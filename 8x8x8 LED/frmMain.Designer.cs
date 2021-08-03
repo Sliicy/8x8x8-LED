@@ -50,16 +50,20 @@ namespace _8x8x8_LED
             this.cbStopBits = new System.Windows.Forms.ComboBox();
             this.cbComPort = new System.Windows.Forms.ComboBox();
             this.tpProjectImage = new System.Windows.Forms.TabPage();
+            this.btnUploadImage = new System.Windows.Forms.Button();
             this.tpVideo = new System.Windows.Forms.TabPage();
             this.tpMusic = new System.Windows.Forms.TabPage();
-            this.tpMarquee = new System.Windows.Forms.TabPage();
             this.chkSyncMusic = new System.Windows.Forms.CheckBox();
+            this.tpMarquee = new System.Windows.Forms.TabPage();
+            this.pbImage = new System.Windows.Forms.PictureBox();
             this.tcModes.SuspendLayout();
             this.tpSetup.SuspendLayout();
             this.grpSendPacket.SuspendLayout();
             this.grpConnection.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDataBits)).BeginInit();
+            this.tpProjectImage.SuspendLayout();
             this.tpMusic.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
             this.SuspendLayout();
             // 
             // tcModes
@@ -326,6 +330,8 @@ namespace _8x8x8_LED
             // 
             // tpProjectImage
             // 
+            this.tpProjectImage.Controls.Add(this.pbImage);
+            this.tpProjectImage.Controls.Add(this.btnUploadImage);
             this.tpProjectImage.Location = new System.Drawing.Point(4, 33);
             this.tpProjectImage.Margin = new System.Windows.Forms.Padding(6);
             this.tpProjectImage.Name = "tpProjectImage";
@@ -334,6 +340,16 @@ namespace _8x8x8_LED
             this.tpProjectImage.TabIndex = 1;
             this.tpProjectImage.Text = "Project Image";
             this.tpProjectImage.UseVisualStyleBackColor = true;
+            // 
+            // btnUploadImage
+            // 
+            this.btnUploadImage.Location = new System.Drawing.Point(9, 9);
+            this.btnUploadImage.Name = "btnUploadImage";
+            this.btnUploadImage.Size = new System.Drawing.Size(138, 42);
+            this.btnUploadImage.TabIndex = 0;
+            this.btnUploadImage.Text = "Upload Image";
+            this.btnUploadImage.UseVisualStyleBackColor = true;
+            this.btnUploadImage.Click += new System.EventHandler(this.BtnUploadImage_Click);
             // 
             // tpVideo
             // 
@@ -358,17 +374,6 @@ namespace _8x8x8_LED
             this.tpMusic.Text = "Music";
             this.tpMusic.UseVisualStyleBackColor = true;
             // 
-            // tpMarquee
-            // 
-            this.tpMarquee.Location = new System.Drawing.Point(4, 33);
-            this.tpMarquee.Margin = new System.Windows.Forms.Padding(6);
-            this.tpMarquee.Name = "tpMarquee";
-            this.tpMarquee.Padding = new System.Windows.Forms.Padding(6);
-            this.tpMarquee.Size = new System.Drawing.Size(790, 477);
-            this.tpMarquee.TabIndex = 3;
-            this.tpMarquee.Text = "Marquee";
-            this.tpMarquee.UseVisualStyleBackColor = true;
-            // 
             // chkSyncMusic
             // 
             this.chkSyncMusic.AutoSize = true;
@@ -380,6 +385,26 @@ namespace _8x8x8_LED
             this.chkSyncMusic.UseVisualStyleBackColor = true;
             this.chkSyncMusic.CheckedChanged += new System.EventHandler(this.ChkSyncMusic_CheckedChanged);
             // 
+            // tpMarquee
+            // 
+            this.tpMarquee.Location = new System.Drawing.Point(4, 33);
+            this.tpMarquee.Margin = new System.Windows.Forms.Padding(6);
+            this.tpMarquee.Name = "tpMarquee";
+            this.tpMarquee.Padding = new System.Windows.Forms.Padding(6);
+            this.tpMarquee.Size = new System.Drawing.Size(790, 477);
+            this.tpMarquee.TabIndex = 3;
+            this.tpMarquee.Text = "Marquee";
+            this.tpMarquee.UseVisualStyleBackColor = true;
+            // 
+            // pbImage
+            // 
+            this.pbImage.Location = new System.Drawing.Point(10, 69);
+            this.pbImage.Name = "pbImage";
+            this.pbImage.Size = new System.Drawing.Size(512, 64);
+            this.pbImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbImage.TabIndex = 1;
+            this.pbImage.TabStop = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -387,12 +412,14 @@ namespace _8x8x8_LED
             this.ClientSize = new System.Drawing.Size(798, 514);
             this.Controls.Add(this.tcModes);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "8x8x8 LED";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyDown);
             this.tcModes.ResumeLayout(false);
             this.tpSetup.ResumeLayout(false);
             this.grpSendPacket.ResumeLayout(false);
@@ -400,8 +427,10 @@ namespace _8x8x8_LED
             this.grpConnection.ResumeLayout(false);
             this.grpConnection.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDataBits)).EndInit();
+            this.tpProjectImage.ResumeLayout(false);
             this.tpMusic.ResumeLayout(false);
             this.tpMusic.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -432,6 +461,8 @@ namespace _8x8x8_LED
         private System.Windows.Forms.TextBox txtBytesToSend;
         private System.Windows.Forms.Button btnInvertPacket;
         private System.Windows.Forms.CheckBox chkSyncMusic;
+        private System.Windows.Forms.Button btnUploadImage;
+        private System.Windows.Forms.PictureBox pbImage;
     }
 }
 

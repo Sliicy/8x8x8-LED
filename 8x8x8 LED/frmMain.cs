@@ -1,5 +1,6 @@
 ﻿using NAudio.Wave;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -204,6 +205,113 @@ namespace _8x8x8_LED
             {
                 waveIn.StopRecording();
             }
+        }
+
+        private void FrmMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (ModifierKeys == Keys.Control && e.KeyCode == Keys.W)
+                Close();
+        }
+
+        private void BtnUploadImage_Click(object sender, EventArgs e)
+        {
+            var picSelect = new OpenFileDialog()
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+                Multiselect = false,
+                Title = "Select image to send:",
+                Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.tiff) | *.bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff"
+            };
+
+            DialogResult selection = picSelect.ShowDialog();
+            if (selection == DialogResult.OK)
+            {
+
+                // Set the image (copy the image, rename it, convert it to .png, and save it to the Template folder):
+                Bitmap b;
+                var stream = System.IO.File.Open(picSelect.FileName, System.IO.FileMode.Open);
+                b = (Bitmap)Image.FromStream(stream);
+                stream.Close();
+                if (b.Width > 64 || b.Height > 8)
+                {
+                    MessageBox.Show("Image dimensions must be exactly 64x8 (WxH)!"); // TODO: Replace with code that shrinks image?
+                    return;
+                }
+                pbImage.Image = b;
+
+                byte[] bytesToSend = new byte[65];
+                bytesToSend[0] = 0xF2;
+                int i = 1; // Skip first byte (first byte is the header)
+                
+
+                for (int z = 0; z < 64; z += 8)
+                {
+                    for (int y = 7; y > 0; y--)
+                    {
+                        var bits = new BitArray(8);
+                        //string line = "";
+                        for (int x = 0; x < 8; x++)
+                        {
+                            if (b.GetPixel(x + z, y).B == 0 && b.GetPixel(x + z, y).B == 0 && b.GetPixel(x + z, y).B == 0)
+                            {
+                                bits[x] = true;
+                                //line += "1";
+                            } else
+                            {
+                                bits[x] = false;
+                                //line += "0";
+                            }
+                        }
+                        //MessageBox.Show(line);
+                        byte[] bytes = new byte[1];
+                        bits.CopyTo(bytes, 0);
+                        bytesToSend[i] = bytes[0];
+
+                        i++;
+                    }
+                }
+
+
+
+                //for (int x = 0; x < 64; x++)
+                //{
+                //    string line = "";
+                //
+                //    for (int y = 7; y > 0; y--)
+                //    {
+                //        if (b.GetPixel(x, y) == Color.White) {
+                //            line += "1";
+                //        } else
+                //        {
+                //            line += "0";
+                //        }
+                //        MessageBox.Show(b.GetPixel(x, y).ToString());
+                //    }
+                //    MessageBox.Show(line);
+                //    i++;
+                //}
+                if (sp.IsOpen)
+                {
+                    sp.Write(bytesToSend, 0, bytesToSend.Length);
+                }
+
+            }
+        }
+
+        private byte TranslateCoordinatesToLine(string line, int v)
+        {
+            return Convert.ToByte(line, 2);
+            /*if (line == { 0,0,0,0,0,0,0,0}) {
+
+            }
+            if (x == 0)
+            {
+                return 0x00;
+            } else if (x == 1)
+            {
+
+            }
+            return 0x00;*/
         }
     }
 }
