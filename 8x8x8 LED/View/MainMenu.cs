@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Apps;
+using _8x8x8_LED.Model;
 using NAudio.Wave;
 using System;
 using System.Collections;
@@ -24,6 +25,9 @@ namespace _8x8x8_LED
         }
 
         public readonly SerialPort serialPort = new SerialPort();
+
+        public Cube cube = new Cube(8, 8, 8);
+
         public int animationSpeed = 100;
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -158,7 +162,7 @@ namespace _8x8x8_LED
 
                 counter++;
             }
-            SerialHelper.Send(serialPort, bytesToSend, false);
+            SerialHelper.SendPacket(serialPort, bytesToSend, false);
         }
 
         private void BtnInvertPacket_Click(object sender, EventArgs e)

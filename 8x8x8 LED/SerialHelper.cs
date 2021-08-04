@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _8x8x8_LED.Model;
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace _8x8x8_LED
     static class SerialHelper
     {
         const byte HEADER = 0xF2;
-        public static void Send(SerialPort serialPort, byte[] payload, bool prependHeader = true)
+        public static void SendPacket(SerialPort serialPort, byte[] payload, bool prependHeader = true)
         {
             if (serialPort.IsOpen)
             {
@@ -36,6 +37,24 @@ namespace _8x8x8_LED
                 // Send bytes:
                 serialPort.Write(dataPacket, 0, dataPacket.Length);
             }
+        }
+
+        public static void Send(SerialPort serialPort, Cube cube)
+        {
+            byte[] payload = new byte[64];
+
+            int i = 0;
+            for (int z = 0; z < 8; z++)
+            {
+                for (int y = 0; y < 8; y++)
+                {
+
+
+                    payload[i] = cube.matrix[z,y,0];
+                }
+            }
+
+            SendPacket(serialPort, );
         }
 
         private static byte[,] RotateMatrixCounterClockwise(byte[,] oldMatrix)

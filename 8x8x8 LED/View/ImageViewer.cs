@@ -73,7 +73,7 @@ namespace _8x8x8_LED
 
                 
 
-                SerialHelper.Send(serialPort, bytesToSend, true);
+                SerialHelper.SendPacket(serialPort, bytesToSend, true);
 
             }
         }

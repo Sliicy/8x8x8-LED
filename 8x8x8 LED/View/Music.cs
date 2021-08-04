@@ -30,6 +30,7 @@ namespace _8x8x8_LED.Apps
         IWaveIn waveIn = new WasapiLoopbackCapture();
         static void WaveIn_DataAvailable(object sender, WaveInEventArgs e, ref double leftAudio, ref double rightAudio)
         {
+            // TODO: instead of doing 8 bytes at a time, do 64 at a time to have individual lines
             for (int i = 0; i < e.BytesRecorded; i += 8)
             {
                 float leftSample = BitConverter.ToSingle(e.Buffer, i);
@@ -46,10 +47,8 @@ namespace _8x8x8_LED.Apps
                 waveIn.DataAvailable += delegate (object sender2, WaveInEventArgs e2)
                 { WaveIn_DataAvailable(sender2, e2, ref leftChannel, ref rightChannel); };
 
-                //waveIn.DataAvailable += WaveIn_DataAvailable;
                 waveIn.StartRecording();
 
-                //System.Threading.Thread.Sleep(1000);
                 animate = true;
                 bwVisualize.RunWorkerAsync();
 
@@ -69,6 +68,10 @@ namespace _8x8x8_LED.Apps
         private void bwVisualize_DoWork(object sender, DoWorkEventArgs e)
         {
             int counter = 0;
+            //bool wipeScreen = false; // Clear screen once after music stops
+
+            
+
             while (animate)
             {
                 //if (counter % 10 == 0)
@@ -108,10 +111,12 @@ namespace _8x8x8_LED.Apps
                     AnalyzeAudioMatrix(audioChannelDepth, leftChannel, rightChannel);
                 }
 
+                
+
 
                 if ((Math.Abs(leftChannel) > 0.05 || Math.Abs(rightChannel) > 0.05) && counter % speed == 0)
                 {
-                    SerialHelper.Send(serialPort, audioChannelDepth);
+                    SerialHelper.SendPacket(serialPort, audioChannelDepth);
                 }
 
                 /*
