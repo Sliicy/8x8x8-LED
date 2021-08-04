@@ -1,26 +1,30 @@
-﻿using NAudio.Wave;
+﻿using _8x8x8_LED.Apps;
+using NAudio.Wave;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace _8x8x8_LED
 {
-    public partial class frmMain : Form
+    public partial class frmMainMenu : Form
     {
-        public frmMain()
+        public frmMainMenu()
         {
             InitializeComponent();
         }
 
-        readonly SerialPort sp = new SerialPort();
+        public readonly SerialPort serialPort = new SerialPort();
+        public int animationSpeed = 100;
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
@@ -48,9 +52,9 @@ namespace _8x8x8_LED
             Properties.Settings.Default.Save();
             try
             {
-                if (sp.IsOpen)
+                if (serialPort.IsOpen)
                 {
-                    sp.Close();
+                    serialPort.Close();
                 }
             }
             catch (Exception er)
@@ -65,27 +69,27 @@ namespace _8x8x8_LED
             {
                 try
                 {
-                    sp.PortName = cbComPort.Text;
-                    sp.BaudRate = int.Parse(cbBaudRate.Text);
-                    sp.DataBits = decimal.ToInt32(nudDataBits.Value);
+                    serialPort.PortName = cbComPort.Text;
+                    serialPort.BaudRate = int.Parse(cbBaudRate.Text);
+                    serialPort.DataBits = decimal.ToInt32(nudDataBits.Value);
 
                     if (cbStopBits.Text == "0")
                     {
-                        sp.StopBits = StopBits.None;
+                        serialPort.StopBits = StopBits.None;
                     } else if (cbStopBits.Text == "1")
                     {
-                        sp.StopBits = StopBits.One;
+                        serialPort.StopBits = StopBits.One;
                     } else if (cbStopBits.Text == "1.5")
                     {
-                        sp.StopBits = StopBits.OnePointFive;
+                        serialPort.StopBits = StopBits.OnePointFive;
                     } else
                     {
-                        sp.StopBits = StopBits.Two;
+                        serialPort.StopBits = StopBits.Two;
                     }
 
-                    sp.Parity = (Parity)Enum.Parse(typeof(Parity), cbParity.Text, true);
+                    serialPort.Parity = (Parity)Enum.Parse(typeof(Parity), cbParity.Text, true);
 
-                    sp.Open();
+                    serialPort.Open();
                     btnConnect.Text = "Disco&nnect";
                 }
                 catch (Exception er)
@@ -96,9 +100,9 @@ namespace _8x8x8_LED
             {
                 try
                 {
-                    if (sp.IsOpen)
+                    if (serialPort.IsOpen)
                     {
-                        sp.Close();
+                        serialPort.Close();
                         btnConnect.Text = "Co&nnect";
                     }
                 }
@@ -154,10 +158,7 @@ namespace _8x8x8_LED
 
                 counter++;
             }
-            if (sp.IsOpen)
-            {
-                sp.Write(bytesToSend, 0, bytesToSend.Length);
-            }
+            SerialHelper.Send(serialPort, bytesToSend, false);
         }
 
         private void BtnInvertPacket_Click(object sender, EventArgs e)
@@ -180,32 +181,6 @@ namespace _8x8x8_LED
             }
             txtBytesToSend.Text = "0xF2, " + Environment.NewLine + sb;
         }
-        IWaveIn waveIn = new WasapiLoopbackCapture();
-        static void waveIn_DataAvailable(object sender, WaveInEventArgs e)
-        {
-            for (int i = 0; i < e.BytesRecorded; i += 8)
-            {
-                float leftSample = BitConverter.ToSingle(e.Buffer, i);
-                float rightSample = BitConverter.ToSingle(e.Buffer, i + 4);
-
-            }
-        }
-
-        private void ChkSyncMusic_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkSyncMusic.Checked)
-            {
-
-                
-                waveIn.DataAvailable += waveIn_DataAvailable;
-                waveIn.StartRecording();
-
-                
-            } else
-            {
-                waveIn.StopRecording();
-            }
-        }
 
         private void FrmMain_KeyDown(object sender, KeyEventArgs e)
         {
@@ -213,105 +188,76 @@ namespace _8x8x8_LED
                 Close();
         }
 
-        private void BtnUploadImage_Click(object sender, EventArgs e)
+        private void BtnMarqueeAnimate_Click(object sender, EventArgs e) {
+            if (btnMarqueeAnimate.Text == "&Animate")
+            {
+                tmrAnimate.Enabled = true;
+                btnMarqueeAnimate.Text = "&Stop";
+            } else
+            {
+                tmrAnimate.Enabled = false;
+                btnMarqueeAnimate.Text = "&Animate";
+            }
+        }
+
+        private void TmrAnimate_Tick(object sender, EventArgs e)
         {
-            var picSelect = new OpenFileDialog()
+            byte[] scanner = { };
+            // IDEA: have each letter scanned vertically. Space adjustable
+
+
+            var letterMapping = new Dictionary<string, Bitmap>();
+
+
+            Bitmap canvas;
+
+            foreach (string letter in txtMarquee.Text.Split())
             {
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
-                Multiselect = false,
-                Title = "Select image to send:",
-                Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.tiff) | *.bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff"
-            };
-
-            DialogResult selection = picSelect.ShowDialog();
-            if (selection == DialogResult.OK)
-            {
-
-                // Set the image (copy the image, rename it, convert it to .png, and save it to the Template folder):
-                Bitmap b;
-                var stream = System.IO.File.Open(picSelect.FileName, System.IO.FileMode.Open);
-                b = (Bitmap)Image.FromStream(stream);
-                stream.Close();
-                if (b.Width > 64 || b.Height > 8)
+                if (letterMapping.ContainsKey(letter))
                 {
-                    MessageBox.Show("Image dimensions must be exactly 64x8 (WxH)!"); // TODO: Replace with code that shrinks image?
-                    return;
-                }
-                pbImage.Image = b;
-
-                byte[] bytesToSend = new byte[65];
-                bytesToSend[0] = 0xF2;
-                int i = 1; // Skip first byte (first byte is the header)
-                
-
-                for (int z = 0; z < 64; z += 8)
+                    canvas = letterMapping[letter];
+                } else
                 {
-                    for (int y = 7; y > 0; y--)
+                    if (File.Exists(Path.Combine(Application.StartupPath, "Characters", letter + ".png")))
                     {
-                        var bits = new BitArray(8);
-                        //string line = "";
-                        for (int x = 0; x < 8; x++)
-                        {
-                            if (b.GetPixel(x + z, y).B == 0 && b.GetPixel(x + z, y).B == 0 && b.GetPixel(x + z, y).B == 0)
-                            {
-                                bits[x] = true;
-                                //line += "1";
-                            } else
-                            {
-                                bits[x] = false;
-                                //line += "0";
-                            }
-                        }
-                        //MessageBox.Show(line);
-                        byte[] bytes = new byte[1];
-                        bits.CopyTo(bytes, 0);
-                        bytesToSend[i] = bytes[0];
-
-                        i++;
+                        var stream = File.Open(Path.Combine(Application.StartupPath, "Characters", letter + ".png"), FileMode.Open);
+                        letterMapping.Add(letter, (Bitmap)Image.FromStream(stream));
+                        stream.Close();
                     }
                 }
 
+                // Scan layer by layer and send.
 
 
-                //for (int x = 0; x < 64; x++)
-                //{
-                //    string line = "";
-                //
-                //    for (int y = 7; y > 0; y--)
-                //    {
-                //        if (b.GetPixel(x, y) == Color.White) {
-                //            line += "1";
-                //        } else
-                //        {
-                //            line += "0";
-                //        }
-                //        MessageBox.Show(b.GetPixel(x, y).ToString());
-                //    }
-                //    MessageBox.Show(line);
-                //    i++;
-                //}
-                if (sp.IsOpen)
-                {
-                    sp.Write(bytesToSend, 0, bytesToSend.Length);
-                }
 
             }
         }
 
-        private byte TranslateCoordinatesToLine(string line, int v)
+        private void NudAnimationSpeed_ValueChanged(object sender, EventArgs e)
         {
-            return Convert.ToByte(line, 2);
-            /*if (line == { 0,0,0,0,0,0,0,0}) {
+            animationSpeed = int.Parse(nudAnimationSpeed.Value.ToString());
+        }
 
+        private void BtnShowApp_Click(object sender, EventArgs e)
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm.Text == lstApps.SelectedItem.ToString())
+                {
+                    openForm.BringToFront();
+                    return;
+                }
             }
-            if (x == 0)
+            Form form = new Form();
+            if (lstApps.SelectedItem.ToString() == "Image Viewer")
             {
-                return 0x00;
-            } else if (x == 1)
+                form = new frmImageViewer(serialPort);
+            } else if (lstApps.SelectedItem.ToString() == "Music")
             {
+                form = new frmMusic(serialPort);
+            }
 
-            }
-            return 0x00;*/
+            form.Show();
         }
     }
 }
