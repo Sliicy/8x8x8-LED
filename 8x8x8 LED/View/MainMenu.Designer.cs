@@ -138,7 +138,7 @@ namespace _8x8x8_LED
             this.btnShowApp.Name = "btnShowApp";
             this.btnShowApp.Size = new System.Drawing.Size(184, 42);
             this.btnShowApp.TabIndex = 4;
-            this.btnShowApp.Text = "Play";
+            this.btnShowApp.Text = "&Open";
             this.btnShowApp.UseVisualStyleBackColor = true;
             this.btnShowApp.Click += new System.EventHandler(this.BtnShowApp_Click);
             // 

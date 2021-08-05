@@ -50,11 +50,10 @@ namespace _8x8x8_LED
                 {
 
 
-                    payload[i] = cube.matrix[z,y,0];
+                    //payload[i] = cube.matrix[z,y,0];
                 }
             }
 
-            SendPacket(serialPort, );
         }
 
         private static byte[,] RotateMatrixCounterClockwise(byte[,] oldMatrix)

@@ -258,7 +258,7 @@ namespace _8x8x8_LED
                 form = new frmImageViewer(serialPort);
             } else if (lstApps.SelectedItem.ToString() == "Music")
             {
-                form = new frmMusic(serialPort);
+                form = new FrmMusic(serialPort);
             }
 
             form.Show();

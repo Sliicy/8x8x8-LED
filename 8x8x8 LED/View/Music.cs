@@ -12,31 +12,50 @@ using System.Windows.Forms;
 
 namespace _8x8x8_LED.Apps
 {
-    public partial class frmMusic : Form
+    public partial class FrmMusic : Form
     {
-        private SerialPort serialPort;
-        //private byte[] leftChannel = new byte[64];
-        private double leftChannel = 0;
-        private double rightChannel = 0;
-        private bool animate = false;
-        private int speed = 1;
+        private readonly SerialPort serialPort;
 
-        public frmMusic(SerialPort sp)
+        private int samples = 1024; // How many samples to calculate wave form from.
+
+        private double[] eightChannels = new double[8]; // Holds 8 bytes of audio.
+
+        private bool matrixIsCleared = false; // Controls whether to clear the screen if no audio is playing.
+        private int previousShuffle = 0; // Last animation used if shuffling.
+
+        private bool animate = false; // Whether to animate the visualizer.
+        private int speed = 1; // Speed of animation.
+        private int timeElapsed = 0; // Used to adjust speed of animation
+
+        readonly IWaveIn waveIn = new WasapiLoopbackCapture();
+
+        public FrmMusic(SerialPort sp)
         {
             InitializeComponent();
             serialPort = sp;
         }
 
-        IWaveIn waveIn = new WasapiLoopbackCapture();
-        static void WaveIn_DataAvailable(object sender, WaveInEventArgs e, ref double leftAudio, ref double rightAudio)
+        static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] eightChannels, int samples = 8, bool mirrorRightChannelToLeft = true)
         {
-            // TODO: instead of doing 8 bytes at a time, do 64 at a time to have individual lines
-            for (int i = 0; i < e.BytesRecorded; i += 8)
+            for (int i = 0; i < e.BytesRecorded; i += samples)
             {
-                float leftSample = BitConverter.ToSingle(e.Buffer, i);
-                float rightSample = BitConverter.ToSingle(e.Buffer, i + 4);
-                leftAudio = leftSample;
-                rightAudio = rightSample;
+                eightChannels[0] = BitConverter.ToSingle(e.Buffer, i);
+                eightChannels[1] = BitConverter.ToSingle(e.Buffer, i + samples / 4);
+                eightChannels[2] = BitConverter.ToSingle(e.Buffer, i + (samples / 4) * 2);
+                eightChannels[3] = BitConverter.ToSingle(e.Buffer, i + (samples / 4) * 3);
+                if (mirrorRightChannelToLeft)
+                {
+                    eightChannels[7] = BitConverter.ToSingle(e.Buffer, i + 4);
+                    eightChannels[6] = BitConverter.ToSingle(e.Buffer, i + 4 + samples / 4);
+                    eightChannels[5] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 2);
+                    eightChannels[4] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 3);
+                } else
+                {
+                    eightChannels[4] = BitConverter.ToSingle(e.Buffer, i + 4);
+                    eightChannels[5] = BitConverter.ToSingle(e.Buffer, i + 4 + samples / 4);
+                    eightChannels[6] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 2);
+                    eightChannels[7] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 3);
+                }
             }
         }
 
@@ -45,7 +64,7 @@ namespace _8x8x8_LED.Apps
             if (chkSyncMusic.Checked)
             {
                 waveIn.DataAvailable += delegate (object sender2, WaveInEventArgs e2)
-                { WaveIn_DataAvailable(sender2, e2, ref leftChannel, ref rightChannel); };
+                { WaveIn_DataAvailable(e2, ref eightChannels, samples, chkMirrored.Checked); };
 
                 waveIn.StartRecording();
 
@@ -60,626 +79,305 @@ namespace _8x8x8_LED.Apps
             }
         }
 
-        private void TmrMusic_Tick(object sender, EventArgs e)
+        private void BwVisualize_DoWork(object sender, DoWorkEventArgs e)
         {
-            
-        }
-
-        private void bwVisualize_DoWork(object sender, DoWorkEventArgs e)
-        {
-            int counter = 0;
-            //bool wipeScreen = false; // Clear screen once after music stops
-
-            
+            int timeUntilNextShuffledAnimation = 0;
 
             while (animate)
             {
-                //if (counter % 10 == 0)
-                //{
-                //Invoke((MethodInvoker)delegate {
-                //    textBox1.Text += leftAudio.ToString() + Environment.NewLine;
-                //});
-                //}
-                //counter++;
-                byte[] audioChannelDepth = new byte[64];
-                
+                byte[] arrayOutput = new byte[64];
 
-                if (rbSingleBar.Checked)
+                if (rbFloatingLines.Checked)
                 {
-                    AnalyzeAudioSingleBar(audioChannelDepth, leftChannel, 0);
-                    AnalyzeAudioSingleBar(audioChannelDepth, rightChannel, 32); // Offset by 32 for right channel
-
-                } else if (rbFilled.Checked)
+                    AnimateBars(arrayOutput, eightChannels, 255, false);
+                } else if (rbFloatingDots.Checked)
                 {
-                    AnalyzeAudioFilled(audioChannelDepth, leftChannel, 0);
-                    AnalyzeAudioFilled(audioChannelDepth, rightChannel, 32);
-
-                } else if (rbFloatingBar.Checked)
+                    AnimateBars(arrayOutput, eightChannels, 1, false);
+                } else if (rbSolidLines.Checked)
                 {
-                    AnalyzeAudioFloatingBar(audioChannelDepth, leftChannel, 0);
-                    AnalyzeAudioFloatingBar(audioChannelDepth, rightChannel, 32);
-                } else if (rbFloatingSquare.Checked)
+                    AnimateBars(arrayOutput, eightChannels, 255, true);
+                } else if (rbSolidDots.Checked)
                 {
-                    AnalyzeAudioFloatingSquare(audioChannelDepth, leftChannel, 0);
-                    AnalyzeAudioFloatingSquare(audioChannelDepth, rightChannel, 32);
-                } else if (rbTube.Checked)
-                {
-                    AnalyzeAudioTube(audioChannelDepth, leftChannel, 0);
-                    AnalyzeAudioTube(audioChannelDepth, rightChannel, 32);
+                    AnimateBars(arrayOutput, eightChannels, 1, true);
                 } else if (rbMatrix.Checked)
                 {
-                    AnalyzeAudioMatrix(audioChannelDepth, leftChannel, rightChannel);
-                }
-
-                
-
-
-                if ((Math.Abs(leftChannel) > 0.05 || Math.Abs(rightChannel) > 0.05) && counter % speed == 0)
+                    AnimateMatrix(arrayOutput, eightChannels);
+                } else if (rbCenteredFloatingLines.Checked)
                 {
-                    SerialHelper.SendPacket(serialPort, audioChannelDepth);
-                }
-
-                /*
-                if (Math.Abs(leftAudio) > 0.00001) // Ignore silence after 0.00001
+                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255);
+                } else if (rbCenteredFloatingDots.Checked)
                 {
-                    byte[] payloadClippedTo64 = new byte[64];
-
-                    for (int i = 0; i < 64; i++)
+                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1);
+                } else if (rbShuffled.Checked)
+                {
+                    if (timeUntilNextShuffledAnimation > 0)
                     {
-                        try
-                        {
-                            payloadClippedTo64[i] = leftChannel[i];
-                        } catch (Exception)
-                        {
-                            payloadClippedTo64[i] = 0;
-                        }
-                    
+                        timeUntilNextShuffledAnimation--;
+                    } else
+                    {
+                        timeUntilNextShuffledAnimation = 10000;
+                        Random random = new Random();
+                        previousShuffle = random.Next(1, 7);
                     }
-                    SerialHelper.Send(serialPort, payloadClippedTo64);
-                   */
-                counter++;
-            }
-            
-        }
+                    switch (previousShuffle)
+                    {
+                        case 1:
+                            AnimateBars(arrayOutput, eightChannels, 255, false);
+                            break;
+                        case 2:
+                            AnimateBars(arrayOutput, eightChannels, 1, false);
+                            break;
+                        case 3:
+                            AnimateBars(arrayOutput, eightChannels, 255, true);
+                            break;
+                        case 4:
+                            AnimateBars(arrayOutput, eightChannels, 1, true);
+                            break;
+                        case 5:
+                            AnimateMatrix(arrayOutput, eightChannels);
+                            break;
+                        case 6:
+                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255);
+                            break;
+                        case 7:
+                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1);
+                            break;
+                    }
+                    
+                }
 
-        private void AnalyzeAudioSingleBar(byte[] audioChannelDepth, double channel, int offset)
-        {
-            if (Math.Abs(channel) > .05 && Math.Abs(channel) <= .1)
-            {
-                audioChannelDepth[0 + offset] = 0xFF;
-                audioChannelDepth[8 + offset] = 0xFF;
-                audioChannelDepth[16 + offset] = 0xFF;
-                audioChannelDepth[24 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .1 && Math.Abs(channel) <= .15)
-            {
-                audioChannelDepth[1 + offset] = 0xFF;
-                audioChannelDepth[9 + offset] = 0xFF;
-                audioChannelDepth[17 + offset] = 0xFF;
-                audioChannelDepth[25 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .15 && Math.Abs(channel) <= .2)
-            {
-                audioChannelDepth[2 + offset] = 0xFF;
-                audioChannelDepth[10 + offset] = 0xFF;
-                audioChannelDepth[18 + offset] = 0xFF;
-                audioChannelDepth[26 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .2 && Math.Abs(channel) <= .25)
-            {
-                audioChannelDepth[3 + offset] = 0xFF;
-                audioChannelDepth[11 + offset] = 0xFF;
-                audioChannelDepth[19 + offset] = 0xFF;
-                audioChannelDepth[27 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .25 && Math.Abs(channel) <= .3)
-            {
-                audioChannelDepth[4 + offset] = 0xFF;
-                audioChannelDepth[12 + offset] = 0xFF;
-                audioChannelDepth[20 + offset] = 0xFF;
-                audioChannelDepth[28 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .3 && Math.Abs(channel) <= .4)
-            {
-                audioChannelDepth[5 + offset] = 0xFF;
-                audioChannelDepth[13 + offset] = 0xFF;
-                audioChannelDepth[21 + offset] = 0xFF;
-                audioChannelDepth[29 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .4 && Math.Abs(channel) <= .5)
-            {
-                audioChannelDepth[6 + offset] = 0xFF;
-                audioChannelDepth[14 + offset] = 0xFF;
-                audioChannelDepth[22 + offset] = 0xFF;
-                audioChannelDepth[30 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .5)
-            {
-                audioChannelDepth[7 + offset] = 0xFF;
-                audioChannelDepth[15 + offset] = 0xFF;
-                audioChannelDepth[23 + offset] = 0xFF;
-                audioChannelDepth[31 + offset] = 0xFF;
-            }
-        }
-
-        private void AnalyzeAudioFilled(byte[] audioChannelDepth, double channel, int offset)
-        {
-            if (Math.Abs(channel) > .05)
-            {
-                audioChannelDepth[0 + offset] = 0xFF;
-                audioChannelDepth[8 + offset] = 0xFF;
-                audioChannelDepth[16 + offset] = 0xFF;
-                audioChannelDepth[24 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .1)
-            {
-                audioChannelDepth[1 + offset] = 0xFF;
-                audioChannelDepth[9 + offset] = 0xFF;
-                audioChannelDepth[17 + offset] = 0xFF;
-                audioChannelDepth[25 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .15)
-            {
-                audioChannelDepth[2 + offset] = 0xFF;
-                audioChannelDepth[10 + offset] = 0xFF;
-                audioChannelDepth[18 + offset] = 0xFF;
-                audioChannelDepth[26 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .2)
-            {
-                audioChannelDepth[3 + offset] = 0xFF;
-                audioChannelDepth[11 + offset] = 0xFF;
-                audioChannelDepth[19 + offset] = 0xFF;
-                audioChannelDepth[27 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .25)
-            {
-                audioChannelDepth[4 + offset] = 0xFF;
-                audioChannelDepth[12 + offset] = 0xFF;
-                audioChannelDepth[20 + offset] = 0xFF;
-                audioChannelDepth[28 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .3)
-            {
-                audioChannelDepth[5 + offset] = 0xFF;
-                audioChannelDepth[13 + offset] = 0xFF;
-                audioChannelDepth[21 + offset] = 0xFF;
-                audioChannelDepth[29 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .4)
-            {
-                audioChannelDepth[6 + offset] = 0xFF;
-                audioChannelDepth[14 + offset] = 0xFF;
-                audioChannelDepth[22 + offset] = 0xFF;
-                audioChannelDepth[30 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .5)
-            {
-                audioChannelDepth[7 + offset] = 0xFF;
-                audioChannelDepth[15 + offset] = 0xFF;
-                audioChannelDepth[23 + offset] = 0xFF;
-                audioChannelDepth[31 + offset] = 0xFF;
-            }
-        }
-
-        private void AnalyzeAudioFloatingBar(byte[] audioChannelDepth, double channel, int offset)
-        {
-            if (Math.Abs(channel) > .05 && Math.Abs(channel) <= .1)
-            {
-                audioChannelDepth[0 + offset] = 0xFF;
-                audioChannelDepth[8 + offset] = 0xFF;
-                audioChannelDepth[16 + offset] = 0xFF;
-                audioChannelDepth[24 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .1 && Math.Abs(channel) <= .15)
-            {
-                audioChannelDepth[1 + offset] = 0xFF;
-                audioChannelDepth[9 + offset] = 0xFF;
-                audioChannelDepth[17 + offset] = 0xFF;
-                audioChannelDepth[25 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .15 && Math.Abs(channel) <= .2)
-            {
-                audioChannelDepth[2 + offset] = 0xFF;
-                audioChannelDepth[10 + offset] = 0xFF;
-                audioChannelDepth[18 + offset] = 0xFF;
-                audioChannelDepth[26 + offset] = 0xFF;
-
-                audioChannelDepth[0 + offset] = 0xFF;
-                audioChannelDepth[8 + offset] = 0xFF;
-                audioChannelDepth[16 + offset] = 0xFF;
-                audioChannelDepth[24 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .2 && Math.Abs(channel) <= .25)
-            {
-                audioChannelDepth[3 + offset] = 0xFF;
-                audioChannelDepth[11 + offset] = 0xFF;
-                audioChannelDepth[19 + offset] = 0xFF;
-                audioChannelDepth[27 + offset] = 0xFF;
-
-                audioChannelDepth[1 + offset] = 0xFF;
-                audioChannelDepth[9 + offset] = 0xFF;
-                audioChannelDepth[17 + offset] = 0xFF;
-                audioChannelDepth[25 + offset] = 0xFF;
-
-                audioChannelDepth[0 + offset] = 0xFF;
-                audioChannelDepth[8 + offset] = 0xFF;
-                audioChannelDepth[16 + offset] = 0xFF;
-                audioChannelDepth[24 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .25 && Math.Abs(channel) <= .3)
-            {
-                audioChannelDepth[4 + offset] = 0xFF;
-                audioChannelDepth[12 + offset] = 0xFF;
-                audioChannelDepth[20 + offset] = 0xFF;
-                audioChannelDepth[28 + offset] = 0xFF;
-
-                audioChannelDepth[2 + offset] = 0xFF;
-                audioChannelDepth[10 + offset] = 0xFF;
-                audioChannelDepth[18 + offset] = 0xFF;
-                audioChannelDepth[26 + offset] = 0xFF;
-
-                audioChannelDepth[1 + offset] = 0xFF;
-                audioChannelDepth[9 + offset] = 0xFF;
-                audioChannelDepth[17 + offset] = 0xFF;
-                audioChannelDepth[25 + offset] = 0xFF;
-
-                audioChannelDepth[0 + offset] = 0xFF;
-                audioChannelDepth[8 + offset] = 0xFF;
-                audioChannelDepth[16 + offset] = 0xFF;
-                audioChannelDepth[24 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .3 && Math.Abs(channel) <= .4)
-            {
-                audioChannelDepth[5 + offset] = 0xFF;
-                audioChannelDepth[13 + offset] = 0xFF;
-                audioChannelDepth[21 + offset] = 0xFF;
-                audioChannelDepth[29 + offset] = 0xFF;
-
-                audioChannelDepth[3 + offset] = 0xFF;
-                audioChannelDepth[11 + offset] = 0xFF;
-                audioChannelDepth[19 + offset] = 0xFF;
-                audioChannelDepth[27 + offset] = 0xFF;
-
-                audioChannelDepth[2 + offset] = 0xFF;
-                audioChannelDepth[10 + offset] = 0xFF;
-                audioChannelDepth[18 + offset] = 0xFF;
-                audioChannelDepth[26 + offset] = 0xFF;
-
-                audioChannelDepth[1 + offset] = 0xFF;
-                audioChannelDepth[9 + offset] = 0xFF;
-                audioChannelDepth[17 + offset] = 0xFF;
-                audioChannelDepth[25 + offset] = 0xFF;
-
-                audioChannelDepth[0 + offset] = 0xFF;
-                audioChannelDepth[8 + offset] = 0xFF;
-                audioChannelDepth[16 + offset] = 0xFF;
-                audioChannelDepth[24 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .4 && Math.Abs(channel) <= .5)
-            {
-                audioChannelDepth[6 + offset] = 0xFF;
-                audioChannelDepth[14 + offset] = 0xFF;
-                audioChannelDepth[22 + offset] = 0xFF;
-                audioChannelDepth[30 + offset] = 0xFF;
-
-                audioChannelDepth[4 + offset] = 0xFF;
-                audioChannelDepth[12 + offset] = 0xFF;
-                audioChannelDepth[20 + offset] = 0xFF;
-                audioChannelDepth[28 + offset] = 0xFF;
-
-                audioChannelDepth[3 + offset] = 0xFF;
-                audioChannelDepth[11 + offset] = 0xFF;
-                audioChannelDepth[19 + offset] = 0xFF;
-                audioChannelDepth[27 + offset] = 0xFF;
-
-                audioChannelDepth[2 + offset] = 0xFF;
-                audioChannelDepth[10 + offset] = 0xFF;
-                audioChannelDepth[18 + offset] = 0xFF;
-                audioChannelDepth[26 + offset] = 0xFF;
-
-                audioChannelDepth[1 + offset] = 0xFF;
-                audioChannelDepth[9 + offset] = 0xFF;
-                audioChannelDepth[17 + offset] = 0xFF;
-                audioChannelDepth[25 + offset] = 0xFF;
-
-                audioChannelDepth[0 + offset] = 0xFF;
-                audioChannelDepth[8 + offset] = 0xFF;
-                audioChannelDepth[16 + offset] = 0xFF;
-                audioChannelDepth[24 + offset] = 0xFF;
-            }
-            if (Math.Abs(channel) > .5)
-            {
-                audioChannelDepth[7 + offset] = 0xFF;
-                audioChannelDepth[15 + offset] = 0xFF;
-                audioChannelDepth[23 + offset] = 0xFF;
-                audioChannelDepth[31 + offset] = 0xFF;
-
-                audioChannelDepth[5 + offset] = 0xFF;
-                audioChannelDepth[13 + offset] = 0xFF;
-                audioChannelDepth[21 + offset] = 0xFF;
-                audioChannelDepth[29 + offset] = 0xFF;
-
-                audioChannelDepth[4 + offset] = 0xFF;
-                audioChannelDepth[12 + offset] = 0xFF;
-                audioChannelDepth[20 + offset] = 0xFF;
-                audioChannelDepth[28 + offset] = 0xFF;
-
-                audioChannelDepth[3 + offset] = 0xFF;
-                audioChannelDepth[11 + offset] = 0xFF;
-                audioChannelDepth[19 + offset] = 0xFF;
-                audioChannelDepth[27 + offset] = 0xFF;
-
-                audioChannelDepth[2 + offset] = 0xFF;
-                audioChannelDepth[10 + offset] = 0xFF;
-                audioChannelDepth[18 + offset] = 0xFF;
-                audioChannelDepth[26 + offset] = 0xFF;
-
-                audioChannelDepth[1 + offset] = 0xFF;
-                audioChannelDepth[9 + offset] = 0xFF;
-                audioChannelDepth[17 + offset] = 0xFF;
-                audioChannelDepth[25 + offset] = 0xFF;
-
-                audioChannelDepth[0 + offset] = 0xFF;
-                audioChannelDepth[8 + offset] = 0xFF;
-                audioChannelDepth[16 + offset] = 0xFF;
-                audioChannelDepth[24 + offset] = 0xFF;
-            }
-        }
-
-        private void AnalyzeAudioFloatingSquare(byte[] audioChannelDepth, double channel, int offset)
-        {
-            if (Math.Abs(channel) > .05 && Math.Abs(channel) < .1)
-            {
-
-                audioChannelDepth[0 + offset] = 0x81;
-                audioChannelDepth[8 + offset] = 0x81;
-                audioChannelDepth[16 + offset] = 0x81;
-                audioChannelDepth[24 + offset] = 0x81;
-                if (offset == 0)
+                // Ensure that audio has activity, and the speed of detection is properly set:
+                if ((Math.Abs(eightChannels[0]) > 0.05 || Math.Abs(eightChannels[5]) > 0.05) && timeElapsed % speed == 0)
                 {
-                    audioChannelDepth[0] = 0xFF;
+                    SerialHelper.SendPacket(serialPort, arrayOutput);
+                    matrixIsCleared = false;
                 } else
                 {
-                    audioChannelDepth[56] = 0xFF;
+                    if (!matrixIsCleared) // Do this only once:
+                    {
+                        arrayOutput = new byte[64]; // Clear the screen.
+                        if (chkShowSilence.Checked)
+                        {
+                            if (rbFloatingLines.Checked || rbSolidLines.Checked)
+                            {
+                                arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
+                                arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
+                                arrayOutput[48] = arrayOutput[56] = 255;
+                            } else if (rbCenteredFloatingLines.Checked)
+                            {
+                                arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
+                                arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
+                                arrayOutput[51] = arrayOutput[59] = 255;
+                            } else if (rbCenteredFloatingDots.Checked)
+                            {
+                                arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
+                                arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
+                                arrayOutput[51] = arrayOutput[59] = 1;
+                            } else if (rbMatrix.Checked)
+                            {
+                                arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
+                                arrayOutput[40] = arrayOutput[48] = arrayOutput[56] = 231;
+                            } else if (rbSolidDots.Checked || rbFloatingDots.Checked)
+                            {
+                                arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
+                                arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
+                                arrayOutput[48] = arrayOutput[56] = 1;
+                            } else if (rbShuffled.Checked)
+                            {
+                                Random random = new Random();
+                                arrayOutput[0] = Convert.ToByte(random.Next(0, 255));
+                                arrayOutput[8] = Convert.ToByte(random.Next(0, 255));
+                                arrayOutput[16] = Convert.ToByte(random.Next(0, 255));
+                                arrayOutput[24] = Convert.ToByte(random.Next(0, 255));
+                                arrayOutput[32] = Convert.ToByte(random.Next(0, 255));
+                                arrayOutput[40] = Convert.ToByte(random.Next(0, 255));
+                                arrayOutput[48] = Convert.ToByte(random.Next(0, 255));
+                                arrayOutput[56] = Convert.ToByte(random.Next(0, 255));
+                            }
+                        }
+                        SerialHelper.SendPacket(serialPort, arrayOutput);
+                        matrixIsCleared = true;
+                    }
                 }
-                
-                
-            }
-            if (Math.Abs(channel) > .1 && Math.Abs(channel) < .15)
-            {
-                audioChannelDepth[1 + offset] = 0x81;
-                audioChannelDepth[9 + offset] = 0x81;
-                audioChannelDepth[17 + offset] = 0x81;
-                audioChannelDepth[25 + offset] = 0x81;
-                if (offset == 0)
-                    audioChannelDepth[1] = 0xFF;
-                else
-                audioChannelDepth[57] = 0xFF;
-            }
-            if (Math.Abs(channel) > .15 && Math.Abs(channel) < .2)
-            {
-                audioChannelDepth[2 + offset] = 0x81;
-                audioChannelDepth[10 + offset] = 0x81;
-                audioChannelDepth[18 + offset] = 0x81;
-                audioChannelDepth[26 + offset] = 0x81;
-                if (offset == 0)
-                    audioChannelDepth[2] = 0xFF;
-                else
-                audioChannelDepth[58] = 0xFF;
-            }
-            if (Math.Abs(channel) > .2 && Math.Abs(channel) < .25)
-            {
-                audioChannelDepth[3 + offset] = 0x81;
-                audioChannelDepth[11 + offset] = 0x81;
-                audioChannelDepth[19 + offset] = 0x81;
-                audioChannelDepth[27 + offset] = 0x81;
-                if (offset == 0)
-                    audioChannelDepth[3] = 0xFF;
-                else
-                audioChannelDepth[59] = 0xFF;
-            }
-            if (Math.Abs(channel) > .25 && Math.Abs(channel) < .3)
-            {
-                audioChannelDepth[4 + offset] = 0x81;
-                audioChannelDepth[12 + offset] = 0x81;
-                audioChannelDepth[20 + offset] = 0x81;
-                audioChannelDepth[28 + offset] = 0x81;
-                if (offset == 0)
-                    audioChannelDepth[4] = 0xFF;
-                else
-                audioChannelDepth[60] = 0xFF;
-            }
-            if (Math.Abs(channel) > .3 && Math.Abs(channel) < .4)
-            {
-                audioChannelDepth[5 + offset] = 0x81;
-                audioChannelDepth[13 + offset] = 0x81;
-                audioChannelDepth[21 + offset] = 0x81;
-                audioChannelDepth[29 + offset] = 0x81;
-                if (offset == 0)
-                    audioChannelDepth[5] = 0xFF;
-                else
-                audioChannelDepth[61] = 0xFF;
-            }
-            if (Math.Abs(channel) > .4 && Math.Abs(channel) < .5)
-            {
-                audioChannelDepth[6 + offset] = 0x81;
-                audioChannelDepth[14 + offset] = 0x81;
-                audioChannelDepth[22 + offset] = 0x81;
-                audioChannelDepth[30 + offset] = 0x81;
-                if (offset == 0)
-                    audioChannelDepth[6] = 0xFF;
-                else
-                audioChannelDepth[62] = 0xFF;
-            }
-            if (Math.Abs(channel) > .5)
-            {
-                audioChannelDepth[7 + offset] = 0x81;
-                audioChannelDepth[15 + offset] = 0x81;
-                audioChannelDepth[23 + offset] = 0x81;
-                audioChannelDepth[31 + offset] = 0x81;
-                if (offset == 0)
-                    audioChannelDepth[7] = 0xFF;
-                else
-                audioChannelDepth[63] = 0xFF;
+                timeElapsed++;
             }
         }
 
-        private void AnalyzeAudioTube(byte[] audioChannelDepth, double channel, int offset)
+        private void AnimateBars(byte[] arrayOutput, double[] channels, byte thickness, bool filledUnderneath = false)
         {
-            if (Math.Abs(channel) > .05)
+            int channelIndex = 0;
+            foreach (double channel in channels)
             {
-                
-                audioChannelDepth[0 + offset] = 0x81;
-                audioChannelDepth[8 + offset] = 0x81;
-                audioChannelDepth[16 + offset] = 0x81;
-                audioChannelDepth[24 + offset] = 0x81;
-                audioChannelDepth[0] = 0xFF;
-                audioChannelDepth[56] = 0xFF;
-            }
-            if (Math.Abs(channel) > .1)
-            {
-                audioChannelDepth[1 + offset] = 0x81;
-                audioChannelDepth[9 + offset] = 0x81;
-                audioChannelDepth[17 + offset] = 0x81;
-                audioChannelDepth[25 + offset] = 0x81;
-                audioChannelDepth[1] = 0xFF;
-                audioChannelDepth[57] = 0xFF;
-            }
-            if (Math.Abs(channel) > .15)
-            {
-                audioChannelDepth[2 + offset] = 0x81;
-                audioChannelDepth[10 + offset] = 0x81;
-                audioChannelDepth[18 + offset] = 0x81;
-                audioChannelDepth[26 + offset] = 0x81;
-                audioChannelDepth[2] = 0xFF;
-                audioChannelDepth[58] = 0xFF;
-            }
-            if (Math.Abs(channel) > .2)
-            {
-                audioChannelDepth[3 + offset] = 0x81;
-                audioChannelDepth[11 + offset] = 0x81;
-                audioChannelDepth[19 + offset] = 0x81;
-                audioChannelDepth[27 + offset] = 0x81;
-                audioChannelDepth[3] = 0xFF;
-                audioChannelDepth[59] = 0xFF;
-            }
-            if (Math.Abs(channel) > .25)
-            {
-                audioChannelDepth[4 + offset] = 0x81;
-                audioChannelDepth[12 + offset] = 0x81;
-                audioChannelDepth[20 + offset] = 0x81;
-                audioChannelDepth[28 + offset] = 0x81;
-                audioChannelDepth[4] = 0xFF;
-                audioChannelDepth[60] = 0xFF;
-            }
-            if (Math.Abs(channel) > .3)
-            {
-                audioChannelDepth[5 + offset] = 0x81;
-                audioChannelDepth[13 + offset] = 0x81;
-                audioChannelDepth[21 + offset] = 0x81;
-                audioChannelDepth[29 + offset] = 0x81;
-                audioChannelDepth[5] = 0xFF;
-                audioChannelDepth[61] = 0xFF;
-            }
-            if (Math.Abs(channel) > .4)
-            {
-                audioChannelDepth[6 + offset] = 0x81;
-                audioChannelDepth[14 + offset] = 0x81;
-                audioChannelDepth[22 + offset] = 0x81;
-                audioChannelDepth[30 + offset] = 0x81;
-                audioChannelDepth[6] = 0xFF;
-                audioChannelDepth[62] = 0xFF;
-            }
-            if (Math.Abs(channel) > .5)
-            {
-                audioChannelDepth[7 + offset] = 0x81;
-                audioChannelDepth[15 + offset] = 0x81;
-                audioChannelDepth[23 + offset] = 0x81;
-                audioChannelDepth[31 + offset] = 0x81;
-                audioChannelDepth[7] = 0xFF;
-                audioChannelDepth[63] = 0xFF;
+                if (Math.Abs(channel) > .05 && (filledUnderneath || Math.Abs(channel) <= .1))
+                {
+                    arrayOutput[channelIndex * 8] = thickness;
+                }
+                if (Math.Abs(channel) > .1 && (filledUnderneath || Math.Abs(channel) <= .15))
+                {
+                    arrayOutput[channelIndex * 8 + 1] = thickness;
+                }
+                if (Math.Abs(channel) > .15 && (filledUnderneath || Math.Abs(channel) <= .2))
+                {
+                    arrayOutput[channelIndex * 8 + 2] = thickness;
+                }
+                if (Math.Abs(channel) > .2 && (filledUnderneath || Math.Abs(channel) <= .25))
+                {
+                    arrayOutput[channelIndex * 8 + 3] = thickness;
+                }
+                if (Math.Abs(channel) > .25 && (filledUnderneath || Math.Abs(channel) <= .3))
+                {
+                    arrayOutput[channelIndex * 8 + 4] = thickness;
+                }
+                if (Math.Abs(channel) > .3 && (filledUnderneath || Math.Abs(channel) <= .4))
+                {
+                    arrayOutput[channelIndex * 8 + 5] = thickness;
+                }
+                if (Math.Abs(channel) > .4 && (filledUnderneath || Math.Abs(channel) <= .5))
+                {
+                    arrayOutput[channelIndex * 8 + 6] = thickness;
+                }
+                if (Math.Abs(channel) > .5)
+                {
+                    arrayOutput[channelIndex * 8 + 7] = thickness;
+                }
+                channelIndex++;
             }
         }
 
-        private void AnalyzeAudioMatrix(byte[] audioChannelDepth, double leftChannel, double rightChannel)
+        private void AnimateMatrix(byte[] arrayOutput, double[] channels)
         {
-            leftChannel = Math.Abs(leftChannel);
-            rightChannel = Math.Abs(rightChannel);
-
+            channels[0] = Math.Abs(channels[0]);
+            channels[1] = Math.Abs(channels[1]);
+            channels[2] = Math.Abs(channels[2]);
+            channels[5] = Math.Abs(channels[5]);
+            channels[6] = Math.Abs(channels[6]);
+            channels[7] = Math.Abs(channels[7]);
 
             double currentLevel = .05;
-            audioChannelDepth[0] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[1] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[2] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[0] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
+            arrayOutput[8] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
+            arrayOutput[16] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
 
-            audioChannelDepth[5] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[6] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[7] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[40] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
+            arrayOutput[48] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
+            arrayOutput[56] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
 
             currentLevel = .1;
-            audioChannelDepth[8] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[9] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[10] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[1] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
+            arrayOutput[9] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
+            arrayOutput[17] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
 
-            audioChannelDepth[13] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[14] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[15] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[41] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
+            arrayOutput[49] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
+            arrayOutput[57] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
 
             currentLevel = .15;
-            audioChannelDepth[16] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[17] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[18] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[2] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
+            arrayOutput[10] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
+            arrayOutput[18] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
 
-            audioChannelDepth[21] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[22] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[23] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[42] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
+            arrayOutput[50] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
+            arrayOutput[58] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
 
             currentLevel = .2;
-            audioChannelDepth[24] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[25] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[26] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[3] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
+            arrayOutput[11] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
+            arrayOutput[19] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
 
-            audioChannelDepth[29] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[30] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[31] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[43] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
+            arrayOutput[51] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
+            arrayOutput[59] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
 
 
             currentLevel = .25;
-            audioChannelDepth[32] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[33] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[34] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[4] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
+            arrayOutput[12] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
+            arrayOutput[20] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
 
-            audioChannelDepth[37] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[38] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[39] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[44] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
+            arrayOutput[52] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
+            arrayOutput[60] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
 
             currentLevel = .3;
-            audioChannelDepth[40] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[41] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[42] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[5] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
+            arrayOutput[13] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
+            arrayOutput[21] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
 
-            audioChannelDepth[45] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[46] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[47] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[45] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
+            arrayOutput[53] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
+            arrayOutput[61] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
 
             currentLevel = .4;
-            audioChannelDepth[48] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[49] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[50] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[6] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
+            arrayOutput[14] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
+            arrayOutput[22] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
 
-            audioChannelDepth[53] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[54] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[55] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[46] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
+            arrayOutput[54] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
+            arrayOutput[62] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
 
             currentLevel = .5;
-            audioChannelDepth[56] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[57] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[58] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[7] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
+            arrayOutput[15] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
+            arrayOutput[23] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
 
-            audioChannelDepth[61] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[62] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
-            audioChannelDepth[63] = Convert.ToByte((rightChannel > currentLevel ? 7 : 0) + (leftChannel > currentLevel ? 224 : 0));
+            arrayOutput[47] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
+            arrayOutput[55] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
+            arrayOutput[63] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
+        }
+
+        readonly int[] da_map = { // Direction Of Audio Render Channels:
+                03, 02, 01, 00, 04, 05, 06, 07,
+                11, 10, 09, 08, 12, 13, 14, 15,
+                19, 18, 17, 16, 20, 21, 22, 23,
+                27, 26, 25, 24, 28, 29, 30, 31,
+                35, 34, 33, 32, 36, 37, 38, 39,
+                43, 42, 41, 40, 44, 45, 46, 47,
+                51, 50, 49, 48, 52, 53, 54, 55,
+                59, 58, 57, 56, 60, 61, 62, 63
+            };
+        
+        private void AnimateCenteredBars(byte[] audioChannelDepth, double[] channels, byte thickness = 1)
+        {
+            int channelIndex = 0;
+            int renderIndex = 0;
+            foreach (double channel in channels)
+            {
+
+                // Negatives for Channel i:
+                if (channels[channelIndex] <= -.05 && channels[channelIndex] > -.15)
+                {
+                    audioChannelDepth[da_map[renderIndex]] = thickness;
+                } else if (channels[channelIndex] <= -.15 && channels[channelIndex] > -.25)
+                {
+                    audioChannelDepth[da_map[renderIndex + 1]] = thickness;
+                } else if (channels[channelIndex] <= -.25 && channels[channelIndex] > -.35)
+                {
+                    audioChannelDepth[da_map[renderIndex + 2]] = thickness;
+                } else if (channels[channelIndex] <= -.35)
+                {
+                    audioChannelDepth[da_map[renderIndex + 3]] = thickness;
+                }
+
+                // Positives for Channel i:
+                if (channels[channelIndex] >= .05 && channels[channelIndex] < .15)
+                {
+                    audioChannelDepth[da_map[renderIndex + 4]] = thickness;
+                } else if (channels[channelIndex] >= .15 && channels[channelIndex] < .25)
+                {
+                    audioChannelDepth[da_map[renderIndex + 5]] = thickness;
+                } else if (channels[channelIndex] >= .25 && channels[channelIndex] < .35)
+                {
+                    audioChannelDepth[da_map[renderIndex + 6]] = thickness;
+                } else if (channels[channelIndex] >= .35)
+                {
+                    audioChannelDepth[da_map[renderIndex + 7]] = thickness;
+                }
+
+                channelIndex++;
+                renderIndex += 8;
+            }
         }
 
         private void FrmMusic_FormClosing(object sender, FormClosingEventArgs e)
@@ -695,6 +393,24 @@ namespace _8x8x8_LED.Apps
         private void TrkResponsiveness_Scroll(object sender, EventArgs e)
         {
             speed = trkResponsiveness.Value;
+            lblResponsiveness.Text = "Responsiveness (" + speed + "):";
+        }
+
+        private void TrkSamples_Scroll(object sender, EventArgs e)
+        {
+            samples = trkSamples.Value;
+            lblSamples.Text = "Samples (" + samples + "):";
+            chkSyncMusic.Checked = false;
+        }
+
+        private void ChkShowSilence_CheckedChanged(object sender, EventArgs e)
+        {
+            matrixIsCleared = false;
+        }
+
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            matrixIsCleared = false;
         }
     }
 }
