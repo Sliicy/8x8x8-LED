@@ -33,6 +33,9 @@ namespace _8x8x8_LED
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainMenu));
             this.tcModes = new System.Windows.Forms.TabControl();
             this.tpSetup = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.lstApps = new System.Windows.Forms.ListBox();
             this.btnShowApp = new System.Windows.Forms.Button();
             this.grpAnimationSpeed = new System.Windows.Forms.GroupBox();
@@ -65,7 +68,6 @@ namespace _8x8x8_LED
             this.cbParity = new System.Windows.Forms.ComboBox();
             this.cbStopBits = new System.Windows.Forms.ComboBox();
             this.cbComPort = new System.Windows.Forms.ComboBox();
-            this.tpVideo = new System.Windows.Forms.TabPage();
             this.tpMarquee = new System.Windows.Forms.TabPage();
             this.lblLetterSpacing = new System.Windows.Forms.Label();
             this.trkLetterSpacing = new System.Windows.Forms.TrackBar();
@@ -87,7 +89,6 @@ namespace _8x8x8_LED
             // tcModes
             // 
             this.tcModes.Controls.Add(this.tpSetup);
-            this.tcModes.Controls.Add(this.tpVideo);
             this.tcModes.Controls.Add(this.tpMarquee);
             this.tcModes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcModes.Location = new System.Drawing.Point(0, 0);
@@ -99,6 +100,9 @@ namespace _8x8x8_LED
             // 
             // tpSetup
             // 
+            this.tpSetup.Controls.Add(this.button3);
+            this.tpSetup.Controls.Add(this.button4);
+            this.tpSetup.Controls.Add(this.button2);
             this.tpSetup.Controls.Add(this.lstApps);
             this.tpSetup.Controls.Add(this.btnShowApp);
             this.tpSetup.Controls.Add(this.grpAnimationSpeed);
@@ -113,6 +117,36 @@ namespace _8x8x8_LED
             this.tpSetup.TabIndex = 0;
             this.tpSetup.Text = "Setup";
             this.tpSetup.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(327, 494);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(138, 73);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "Setup";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(658, 509);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(138, 42);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "Gravity";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(514, 509);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(138, 42);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "Draw";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // lstApps
             // 
@@ -535,17 +569,6 @@ namespace _8x8x8_LED
             this.cbComPort.Click += new System.EventHandler(this.CbComPort_Click);
             this.cbComPort.Enter += new System.EventHandler(this.CbComPort_Click);
             // 
-            // tpVideo
-            // 
-            this.tpVideo.Location = new System.Drawing.Point(4, 33);
-            this.tpVideo.Margin = new System.Windows.Forms.Padding(6);
-            this.tpVideo.Name = "tpVideo";
-            this.tpVideo.Padding = new System.Windows.Forms.Padding(6);
-            this.tpVideo.Size = new System.Drawing.Size(1253, 575);
-            this.tpVideo.TabIndex = 4;
-            this.tpVideo.Text = "Video";
-            this.tpVideo.UseVisualStyleBackColor = true;
-            // 
             // tpMarquee
             // 
             this.tpMarquee.Controls.Add(this.lblLetterSpacing);
@@ -643,7 +666,6 @@ namespace _8x8x8_LED
         private System.Windows.Forms.Label lblComPort;
         private System.Windows.Forms.ComboBox cbBaudRate;
         private System.Windows.Forms.ComboBox cbComPort;
-        private System.Windows.Forms.TabPage tpVideo;
         private System.Windows.Forms.TabPage tpMarquee;
         private System.Windows.Forms.NumericUpDown nudDataBits;
         private System.Windows.Forms.Label lblDatabits;
@@ -677,6 +699,9 @@ namespace _8x8x8_LED
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnShowApp;
         private System.Windows.Forms.ListBox lstApps;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }
 

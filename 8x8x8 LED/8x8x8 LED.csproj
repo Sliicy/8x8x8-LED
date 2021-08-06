@@ -226,6 +226,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Cube.cs" />
+    <Compile Include="Model\Direction.cs" />
+    <Compile Include="Model\Position.cs" />
     <Compile Include="View\Music.cs">
       <SubType>Form</SubType>
     </Compile>

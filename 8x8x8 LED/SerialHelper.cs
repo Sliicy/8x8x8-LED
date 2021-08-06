@@ -29,7 +29,7 @@ namespace _8x8x8_LED
                 dataPacket[0] = HEADER;
 
                 // Copy payload:
-                for (int i = 1; i < dataPacket.Length - 1; i++)
+                for (int i = 1; i < dataPacket.Length; i++)
                 {
                     dataPacket[i] = payload[i - 1];
                 }
@@ -37,23 +37,6 @@ namespace _8x8x8_LED
                 // Send bytes:
                 serialPort.Write(dataPacket, 0, dataPacket.Length);
             }
-        }
-
-        public static void Send(SerialPort serialPort, Cube cube)
-        {
-            byte[] payload = new byte[64];
-
-            int i = 0;
-            for (int z = 0; z < 8; z++)
-            {
-                for (int y = 0; y < 8; y++)
-                {
-
-
-                    //payload[i] = cube.matrix[z,y,0];
-                }
-            }
-
         }
 
         private static byte[,] RotateMatrixCounterClockwise(byte[,] oldMatrix)

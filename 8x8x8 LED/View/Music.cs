@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using _8x8x8_LED.Model;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace _8x8x8_LED.Apps
     public partial class FrmMusic : Form
     {
         private readonly SerialPort serialPort;
+        private Cube cube;
 
         private int samples = 1024; // How many samples to calculate wave form from.
 
@@ -29,10 +31,11 @@ namespace _8x8x8_LED.Apps
 
         readonly IWaveIn waveIn = new WasapiLoopbackCapture();
 
-        public FrmMusic(SerialPort sp)
+        public FrmMusic(SerialPort sp, ref Cube cube)
         {
             InitializeComponent();
             serialPort = sp;
+            this.cube = cube;
         }
 
         static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] eightChannels, int samples = 8, bool mirrorRightChannelToLeft = true)
@@ -104,10 +107,18 @@ namespace _8x8x8_LED.Apps
                     AnimateMatrix(arrayOutput, eightChannels);
                 } else if (rbCenteredFloatingLines.Checked)
                 {
-                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255);
+                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, false);
                 } else if (rbCenteredFloatingDots.Checked)
                 {
-                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1);
+                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, false);
+                }
+                else if (rbCenteredSolidLines.Checked)
+                {
+                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, true);
+                }
+                else if (rbCenteredSolidDots.Checked)
+                {
+                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
                 } else if (rbShuffled.Checked)
                 {
                     if (timeUntilNextShuffledAnimation > 0)
@@ -117,7 +128,7 @@ namespace _8x8x8_LED.Apps
                     {
                         timeUntilNextShuffledAnimation = 10000;
                         Random random = new Random();
-                        previousShuffle = random.Next(1, 7);
+                        previousShuffle = random.Next(1, 9);
                     }
                     switch (previousShuffle)
                     {
@@ -137,10 +148,16 @@ namespace _8x8x8_LED.Apps
                             AnimateMatrix(arrayOutput, eightChannels);
                             break;
                         case 6:
-                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255);
+                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, false);
                             break;
                         case 7:
-                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1);
+                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, false);
+                            break;
+                        case 8:
+                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
+                            break;
+                        case 9:
+                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
                             break;
                     }
                     
@@ -149,7 +166,8 @@ namespace _8x8x8_LED.Apps
                 // Ensure that audio has activity, and the speed of detection is properly set:
                 if ((Math.Abs(eightChannels[0]) > 0.05 || Math.Abs(eightChannels[5]) > 0.05) && timeElapsed % speed == 0)
                 {
-                    SerialHelper.SendPacket(serialPort, arrayOutput);
+                    arrayOutput.CopyTo(cube.matrix, 0);
+                    SerialHelper.SendPacket(serialPort, cube.matrix);
                     matrixIsCleared = false;
                 } else
                 {
@@ -163,26 +181,31 @@ namespace _8x8x8_LED.Apps
                                 arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
                                 arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
                                 arrayOutput[48] = arrayOutput[56] = 255;
-                            } else if (rbCenteredFloatingLines.Checked)
+                            }
+                            else if (rbCenteredFloatingLines.Checked || rbCenteredSolidLines.Checked)
                             {
                                 arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
                                 arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
                                 arrayOutput[51] = arrayOutput[59] = 255;
-                            } else if (rbCenteredFloatingDots.Checked)
+                            }
+                            else if (rbCenteredFloatingDots.Checked || rbCenteredSolidDots.Checked)
                             {
                                 arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
                                 arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
                                 arrayOutput[51] = arrayOutput[59] = 1;
-                            } else if (rbMatrix.Checked)
+                            }
+                            else if (rbMatrix.Checked)
                             {
                                 arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
                                 arrayOutput[40] = arrayOutput[48] = arrayOutput[56] = 231;
-                            } else if (rbSolidDots.Checked || rbFloatingDots.Checked)
+                            }
+                            else if (rbSolidDots.Checked || rbFloatingDots.Checked)
                             {
                                 arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
                                 arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
                                 arrayOutput[48] = arrayOutput[56] = 1;
-                            } else if (rbShuffled.Checked)
+                            }
+                            else if (rbShuffled.Checked)
                             {
                                 Random random = new Random();
                                 arrayOutput[0] = Convert.ToByte(random.Next(0, 255));
@@ -195,9 +218,13 @@ namespace _8x8x8_LED.Apps
                                 arrayOutput[56] = Convert.ToByte(random.Next(0, 255));
                             }
                         }
-                        SerialHelper.SendPacket(serialPort, arrayOutput);
+
+                        arrayOutput.CopyTo(cube.matrix, 0);
+                        SerialHelper.SendPacket(serialPort, cube.matrix);
                         matrixIsCleared = true;
                     }
+
+                    
                 }
                 timeElapsed++;
             }
@@ -338,7 +365,7 @@ namespace _8x8x8_LED.Apps
                 59, 58, 57, 56, 60, 61, 62, 63
             };
         
-        private void AnimateCenteredBars(byte[] audioChannelDepth, double[] channels, byte thickness = 1)
+        private void AnimateCenteredBars(byte[] audioChannelDepth, double[] channels, byte thickness = 1, bool filledUnderneath = false)
         {
             int channelIndex = 0;
             int renderIndex = 0;
@@ -346,31 +373,37 @@ namespace _8x8x8_LED.Apps
             {
 
                 // Negatives for Channel i:
-                if (channels[channelIndex] <= -.05 && channels[channelIndex] > -.15)
+                if (channels[channelIndex] <= -.05 && (filledUnderneath || channels[channelIndex] > -.15))
                 {
                     audioChannelDepth[da_map[renderIndex]] = thickness;
-                } else if (channels[channelIndex] <= -.15 && channels[channelIndex] > -.25)
+                }
+                if (channels[channelIndex] <= -.15 && (filledUnderneath || channels[channelIndex] > -.25))
                 {
                     audioChannelDepth[da_map[renderIndex + 1]] = thickness;
-                } else if (channels[channelIndex] <= -.25 && channels[channelIndex] > -.35)
+                }
+                if (channels[channelIndex] <= -.25 && (filledUnderneath || channels[channelIndex] > -.35))
                 {
                     audioChannelDepth[da_map[renderIndex + 2]] = thickness;
-                } else if (channels[channelIndex] <= -.35)
+                }
+                if (channels[channelIndex] <= -.35)
                 {
                     audioChannelDepth[da_map[renderIndex + 3]] = thickness;
                 }
 
                 // Positives for Channel i:
-                if (channels[channelIndex] >= .05 && channels[channelIndex] < .15)
+                if (channels[channelIndex] >= .05 && (filledUnderneath || channels[channelIndex] < .15))
                 {
                     audioChannelDepth[da_map[renderIndex + 4]] = thickness;
-                } else if (channels[channelIndex] >= .15 && channels[channelIndex] < .25)
+                }
+                if (channels[channelIndex] >= .15 && (filledUnderneath || channels[channelIndex] < .25))
                 {
                     audioChannelDepth[da_map[renderIndex + 5]] = thickness;
-                } else if (channels[channelIndex] >= .25 && channels[channelIndex] < .35)
+                }
+                if (channels[channelIndex] >= .25 && (filledUnderneath || channels[channelIndex] < .35))
                 {
                     audioChannelDepth[da_map[renderIndex + 6]] = thickness;
-                } else if (channels[channelIndex] >= .35)
+                }
+                if (channels[channelIndex] >= .35)
                 {
                     audioChannelDepth[da_map[renderIndex + 7]] = thickness;
                 }

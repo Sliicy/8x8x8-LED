@@ -26,9 +26,9 @@ namespace _8x8x8_LED
 
         public readonly SerialPort serialPort = new SerialPort();
 
-        public Cube cube = new Cube(8, 8, 8);
-
         public int animationSpeed = 100;
+
+        public Cube cube = new Cube(64);
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
@@ -258,10 +258,40 @@ namespace _8x8x8_LED
                 form = new frmImageViewer(serialPort);
             } else if (lstApps.SelectedItem.ToString() == "Music")
             {
-                form = new FrmMusic(serialPort);
+                form = new FrmMusic(serialPort, ref cube);
             }
 
             form.Show();
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            cube.Shift(Direction.Leftwards, true, 0);
+            SerialHelper.SendPacket(serialPort, cube.matrix);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            cube.matrix[0] = 129;
+            cube.matrix[1] = 1;
+            cube.matrix[2] = 2;
+            cube.matrix[3] = 4;
+            cube.matrix[6] = 48;
+            cube.matrix[8] = 48;
+            cube.matrix[16] = 48;
+            cube.matrix[24] = 78;
+            cube.matrix[17] = 68;
+            cube.matrix[33] = 14;
+            cube.matrix[63] = 88;
+            cube.matrix[56] = 254;
+            cube.matrix[57] = 255;
+            cube.matrix[62] = 5;
+            SerialHelper.SendPacket(serialPort, cube.matrix, true);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            cube.Shift(Direction.Downwards, false, 0);
+            SerialHelper.SendPacket(serialPort, cube.matrix);
         }
     }
 }
