@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Orientation = _8x8x8_LED.Model.Orientation;
 
 namespace _8x8x8_LED
 {
@@ -255,7 +256,7 @@ namespace _8x8x8_LED
             Form form = new Form();
             if (lstApps.SelectedItem.ToString() == "Image Viewer")
             {
-                form = new frmImageViewer(serialPort);
+                form = new FrmImageViewer(serialPort, cube);
             } else if (lstApps.SelectedItem.ToString() == "Music")
             {
                 form = new FrmMusic(serialPort, ref cube);
@@ -265,33 +266,38 @@ namespace _8x8x8_LED
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            cube.Shift(Direction.Leftwards, true, 0);
+            //cube.Flip(Axis.Z);
+            cube.Rotate(Orientation.ClockwiseZ, 0);
             SerialHelper.SendPacket(serialPort, cube.matrix);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            cube.matrix[0] = 129;
-            cube.matrix[1] = 1;
-            cube.matrix[2] = 2;
-            cube.matrix[3] = 4;
-            cube.matrix[6] = 48;
-            cube.matrix[8] = 48;
-            cube.matrix[16] = 48;
-            cube.matrix[24] = 78;
-            cube.matrix[17] = 68;
-            cube.matrix[33] = 14;
-            cube.matrix[63] = 88;
-            cube.matrix[56] = 254;
-            cube.matrix[57] = 255;
-            cube.matrix[62] = 5;
-            SerialHelper.SendPacket(serialPort, cube.matrix, true);
-        }
+            cube.matrix[0] = 1;
+            cube.matrix[9] = 2;
+            cube.matrix[18] = 4;
+            cube.matrix[27] = 8;
+            cube.matrix[36] = 16;
+            cube.matrix[45] = 32;
+            cube.matrix[54] = 64;
+            cube.matrix[63] = 128;
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            cube.Shift(Direction.Downwards, false, 0);
-            SerialHelper.SendPacket(serialPort, cube.matrix);
+            cube.matrix[3] = 8;
+            cube.matrix[11] = 8;
+            cube.matrix[19] = 8;
+
+            cube.matrix[24] = 8;
+            cube.matrix[25] = 8;
+            cube.matrix[26] = 8;
+
+
+            //cube.matrix[17] = 68;
+            //cube.matrix[33] = 14;
+            //cube.matrix[63] = 88;
+            //cube.matrix[56] = 254;
+            //cube.matrix[57] = 255;
+            //cube.matrix[62] = 5;
+            SerialHelper.SendPacket(serialPort, cube.matrix, true);
         }
     }
 }

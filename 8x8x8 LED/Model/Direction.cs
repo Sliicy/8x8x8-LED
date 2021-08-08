@@ -6,7 +6,7 @@
         Downwards,
         Leftwards,
         Rightwards,
-        Frontwards,
+        Forwards,
         Backwards,
     }
 }

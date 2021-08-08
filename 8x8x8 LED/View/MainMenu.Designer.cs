@@ -34,7 +34,6 @@ namespace _8x8x8_LED
             this.tcModes = new System.Windows.Forms.TabControl();
             this.tpSetup = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.lstApps = new System.Windows.Forms.ListBox();
             this.btnShowApp = new System.Windows.Forms.Button();
@@ -101,7 +100,6 @@ namespace _8x8x8_LED
             // tpSetup
             // 
             this.tpSetup.Controls.Add(this.button3);
-            this.tpSetup.Controls.Add(this.button4);
             this.tpSetup.Controls.Add(this.button2);
             this.tpSetup.Controls.Add(this.lstApps);
             this.tpSetup.Controls.Add(this.btnShowApp);
@@ -127,16 +125,6 @@ namespace _8x8x8_LED
             this.button3.Text = "Setup";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(658, 509);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(138, 42);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "Gravity";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button2
             // 
@@ -701,7 +689,6 @@ namespace _8x8x8_LED
         private System.Windows.Forms.ListBox lstApps;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
     }
 }
 

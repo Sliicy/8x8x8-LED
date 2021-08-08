@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace _8x8x8_LED.Model
 {
+    [Serializable]
     public class Cube
     {
 
@@ -23,16 +24,16 @@ namespace _8x8x8_LED.Model
         // 01, 09, 17, 25, 33, 41, 49, 57,
         // 00, 08, 16, 24, 32, 40, 48, 56,
 
-        // Lighting up back-left-bottom LED:
+        // Lighting up the back bottom-left LED:
         // matrix[0] = 1
 
-        // Lighting up back-left-top LED:
+        // Lighting up the back top-left LED:
         // matrix[7] = 1
 
-        // Lighting up entire row-right-top LED:
+        // Lighting up entire top-right row LED:
         // matrix[63] = 255
 
-        // Lighting up front-right-top LED:
+        // Lighting up the front top-right LED:
         // matrix[56] = 128
 
 
@@ -40,9 +41,6 @@ namespace _8x8x8_LED.Model
         {
             matrix = new byte[size];
         }
-
-        
-
 
         public void Set(byte[] newMatrix)
         {
@@ -59,10 +57,18 @@ namespace _8x8x8_LED.Model
             SerialHelper.SendPacket(serialPort, matrix);
         }
 
-        public static Position CoordinatesAt(bool vertical, int coordinates)
+        /// <summary>
+        /// Returns where a specific point is located relative to the cube.
+        /// Valid Positions are Top, Bottom, Left, and Right.
+        /// Coordinates represents a number from 0 - 63.
+        /// Axis indicates which axis to analyze.
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <param name="vertical"></param>
+        /// <returns></returns>
+        public static Position CoordinatesAt(int coordinates, Axis axis)
         {
-
-            if (vertical = true)
+            if (axis == Axis.Z)
             {
                 if (coordinates == 0 ||
                 coordinates == 8 ||
@@ -86,7 +92,6 @@ namespace _8x8x8_LED.Model
                 {
                     return Position.Top;
                 }
-                
             } else {
                 if (coordinates == 0 ||
                 coordinates == 1 ||
@@ -99,14 +104,14 @@ namespace _8x8x8_LED.Model
                 {
                     return Position.Left;
                 }
-                else if (coordinates == 7 ||
-                    coordinates == 63 ||
-                    coordinates == 62 ||
-                    coordinates == 61 ||
-                    coordinates == 60 ||
-                    coordinates == 59 ||
+                else if (coordinates == 56 ||
+                    coordinates == 57 ||
                     coordinates == 58 ||
-                    coordinates == 57)
+                    coordinates == 59 ||
+                    coordinates == 60 ||
+                    coordinates == 61 ||
+                    coordinates == 62 ||
+                    coordinates == 63)
                 {
                     return Position.Right;
                 }
@@ -114,15 +119,18 @@ namespace _8x8x8_LED.Model
             return Position.None;
         }
 
+        /// <summary>
+        /// Shifts all points on the cube a direction.
+        /// Direction is the direction to shift to.
+        /// Looping indicates if the points on the edge should "teleport" to the other side.
+        /// Iterations is how many times to perform the shift.
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="looping"></param>
+        /// <param name="iterations"></param>
         public void Shift(Direction direction, bool looping = false, int iterations = 0)
         {
             byte[] output = new byte[matrix.Length];
-
-            
-
-            
-
-
             switch (direction)
             {
                 case Direction.Upwards:
@@ -132,7 +140,7 @@ namespace _8x8x8_LED.Model
                         {
                             if (looping)
                             {
-                                if (CoordinatesAt(true, y + z) == Position.Bottom)
+                                if (CoordinatesAt(y + z, Axis.Z) == Position.Bottom)
                                 {
                                     output[y + z] = matrix[y + z + 7];
                                 } else
@@ -142,7 +150,7 @@ namespace _8x8x8_LED.Model
                             }
                             else
                             {
-                                if (CoordinatesAt(true, y + z) != Position.Bottom)
+                                if (CoordinatesAt(y + z, Axis.Z) != Position.Bottom)
                                 {
                                     output[y + z] = matrix[(y + z) - 1];
                                 }
@@ -157,82 +165,79 @@ namespace _8x8x8_LED.Model
                         {
                             if (looping)
                             {
-                                if (CoordinatesAt(true, y + z) == Position.Top)
+                                if (CoordinatesAt(y + z, Axis.Z) == Position.Top)
                                 {
                                     output[y + z] = matrix[y + z - 7];
                                 }
                                 else
                                 {
-                                    output[y + z] = matrix[(y + z) + 1];
+                                    output[y + z] = matrix[y + z + 1];
                                 }
                             }
                             else
                             {
-                                if (CoordinatesAt(true, y + z) != Position.Top)
+                                if (CoordinatesAt(y + z, Axis.Z) != Position.Top)
                                 {
-                                    output[y + z] = matrix[(y + z) + 1];
+                                    output[y + z] = matrix[y + z + 1];
                                 }
                             }
                         }
                     }
                     break;
-                case Direction.Leftwards: // TODO fix
-
-
+                case Direction.Leftwards:
                     for (int y = 0; y < 63; y += 8)
                     {
                         for (int z = 0; z < 8; z++)
                         {
                             if (looping)
                             {
-                                if (CoordinatesAt(false, y + z) == Position.Left)
+                                if (CoordinatesAt(y + z, Axis.Y) == Position.Right)
                                 {
-                                    output[y + z] = matrix[y + z + 56];
-                                }
-                                else
+                                    output[y + z] = matrix[y + z - 56];
+                                } else
                                 {
                                     output[y + z] = matrix[(y + z) + 8];
                                 }
-                            }
-                            else
+                            } else
                             {
-                                if (CoordinatesAt(false, y + z) != Position.Right)
+                                if (CoordinatesAt(y + z, Axis.Y) != Position.Right)
                                 {
                                     output[y + z] = matrix[(y + z) + 8];
                                 }
                             }
                         }
                     }
-
-
-
-
-
-
-
-
-
                     break;
                 case Direction.Rightwards:
-
-                    break;
-                case Direction.Frontwards:
-                    for (int y = 0; y < 64; y++)
+                    for (int y = 0; y < 63; y += 8)
                     {
-                        if (looping)
+                        for (int z = 0; z < 8; z++)
                         {
-                            // TODO: Figure out forward looping
-
-                            if (output[y] - 128 > 0)
+                            if (looping)
                             {
-                                output[y] = Convert.ToByte(((matrix[y] - 127) / 2) % 256);
+                                if (CoordinatesAt(y + z, Axis.Y) == Position.Left)
+                                {
+                                    output[y + z] = matrix[y + z + 56];
+                                } else
+                                {
+                                    output[y + z] = matrix[(y + z) - 8];
+                                }
                             } else
                             {
-                                output[y] = Convert.ToByte((matrix[y] / 2) % 256);
+                                if (CoordinatesAt(y + z, Axis.Y) != Position.Left)
+                                {
+                                    output[y + z] = matrix[(y + z) - 8];
+                                }
                             }
-
-
-                            
+                        }
+                    }
+                    break;
+                case Direction.Forwards:
+                    for (int y = 0; y < 64; y++)
+                    {
+                        if (looping && matrix[y] % 2 != 0)
+                        {
+                            output[y] = Convert.ToByte(((matrix[y] - 1) / 2 + 128) % 256);
                         }
                         else
                         {
@@ -243,9 +248,9 @@ namespace _8x8x8_LED.Model
                 case Direction.Backwards:
                     for (int y = 0; y < 64; y++)
                     {
-                        if (looping)
+                        if (looping && matrix[y] - 128 > 0)
                         {
-                            
+                            output[y] = Convert.ToByte(((matrix[y] + 128) * 2 + 1) % 256);
                         }
                         else
                         {
@@ -254,16 +259,140 @@ namespace _8x8x8_LED.Model
                     }
                     break;
             }
+            output.CopyTo(matrix, 0);
             if (iterations > 0)
             {
-                output.CopyTo(matrix, 0);
                 Shift(direction, looping, iterations - 1);
             }
-            else
-            {
-                output.CopyTo(matrix, 0);
-            }
+        }
 
+        public void Flip(Axis axis)
+        {
+            byte[] output = new byte[matrix.Length];
+            if (axis == Axis.X)
+            {
+                throw new NotImplementedException(); // TODO
+            }
+            else if (axis == Axis.Y)
+            {
+                var array2D = new byte[8, 8];
+                int counter = 0;
+                for (int x = 0; x < 8; x++)
+                {
+                    for (int y = 0; y < 8; y++)
+                    {
+                        array2D[y, x] = matrix[counter];
+                        counter++;
+                    }
+                }
+                var output2DArray = RotateCounterClockwise(array2D);
+                counter = 0;
+                for (int x = 0; x < 8; x++)
+                {
+                    for (int y = 0; y < 8; y++)
+                    {
+                        output[counter] = output2DArray[x, y];
+                        counter++;
+                    }
+                }
+            }
+            else if (axis == Axis.Z)
+            {
+                var array2D = new byte[8, 8];
+                int counter = 63;
+                for (int y = 0; y < 8; y++)
+                {
+                    for (int x = 0; x < 8; x++)
+                    {
+                        array2D[x, y] = matrix[counter];
+                        counter--;
+                    }
+                }
+                var output2DArray = RotateCounterClockwise(array2D);
+                counter = 0;
+                for (int x = 0; x < 8; x++)
+                {
+                    for (int y = 0; y < 8; y++)
+                    {
+                        output[counter] = output2DArray[x, y];
+                        counter++;
+                    }
+                }
+            }
+            output.CopyTo(matrix, 0);
+        }
+
+        public void Rotate(Orientation orientation, int iterations = 0)
+        {
+            byte[] output = new byte[matrix.Length];
+            if (orientation == Orientation.ClockwiseX)
+            {
+                throw new NotImplementedException(); // TODO
+
+
+
+
+
+            } else if (orientation == Orientation.ClockwiseY)
+            {
+                Rotate(Orientation.CounterclockwiseY, 2 - iterations);
+                return;
+            } else if (orientation == Orientation.ClockwiseZ)
+            {
+                throw new NotImplementedException(); // TODO
+            } else if (orientation == Orientation.CounterclockwiseX)
+            {
+                throw new NotImplementedException(); // TODO
+
+
+            } else if (orientation == Orientation.CounterclockwiseY)
+            {
+                var array2D = new byte[8, 8];
+                int counter = 0;
+                for (int x = 0; x < 8; x++)
+                {
+                    for (int y = 0; y < 8; y++)
+                    {
+                        array2D[x, y] = matrix[counter];
+                        counter++;
+                    }
+                }
+                var output2DArray = RotateCounterClockwise(array2D);
+                counter = 0;
+                for (int x = 0; x < 8; x++)
+                {
+                    for (int y = 0; y < 8; y++)
+                    {
+                        output[counter] = output2DArray[x, y];
+                        counter++;
+                    }
+                }
+            } else if (orientation == Orientation.CounterclockwiseZ)
+            {
+                throw new NotImplementedException(); // TODO
+            }
+            output.CopyTo(matrix, 0);
+            if (iterations > 0)
+            {
+                Rotate(orientation, iterations - 1);
+            }
+        }
+
+        private static byte[,] RotateCounterClockwise(byte[,] oldMatrix)
+        {
+            byte[,] newMatrix = new byte[oldMatrix.GetLength(1), oldMatrix.GetLength(0)];
+            int newColumn, newRow = 0;
+            for (int oldColumn = oldMatrix.GetLength(1) - 1; oldColumn >= 0; oldColumn--)
+            {
+                newColumn = 0;
+                for (int oldRow = 0; oldRow < oldMatrix.GetLength(0); oldRow++)
+                {
+                    newMatrix[newRow, newColumn] = oldMatrix[oldRow, oldColumn];
+                    newColumn++;
+                }
+                newRow++;
+            }
+            return newMatrix;
         }
     }
 }

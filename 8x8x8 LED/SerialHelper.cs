@@ -38,44 +38,5 @@ namespace _8x8x8_LED
                 serialPort.Write(dataPacket, 0, dataPacket.Length);
             }
         }
-
-        private static byte[,] RotateMatrixCounterClockwise(byte[,] oldMatrix)
-        {
-            byte[,] newMatrix = new byte[oldMatrix.GetLength(1), oldMatrix.GetLength(0)];
-            int newColumn, newRow = 0;
-            for (int oldColumn = oldMatrix.GetLength(1) - 1; oldColumn >= 0; oldColumn--)
-            {
-                newColumn = 0;
-                for (int oldRow = 0; oldRow < oldMatrix.GetLength(0); oldRow++)
-                {
-                    newMatrix[newRow, newColumn] = oldMatrix[oldRow, oldColumn];
-                    newColumn++;
-                }
-                newRow++;
-            }
-            return newMatrix;
-        }
-
-        //var array2D = new byte[8, 8];
-        //int counter = 0;
-        //for (int x = 0; x < 8; x++)
-        //{
-        //    for (int y = 0; y < 8; y++)
-        //    {
-        //        array2D[x, y] = bytesToSend[counter];
-        //        counter++;
-        //    }
-        //}
-        //
-        //var output2DArray = RotateMatrixCounterClockwise(RotateMatrixCounterClockwise(array2D));
-        //counter = 0;
-        //for (int x = 0; x < 8; x++)
-        //{
-        //    for (int y = 0; y < 8; y++)
-        //    {
-        //        bytesToSend[counter] = output2DArray[x, y];
-        //        counter++;
-        //    }
-        //}
     }
 }

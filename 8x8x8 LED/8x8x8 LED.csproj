@@ -225,8 +225,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Axis.cs" />
     <Compile Include="Model\Cube.cs" />
     <Compile Include="Model\Direction.cs" />
+    <Compile Include="Model\Orientation.cs" />
     <Compile Include="Model\Position.cs" />
     <Compile Include="View\Music.cs">
       <SubType>Form</SubType>

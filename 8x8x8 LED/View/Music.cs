@@ -31,10 +31,10 @@ namespace _8x8x8_LED.Apps
 
         readonly IWaveIn waveIn = new WasapiLoopbackCapture();
 
-        public FrmMusic(SerialPort sp, ref Cube cube)
+        public FrmMusic(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
-            serialPort = sp;
+            this.serialPort = serialPort;
             this.cube = cube;
         }
 

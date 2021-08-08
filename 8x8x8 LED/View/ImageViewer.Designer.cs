@@ -1,7 +1,7 @@
 ﻿
 namespace _8x8x8_LED
 {
-    partial class frmImageViewer
+    partial class FrmImageViewer
     {
         /// <summary>
         /// Required designer variable.
