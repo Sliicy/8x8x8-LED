@@ -67,6 +67,7 @@
     <Reference Include="NAudio.WinMM, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.WinMM.2.0.1\lib\netstandard2.0\NAudio.WinMM.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
     </Reference>
@@ -230,6 +231,12 @@
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Model\Orientation.cs" />
     <Compile Include="Model\Position.cs" />
+    <Compile Include="View\Marquee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Marquee.Designer.cs">
+      <DependentUpon>Marquee.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Music.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +260,9 @@
     <Compile Include="SerialHelper.cs" />
     <EmbeddedResource Include="View\ImageViewer.resx">
       <DependentUpon>ImageViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Marquee.resx">
+      <DependentUpon>Marquee.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Music.resx">
       <DependentUpon>Music.cs</DependentUpon>
@@ -291,6 +301,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Characters\C.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Characters\Calibration Cube.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

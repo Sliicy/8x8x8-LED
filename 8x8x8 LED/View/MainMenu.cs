@@ -1,5 +1,6 @@
 ﻿using _8x8x8_LED.Apps;
 using _8x8x8_LED.Model;
+using _8x8x8_LED.View;
 using NAudio.Wave;
 using System;
 using System.Collections;
@@ -41,6 +42,14 @@ namespace _8x8x8_LED
             nudDataBits.Value = Properties.Settings.Default.DataBits;
             cbStopBits.SelectedIndex = Properties.Settings.Default.StopBits;
             cbParity.SelectedIndex = Properties.Settings.Default.Parity;
+
+            cbRotateX.SelectedIndex = Properties.Settings.Default.OrientationX;
+            cbRotateY.SelectedIndex = Properties.Settings.Default.OrientationY;
+            cbRotateZ.SelectedIndex = Properties.Settings.Default.OrientationZ;
+
+            chkFlipX.Checked = Properties.Settings.Default.FlippedX;
+            chkFlipY.Checked = Properties.Settings.Default.FlippedY;
+            chkFlipZ.Checked = Properties.Settings.Default.FlippedZ;
             if (chkAutoconnect.Checked) btnConnect.PerformClick();
         }
 
@@ -58,9 +67,7 @@ namespace _8x8x8_LED
             try
             {
                 if (serialPort.IsOpen)
-                {
                     serialPort.Close();
-                }
             }
             catch (Exception er)
             {
@@ -101,7 +108,8 @@ namespace _8x8x8_LED
                 {
                     MessageBox.Show(er.Message);
                 }
-            } else
+            }
+            else
             {
                 try
                 {
@@ -169,7 +177,6 @@ namespace _8x8x8_LED
         private void BtnInvertPacket_Click(object sender, EventArgs e)
         {
             string sb = "";
-
             bool ignoreFirstByte = true;
 
             foreach (string byteFound in txtBytesToSend.Text.Split(','))
@@ -193,49 +200,9 @@ namespace _8x8x8_LED
                 Close();
         }
 
-        private void BtnMarqueeAnimate_Click(object sender, EventArgs e) {
-            if (btnMarqueeAnimate.Text == "&Animate")
-            {
-                tmrAnimate.Enabled = true;
-                btnMarqueeAnimate.Text = "&Stop";
-            } else
-            {
-                tmrAnimate.Enabled = false;
-                btnMarqueeAnimate.Text = "&Animate";
-            }
-        }
-
         private void TmrAnimate_Tick(object sender, EventArgs e)
         {
-            byte[] scanner = { };
-            // IDEA: have each letter scanned vertically. Space adjustable
-
-
-            var letterMapping = new Dictionary<string, Bitmap>();
-
-
-            Bitmap canvas;
-
-            foreach (string letter in txtMarquee.Text.Split())
-            {
-                if (letterMapping.ContainsKey(letter))
-                {
-                    canvas = letterMapping[letter];
-                } else
-                {
-                    if (File.Exists(Path.Combine(Application.StartupPath, "Characters", letter + ".png")))
-                    {
-                        var stream = File.Open(Path.Combine(Application.StartupPath, "Characters", letter + ".png"), FileMode.Open);
-                        letterMapping.Add(letter, (Bitmap)Image.FromStream(stream));
-                        stream.Close();
-                    }
-                }
-
-                // Scan layer by layer and send.
-
-
-
-            }
+            
         }
 
         private void NudAnimationSpeed_ValueChanged(object sender, EventArgs e)
@@ -257,47 +224,126 @@ namespace _8x8x8_LED
             if (lstApps.SelectedItem.ToString() == "Image Viewer")
             {
                 form = new FrmImageViewer(serialPort, cube);
-            } else if (lstApps.SelectedItem.ToString() == "Music")
+            }
+            else if (lstApps.SelectedItem.ToString() == "Music")
             {
                 form = new FrmMusic(serialPort, ref cube);
+            }
+            else if (lstApps.SelectedItem.ToString() == "Marquee")
+            {
+                form = new FrmMarquee(serialPort, ref cube);
+            } else
+            {
+                return;
             }
 
             form.Show();
         }
-        private void button2_Click(object sender, EventArgs e)
+
+        private void RenderCube()
         {
-            //cube.Flip(Axis.Z);
-            cube.Rotate(Orientation.ClockwiseZ, 0);
-            SerialHelper.SendPacket(serialPort, cube.matrix);
+            if (cbRotateX.Text == "") cbRotateX.Text = "0";
+            if (cbRotateY.Text == "") cbRotateY.Text = "0";
+            if (cbRotateZ.Text == "") cbRotateZ.Text = "0";
+
+            cube.FlippedX = chkFlipX.Checked;
+            cube.FlippedY = chkFlipY.Checked;
+            cube.FlippedZ = chkFlipZ.Checked;
+            cube.OrientationX = Convert.ToInt32(cbRotateX.Text);
+            cube.OrientationY = Convert.ToInt32(cbRotateY.Text);
+            cube.OrientationZ = Convert.ToInt32(cbRotateZ.Text);
+            SerialHelper.Send(serialPort, cube);
+
+            Properties.Settings.Default.OrientationX = cbRotateX.SelectedIndex;
+            Properties.Settings.Default.OrientationY = cbRotateY.SelectedIndex;
+            Properties.Settings.Default.OrientationZ = cbRotateZ.SelectedIndex;
+
+            Properties.Settings.Default.FlippedX = chkFlipX.Checked;
+            Properties.Settings.Default.FlippedY = chkFlipY.Checked;
+            Properties.Settings.Default.FlippedZ = chkFlipZ.Checked;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void ChkFlipX_CheckedChanged(object sender, EventArgs e)
         {
-            cube.matrix[0] = 1;
-            cube.matrix[9] = 2;
-            cube.matrix[18] = 4;
-            cube.matrix[27] = 8;
-            cube.matrix[36] = 16;
-            cube.matrix[45] = 32;
-            cube.matrix[54] = 64;
-            cube.matrix[63] = 128;
+            RenderCube();
+        }
 
-            cube.matrix[3] = 8;
-            cube.matrix[11] = 8;
-            cube.matrix[19] = 8;
+        private void ChkFlipY_CheckedChanged(object sender, EventArgs e)
+        {
+            RenderCube();
+        }
 
-            cube.matrix[24] = 8;
-            cube.matrix[25] = 8;
-            cube.matrix[26] = 8;
+        private void ChkFlipZ_CheckedChanged(object sender, EventArgs e)
+        {
+            RenderCube();
+        }
 
+        private void CbRotateX_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RenderCube();
+        }
 
-            //cube.matrix[17] = 68;
-            //cube.matrix[33] = 14;
-            //cube.matrix[63] = 88;
-            //cube.matrix[56] = 254;
-            //cube.matrix[57] = 255;
-            //cube.matrix[62] = 5;
-            SerialHelper.SendPacket(serialPort, cube.matrix, true);
+        private void CbRotateY_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RenderCube();
+        }
+
+        private void CbRotateZ_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RenderCube();
+        }
+
+        private void BtnCalibrate_Click(object sender, EventArgs e)
+        {
+            cube.Clear();
+            SerialHelper.Send(serialPort, cube);
+            var d = MessageBox.Show("Please play with the settings until the next 5 messages are all describing the cube correctly." + Environment.NewLine + Environment.NewLine +
+                "Alternatively, there is a \"Calibration Cube.png\" image which can be loaded into the Image Viewer and used to calibrate the cube (make sure to use the controls found in settings for changes to stay persistent)." + Environment.NewLine + Environment.NewLine +
+                "Continue with manual calibration?", "Calibrate Cube", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (d != DialogResult.Yes) return;
+            cube.matrix[0] = 128;
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("If the LEDs are calibrated correctly, then right now, the back bottom left LED should be the only one on.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear();
+            cube.matrix[0] = 255;
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("Now, the bottom left row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear();
+            cube.matrix[0] = 128;
+            cube.matrix[8] = 128;
+            cube.matrix[16] = 128;
+            cube.matrix[24] = 128;
+            cube.matrix[32] = 128;
+            cube.matrix[40] = 128;
+            cube.matrix[48] = 128;
+            cube.matrix[56] = 128;
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("Now, the bottom back row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear();
+            cube.matrix[56] = 1;
+            cube.matrix[57] = 1;
+            cube.matrix[58] = 1;
+            cube.matrix[59] = 1;
+            cube.matrix[60] = 1;
+            cube.matrix[61] = 1;
+            cube.matrix[62] = 1;
+            cube.matrix[63] = 1;
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("Now, the right front row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear();
+            cube.matrix[7] = 255;
+            cube.matrix[15] = 255;
+            cube.matrix[23] = 255;
+            cube.matrix[31] = 255;
+            cube.matrix[39] = 255;
+            cube.matrix[47] = 255;
+            cube.matrix[55] = 255;
+            cube.matrix[63] = 255;
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("Now, the entire top section should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear();
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("If each of these message boxes were correct, then the cube is calibrated!", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

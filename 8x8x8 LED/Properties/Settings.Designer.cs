@@ -82,5 +82,77 @@ namespace _8x8x8_LED.Properties {
                 this["Parity"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int OrientationX {
+            get {
+                return ((int)(this["OrientationX"]));
+            }
+            set {
+                this["OrientationX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int OrientationY {
+            get {
+                return ((int)(this["OrientationY"]));
+            }
+            set {
+                this["OrientationY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int OrientationZ {
+            get {
+                return ((int)(this["OrientationZ"]));
+            }
+            set {
+                this["OrientationZ"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FlippedX {
+            get {
+                return ((bool)(this["FlippedX"]));
+            }
+            set {
+                this["FlippedX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FlippedY {
+            get {
+                return ((bool)(this["FlippedY"]));
+            }
+            set {
+                this["FlippedY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FlippedZ {
+            get {
+                return ((bool)(this["FlippedZ"]));
+            }
+            set {
+                this["FlippedZ"] = value;
+            }
+        }
     }
 }

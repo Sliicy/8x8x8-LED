@@ -38,5 +38,68 @@ namespace _8x8x8_LED
                 serialPort.Write(dataPacket, 0, dataPacket.Length);
             }
         }
+        public static void Send(SerialPort serialPort, Cube cube)
+        {
+            // Create a new cube, copy the matrix, and perform orientational operations:
+            Cube outputCube = new Cube(cube.matrix.Length);
+            cube.matrix.CopyTo(outputCube.matrix, 0);
+            if (cube.FlippedX)
+                outputCube.Flip(Axis.X);
+            if (cube.FlippedY)
+                outputCube.Flip(Axis.Y);
+            if (cube.FlippedZ)
+                outputCube.Flip(Axis.Z);
+
+            if (cube.OrientationX != 0)
+            {
+
+                if (cube.OrientationX == 90)
+                {
+                    outputCube.Rotate(Orientation.ClockwiseX, 0);
+                }
+                if (cube.OrientationX == 180)
+                {
+                    outputCube.Rotate(Orientation.ClockwiseX, 1);
+                }
+                if (cube.OrientationX == 270)
+                {
+                    outputCube.Rotate(Orientation.ClockwiseX, 2);
+                }
+
+            }
+                
+            if (cube.OrientationY != 0)
+            {
+                if (cube.OrientationY == 90)
+                {
+                    outputCube.Rotate(Orientation.ClockwiseY, 0);
+                }
+                if (cube.OrientationY == 180)
+                {
+                    outputCube.Rotate(Orientation.ClockwiseY, 1);
+                }
+                if (cube.OrientationY == 270)
+                {
+                    outputCube.Rotate(Orientation.ClockwiseY, 2);
+                }
+            }
+                
+            if (cube.OrientationZ != 0)
+            {
+                if (cube.OrientationZ == 90)
+                {
+                    outputCube.Rotate(Orientation.ClockwiseZ, 0);
+                }
+                if (cube.OrientationZ == 180)
+                {
+                    outputCube.Rotate(Orientation.ClockwiseZ, 1);
+                }
+                if (cube.OrientationZ == 270)
+                {
+                    outputCube.Rotate(Orientation.ClockwiseZ, 2);
+                }
+            }
+            SendPacket(serialPort, outputCube.matrix);
+        }
     }
 }

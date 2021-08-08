@@ -167,7 +167,7 @@ namespace _8x8x8_LED.Apps
                 if ((Math.Abs(eightChannels[0]) > 0.05 || Math.Abs(eightChannels[5]) > 0.05) && timeElapsed % speed == 0)
                 {
                     arrayOutput.CopyTo(cube.matrix, 0);
-                    SerialHelper.SendPacket(serialPort, cube.matrix);
+                    SerialHelper.Send(serialPort, cube);
                     matrixIsCleared = false;
                 } else
                 {
@@ -220,7 +220,7 @@ namespace _8x8x8_LED.Apps
                         }
 
                         arrayOutput.CopyTo(cube.matrix, 0);
-                        SerialHelper.SendPacket(serialPort, cube.matrix);
+                        SerialHelper.Send(serialPort, cube);
                         matrixIsCleared = true;
                     }
 
@@ -444,6 +444,11 @@ namespace _8x8x8_LED.Apps
         private void RadioButton_CheckedChanged(object sender, EventArgs e)
         {
             matrixIsCleared = false;
+        }
+
+        private void FrmMusic_Load(object sender, EventArgs e)
+        {
+            chkSyncMusic.Checked = true;
         }
     }
 }

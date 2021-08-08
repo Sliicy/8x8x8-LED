@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Orientation = _8x8x8_LED.Model.Orientation;
 
 namespace _8x8x8_LED
 {
@@ -26,126 +27,29 @@ namespace _8x8x8_LED
             this.cube = cube;
         }
 
-        private void BtnUploadImage_Click(object sender, EventArgs e)
+        private void BtnAddImage_Click(object sender, EventArgs e)
         {
             DialogResult selection = picSelect.ShowDialog();
             if (selection == DialogResult.OK)
-                RenderImage2();
+                RenderImage();
         }
 
         private readonly OpenFileDialog picSelect = new OpenFileDialog()
         {
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+            InitialDirectory = Application.StartupPath,
             Multiselect = false,
             Title = "Select image to send:",
             Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.tiff) | *.bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff"
         };
 
-        private void BtnImageReload_Click(object sender, EventArgs e)
+        private void BtnRefresh_Click(object sender, EventArgs e)
         {
             if (File.Exists(picSelect.FileName))
-                RenderImage2();
-        }
-
-        private void RenderImage2()
-        {
-            // Set the image (copy the image, rename it, convert it to .png, and save it to the Template folder):
-            Bitmap b;
-            var stream = File.Open(picSelect.FileName, FileMode.Open);
-            b = (Bitmap)Image.FromStream(stream);
-            stream.Close();
-            if (b.Width != 64 || b.Height % 8 != 0)
-            {
-                MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!"); // TODO: Replace with code that shrinks image?
-                return;
-            }
-            pbImage.Image = b;
-
-            byte[] bytesToSend = new byte[64];
-
-            int i = 0;
-
-
-            for (int z = 0; z < 64; z += 8)
-            {
-                for (int y = 7; y > -1; y--)
-                {
-                    var bits = new BitArray(8);
-
-                    for (int x = 0; x < 8; x++)
-                    {
-                        if (b.GetPixel(x + z, y).B == 255 && b.GetPixel(x + z, y).B == 255 && b.GetPixel(x + z, y).B == 255)
-                        {
-                            bits[x] = false;
-                        } else
-                        {
-                            bits[x] = true;
-                        }
-                    }
-                    byte[] bytes = new byte[1];
-                    bits.CopyTo(bytes, 0);
-                    bytesToSend[i] = bytes[0];
-
-                    i++;
-                }
-            }
-
-            bytesToSend.CopyTo(cube.matrix, 0);
-            SerialHelper.SendPacket(serialPort, cube.matrix);
-            MessageBox.Show("Before");
-
-            var array2D = new byte[8, 8];
-            int counter = 0;
-            for (int x = 0; x < 8; x++)
-            {
-                for (int y = 0; y < 8; y++)
-                {
-                    array2D[y, x] = bytesToSend[counter];
-                    counter++;
-                }
-            }
-
-            var output2DArray = RotateCounterClockwise(array2D);
-            counter = 0;
-            for (int x = 0; x < 8; x++)
-            {
-                for (int y = 0; y < 8; y++)
-                {
-                    bytesToSend[counter] = output2DArray[x, y];
-                    counter++;
-                }
-            }
-
-
-
-
-            bytesToSend.CopyTo(cube.matrix, 0);
-            SerialHelper.SendPacket(serialPort, cube.matrix);
-
-
-
-        }
-
-        private static byte[,] RotateCounterClockwise(byte[,] oldMatrix)
-        {
-            byte[,] newMatrix = new byte[oldMatrix.GetLength(1), oldMatrix.GetLength(0)];
-            int newColumn, newRow = 0;
-            for (int oldColumn = oldMatrix.GetLength(1) - 1; oldColumn >= 0; oldColumn--)
-            {
-                newColumn = 0;
-                for (int oldRow = 0; oldRow < oldMatrix.GetLength(0); oldRow++)
-                {
-                    newMatrix[newRow, newColumn] = oldMatrix[oldRow, oldColumn];
-                    newColumn++;
-                }
-                newRow++;
-            }
-            return newMatrix;
+                RenderImage();
         }
 
         private void RenderImage()
         {
-            // Set the image (copy the image, rename it, convert it to .png, and save it to the Template folder):
             Bitmap b;
             var stream = File.Open(picSelect.FileName, FileMode.Open);
             b = (Bitmap)Image.FromStream(stream);
@@ -155,12 +59,11 @@ namespace _8x8x8_LED
                 MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!"); // TODO: Replace with code that shrinks image?
                 return;
             }
-            pbImage.Image = b;
+            //pbImage.Image = b;
 
             byte[] bytesToSend = new byte[64];
 
             int i = 0;
-
 
             for (int z = 0; z < 64; z += 8)
             {
@@ -186,9 +89,51 @@ namespace _8x8x8_LED
                 }
             }
 
-
             bytesToSend.CopyTo(cube.matrix, 0);
-            SerialHelper.SendPacket(serialPort, cube.matrix);
+            cube.Rotate(Orientation.ClockwiseZ);
+            SerialHelper.Send(serialPort, cube);
+        }
+
+        private void BtnClickOperation_Click(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+
+            if (b == btnFlipX)
+                cube.Flip(Axis.X);
+            if (b == btnFlipY)
+                cube.Flip(Axis.Y);
+            if (b == btnFlipZ)
+                cube.Flip(Axis.Z);
+
+            if (b == btnShiftUpwards)
+                cube.Shift(Direction.Upwards, chkLoop.Checked);
+            if (b == btnShiftDownwards)
+                cube.Shift(Direction.Downwards, chkLoop.Checked);
+            if (b == btnShiftLeftwards)
+                cube.Shift(Direction.Leftwards, chkLoop.Checked);
+            if (b == btnShiftRightwards)
+                cube.Shift(Direction.Rightwards, chkLoop.Checked);
+            if (b == btnShiftForwards)
+                cube.Shift(Direction.Forwards, chkLoop.Checked);
+            if (b == btnShiftBackwards)
+                cube.Shift(Direction.Backwards, chkLoop.Checked);
+
+            if (b == btnRotateXClock)
+                cube.Rotate(Orientation.ClockwiseX);
+            if (b == btnRotateYClock)
+                cube.Rotate(Orientation.ClockwiseY);
+            if (b == btnRotateZClock)
+                cube.Rotate(Orientation.ClockwiseZ);
+
+            if (b == btnRotateXCounter)
+                cube.Rotate(Orientation.CounterclockwiseX);
+            if (b == btnRotateYCounter)
+                cube.Rotate(Orientation.CounterclockwiseY);
+            if (b == btnRotateZCounter)
+                cube.Rotate(Orientation.CounterclockwiseZ);
+
+            SerialHelper.Send(serialPort, cube);
+            //SerialHelper.SendPacket(serialPort, cube.matrix);
         }
     }
 }

@@ -36,6 +36,18 @@ namespace _8x8x8_LED.Model
         // Lighting up the front top-right LED:
         // matrix[56] = 128
 
+        /// <summary>
+        /// Represents the current state of the cube (is it rotated, flipped, etc).
+        /// -1 represents the cube not being modified.
+        /// </summary>
+        public int OrientationX = 0;
+        public int OrientationY = 0;
+        public int OrientationZ = 0;
+
+        public bool FlippedX = false;
+        public bool FlippedY = false;
+        public bool FlippedZ = false;
+
 
         public Cube(int size)
         {
@@ -57,6 +69,12 @@ namespace _8x8x8_LED.Model
             SerialHelper.SendPacket(serialPort, matrix);
         }
 
+        public void Clear()
+        {
+            for (int i = 0; i < matrix.Length; i++)
+                matrix[i] = 0;
+        }
+
         /// <summary>
         /// Returns where a specific point is located relative to the cube.
         /// Valid Positions are Top, Bottom, Left, and Right.
@@ -66,7 +84,7 @@ namespace _8x8x8_LED.Model
         /// <param name="coordinates"></param>
         /// <param name="vertical"></param>
         /// <returns></returns>
-        public static Position CoordinatesAt(int coordinates, Axis axis)
+        private static Position CoordinatesAt(int coordinates, Axis axis)
         {
             if (axis == Axis.Z)
             {
@@ -266,12 +284,123 @@ namespace _8x8x8_LED.Model
             }
         }
 
+        /// <summary>
+        /// Returns a shifted array.
+        /// </summary>
+        /// <param name="cube"></param>
+        /// <param name="direction"></param>
+        /// <param name="looping"></param>
+        /// <param name="iterations"></param>
+        /// <returns></returns>
+        public static byte[] Shifted(Cube cube, Direction direction, bool looping = false, int iterations = 0)
+        {
+            cube.Shift(direction, looping, iterations);
+            return cube.matrix;
+        }
+
+        /// <summary>
+        /// Extrapolates all bases that make up the number (18 becomes 16, 2. 27 becomes 16, 8, 2, 1)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static List<int> BasesFromNumber(int input)
+        {
+            List<int> output = new List<int>();
+            if (input - 128 >= 0)
+            {
+                output.Add(128);
+                input -= 128;
+            }
+            if (input - 64 >= 0)
+            {
+                output.Add(64);
+                input -= 64;
+            }
+            if (input - 32 >= 0)
+            {
+                output.Add(32);
+                input -= 32;
+            }
+            if (input - 16 >= 0)
+            {
+                output.Add(16);
+                input -= 16;
+            }
+            if (input - 8 >= 0)
+            {
+                output.Add(8);
+                input -= 8;
+            }
+            if (input - 4 >= 0)
+            {
+                output.Add(4);
+                input -= 4;
+            }
+            if (input - 2 >= 0)
+            {
+                output.Add(2);
+                input -= 2;
+            }
+            if (input - 1 >= 0)
+            {
+                output.Add(1);
+                input -= 1;
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Flips the cube along the X, Y, or Z Axis.
+        /// </summary>
+        /// <param name="axis"></param>
         public void Flip(Axis axis)
         {
             byte[] output = new byte[matrix.Length];
             if (axis == Axis.X)
             {
-                throw new NotImplementedException(); // TODO
+                for (int i = 0; i < matrix.Length; i++)
+                {
+                    var inputComposition = BasesFromNumber(matrix[i]);
+                    var outputComposition = new List<int>();
+                    if (inputComposition.Contains(1))
+                    {
+                        outputComposition.Add(128);
+                    }
+                    if (inputComposition.Contains(2))
+                    {
+                        outputComposition.Add(64);
+                    }
+                    if (inputComposition.Contains(4))
+                    {
+                        outputComposition.Add(32);
+                    }
+                    if (inputComposition.Contains(8))
+                    {
+                        outputComposition.Add(16);
+                    }
+                    if (inputComposition.Contains(16))
+                    {
+                        outputComposition.Add(8);
+                    }
+                    if (inputComposition.Contains(32))
+                    {
+                        outputComposition.Add(4);
+                    }
+                    if (inputComposition.Contains(64))
+                    {
+                        outputComposition.Add(2);
+                    }
+                    if (inputComposition.Contains(128))
+                    {
+                        outputComposition.Add(1);
+                    }
+
+                    foreach (int number in outputComposition)
+                    {
+                        output[i] += Convert.ToByte(number);
+                    }
+                }
             }
             else if (axis == Axis.Y)
             {
@@ -322,29 +451,91 @@ namespace _8x8x8_LED.Model
             output.CopyTo(matrix, 0);
         }
 
+        /// <summary>
+        /// Returns a flipped array.
+        /// </summary>
+        /// <param name="cube"></param>
+        /// <param name="axis"></param>
+        public static byte[] Flipped(Cube cube, Axis axis)
+        {
+            cube.Flip(axis);
+            return cube.matrix;
+        }
+
+        /// <summary>
+        /// Rotate the points on the cube by the X, Y, or Z axis.
+        /// Orientation is the direction (clockwise, counterclockwise).
+        /// Iterations are how many times to rotate it.
+        /// </summary>
+        /// <param name="orientation"></param>
+        /// <param name="iterations"></param>
         public void Rotate(Orientation orientation, int iterations = 0)
         {
             byte[] output = new byte[matrix.Length];
             if (orientation == Orientation.ClockwiseX)
             {
-                throw new NotImplementedException(); // TODO
-
-
-
-
-
+                int x = 1;
+                int counter = 0;
+                for (int i = 0; i < matrix.Length; i++)
+                {
+                    if (BasesFromNumber(matrix[i]).Contains(1))
+                        output[counter + 7] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(2))
+                        output[counter + 6] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(4))
+                        output[counter + 5] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(8))
+                        output[counter + 4] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(16))
+                        output[counter + 3] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(32))
+                        output[counter + 2] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(64))
+                        output[counter + 1] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(128))
+                        output[counter + 0] += Convert.ToByte(x);
+                    x *= 2;
+                    if (x == 256)
+                    {
+                        x = 1;
+                        counter += 8;
+                    }
+                }
             } else if (orientation == Orientation.ClockwiseY)
             {
                 Rotate(Orientation.CounterclockwiseY, 2 - iterations);
                 return;
             } else if (orientation == Orientation.ClockwiseZ)
             {
-                throw new NotImplementedException(); // TODO
+                int x = 128;
+                int counter = 0;
+                for (int i = 0; i < matrix.Length; i++)
+                {
+                    if (BasesFromNumber(matrix[i]).Contains(128))
+                        output[56 + i % 8] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(64))
+                        output[48 + i % 8] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(32))
+                        output[40 + i % 8] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(16))
+                        output[32 + i % 8] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(8))
+                        output[24 + i % 8] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(4))
+                        output[16 + i % 8] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(2))
+                        output[8 + i % 8] += Convert.ToByte(x);
+                    if (BasesFromNumber(matrix[i]).Contains(1))
+                        output[0 + i % 8] += Convert.ToByte(x);
+
+                    counter++;
+                    if (counter % 8 == 0)
+                        x = x / 2;
+                }
             } else if (orientation == Orientation.CounterclockwiseX)
             {
-                throw new NotImplementedException(); // TODO
-
-
+                Rotate(Orientation.ClockwiseX, 2 - iterations);
+                return;
             } else if (orientation == Orientation.CounterclockwiseY)
             {
                 var array2D = new byte[8, 8];
@@ -369,7 +560,9 @@ namespace _8x8x8_LED.Model
                 }
             } else if (orientation == Orientation.CounterclockwiseZ)
             {
-                throw new NotImplementedException(); // TODO
+                Rotate(Orientation.ClockwiseZ, 2 - iterations);
+                return;
+
             }
             output.CopyTo(matrix, 0);
             if (iterations > 0)
@@ -378,6 +571,24 @@ namespace _8x8x8_LED.Model
             }
         }
 
+        /// <summary>
+        /// Returns a rotated array.
+        /// </summary>
+        /// <param name="cube"></param>
+        /// <param name="orientation"></param>
+        /// <param name="iterations"></param>
+        /// <returns></returns>
+        public static byte[] Rotated(Cube cube, Orientation orientation, int iterations = 0)
+        {
+            cube.Rotate(orientation, iterations);
+            return cube.matrix;
+        }
+
+        /// <summary>
+        /// Method used to rotate the Cube.
+        /// </summary>
+        /// <param name="oldMatrix"></param>
+        /// <returns></returns>
         private static byte[,] RotateCounterClockwise(byte[,] oldMatrix)
         {
             byte[,] newMatrix = new byte[oldMatrix.GetLength(1), oldMatrix.GetLength(0)];
