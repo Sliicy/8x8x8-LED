@@ -223,11 +223,19 @@ namespace _8x8x8_LED
             Form form = new Form();
             if (lstApps.SelectedItem.ToString() == "Image Viewer")
             {
-                form = new FrmImageViewer(serialPort, cube);
+                form = new FrmImageViewer(serialPort, ref cube);
+            }
+            else if (lstApps.SelectedItem.ToString() == "Video")
+            {
+                form = new FrmVideo(serialPort, ref cube);
             }
             else if (lstApps.SelectedItem.ToString() == "Music")
             {
                 form = new FrmMusic(serialPort, ref cube);
+            }
+            else if (lstApps.SelectedItem.ToString() == "Pong")
+            {
+                form = new FrmPong(serialPort, ref cube);
             }
             else if (lstApps.SelectedItem.ToString() == "Marquee")
             {

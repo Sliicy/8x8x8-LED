@@ -20,7 +20,7 @@ namespace _8x8x8_LED
         private readonly SerialPort serialPort;
         private Cube cube;
 
-        public FrmImageViewer(SerialPort serialPort, Cube cube)
+        public FrmImageViewer(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -31,7 +31,7 @@ namespace _8x8x8_LED
         {
             DialogResult selection = picSelect.ShowDialog();
             if (selection == DialogResult.OK)
-                RenderImage();
+                RenderImage(picSelect.FileName);
         }
 
         private readonly OpenFileDialog picSelect = new OpenFileDialog()
@@ -45,18 +45,18 @@ namespace _8x8x8_LED
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
             if (File.Exists(picSelect.FileName))
-                RenderImage();
+                RenderImage(picSelect.FileName);
         }
 
-        private void RenderImage()
+        private void RenderImage(string path)
         {
             Bitmap b;
-            var stream = File.Open(picSelect.FileName, FileMode.Open);
+            var stream = File.Open(path, FileMode.Open);
             b = (Bitmap)Image.FromStream(stream);
             stream.Close();
             if (b.Width != 64 || b.Height % 8 != 0)
             {
-                MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!"); // TODO: Replace with code that shrinks image?
+                MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             //pbImage.Image = b;
@@ -133,7 +133,6 @@ namespace _8x8x8_LED
                 cube.Rotate(Orientation.CounterclockwiseZ);
 
             SerialHelper.Send(serialPort, cube);
-            //SerialHelper.SendPacket(serialPort, cube.matrix);
         }
     }
 }

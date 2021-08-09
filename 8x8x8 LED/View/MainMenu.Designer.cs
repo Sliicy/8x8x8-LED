@@ -85,6 +85,7 @@ namespace _8x8x8_LED
             "Video",
             "Tetris",
             "Snake",
+            "Pong",
             "Game of Life"});
             this.lstApps.Location = new System.Drawing.Point(29, 37);
             this.lstApps.Name = "lstApps";

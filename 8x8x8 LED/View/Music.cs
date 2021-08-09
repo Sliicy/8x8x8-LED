@@ -423,12 +423,6 @@ namespace _8x8x8_LED.Apps
             }
         }
 
-        private void TrkResponsiveness_Scroll(object sender, EventArgs e)
-        {
-            speed = trkResponsiveness.Value;
-            lblResponsiveness.Text = "Responsiveness (" + speed + "):";
-        }
-
         private void TrkSamples_Scroll(object sender, EventArgs e)
         {
             samples = trkSamples.Value;
@@ -449,6 +443,12 @@ namespace _8x8x8_LED.Apps
         private void FrmMusic_Load(object sender, EventArgs e)
         {
             chkSyncMusic.Checked = true;
+            cbResponsiveness.SelectedIndex = 0;
+        }
+
+        private void CbResponsiveness_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            speed = int.Parse(cbResponsiveness.SelectedItem.ToString());
         }
     }
 }

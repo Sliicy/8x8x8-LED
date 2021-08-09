@@ -47,11 +47,10 @@ namespace _8x8x8_LED.Apps
             this.chkMirrored = new System.Windows.Forms.CheckBox();
             this.chkShowSilence = new System.Windows.Forms.CheckBox();
             this.lblResponsiveness = new System.Windows.Forms.Label();
-            this.trkResponsiveness = new System.Windows.Forms.TrackBar();
             this.grpSettings = new System.Windows.Forms.GroupBox();
+            this.cbResponsiveness = new System.Windows.Forms.ComboBox();
             this.grpMusicStyle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSamples)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkResponsiveness)).BeginInit();
             this.grpSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +58,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.chkSyncMusic.AutoSize = true;
             this.chkSyncMusic.Location = new System.Drawing.Point(9, 31);
-            this.chkSyncMusic.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkSyncMusic.Margin = new System.Windows.Forms.Padding(6);
             this.chkSyncMusic.Name = "chkSyncMusic";
             this.chkSyncMusic.Size = new System.Drawing.Size(126, 28);
             this.chkSyncMusic.TabIndex = 1;
@@ -76,7 +75,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.rbFloatingLines.AutoSize = true;
             this.rbFloatingLines.Location = new System.Drawing.Point(12, 34);
-            this.rbFloatingLines.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbFloatingLines.Margin = new System.Windows.Forms.Padding(6);
             this.rbFloatingLines.Name = "rbFloatingLines";
             this.rbFloatingLines.Size = new System.Drawing.Size(145, 28);
             this.rbFloatingLines.TabIndex = 9;
@@ -96,10 +95,10 @@ namespace _8x8x8_LED.Apps
             this.grpMusicStyle.Controls.Add(this.rbSolidLines);
             this.grpMusicStyle.Controls.Add(this.rbFloatingDots);
             this.grpMusicStyle.Controls.Add(this.rbFloatingLines);
-            this.grpMusicStyle.Location = new System.Drawing.Point(580, 15);
-            this.grpMusicStyle.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.grpMusicStyle.Location = new System.Drawing.Point(493, 15);
+            this.grpMusicStyle.Margin = new System.Windows.Forms.Padding(6);
             this.grpMusicStyle.Name = "grpMusicStyle";
-            this.grpMusicStyle.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.grpMusicStyle.Padding = new System.Windows.Forms.Padding(6);
             this.grpMusicStyle.Size = new System.Drawing.Size(254, 438);
             this.grpMusicStyle.TabIndex = 8;
             this.grpMusicStyle.TabStop = false;
@@ -109,7 +108,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.rbShuffled.AutoSize = true;
             this.rbShuffled.Location = new System.Drawing.Point(12, 394);
-            this.rbShuffled.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbShuffled.Margin = new System.Windows.Forms.Padding(6);
             this.rbShuffled.Name = "rbShuffled";
             this.rbShuffled.Size = new System.Drawing.Size(96, 28);
             this.rbShuffled.TabIndex = 18;
@@ -121,7 +120,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.rbCenteredFloatingDots.AutoSize = true;
             this.rbCenteredFloatingDots.Location = new System.Drawing.Point(12, 234);
-            this.rbCenteredFloatingDots.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbCenteredFloatingDots.Margin = new System.Windows.Forms.Padding(6);
             this.rbCenteredFloatingDots.Name = "rbCenteredFloatingDots";
             this.rbCenteredFloatingDots.Size = new System.Drawing.Size(220, 28);
             this.rbCenteredFloatingDots.TabIndex = 14;
@@ -133,7 +132,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.rbCenteredSolidDots.AutoSize = true;
             this.rbCenteredSolidDots.Location = new System.Drawing.Point(12, 314);
-            this.rbCenteredSolidDots.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbCenteredSolidDots.Margin = new System.Windows.Forms.Padding(6);
             this.rbCenteredSolidDots.Name = "rbCenteredSolidDots";
             this.rbCenteredSolidDots.Size = new System.Drawing.Size(195, 28);
             this.rbCenteredSolidDots.TabIndex = 16;
@@ -146,7 +145,7 @@ namespace _8x8x8_LED.Apps
             this.rbCenteredSolidLines.AutoSize = true;
             this.rbCenteredSolidLines.Checked = true;
             this.rbCenteredSolidLines.Location = new System.Drawing.Point(12, 274);
-            this.rbCenteredSolidLines.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbCenteredSolidLines.Margin = new System.Windows.Forms.Padding(6);
             this.rbCenteredSolidLines.Name = "rbCenteredSolidLines";
             this.rbCenteredSolidLines.Size = new System.Drawing.Size(203, 28);
             this.rbCenteredSolidLines.TabIndex = 15;
@@ -159,7 +158,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.rbCenteredFloatingLines.AutoSize = true;
             this.rbCenteredFloatingLines.Location = new System.Drawing.Point(12, 194);
-            this.rbCenteredFloatingLines.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbCenteredFloatingLines.Margin = new System.Windows.Forms.Padding(6);
             this.rbCenteredFloatingLines.Name = "rbCenteredFloatingLines";
             this.rbCenteredFloatingLines.Size = new System.Drawing.Size(228, 28);
             this.rbCenteredFloatingLines.TabIndex = 13;
@@ -171,7 +170,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.rbMatrix.AutoSize = true;
             this.rbMatrix.Location = new System.Drawing.Point(12, 354);
-            this.rbMatrix.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbMatrix.Margin = new System.Windows.Forms.Padding(6);
             this.rbMatrix.Name = "rbMatrix";
             this.rbMatrix.Size = new System.Drawing.Size(78, 28);
             this.rbMatrix.TabIndex = 17;
@@ -183,7 +182,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.rbSolidDots.AutoSize = true;
             this.rbSolidDots.Location = new System.Drawing.Point(12, 154);
-            this.rbSolidDots.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbSolidDots.Margin = new System.Windows.Forms.Padding(6);
             this.rbSolidDots.Name = "rbSolidDots";
             this.rbSolidDots.Size = new System.Drawing.Size(112, 28);
             this.rbSolidDots.TabIndex = 12;
@@ -195,7 +194,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.rbSolidLines.AutoSize = true;
             this.rbSolidLines.Location = new System.Drawing.Point(12, 114);
-            this.rbSolidLines.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbSolidLines.Margin = new System.Windows.Forms.Padding(6);
             this.rbSolidLines.Name = "rbSolidLines";
             this.rbSolidLines.Size = new System.Drawing.Size(120, 28);
             this.rbSolidLines.TabIndex = 11;
@@ -207,7 +206,7 @@ namespace _8x8x8_LED.Apps
             // 
             this.rbFloatingDots.AutoSize = true;
             this.rbFloatingDots.Location = new System.Drawing.Point(12, 74);
-            this.rbFloatingDots.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rbFloatingDots.Margin = new System.Windows.Forms.Padding(6);
             this.rbFloatingDots.Name = "rbFloatingDots";
             this.rbFloatingDots.Size = new System.Drawing.Size(137, 28);
             this.rbFloatingDots.TabIndex = 10;
@@ -228,12 +227,12 @@ namespace _8x8x8_LED.Apps
             // trkSamples
             // 
             this.trkSamples.LargeChange = 8;
-            this.trkSamples.Location = new System.Drawing.Point(175, 178);
-            this.trkSamples.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.trkSamples.Location = new System.Drawing.Point(172, 180);
+            this.trkSamples.Margin = new System.Windows.Forms.Padding(6);
             this.trkSamples.Maximum = 16384;
             this.trkSamples.Minimum = 8;
             this.trkSamples.Name = "trkSamples";
-            this.trkSamples.Size = new System.Drawing.Size(280, 45);
+            this.trkSamples.Size = new System.Drawing.Size(175, 45);
             this.trkSamples.SmallChange = 8;
             this.trkSamples.TabIndex = 7;
             this.trkSamples.Value = 1024;
@@ -245,7 +244,7 @@ namespace _8x8x8_LED.Apps
             this.chkMirrored.Checked = true;
             this.chkMirrored.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkMirrored.Location = new System.Drawing.Point(9, 71);
-            this.chkMirrored.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkMirrored.Margin = new System.Windows.Forms.Padding(6);
             this.chkMirrored.Name = "chkMirrored";
             this.chkMirrored.Size = new System.Drawing.Size(155, 28);
             this.chkMirrored.TabIndex = 2;
@@ -258,7 +257,7 @@ namespace _8x8x8_LED.Apps
             this.chkShowSilence.Checked = true;
             this.chkShowSilence.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkShowSilence.Location = new System.Drawing.Point(9, 111);
-            this.chkShowSilence.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkShowSilence.Margin = new System.Windows.Forms.Padding(6);
             this.chkShowSilence.Name = "chkShowSilence";
             this.chkShowSilence.Size = new System.Drawing.Size(145, 28);
             this.chkShowSilence.TabIndex = 3;
@@ -276,43 +275,55 @@ namespace _8x8x8_LED.Apps
             this.lblResponsiveness.TabIndex = 4;
             this.lblResponsiveness.Text = "&Responsiveness:";
             // 
-            // trkResponsiveness
-            // 
-            this.trkResponsiveness.Location = new System.Drawing.Point(175, 140);
-            this.trkResponsiveness.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.trkResponsiveness.Maximum = 10000;
-            this.trkResponsiveness.Minimum = 1;
-            this.trkResponsiveness.Name = "trkResponsiveness";
-            this.trkResponsiveness.Size = new System.Drawing.Size(280, 45);
-            this.trkResponsiveness.TabIndex = 5;
-            this.trkResponsiveness.Value = 1;
-            this.trkResponsiveness.Scroll += new System.EventHandler(this.TrkResponsiveness_Scroll);
-            // 
             // grpSettings
             // 
+            this.grpSettings.Controls.Add(this.cbResponsiveness);
             this.grpSettings.Controls.Add(this.chkSyncMusic);
             this.grpSettings.Controls.Add(this.trkSamples);
             this.grpSettings.Controls.Add(this.lblSamples);
             this.grpSettings.Controls.Add(this.chkShowSilence);
             this.grpSettings.Controls.Add(this.lblResponsiveness);
-            this.grpSettings.Controls.Add(this.trkResponsiveness);
             this.grpSettings.Controls.Add(this.chkMirrored);
             this.grpSettings.Location = new System.Drawing.Point(12, 12);
             this.grpSettings.Name = "grpSettings";
-            this.grpSettings.Size = new System.Drawing.Size(559, 441);
+            this.grpSettings.Size = new System.Drawing.Size(472, 441);
             this.grpSettings.TabIndex = 0;
             this.grpSettings.TabStop = false;
             this.grpSettings.Text = "Settings";
+            // 
+            // cbResponsiveness
+            // 
+            this.cbResponsiveness.FormattingEnabled = true;
+            this.cbResponsiveness.Items.AddRange(new object[] {
+            "1",
+            "100",
+            "1000",
+            "10000",
+            "100000",
+            "200000",
+            "300000",
+            "400000",
+            "500000",
+            "600000",
+            "700000",
+            "800000",
+            "900000",
+            "1000000"});
+            this.cbResponsiveness.Location = new System.Drawing.Point(172, 142);
+            this.cbResponsiveness.Name = "cbResponsiveness";
+            this.cbResponsiveness.Size = new System.Drawing.Size(175, 32);
+            this.cbResponsiveness.TabIndex = 5;
+            this.cbResponsiveness.SelectedIndexChanged += new System.EventHandler(this.CbResponsiveness_SelectedIndexChanged);
             // 
             // FrmMusic
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(848, 463);
+            this.ClientSize = new System.Drawing.Size(758, 463);
             this.Controls.Add(this.grpSettings);
             this.Controls.Add(this.grpMusicStyle);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "FrmMusic";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Music";
@@ -321,7 +332,6 @@ namespace _8x8x8_LED.Apps
             this.grpMusicStyle.ResumeLayout(false);
             this.grpMusicStyle.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSamples)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkResponsiveness)).EndInit();
             this.grpSettings.ResumeLayout(false);
             this.grpSettings.PerformLayout();
             this.ResumeLayout(false);
@@ -348,7 +358,7 @@ namespace _8x8x8_LED.Apps
         private System.Windows.Forms.RadioButton rbCenteredSolidDots;
         private System.Windows.Forms.RadioButton rbCenteredSolidLines;
         private System.Windows.Forms.Label lblResponsiveness;
-        private System.Windows.Forms.TrackBar trkResponsiveness;
         private System.Windows.Forms.GroupBox grpSettings;
+        private System.Windows.Forms.ComboBox cbResponsiveness;
     }
 }
