@@ -31,7 +31,13 @@ namespace _8x8x8_LED
         {
             DialogResult selection = picSelect.ShowDialog();
             if (selection == DialogResult.OK)
-                RenderImage(picSelect.FileName);
+            {
+                var stream = File.Open(picSelect.FileName, FileMode.Open);
+                bitmap = (Bitmap)Image.FromStream(stream);
+                stream.Close();
+                RenderImage();
+            }
+                
         }
 
         private readonly OpenFileDialog picSelect = new OpenFileDialog()
@@ -45,21 +51,32 @@ namespace _8x8x8_LED
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
             if (File.Exists(picSelect.FileName))
-                RenderImage(picSelect.FileName);
+            {
+                var stream = File.Open(picSelect.FileName, FileMode.Open);
+                bitmap = (Bitmap)Image.FromStream(stream);
+                stream.Close();
+                RenderImage();
+            }
+                
         }
 
-        private void RenderImage(string path)
+        Bitmap bitmap;
+
+        private void RenderImage()
         {
-            Bitmap b;
-            var stream = File.Open(path, FileMode.Open);
-            b = (Bitmap)Image.FromStream(stream);
-            stream.Close();
-            if (b.Width != 64 || b.Height % 8 != 0)
+            foreach (Control c in pnlMatrix.Controls)
+            {
+                if (c is Panel)
+                {
+                    c.Dispose();
+                }
+            }
+
+            if (bitmap.Width != 64 || bitmap.Height % 8 != 0)
             {
                 MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            //pbImage.Image = b;
 
             byte[] bytesToSend = new byte[64];
 
@@ -70,10 +87,9 @@ namespace _8x8x8_LED
                 for (int y = 7; y > -1; y--)
                 {
                     var bits = new BitArray(8);
-
                     for (int x = 0; x < 8; x++)
                     {
-                        if (b.GetPixel(x + z, y).B == 255 && b.GetPixel(x + z, y).B == 255 && b.GetPixel(x + z, y).B == 255)
+                        if (bitmap.GetPixel(x + z, y).R == 255 && bitmap.GetPixel(x + z, y).G == 255 && bitmap.GetPixel(x + z, y).B == 255)
                         {
                             bits[x] = false;
                         } else
@@ -89,11 +105,103 @@ namespace _8x8x8_LED
                 }
             }
 
+
+
+
+            bytesToSend.CopyTo(cube.matrix, 0);
+            cube.Rotate(Orientation.ClockwiseZ);
+            SerialHelper.Send(serialPort, cube);
+
+            
+            for (int x = 0; x < bitmap.Width; x++)
+            {
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    Panel p = new Panel
+                    {
+                        Width = pnlMatrix.Width / 64,
+                        Height = pnlMatrix.Height / 8,
+                    };
+                    p.BackColor = Color.FromArgb(bitmap.GetPixel(x, y).ToArgb());
+                    p.Left = x * 16;
+                    p.Top = y * 16;
+                    pnlMatrix.Controls.Add(p);
+                    p.MouseEnter += new EventHandler(Panel_MouseEnter);
+                    p.MouseDown += new MouseEventHandler(Panel_MouseDown);
+
+                }
+            }
+        }
+
+        private void Panel_MouseEnter(object sender, EventArgs e)
+        {
+            var c = (Panel)sender;
+            if (ModifierKeys.HasFlag(Keys.Control))
+            {
+                c.BackColor = Color.Black;
+                bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);
+                return;
+            } else if (ModifierKeys.HasFlag(Keys.Shift))
+            {
+                c.BackColor = Color.White;
+                bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);
+                return;
+            }
+
+
+            byte[] bytesToSend = new byte[64];
+            int i = 0;
+            
+            for (int z = 0; z < 64; z += 8)
+            {
+                for (int y = 7; y > -1; y--)
+                {
+                    var bits = new BitArray(8);
+                    for (int x = 0; x < 8; x++)
+                    {
+                        if (bitmap.GetPixel(x + z, y).R == 255 && bitmap.GetPixel(x + z, y).G == 255 && bitmap.GetPixel(x + z, y).B == 255)
+                        {
+                            bits[x] = false;
+                        }
+                        else
+                        {
+                            bits[x] = true;
+                        }
+                        if (x + z == c.Left / 16 && y == c.Top / 16)
+                        {
+                            if (bits[x] == true)
+                            {
+                                bits[x] = false;
+                            } else
+                            {
+                                bits[x] = true;
+                            }
+                        }
+                    }
+                    byte[] bytes = new byte[1];
+                    bits.CopyTo(bytes, 0);
+                    bytesToSend[i] = bytes[0];
+                    i++;
+                }
+            }
             bytesToSend.CopyTo(cube.matrix, 0);
             cube.Rotate(Orientation.ClockwiseZ);
             SerialHelper.Send(serialPort, cube);
         }
+        private void Panel_MouseDown(object sender, MouseEventArgs e)
+        {
+            var c = (Panel)sender;
 
+            if (c.BackColor == Color.Black)
+            {
+                c.BackColor = Color.White;
+            }
+            else
+            {
+                c.BackColor = Color.Black;
+            }
+            bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);
+        }
         private void BtnClickOperation_Click(object sender, EventArgs e)
         {
             Button b = sender as Button;
@@ -133,6 +241,12 @@ namespace _8x8x8_LED
                 cube.Rotate(Orientation.CounterclockwiseZ);
 
             SerialHelper.Send(serialPort, cube);
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            bitmap.Save(picSelect.FileName, System.Drawing.Imaging.ImageFormat.Png);
+            RenderImage();
         }
     }
 }

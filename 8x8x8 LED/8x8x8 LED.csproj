@@ -68,6 +68,7 @@
       <HintPath>..\packages\NAudio.WinMM.2.0.1\lib\netstandard2.0\NAudio.WinMM.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
     </Reference>
