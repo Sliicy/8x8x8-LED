@@ -240,7 +240,12 @@ namespace _8x8x8_LED
             else if (lstApps.SelectedItem.ToString() == "Marquee")
             {
                 form = new FrmMarquee(serialPort, ref cube);
-            } else
+            }
+            else if (lstApps.SelectedItem.ToString() == "Space")
+            {
+                form = new Space(serialPort, ref cube);
+            }
+            else
             {
                 return;
             }

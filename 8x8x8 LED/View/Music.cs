@@ -128,7 +128,7 @@ namespace _8x8x8_LED.Apps
                     {
                         timeUntilNextShuffledAnimation = 10000;
                         Random random = new Random();
-                        previousShuffle = random.Next(1, 9);
+                        previousShuffle = random.Next(1, 10);
                     }
                     switch (previousShuffle)
                     {
@@ -208,14 +208,14 @@ namespace _8x8x8_LED.Apps
                             else if (rbShuffled.Checked)
                             {
                                 Random random = new Random();
-                                arrayOutput[0] = Convert.ToByte(random.Next(0, 255));
-                                arrayOutput[8] = Convert.ToByte(random.Next(0, 255));
-                                arrayOutput[16] = Convert.ToByte(random.Next(0, 255));
-                                arrayOutput[24] = Convert.ToByte(random.Next(0, 255));
-                                arrayOutput[32] = Convert.ToByte(random.Next(0, 255));
-                                arrayOutput[40] = Convert.ToByte(random.Next(0, 255));
-                                arrayOutput[48] = Convert.ToByte(random.Next(0, 255));
-                                arrayOutput[56] = Convert.ToByte(random.Next(0, 255));
+                                arrayOutput[0] = Convert.ToByte(random.Next(0, 256));
+                                arrayOutput[8] = Convert.ToByte(random.Next(0, 256));
+                                arrayOutput[16] = Convert.ToByte(random.Next(0, 256));
+                                arrayOutput[24] = Convert.ToByte(random.Next(0, 256));
+                                arrayOutput[32] = Convert.ToByte(random.Next(0, 256));
+                                arrayOutput[40] = Convert.ToByte(random.Next(0, 256));
+                                arrayOutput[48] = Convert.ToByte(random.Next(0, 256));
+                                arrayOutput[56] = Convert.ToByte(random.Next(0, 256));
                             }
                         }
 

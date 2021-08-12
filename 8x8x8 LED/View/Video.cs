@@ -58,7 +58,7 @@ namespace _8x8x8_LED.View
         private void RenderVideo(Bitmap b)
         {
             byte[] bytesToSend = new byte[64];
-            while (chkLooped.Checked) {
+            while (chkAnimate.Checked) {
                 for (int depth = 0; depth < b.Height; depth += 8)
                 {
                     int i = 0;
@@ -85,27 +85,23 @@ namespace _8x8x8_LED.View
                             i++;
                         }
                     }
-
-                    bytesToSend.CopyTo(cube.matrix, 0);
-                    cube.Rotate(Orientation.ClockwiseZ);
+                    if (rbLooped.Checked)
+                    {
+                        bytesToSend.CopyTo(cube.matrix, 0);
+                        cube.Rotate(Orientation.ClockwiseZ);
+                    }
+                    if (rbGravity.Checked)
+                        cube.Shift(Direction.Downwards, true, 0);
                     SerialHelper.Send(serialPort, cube);
                     System.Threading.Thread.Sleep(int.Parse(nudSpeed.Value.ToString()));
-                    if (!chkLooped.Checked) break;
+                    if (!chkAnimate.Checked) break;
                 }
             }
         }
 
         private void ChkLooped_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkLooped.Checked == false)
-            {
-                bwRenderer.CancelAsync();
-            }
-            else
-            {
-                if (!bwRenderer.IsBusy)
-                    bwRenderer.RunWorkerAsync();
-            }
+            
         }
 
         private void BwRenderer_DoWork(object sender, DoWorkEventArgs e)
@@ -117,6 +113,19 @@ namespace _8x8x8_LED.View
         private void FrmVideo_FormClosing(object sender, FormClosingEventArgs e)
         {
             bwRenderer.CancelAsync();
+        }
+
+        private void ChkAnimate_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkAnimate.Checked == false)
+            {
+                bwRenderer.CancelAsync();
+            }
+            else
+            {
+                if (!bwRenderer.IsBusy)
+                    bwRenderer.RunWorkerAsync();
+            }
         }
     }
 }

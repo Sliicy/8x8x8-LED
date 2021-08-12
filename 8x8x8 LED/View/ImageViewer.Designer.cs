@@ -53,6 +53,7 @@ namespace _8x8x8_LED
             this.pnlMatrix = new System.Windows.Forms.Panel();
             this.btnSave = new System.Windows.Forms.Button();
             this.lblHow = new System.Windows.Forms.Label();
+            this.btnSaveNew = new System.Windows.Forms.Button();
             this.grpShift.SuspendLayout();
             this.grpFlip.SuspendLayout();
             this.grpRotate.SuspendLayout();
@@ -219,7 +220,7 @@ namespace _8x8x8_LED
             this.btnFlipX.Name = "btnFlipX";
             this.btnFlipX.Size = new System.Drawing.Size(250, 42);
             this.btnFlipX.TabIndex = 4;
-            this.btnFlipX.Text = "Flip X Axis";
+            this.btnFlipX.Text = "Flip &X Axis";
             this.btnFlipX.UseVisualStyleBackColor = true;
             this.btnFlipX.Click += new System.EventHandler(this.BtnClickOperation_Click);
             // 
@@ -230,7 +231,7 @@ namespace _8x8x8_LED
             this.btnFlipY.Name = "btnFlipY";
             this.btnFlipY.Size = new System.Drawing.Size(250, 42);
             this.btnFlipY.TabIndex = 4;
-            this.btnFlipY.Text = "Flip Y Axis";
+            this.btnFlipY.Text = "Flip &Y Axis";
             this.btnFlipY.UseVisualStyleBackColor = true;
             this.btnFlipY.Click += new System.EventHandler(this.BtnClickOperation_Click);
             // 
@@ -241,7 +242,7 @@ namespace _8x8x8_LED
             this.btnFlipZ.Name = "btnFlipZ";
             this.btnFlipZ.Size = new System.Drawing.Size(250, 42);
             this.btnFlipZ.TabIndex = 4;
-            this.btnFlipZ.Text = "Flip Z Axis";
+            this.btnFlipZ.Text = "Flip &Z Axis";
             this.btnFlipZ.UseVisualStyleBackColor = true;
             this.btnFlipZ.Click += new System.EventHandler(this.BtnClickOperation_Click);
             // 
@@ -327,6 +328,17 @@ namespace _8x8x8_LED
             this.lblHow.TabIndex = 10;
             this.lblHow.Text = "Control = Draw; Shift = Erase";
             // 
+            // btnSaveNew
+            // 
+            this.btnSaveNew.Location = new System.Drawing.Point(868, 353);
+            this.btnSaveNew.Margin = new System.Windows.Forms.Padding(6);
+            this.btnSaveNew.Name = "btnSaveNew";
+            this.btnSaveNew.Size = new System.Drawing.Size(200, 42);
+            this.btnSaveNew.TabIndex = 1;
+            this.btnSaveNew.Text = "Save As &New Frame";
+            this.btnSaveNew.UseVisualStyleBackColor = true;
+            this.btnSaveNew.Click += new System.EventHandler(this.BtnSaveNew_Click);
+            // 
             // FrmImageViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -337,6 +349,7 @@ namespace _8x8x8_LED
             this.Controls.Add(this.grpRotate);
             this.Controls.Add(this.grpFlip);
             this.Controls.Add(this.grpShift);
+            this.Controls.Add(this.btnSaveNew);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnAddImage);
@@ -379,5 +392,6 @@ namespace _8x8x8_LED
         private System.Windows.Forms.Panel pnlMatrix;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label lblHow;
+        private System.Windows.Forms.Button btnSaveNew;
     }
 }

@@ -19,6 +19,7 @@ namespace _8x8x8_LED
     {
         private readonly SerialPort serialPort;
         private Cube cube;
+        private int fileNameIncrementor = 0;
 
         public FrmImageViewer(SerialPort serialPort, ref Cube cube)
         {
@@ -36,6 +37,7 @@ namespace _8x8x8_LED
                 bitmap = (Bitmap)Image.FromStream(stream);
                 stream.Close();
                 RenderImage();
+                fileNameIncrementor = 0;
             }
                 
         }
@@ -104,9 +106,6 @@ namespace _8x8x8_LED
                     i++;
                 }
             }
-
-
-
 
             bytesToSend.CopyTo(cube.matrix, 0);
             cube.Rotate(Orientation.ClockwiseZ);
@@ -247,6 +246,14 @@ namespace _8x8x8_LED
         {
             bitmap.Save(picSelect.FileName, System.Drawing.Imaging.ImageFormat.Png);
             RenderImage();
+        }
+
+        private void BtnSaveNew_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show();
+            bitmap.Save(Path.GetFileNameWithoutExtension(picSelect.FileName) + fileNameIncrementor + Path.GetExtension(picSelect.FileName), System.Drawing.Imaging.ImageFormat.Png);
+            RenderImage();
+            fileNameIncrementor++;
         }
     }
 }

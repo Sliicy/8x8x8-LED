@@ -79,14 +79,15 @@ namespace _8x8x8_LED
             this.lstApps.FormattingEnabled = true;
             this.lstApps.ItemHeight = 24;
             this.lstApps.Items.AddRange(new object[] {
-            "Image Viewer",
             "Music",
-            "Marquee",
+            "Image Viewer",
             "Video",
+            "Marquee",
             "Tetris",
             "Snake",
             "Pong",
-            "Game of Life"});
+            "Game of Life",
+            "Space"});
             this.lstApps.Location = new System.Drawing.Point(29, 37);
             this.lstApps.Name = "lstApps";
             this.lstApps.Size = new System.Drawing.Size(184, 196);
