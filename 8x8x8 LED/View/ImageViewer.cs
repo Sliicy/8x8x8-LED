@@ -18,7 +18,7 @@ namespace _8x8x8_LED
     public partial class FrmImageViewer : Form
     {
         private readonly SerialPort serialPort;
-        private Cube cube;
+        private readonly Cube cube;
         private int fileNameIncrementor = 0;
 
         public FrmImageViewer(SerialPort serialPort, ref Cube cube)

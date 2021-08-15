@@ -267,9 +267,9 @@ namespace _8x8x8_LED
             this.grpShift.Controls.Add(this.btnShiftForwards);
             this.grpShift.Controls.Add(this.btnShiftRightwards);
             this.grpShift.Controls.Add(this.btnShiftDownwards);
-            this.grpShift.Location = new System.Drawing.Point(12, 487);
+            this.grpShift.Location = new System.Drawing.Point(44, 319);
             this.grpShift.Name = "grpShift";
-            this.grpShift.Size = new System.Drawing.Size(649, 238);
+            this.grpShift.Size = new System.Drawing.Size(649, 250);
             this.grpShift.TabIndex = 6;
             this.grpShift.TabStop = false;
             this.grpShift.Text = "Shift";
@@ -303,14 +303,14 @@ namespace _8x8x8_LED
             // 
             // pnlMatrix
             // 
-            this.pnlMatrix.Location = new System.Drawing.Point(44, 164);
+            this.pnlMatrix.Location = new System.Drawing.Point(44, 97);
             this.pnlMatrix.Name = "pnlMatrix";
             this.pnlMatrix.Size = new System.Drawing.Size(1024, 128);
             this.pnlMatrix.TabIndex = 9;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(930, 299);
+            this.btnSave.Location = new System.Drawing.Point(930, 234);
             this.btnSave.Margin = new System.Windows.Forms.Padding(6);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(138, 42);
@@ -322,7 +322,7 @@ namespace _8x8x8_LED
             // lblHow
             // 
             this.lblHow.AutoSize = true;
-            this.lblHow.Location = new System.Drawing.Point(40, 308);
+            this.lblHow.Location = new System.Drawing.Point(40, 228);
             this.lblHow.Name = "lblHow";
             this.lblHow.Size = new System.Drawing.Size(249, 24);
             this.lblHow.TabIndex = 10;
@@ -330,7 +330,7 @@ namespace _8x8x8_LED
             // 
             // btnSaveNew
             // 
-            this.btnSaveNew.Location = new System.Drawing.Point(868, 353);
+            this.btnSaveNew.Location = new System.Drawing.Point(868, 288);
             this.btnSaveNew.Margin = new System.Windows.Forms.Padding(6);
             this.btnSaveNew.Name = "btnSaveNew";
             this.btnSaveNew.Size = new System.Drawing.Size(200, 42);
@@ -343,7 +343,7 @@ namespace _8x8x8_LED
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1407, 737);
+            this.ClientSize = new System.Drawing.Size(1407, 575);
             this.Controls.Add(this.lblHow);
             this.Controls.Add(this.pnlMatrix);
             this.Controls.Add(this.grpRotate);

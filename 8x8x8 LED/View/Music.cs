@@ -16,7 +16,7 @@ namespace _8x8x8_LED.Apps
     public partial class FrmMusic : Form
     {
         private readonly SerialPort serialPort;
-        private Cube cube;
+        private readonly Cube cube;
 
         private int samples = 1024; // How many samples to calculate wave form from.
 
