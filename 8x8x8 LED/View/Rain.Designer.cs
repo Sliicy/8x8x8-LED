@@ -1,7 +1,7 @@
 ﻿
 namespace _8x8x8_LED.View
 {
-    partial class Space
+    partial class FrmRain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,9 +29,7 @@ namespace _8x8x8_LED.View
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.chkAnimate = new System.Windows.Forms.CheckBox();
-            this.tmrAnimate = new System.Windows.Forms.Timer(this.components);
             this.bwAnimate = new System.ComponentModel.BackgroundWorker();
             this.lblStarCount = new System.Windows.Forms.Label();
             this.tbStarCount = new System.Windows.Forms.TrackBar();
@@ -50,8 +48,6 @@ namespace _8x8x8_LED.View
             // chkAnimate
             // 
             this.chkAnimate.AutoSize = true;
-            this.chkAnimate.Checked = true;
-            this.chkAnimate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAnimate.Location = new System.Drawing.Point(24, 24);
             this.chkAnimate.Margin = new System.Windows.Forms.Padding(6);
             this.chkAnimate.Name = "chkAnimate";
@@ -60,10 +56,6 @@ namespace _8x8x8_LED.View
             this.chkAnimate.Text = "&Animate";
             this.chkAnimate.UseVisualStyleBackColor = true;
             this.chkAnimate.CheckedChanged += new System.EventHandler(this.ChkAnimate_CheckedChanged);
-            // 
-            // tmrAnimate
-            // 
-            this.tmrAnimate.Tick += new System.EventHandler(this.TmrAnimate_Tick);
             // 
             // bwAnimate
             // 
@@ -120,7 +112,7 @@ namespace _8x8x8_LED.View
             this.cbDirectionZ.Name = "cbDirectionZ";
             this.cbDirectionZ.Size = new System.Drawing.Size(121, 32);
             this.cbDirectionZ.TabIndex = 3;
-            this.cbDirectionZ.SelectedIndexChanged += new System.EventHandler(this.cbDirectionZ_SelectedIndexChanged);
+            this.cbDirectionZ.SelectedIndexChanged += new System.EventHandler(this.CbDirectionZ_SelectedIndexChanged);
             // 
             // lblDirectionZ
             // 
@@ -152,7 +144,7 @@ namespace _8x8x8_LED.View
             this.cbDirectionY.Name = "cbDirectionY";
             this.cbDirectionY.Size = new System.Drawing.Size(121, 32);
             this.cbDirectionY.TabIndex = 3;
-            this.cbDirectionY.SelectedIndexChanged += new System.EventHandler(this.cbDirectionY_SelectedIndexChanged);
+            this.cbDirectionY.SelectedIndexChanged += new System.EventHandler(this.CbDirectionY_SelectedIndexChanged);
             // 
             // lblDirectionX
             // 
@@ -175,9 +167,9 @@ namespace _8x8x8_LED.View
             this.cbDirectionX.Name = "cbDirectionX";
             this.cbDirectionX.Size = new System.Drawing.Size(121, 32);
             this.cbDirectionX.TabIndex = 3;
-            this.cbDirectionX.SelectedIndexChanged += new System.EventHandler(this.cbDirectionX_SelectedIndexChanged);
+            this.cbDirectionX.SelectedIndexChanged += new System.EventHandler(this.CbDirectionX_SelectedIndexChanged);
             // 
-            // Space
+            // FrmRain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -195,10 +187,11 @@ namespace _8x8x8_LED.View
             this.Controls.Add(this.chkAnimate);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(6);
-            this.Name = "Space";
-            this.Text = "Space";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Space_FormClosing);
-            this.Load += new System.EventHandler(this.Space_Load);
+            this.Name = "FrmRain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Rain";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmRain_FormClosing);
+            this.Load += new System.EventHandler(this.FrmRain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tbStarCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).EndInit();
             this.ResumeLayout(false);
@@ -209,7 +202,6 @@ namespace _8x8x8_LED.View
         #endregion
 
         private System.Windows.Forms.CheckBox chkAnimate;
-        private System.Windows.Forms.Timer tmrAnimate;
         private System.ComponentModel.BackgroundWorker bwAnimate;
         private System.Windows.Forms.Label lblStarCount;
         private System.Windows.Forms.TrackBar tbStarCount;

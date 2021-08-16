@@ -33,8 +33,6 @@ namespace _8x8x8_LED
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainMenu));
             this.lstApps = new System.Windows.Forms.ListBox();
             this.btnShowApp = new System.Windows.Forms.Button();
-            this.grpAnimationSpeed = new System.Windows.Forms.GroupBox();
-            this.nudAnimationSpeed = new System.Windows.Forms.NumericUpDown();
             this.grpRotation = new System.Windows.Forms.GroupBox();
             this.btnCalibrate = new System.Windows.Forms.Button();
             this.chkFlipZ = new System.Windows.Forms.CheckBox();
@@ -65,8 +63,6 @@ namespace _8x8x8_LED
             this.cbComPort = new System.Windows.Forms.ComboBox();
             this.tmrAnimate = new System.Windows.Forms.Timer(this.components);
             this.grpOpenApp = new System.Windows.Forms.GroupBox();
-            this.grpAnimationSpeed.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudAnimationSpeed)).BeginInit();
             this.grpRotation.SuspendLayout();
             this.grpSendPacket.SuspendLayout();
             this.grpConnection.SuspendLayout();
@@ -86,55 +82,23 @@ namespace _8x8x8_LED
             "Tetris",
             "Snake",
             "Pong",
+            "Balls",
             "Game of Life",
-            "Space"});
+            "Rain"});
             this.lstApps.Location = new System.Drawing.Point(29, 37);
             this.lstApps.Name = "lstApps";
-            this.lstApps.Size = new System.Drawing.Size(184, 196);
-            this.lstApps.TabIndex = 31;
+            this.lstApps.Size = new System.Drawing.Size(184, 364);
+            this.lstApps.TabIndex = 29;
             // 
             // btnShowApp
             // 
-            this.btnShowApp.Location = new System.Drawing.Point(34, 244);
+            this.btnShowApp.Location = new System.Drawing.Point(29, 406);
             this.btnShowApp.Name = "btnShowApp";
             this.btnShowApp.Size = new System.Drawing.Size(184, 42);
-            this.btnShowApp.TabIndex = 32;
+            this.btnShowApp.TabIndex = 30;
             this.btnShowApp.Text = "&Open";
             this.btnShowApp.UseVisualStyleBackColor = true;
             this.btnShowApp.Click += new System.EventHandler(this.BtnShowApp_Click);
-            // 
-            // grpAnimationSpeed
-            // 
-            this.grpAnimationSpeed.Controls.Add(this.nudAnimationSpeed);
-            this.grpAnimationSpeed.Location = new System.Drawing.Point(920, 15);
-            this.grpAnimationSpeed.Name = "grpAnimationSpeed";
-            this.grpAnimationSpeed.Size = new System.Drawing.Size(247, 124);
-            this.grpAnimationSpeed.TabIndex = 28;
-            this.grpAnimationSpeed.TabStop = false;
-            this.grpAnimationSpeed.Text = "Animation Speed";
-            // 
-            // nudAnimationSpeed
-            // 
-            this.nudAnimationSpeed.Location = new System.Drawing.Point(29, 50);
-            this.nudAnimationSpeed.Maximum = new decimal(new int[] {
-            1000000000,
-            0,
-            0,
-            0});
-            this.nudAnimationSpeed.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudAnimationSpeed.Name = "nudAnimationSpeed";
-            this.nudAnimationSpeed.Size = new System.Drawing.Size(175, 29);
-            this.nudAnimationSpeed.TabIndex = 29;
-            this.nudAnimationSpeed.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.nudAnimationSpeed.ValueChanged += new System.EventHandler(this.NudAnimationSpeed_ValueChanged);
             // 
             // grpRotation
             // 
@@ -511,10 +475,10 @@ namespace _8x8x8_LED
             // 
             this.grpOpenApp.Controls.Add(this.lstApps);
             this.grpOpenApp.Controls.Add(this.btnShowApp);
-            this.grpOpenApp.Location = new System.Drawing.Point(920, 145);
+            this.grpOpenApp.Location = new System.Drawing.Point(920, 15);
             this.grpOpenApp.Name = "grpOpenApp";
-            this.grpOpenApp.Size = new System.Drawing.Size(247, 335);
-            this.grpOpenApp.TabIndex = 30;
+            this.grpOpenApp.Size = new System.Drawing.Size(247, 465);
+            this.grpOpenApp.TabIndex = 28;
             this.grpOpenApp.TabStop = false;
             this.grpOpenApp.Text = "Open App";
             // 
@@ -526,7 +490,6 @@ namespace _8x8x8_LED
             this.Controls.Add(this.grpOpenApp);
             this.Controls.Add(this.grpConnection);
             this.Controls.Add(this.grpSendPacket);
-            this.Controls.Add(this.grpAnimationSpeed);
             this.Controls.Add(this.grpRotation);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeyPreview = true;
@@ -537,8 +500,6 @@ namespace _8x8x8_LED
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyDown);
-            this.grpAnimationSpeed.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudAnimationSpeed)).EndInit();
             this.grpRotation.ResumeLayout(false);
             this.grpRotation.PerformLayout();
             this.grpSendPacket.ResumeLayout(false);
@@ -579,8 +540,6 @@ namespace _8x8x8_LED
         private System.Windows.Forms.Label lblRotateZ;
         private System.Windows.Forms.Label lblRotateY;
         private System.Windows.Forms.Label lblRotateX;
-        private System.Windows.Forms.GroupBox grpAnimationSpeed;
-        private System.Windows.Forms.NumericUpDown nudAnimationSpeed;
         private System.Windows.Forms.Timer tmrAnimate;
         private System.Windows.Forms.Button btnCalibrate;
         private System.Windows.Forms.Button btnShowApp;

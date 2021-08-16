@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace _8x8x8_LED.View
 {
-    public partial class Space : Form
+    public partial class FrmRain : Form
     {
 
         private readonly SerialPort serialPort;
@@ -20,12 +20,13 @@ namespace _8x8x8_LED.View
 
         private int starCount = 90;
         private int speed = 0;
+        private bool animate = false;
 
         private string directionX = "";
         private string directionY = "";
         private string directionZ = "";
 
-        public Space(SerialPort serialPort, ref Cube cube)
+        public FrmRain(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -34,7 +35,7 @@ namespace _8x8x8_LED.View
 
         private void ChkAnimate_CheckedChanged(object sender, EventArgs e)
         {
-            tmrAnimate.Enabled = chkAnimate.Checked;
+            animate = chkAnimate.Checked;
             if (chkAnimate.Checked && bwAnimate.IsBusy == false)
             {
                 bwAnimate.RunWorkerAsync();
@@ -44,20 +45,13 @@ namespace _8x8x8_LED.View
             }
         }
 
-        private void TmrAnimate_Tick(object sender, EventArgs e)
-        {
-            
-            
-        }
-
         private void BwAnimate_DoWork(object sender, DoWorkEventArgs e)
         {
-            while (chkAnimate.Checked)
+            while (animate)
             {
                 Random random = new Random();
 
                 int upwardsOffset = directionZ == "Upwards" ? 7 : 0;
-
 
                 for (int i = 7 - upwardsOffset; i < cube.matrix.Length; i += 8)
                 {
@@ -117,12 +111,12 @@ namespace _8x8x8_LED.View
                     cube.Shift(Direction.Downwards, false, 0);
                 }
                 System.Threading.Thread.Sleep(speed);
-                
             }
         }
 
-        private void Space_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmRain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            animate = false;
             if (bwAnimate.IsBusy)
                 bwAnimate.CancelAsync();
         }
@@ -133,26 +127,27 @@ namespace _8x8x8_LED.View
             speed = tbSpeed.Value;
         }
 
-        private void cbDirectionX_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbDirectionX_SelectedIndexChanged(object sender, EventArgs e)
         {
             directionX = cbDirectionX.Text;
         }
 
-        private void cbDirectionY_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbDirectionY_SelectedIndexChanged(object sender, EventArgs e)
         {
             directionY = cbDirectionY.Text;
         }
 
-        private void cbDirectionZ_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbDirectionZ_SelectedIndexChanged(object sender, EventArgs e)
         {
             directionZ = cbDirectionZ.Text;
         }
 
-        private void Space_Load(object sender, EventArgs e)
+        private void FrmRain_Load(object sender, EventArgs e)
         {
             cbDirectionX.SelectedIndex = 0;
             cbDirectionY.SelectedIndex = 0;
-            cbDirectionZ.SelectedIndex = 0;
+            cbDirectionZ.SelectedIndex = 2;
+            chkAnimate.Checked = true;
         }
     }
 }

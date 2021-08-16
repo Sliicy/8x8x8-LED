@@ -28,8 +28,6 @@ namespace _8x8x8_LED
 
         public readonly SerialPort serialPort = new SerialPort();
 
-        public int animationSpeed = 100;
-
         public Cube cube = new Cube(64);
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -207,7 +205,7 @@ namespace _8x8x8_LED
 
         private void NudAnimationSpeed_ValueChanged(object sender, EventArgs e)
         {
-            animationSpeed = int.Parse(nudAnimationSpeed.Value.ToString());
+            
         }
 
         private void BtnShowApp_Click(object sender, EventArgs e)
@@ -241,11 +239,14 @@ namespace _8x8x8_LED
             {
                 form = new FrmMarquee(serialPort, ref cube);
             }
-            else if (lstApps.SelectedItem.ToString() == "Space")
+            else if (lstApps.SelectedItem.ToString() == "Rain")
             {
-                form = new Space(serialPort, ref cube);
+                form = new FrmRain(serialPort, ref cube);
             }
-            else
+            else if (lstApps.SelectedItem.ToString() == "Balls")
+            {
+                form = new FrmBalls(serialPort, ref cube);
+            } else
             {
                 return;
             }

@@ -425,9 +425,9 @@ namespace _8x8x8_LED.Apps
 
         private void TrkSamples_Scroll(object sender, EventArgs e)
         {
+            chkSyncMusic.Checked = false;
             samples = trkSamples.Value;
             lblSamples.Text = "Samples (" + samples + "):";
-            chkSyncMusic.Checked = false;
         }
 
         private void ChkShowSilence_CheckedChanged(object sender, EventArgs e)

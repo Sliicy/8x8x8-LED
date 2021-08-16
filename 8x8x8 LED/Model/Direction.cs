@@ -8,5 +8,6 @@
         Rightwards,
         Forwards,
         Backwards,
+        None,
     }
 }
