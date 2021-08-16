@@ -29,6 +29,7 @@ namespace _8x8x8_LED.Apps
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMusic));
             this.chkSyncMusic = new System.Windows.Forms.CheckBox();
             this.bwVisualize = new System.ComponentModel.BackgroundWorker();
             this.rbFloatingLines = new System.Windows.Forms.RadioButton();
@@ -324,6 +325,7 @@ namespace _8x8x8_LED.Apps
             this.Controls.Add(this.grpMusicStyle);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "FrmMusic";

@@ -30,6 +30,7 @@ namespace _8x8x8_LED.View
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMarquee));
             this.tmrAnimate = new System.Windows.Forms.Timer(this.components);
             this.txtMarquee = new System.Windows.Forms.TextBox();
             this.chkAnimate = new System.Windows.Forms.CheckBox();
@@ -79,7 +80,10 @@ namespace _8x8x8_LED.View
             this.Controls.Add(this.chkAnimate);
             this.Controls.Add(this.txtMarquee);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.MaximizeBox = false;
             this.Name = "FrmMarquee";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Marquee";

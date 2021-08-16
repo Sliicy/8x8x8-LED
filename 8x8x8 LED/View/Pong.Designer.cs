@@ -30,6 +30,7 @@ namespace _8x8x8_LED.View
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPong));
             this.btnStart = new System.Windows.Forms.Button();
             this.bwGameEngine = new System.ComponentModel.BackgroundWorker();
             this.lblPlayer1Controls = new System.Windows.Forms.Label();
@@ -109,6 +110,7 @@ namespace _8x8x8_LED.View
             this.Controls.Add(this.btnStart);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;

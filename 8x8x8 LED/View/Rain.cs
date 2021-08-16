@@ -18,7 +18,7 @@ namespace _8x8x8_LED.View
         private readonly SerialPort serialPort;
         private Cube cube;
 
-        private int starCount = 90;
+        private int rainCount = 90;
         private int speed = 0;
         private bool animate = false;
 
@@ -55,7 +55,7 @@ namespace _8x8x8_LED.View
 
                 for (int i = 7 - upwardsOffset; i < cube.matrix.Length; i += 8)
                 {
-                    int randomNumber = random.Next(1, starCount);
+                    int randomNumber = random.Next(1, rainCount);
 
                     switch (randomNumber)
                     {
@@ -123,7 +123,7 @@ namespace _8x8x8_LED.View
 
         private void Tb_Scroll(object sender, EventArgs e)
         {
-            starCount = tbStarCount.Value;
+            rainCount = tbStarCount.Value;
             speed = tbSpeed.Value;
         }
 

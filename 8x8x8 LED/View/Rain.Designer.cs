@@ -29,6 +29,7 @@ namespace _8x8x8_LED.View
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmRain));
             this.chkAnimate = new System.Windows.Forms.CheckBox();
             this.bwAnimate = new System.ComponentModel.BackgroundWorker();
             this.lblStarCount = new System.Windows.Forms.Label();
@@ -67,9 +68,9 @@ namespace _8x8x8_LED.View
             this.lblStarCount.AutoSize = true;
             this.lblStarCount.Location = new System.Drawing.Point(80, 145);
             this.lblStarCount.Name = "lblStarCount";
-            this.lblStarCount.Size = new System.Drawing.Size(102, 24);
+            this.lblStarCount.Size = new System.Drawing.Size(108, 24);
             this.lblStarCount.TabIndex = 1;
-            this.lblStarCount.Text = "Star &Count:";
+            this.lblStarCount.Text = "Rain &Count:";
             // 
             // tbStarCount
             // 
@@ -186,7 +187,10 @@ namespace _8x8x8_LED.View
             this.Controls.Add(this.lblStarCount);
             this.Controls.Add(this.chkAnimate);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
+            this.MaximizeBox = false;
             this.Name = "FrmRain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rain";

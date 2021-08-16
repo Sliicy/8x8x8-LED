@@ -78,13 +78,13 @@ namespace _8x8x8_LED
             "Music",
             "Image Viewer",
             "Video",
-            "Marquee",
-            "Tetris",
-            "Snake",
             "Pong",
             "Balls",
-            "Game of Life",
-            "Rain"});
+            "Rain",
+            "Tetris",
+            "Marquee",
+            "Snake",
+            "Game of Life"});
             this.lstApps.Location = new System.Drawing.Point(29, 37);
             this.lstApps.Name = "lstApps";
             this.lstApps.Size = new System.Drawing.Size(184, 364);
@@ -492,8 +492,11 @@ namespace _8x8x8_LED
             this.Controls.Add(this.grpSendPacket);
             this.Controls.Add(this.grpRotation);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(6);
+            this.MaximizeBox = false;
             this.Name = "frmMainMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "8x8x8 LED";
