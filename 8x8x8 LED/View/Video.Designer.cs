@@ -51,7 +51,7 @@ namespace _8x8x8_LED.View
             this.btnSelectFile.TabIndex = 0;
             this.btnSelectFile.Text = "Select &File";
             this.btnSelectFile.UseVisualStyleBackColor = true;
-            this.btnSelectFile.Click += new System.EventHandler(this.btnSelectFile_Click);
+            this.btnSelectFile.Click += new System.EventHandler(this.BtnSelectFile_Click);
             // 
             // lblSpeed
             // 
@@ -107,13 +107,13 @@ namespace _8x8x8_LED.View
             this.rbGravity.Name = "rbGravity";
             this.rbGravity.Size = new System.Drawing.Size(84, 28);
             this.rbGravity.TabIndex = 5;
-            this.rbGravity.TabStop = true;
             this.rbGravity.Text = "&Gravity";
             this.rbGravity.UseVisualStyleBackColor = true;
             // 
             // rbLooped
             // 
             this.rbLooped.AutoSize = true;
+            this.rbLooped.Checked = true;
             this.rbLooped.Location = new System.Drawing.Point(6, 28);
             this.rbLooped.Name = "rbLooped";
             this.rbLooped.Size = new System.Drawing.Size(93, 28);
@@ -125,8 +125,6 @@ namespace _8x8x8_LED.View
             // chkAnimate
             // 
             this.chkAnimate.AutoSize = true;
-            this.chkAnimate.Checked = true;
-            this.chkAnimate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAnimate.Location = new System.Drawing.Point(12, 12);
             this.chkAnimate.Name = "chkAnimate";
             this.chkAnimate.Size = new System.Drawing.Size(98, 28);
@@ -139,7 +137,7 @@ namespace _8x8x8_LED.View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(218, 370);
+            this.ClientSize = new System.Drawing.Size(218, 268);
             this.Controls.Add(this.chkAnimate);
             this.Controls.Add(this.grpAnimationMethod);
             this.Controls.Add(this.nudSpeed);

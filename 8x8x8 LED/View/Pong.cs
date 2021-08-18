@@ -20,9 +20,9 @@ namespace _8x8x8_LED.View
 
         private bool animate = false;
         private int speed = 500;
-        private List<Ball> balls = new List<Ball>();
-        Paddle p1 = new Paddle(2, 0, 2);
-        Paddle p2 = new Paddle(7, 7, 7);
+        private readonly List<Ball> balls = new List<Ball>();
+        readonly Paddle p1 = new Paddle(2, 0, 2);
+        readonly Paddle p2 = new Paddle(7, 7, 7);
 
         private int player1Score = 0;
         private int player2Score = 0;

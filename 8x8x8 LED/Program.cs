@@ -17,7 +17,7 @@ namespace _8x8x8_LED
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMainMenu());
+            Application.Run(new FrmMainMenu());
         }
 
 

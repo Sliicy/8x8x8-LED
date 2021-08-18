@@ -19,9 +19,9 @@ using Orientation = _8x8x8_LED.Model.Orientation;
 
 namespace _8x8x8_LED
 {
-    public partial class frmMainMenu : Form
+    public partial class FrmMainMenu : Form
     {
-        public frmMainMenu()
+        public FrmMainMenu()
         {
             InitializeComponent();
         }
@@ -218,7 +218,7 @@ namespace _8x8x8_LED
                     return;
                 }
             }
-            Form form = new Form();
+            Form form;
             if (lstApps.SelectedItem.ToString() == "Image Viewer")
             {
                 form = new FrmImageViewer(serialPort, ref cube);
@@ -246,7 +246,12 @@ namespace _8x8x8_LED
             else if (lstApps.SelectedItem.ToString() == "Balls")
             {
                 form = new FrmBalls(serialPort, ref cube);
-            } else
+            }
+            else if (lstApps.SelectedItem.ToString() == "Clock")
+            {
+                form = new FrmClock(serialPort, ref cube);
+            }
+            else
             {
                 return;
             }

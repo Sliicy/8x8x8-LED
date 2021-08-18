@@ -31,7 +31,7 @@ namespace _8x8x8_LED.View
         private bool teleport = false;
 
 
-        private int samples = 1024; // How many samples to calculate wave form from.
+        private readonly int samples = 1024; // How many samples to calculate wave form from.
         private double[] twoChannels = new double[2]; // Holds 2 bytes of audio.
 
         readonly IWaveIn waveIn = new WasapiLoopbackCapture();

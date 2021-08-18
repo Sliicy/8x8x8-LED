@@ -16,7 +16,7 @@ namespace _8x8x8_LED.View
     {
 
         private readonly SerialPort serialPort;
-        private Cube cube;
+        private readonly Cube cube;
 
         private int rainCount = 90;
         private int speed = 0;

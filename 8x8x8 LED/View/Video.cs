@@ -18,9 +18,10 @@ namespace _8x8x8_LED.View
     public partial class FrmVideo : Form
     {
         private readonly SerialPort serialPort;
-        private Cube cube;
+        private readonly Cube cube;
 
         private Bitmap renderImage;
+        private bool animate = false;
 
         public FrmVideo(SerialPort serialPort, ref Cube cube)
         {
@@ -29,7 +30,7 @@ namespace _8x8x8_LED.View
             this.cube = cube;
         }
 
-        private void btnSelectFile_Click(object sender, EventArgs e)
+        private void BtnSelectFile_Click(object sender, EventArgs e)
         {
             DialogResult selection = picSelect.ShowDialog();
             if (selection == DialogResult.OK)
@@ -58,7 +59,7 @@ namespace _8x8x8_LED.View
         private void RenderVideo(Bitmap b)
         {
             byte[] bytesToSend = new byte[64];
-            while (chkAnimate.Checked) {
+            while (animate) {
                 for (int depth = 0; depth < b.Height; depth += 8)
                 {
                     int i = 0;
@@ -99,11 +100,6 @@ namespace _8x8x8_LED.View
             }
         }
 
-        private void ChkLooped_CheckedChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void BwRenderer_DoWork(object sender, DoWorkEventArgs e)
         {
             if (renderImage != null)
@@ -112,11 +108,13 @@ namespace _8x8x8_LED.View
 
         private void FrmVideo_FormClosing(object sender, FormClosingEventArgs e)
         {
+            animate = false;
             bwRenderer.CancelAsync();
         }
 
         private void ChkAnimate_CheckedChanged(object sender, EventArgs e)
         {
+            animate = chkAnimate.Checked;
             if (chkAnimate.Checked == false)
             {
                 bwRenderer.CancelAsync();

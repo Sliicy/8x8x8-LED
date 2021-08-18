@@ -1,7 +1,7 @@
 ﻿
 namespace _8x8x8_LED
 {
-    partial class frmMainMenu
+    partial class FrmMainMenu
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace _8x8x8_LED
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainMenu));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMainMenu));
             this.lstApps = new System.Windows.Forms.ListBox();
             this.btnShowApp = new System.Windows.Forms.Button();
             this.grpRotation = new System.Windows.Forms.GroupBox();
@@ -81,6 +81,7 @@ namespace _8x8x8_LED
             "Pong",
             "Balls",
             "Rain",
+            "Clock",
             "Tetris",
             "Marquee",
             "Snake",
