@@ -82,9 +82,9 @@ namespace _8x8x8_LED
             "Balls",
             "Rain",
             "Clock",
-            "Tetris",
             "Marquee",
-            "Snake"});
+            "Snake",
+            "Phone Square"});
             this.lstApps.Location = new System.Drawing.Point(29, 37);
             this.lstApps.Name = "lstApps";
             this.lstApps.Size = new System.Drawing.Size(184, 364);

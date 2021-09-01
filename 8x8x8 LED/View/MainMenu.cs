@@ -255,6 +255,10 @@ namespace _8x8x8_LED
             {
                 form = new FrmSnake(serialPort, ref cube);
             }
+            else if (lstApps.SelectedItem.ToString() == "Phone Square")
+            {
+                form = new PhoneSquare(serialPort, ref cube);
+            }
             else
             {
                 return;
