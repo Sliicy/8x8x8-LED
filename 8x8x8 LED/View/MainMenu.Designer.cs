@@ -84,8 +84,7 @@ namespace _8x8x8_LED
             "Clock",
             "Tetris",
             "Marquee",
-            "Snake",
-            "Game of Life"});
+            "Snake"});
             this.lstApps.Location = new System.Drawing.Point(29, 37);
             this.lstApps.Name = "lstApps";
             this.lstApps.Size = new System.Drawing.Size(184, 364);
@@ -483,7 +482,7 @@ namespace _8x8x8_LED
             this.grpOpenApp.TabStop = false;
             this.grpOpenApp.Text = "Open App";
             // 
-            // frmMainMenu
+            // FrmMainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -498,7 +497,7 @@ namespace _8x8x8_LED
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
-            this.Name = "frmMainMenu";
+            this.Name = "FrmMainMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "8x8x8 LED";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);

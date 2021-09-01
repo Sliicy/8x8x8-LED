@@ -235,9 +235,10 @@
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Model\Orientation.cs" />
     <Compile Include="Model\Pong\Ball.cs" />
-    <Compile Include="Model\Pong\Location.cs" />
+    <Compile Include="Model\Location.cs" />
     <Compile Include="Model\Pong\Paddle.cs" />
     <Compile Include="Model\Position.cs" />
+    <Compile Include="Model\Snake\Snake.cs" />
     <Compile Include="View\Balls.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -289,6 +290,12 @@
     <Compile Include="View\Rain.Designer.cs">
       <DependentUpon>Rain.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Snake.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Snake.Designer.cs">
+      <DependentUpon>Snake.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Video.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -327,6 +334,9 @@
     </Compile>
     <EmbeddedResource Include="View\Rain.resx">
       <DependentUpon>Rain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Snake.resx">
+      <DependentUpon>Snake.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Video.resx">
       <DependentUpon>Video.cs</DependentUpon>

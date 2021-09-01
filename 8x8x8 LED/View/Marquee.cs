@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
@@ -86,7 +85,6 @@ namespace _8x8x8_LED.View
         {
             for (int j = 0; j < positionX + 1; j++)
             {
-                //byte column = new byte();
                 var bits = new BitArray(8);
                 for (int i = 0; i < 8; i++)
                 {
