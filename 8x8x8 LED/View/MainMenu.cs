@@ -15,25 +15,39 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Orientation = _8x8x8_LED.Model.Orientation;
 
 namespace _8x8x8_LED
 {
     public partial class FrmMainMenu : Form
     {
-        public FrmMainMenu()
+
+        public FrmMainMenu(string requestedApp = "", bool minimized = false)
         {
             InitializeComponent();
+            this.requestedApp = requestedApp;
+            this.minimized = minimized;
+            if (minimized)
+                WindowState = FormWindowState.Minimized;
         }
 
         public readonly SerialPort serialPort = new SerialPort();
 
         public Cube cube = new Cube(64);
 
+        private readonly string requestedApp = "";
+        public bool minimized = false;
+
         private void FrmMain_Load(object sender, EventArgs e)
         {
             ReloadAvailableComPorts();
+            lstApps.Items.AddRange(Program.existingApps.ToArray());
+            if (requestedApp != "")
+            {
+                lstApps.SelectedIndex = lstApps.FindString(requestedApp);
+                btnShowApp.PerformClick();
+            }
             
+
             // Load Previous Settings:
             chkAutoconnect.Checked = Properties.Settings.Default.Autoconnect;
             cbBaudRate.SelectedIndex = Properties.Settings.Default.BaudRate;
@@ -198,16 +212,6 @@ namespace _8x8x8_LED
                 Close();
         }
 
-        private void TmrAnimate_Tick(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void NudAnimationSpeed_ValueChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void BtnShowApp_Click(object sender, EventArgs e)
         {
             foreach (Form openForm in Application.OpenForms)
@@ -264,6 +268,8 @@ namespace _8x8x8_LED
                 return;
             }
 
+            if (minimized)
+                form.WindowState = FormWindowState.Minimized;
             form.Show();
         }
 
@@ -371,6 +377,14 @@ namespace _8x8x8_LED
             cube.Clear();
             SerialHelper.Send(serialPort, cube);
             MessageBox.Show("If each of these message boxes were correct, then the cube is calibrated!", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void BtnReset_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Reset all settings to default?", "Reset", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                Properties.Settings.Default.Reset();
+            }
         }
     }
 }

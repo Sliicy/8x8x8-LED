@@ -29,6 +29,7 @@ namespace _8x8x8_LED.View
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSnake));
             this.btnStart = new System.Windows.Forms.Button();
             this.lblPlayer1Controls = new System.Windows.Forms.Label();
             this.bwGameEngine = new System.ComponentModel.BackgroundWorker();
@@ -36,7 +37,7 @@ namespace _8x8x8_LED.View
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(228, 259);
+            this.btnStart.Location = new System.Drawing.Point(74, 214);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(136, 35);
             this.btnStart.TabIndex = 0;
@@ -47,7 +48,7 @@ namespace _8x8x8_LED.View
             // lblPlayer1Controls
             // 
             this.lblPlayer1Controls.AutoSize = true;
-            this.lblPlayer1Controls.Location = new System.Drawing.Point(224, 75);
+            this.lblPlayer1Controls.Location = new System.Drawing.Point(55, 9);
             this.lblPlayer1Controls.Name = "lblPlayer1Controls";
             this.lblPlayer1Controls.Size = new System.Drawing.Size(174, 168);
             this.lblPlayer1Controls.TabIndex = 4;
@@ -64,11 +65,12 @@ namespace _8x8x8_LED.View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(678, 501);
+            this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.lblPlayer1Controls);
             this.Controls.Add(this.btnStart);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;

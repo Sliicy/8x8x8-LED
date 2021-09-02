@@ -32,7 +32,7 @@ namespace _8x8x8_LED.View
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PhoneSquare));
             this.chkAnimate = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtURL = new System.Windows.Forms.TextBox();
             this.lblPhoneURL = new System.Windows.Forms.Label();
             this.bwAnimate = new System.ComponentModel.BackgroundWorker();
             this.tmrAnimate = new System.Windows.Forms.Timer(this.components);
@@ -51,12 +51,13 @@ namespace _8x8x8_LED.View
             this.chkAnimate.UseVisualStyleBackColor = true;
             this.chkAnimate.CheckedChanged += new System.EventHandler(this.ChkAnimate_CheckedChanged);
             // 
-            // textBox1
+            // txtURL
             // 
-            this.textBox1.Location = new System.Drawing.Point(130, 46);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(403, 29);
-            this.textBox1.TabIndex = 2;
+            this.txtURL.Location = new System.Drawing.Point(130, 46);
+            this.txtURL.Name = "txtURL";
+            this.txtURL.Size = new System.Drawing.Size(403, 29);
+            this.txtURL.TabIndex = 2;
+            this.txtURL.TextChanged += new System.EventHandler(this.TxtURL_TextChanged);
             // 
             // lblPhoneURL
             // 
@@ -92,16 +93,18 @@ namespace _8x8x8_LED.View
             this.ClientSize = new System.Drawing.Size(834, 253);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblPhoneURL);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtURL);
             this.Controls.Add(this.chkAnimate);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "PhoneSquare";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Phone Square";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PhoneSquare_FormClosing);
+            this.Load += new System.EventHandler(this.PhoneSquare_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,7 +113,7 @@ namespace _8x8x8_LED.View
         #endregion
 
         private System.Windows.Forms.CheckBox chkAnimate;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtURL;
         private System.Windows.Forms.Label lblPhoneURL;
         private System.ComponentModel.BackgroundWorker bwAnimate;
         private System.Windows.Forms.Timer tmrAnimate;

@@ -21,9 +21,7 @@ namespace _8x8x8_LED.View
         private readonly Cube cube;
         private bool animate = false;
 
-        private List<Coordinate> queue = new List<Coordinate>();
-
-
+        private readonly List<Coordinate> queue = new List<Coordinate>();
 
         public PhoneSquare(SerialPort serialPort, ref Cube cube)
         {
@@ -52,17 +50,11 @@ namespace _8x8x8_LED.View
             {
                 using (var httpClient = new HttpClient())
                 {
-                    string json = httpClient.GetStringAsync("http://" + textBox1.Text + "/sensors.json?sense=accel").Result;
+                    string json = httpClient.GetStringAsync("http://" + txtURL.Text + "/sensors.json?sense=accel").Result;
                     AccelRoot data = JsonConvert.DeserializeObject<AccelRoot>(json);
-                    if (data.accel.data != null)
+                    if (data.Accel.Data != null)
                     {
-
-                        //string rawData = data.accel.data[0][1].ToString();
-
-                        //MessageBox.Show(rawData);
-
-                        
-                        foreach (var item in data.accel.data)
+                        foreach (var item in data.Accel.Data)
                         {
                             string[] coordSet = item[1].ToString().Replace("[", "").Replace("]", "").Replace(Environment.NewLine, "").Split(',');
                             queue.Add(new Coordinate() { x = Convert.ToDouble(coordSet[0]), y = Convert.ToDouble(coordSet[1]), z = Convert.ToDouble(coordSet[2]) });
@@ -82,7 +74,6 @@ namespace _8x8x8_LED.View
                                 cube.matrix[21] = 16;
                                 cube.matrix[22] = 16;
                                 cube.matrix[23] = 16;
-
 
                                 cube.matrix[24] = 16;
                                 cube.matrix[25] = 16;
@@ -163,21 +154,8 @@ namespace _8x8x8_LED.View
                                 cube.matrix[61] = 16;
                             }
 
-
-
-
-
                             cube.Flip(Axis.X);
                             SerialHelper.Send(serialPort, cube);
-
-
-
-
-
-                            //MessageBox.Show(JsonConvert.DeserializeObject<Coordinate>(item[1]));
-                            //MessageBox.Show(item.);
-                            //double x = JsonConvert.DeserializeObject<Coordinate>(item[1][]));
-                            //queue.Add(item[1]);
                         }
                     }
                     
@@ -194,7 +172,6 @@ namespace _8x8x8_LED.View
             {
                 cube.Clear();
 
-
                 if (queue[0].y >= 9 && queue[0].x < 1 && queue[0].x > -1 && queue[0].z < 1 &&queue[0].z > -1)
                 {
                     cube.matrix[16] = 16;
@@ -205,7 +182,6 @@ namespace _8x8x8_LED.View
                     cube.matrix[21] = 16;
                     cube.matrix[22] = 16;
                     cube.matrix[23] = 16;
-
 
                     cube.matrix[24] = 16;
                     cube.matrix[25] = 16;
@@ -254,18 +230,28 @@ namespace _8x8x8_LED.View
         {
             animate = false;
         }
+
+        private void PhoneSquare_Load(object sender, EventArgs e)
+        {
+            txtURL.Text = Properties.Settings.Default.PhoneSquare_URL;
+        }
+
+        private void TxtURL_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.PhoneSquare_URL = txtURL.Text;
+        }
     }
 
     public class AccelRoot
     {
-        public Accel accel { get; set; }
+        public Accel Accel { get; set; }
     }
 
     public class Accel
     {
-        public List<string> desc { get; set; }
-        public string unit { get; set; }
-        public object[][] data { get; set; }
+        public List<string> Desc { get; set; }
+        public string Unit { get; set; }
+        public object[][] Data { get; set; }
     }
     public class CoordinateArray
     {

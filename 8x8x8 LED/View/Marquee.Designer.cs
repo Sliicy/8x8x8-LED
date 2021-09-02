@@ -50,7 +50,6 @@ namespace _8x8x8_LED.View
             this.txtMarquee.Name = "txtMarquee";
             this.txtMarquee.Size = new System.Drawing.Size(726, 34);
             this.txtMarquee.TabIndex = 0;
-            this.txtMarquee.Text = "Hello world!";
             this.txtMarquee.TextChanged += new System.EventHandler(this.TxtMarquee_TextChanged);
             // 
             // bwAnimate
@@ -91,6 +90,7 @@ namespace _8x8x8_LED.View
             0,
             0,
             0});
+            this.nudSpacing.ValueChanged += new System.EventHandler(this.NudSpacing_ValueChanged);
             // 
             // lblSpeed
             // 
@@ -122,12 +122,13 @@ namespace _8x8x8_LED.View
             this.chkLetterEnding.TabIndex = 10;
             this.chkLetterEnding.Text = "&End after last letter leaves";
             this.chkLetterEnding.UseVisualStyleBackColor = true;
+            this.chkLetterEnding.CheckedChanged += new System.EventHandler(this.ChkLetterEnding_CheckedChanged);
             // 
             // FrmMarquee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 523);
+            this.ClientSize = new System.Drawing.Size(752, 222);
             this.Controls.Add(this.chkLetterEnding);
             this.Controls.Add(this.trkSpeed);
             this.Controls.Add(this.lblSpeed);
@@ -141,9 +142,10 @@ namespace _8x8x8_LED.View
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.MaximizeBox = false;
             this.Name = "FrmMarquee";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Marquee";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMarquee_FormClosing);
+            this.Load += new System.EventHandler(this.FrmMarquee_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudSpacing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
             this.ResumeLayout(false);

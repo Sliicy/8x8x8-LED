@@ -31,6 +31,8 @@ namespace _8x8x8_LED.Apps
 
         readonly IWaveIn waveIn = new WasapiLoopbackCapture();
 
+        private string currentMusicStyle = "";
+
         public FrmMusic(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
@@ -90,36 +92,36 @@ namespace _8x8x8_LED.Apps
             {
                 byte[] arrayOutput = new byte[64];
 
-                if (rbFloatingLines.Checked)
+                if (currentMusicStyle == "Floating Lines")
                 {
                     AnimateBars(arrayOutput, eightChannels, 255, false);
-                } else if (rbFloatingDots.Checked)
+                } else if (currentMusicStyle == "Floating Dots")
                 {
                     AnimateBars(arrayOutput, eightChannels, 1, false);
-                } else if (rbSolidLines.Checked)
+                } else if (currentMusicStyle == "Solid Lines")
                 {
                     AnimateBars(arrayOutput, eightChannels, 255, true);
-                } else if (rbSolidDots.Checked)
+                } else if (currentMusicStyle == "Solid Dots")
                 {
                     AnimateBars(arrayOutput, eightChannels, 1, true);
-                } else if (rbMatrix.Checked)
+                } else if (currentMusicStyle == "Matrix")
                 {
                     AnimateMatrix(arrayOutput, eightChannels);
-                } else if (rbCenteredFloatingLines.Checked)
+                } else if (currentMusicStyle == "Centered Floating Lines")
                 {
                     AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, false);
-                } else if (rbCenteredFloatingDots.Checked)
+                } else if (currentMusicStyle == "Centered Floating Dots")
                 {
                     AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, false);
                 }
-                else if (rbCenteredSolidLines.Checked)
+                else if (currentMusicStyle == "Centered Solid Lines")
                 {
                     AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, true);
                 }
-                else if (rbCenteredSolidDots.Checked)
+                else if (currentMusicStyle == "Centered Solid Dots")
                 {
                     AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
-                } else if (rbShuffled.Checked)
+                } else if (currentMusicStyle == "Shuffled")
                 {
                     if (timeUntilNextShuffledAnimation > 0)
                     {
@@ -176,36 +178,36 @@ namespace _8x8x8_LED.Apps
                         arrayOutput = new byte[64]; // Clear the screen.
                         if (chkShowSilence.Checked)
                         {
-                            if (rbFloatingLines.Checked || rbSolidLines.Checked)
+                            if (currentMusicStyle == "Floating Lines" || currentMusicStyle == "Solid Lines")
                             {
                                 arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
                                 arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
                                 arrayOutput[48] = arrayOutput[56] = 255;
                             }
-                            else if (rbCenteredFloatingLines.Checked || rbCenteredSolidLines.Checked)
+                            else if (currentMusicStyle == "Centered Floating Lines" || currentMusicStyle == "Centered Solid Lines")
                             {
                                 arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
                                 arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
                                 arrayOutput[51] = arrayOutput[59] = 255;
                             }
-                            else if (rbCenteredFloatingDots.Checked || rbCenteredSolidDots.Checked)
+                            else if (currentMusicStyle == "Centered Floating Dots" || currentMusicStyle == "Centered Solid Dots")
                             {
                                 arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
                                 arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
                                 arrayOutput[51] = arrayOutput[59] = 1;
                             }
-                            else if (rbMatrix.Checked)
+                            else if (currentMusicStyle == "Matrix")
                             {
                                 arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
                                 arrayOutput[40] = arrayOutput[48] = arrayOutput[56] = 231;
                             }
-                            else if (rbSolidDots.Checked || rbFloatingDots.Checked)
+                            else if (currentMusicStyle == "Floating Dots" || currentMusicStyle == "Solid Dots")
                             {
                                 arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
                                 arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
                                 arrayOutput[48] = arrayOutput[56] = 1;
                             }
-                            else if (rbShuffled.Checked)
+                            else if (currentMusicStyle == "Shuffled")
                             {
                                 Random random = new Random();
                                 arrayOutput[0] = Convert.ToByte(random.Next(0, 256));
@@ -415,6 +417,7 @@ namespace _8x8x8_LED.Apps
 
         private void FrmMusic_FormClosing(object sender, FormClosingEventArgs e)
         {
+            SaveSettings();
             if (chkSyncMusic.Checked)
             {
                 waveIn.StopRecording();
@@ -435,20 +438,36 @@ namespace _8x8x8_LED.Apps
             matrixIsCleared = false;
         }
 
-        private void RadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            matrixIsCleared = false;
-        }
-
         private void FrmMusic_Load(object sender, EventArgs e)
         {
+            chkMirrored.Checked = Properties.Settings.Default.Music_MirroredAudio;
+            chkShowSilence.Checked = Properties.Settings.Default.Music_ShowSilence;
+            cbResponsiveness.Text = Properties.Settings.Default.Music_Responsiveness;
+            trkSamples.Value = Properties.Settings.Default.Music_Samples;
+            cbMusicStyle.SelectedIndex = Properties.Settings.Default.Music_Style;
             chkSyncMusic.Checked = true;
-            cbResponsiveness.SelectedIndex = 0;
         }
 
         private void CbResponsiveness_SelectedIndexChanged(object sender, EventArgs e)
         {
-            speed = int.Parse(cbResponsiveness.SelectedItem.ToString());
+            if (cbResponsiveness.Text != "")
+                speed = int.Parse(cbResponsiveness.SelectedItem.ToString());
+        }
+
+        private void CbMusicStyle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            matrixIsCleared = false;
+            currentMusicStyle = cbMusicStyle.Text;
+        }
+
+        void SaveSettings()
+        {
+            Properties.Settings.Default.Music_MirroredAudio = chkMirrored.Checked;
+            Properties.Settings.Default.Music_ShowSilence = chkShowSilence.Checked;
+            Properties.Settings.Default.Music_Responsiveness = cbResponsiveness.Text;
+            Properties.Settings.Default.Music_Samples = trkSamples.Value;
+            Properties.Settings.Default.Music_Style = cbMusicStyle.SelectedIndex;
+            Properties.Settings.Default.Save();
         }
     }
 }

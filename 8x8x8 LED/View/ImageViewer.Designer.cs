@@ -360,7 +360,7 @@ namespace _8x8x8_LED
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "FrmImageViewer";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Image Viewer";
             this.grpShift.ResumeLayout(false);
             this.grpShift.PerformLayout();

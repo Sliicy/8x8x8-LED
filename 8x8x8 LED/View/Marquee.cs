@@ -218,6 +218,7 @@ namespace _8x8x8_LED.View
             animate = false;
             if (bwAnimate.IsBusy)
                 bwAnimate.CancelAsync();
+            Properties.Settings.Default.Save();
         }
 
         private void ChkAnimate_CheckedChanged(object sender, EventArgs e)
@@ -234,11 +235,31 @@ namespace _8x8x8_LED.View
         private void TxtMarquee_TextChanged(object sender, EventArgs e)
         {
             chkAnimate.Checked = false;
+            Properties.Settings.Default.Marquee_Text = txtMarquee.Text;
         }
 
         private void TrkSpeed_Scroll(object sender, EventArgs e)
         {
             speed = trkSpeed.Value;
+            Properties.Settings.Default.Marquee_Speed = speed;
+        }
+
+        private void FrmMarquee_Load(object sender, EventArgs e)
+        {
+            txtMarquee.Text = Properties.Settings.Default.Marquee_Text;
+            nudSpacing.Value = Properties.Settings.Default.Marquee_SpacingAmount;
+            trkSpeed.Value = Properties.Settings.Default.Marquee_Speed;
+            chkLetterEnding.Checked = Properties.Settings.Default.Marquee_EndLastLetter;
+        }
+
+        private void ChkLetterEnding_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Marquee_EndLastLetter = chkLetterEnding.Checked;
+        }
+
+        private void NudSpacing_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Marquee_SpacingAmount = Convert.ToInt32(nudSpacing.Value);
         }
     }
 }

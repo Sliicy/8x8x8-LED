@@ -45,8 +45,11 @@ namespace _8x8x8_LED.View
 
         private void FrmBalls_Load(object sender, EventArgs e)
         {
-            cbPhysics.SelectedIndex = 0;
+            cbPhysics.SelectedIndex = Properties.Settings.Default.Balls_Physics;
             btnAddBall.PerformClick();
+            chkSyncMusic.Checked = Properties.Settings.Default.Balls_SyncToMusic;
+            trkSpeed.Value = Properties.Settings.Default.Balls_Speed;
+            
             bwEngine.RunWorkerAsync();
         }
 
@@ -60,6 +63,7 @@ namespace _8x8x8_LED.View
                 animateMusic = false;
                 waveIn.StopRecording();
             }
+            Properties.Settings.Default.Save();
         }
 
         private void BtnAddBall_Click(object sender, EventArgs e)
@@ -126,6 +130,7 @@ namespace _8x8x8_LED.View
         {
             speed = trkSpeed.Value;
             lblSpeed.Text = "&Speed (" + speed + "):";
+            Properties.Settings.Default.Balls_Speed = speed;
         }
 
         private void BwEngine_DoWork(object sender, DoWorkEventArgs e)
@@ -237,6 +242,7 @@ namespace _8x8x8_LED.View
             {
                 teleport = false;
             }
+            Properties.Settings.Default.Balls_Physics = cbPhysics.SelectedIndex;
         }
 
         private void ChkSyncMusic_CheckedChanged(object sender, EventArgs e)
@@ -256,6 +262,7 @@ namespace _8x8x8_LED.View
                 speed = trkSpeed.Value;
             }
             trkSpeed.Enabled = !chkSyncMusic.Checked;
+            Properties.Settings.Default.Balls_SyncToMusic = chkSyncMusic.Checked;
         }
 
         static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] twoChannels, int samples = 8)

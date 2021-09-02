@@ -33,7 +33,7 @@ namespace _8x8x8_LED.View
             this.chkAnimate = new System.Windows.Forms.CheckBox();
             this.bwAnimate = new System.ComponentModel.BackgroundWorker();
             this.lblStarCount = new System.Windows.Forms.Label();
-            this.tbStarCount = new System.Windows.Forms.TrackBar();
+            this.tbRainCount = new System.Windows.Forms.TrackBar();
             this.lblSpeed = new System.Windows.Forms.Label();
             this.tbSpeed = new System.Windows.Forms.TrackBar();
             this.cbDirectionZ = new System.Windows.Forms.ComboBox();
@@ -42,7 +42,7 @@ namespace _8x8x8_LED.View
             this.cbDirectionY = new System.Windows.Forms.ComboBox();
             this.lblDirectionX = new System.Windows.Forms.Label();
             this.cbDirectionX = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.tbStarCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbRainCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,27 +66,27 @@ namespace _8x8x8_LED.View
             // lblStarCount
             // 
             this.lblStarCount.AutoSize = true;
-            this.lblStarCount.Location = new System.Drawing.Point(80, 145);
+            this.lblStarCount.Location = new System.Drawing.Point(20, 80);
             this.lblStarCount.Name = "lblStarCount";
             this.lblStarCount.Size = new System.Drawing.Size(108, 24);
             this.lblStarCount.TabIndex = 1;
             this.lblStarCount.Text = "Rain &Count:";
             // 
-            // tbStarCount
+            // tbRainCount
             // 
-            this.tbStarCount.Location = new System.Drawing.Point(189, 145);
-            this.tbStarCount.Maximum = 900;
-            this.tbStarCount.Minimum = 9;
-            this.tbStarCount.Name = "tbStarCount";
-            this.tbStarCount.Size = new System.Drawing.Size(480, 45);
-            this.tbStarCount.TabIndex = 2;
-            this.tbStarCount.Value = 90;
-            this.tbStarCount.Scroll += new System.EventHandler(this.Tb_Scroll);
+            this.tbRainCount.Location = new System.Drawing.Point(129, 80);
+            this.tbRainCount.Maximum = 900;
+            this.tbRainCount.Minimum = 9;
+            this.tbRainCount.Name = "tbRainCount";
+            this.tbRainCount.Size = new System.Drawing.Size(480, 45);
+            this.tbRainCount.TabIndex = 2;
+            this.tbRainCount.Value = 90;
+            this.tbRainCount.Scroll += new System.EventHandler(this.Tb_Scroll);
             // 
             // lblSpeed
             // 
             this.lblSpeed.AutoSize = true;
-            this.lblSpeed.Location = new System.Drawing.Point(80, 196);
+            this.lblSpeed.Location = new System.Drawing.Point(20, 131);
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(71, 24);
             this.lblSpeed.TabIndex = 1;
@@ -94,7 +94,7 @@ namespace _8x8x8_LED.View
             // 
             // tbSpeed
             // 
-            this.tbSpeed.Location = new System.Drawing.Point(189, 196);
+            this.tbSpeed.Location = new System.Drawing.Point(129, 131);
             this.tbSpeed.Maximum = 1000;
             this.tbSpeed.Name = "tbSpeed";
             this.tbSpeed.Size = new System.Drawing.Size(480, 45);
@@ -109,7 +109,7 @@ namespace _8x8x8_LED.View
             "None",
             "Upwards",
             "Downwards"});
-            this.cbDirectionZ.Location = new System.Drawing.Point(208, 345);
+            this.cbDirectionZ.Location = new System.Drawing.Point(154, 270);
             this.cbDirectionZ.Name = "cbDirectionZ";
             this.cbDirectionZ.Size = new System.Drawing.Size(121, 32);
             this.cbDirectionZ.TabIndex = 3;
@@ -118,20 +118,20 @@ namespace _8x8x8_LED.View
             // lblDirectionZ
             // 
             this.lblDirectionZ.AutoSize = true;
-            this.lblDirectionZ.Location = new System.Drawing.Point(74, 348);
+            this.lblDirectionZ.Location = new System.Drawing.Point(20, 273);
             this.lblDirectionZ.Name = "lblDirectionZ";
             this.lblDirectionZ.Size = new System.Drawing.Size(106, 24);
             this.lblDirectionZ.TabIndex = 1;
-            this.lblDirectionZ.Text = "&Direction Z:";
+            this.lblDirectionZ.Text = "Direction &Z:";
             // 
             // lblDirectionY
             // 
             this.lblDirectionY.AutoSize = true;
-            this.lblDirectionY.Location = new System.Drawing.Point(74, 305);
+            this.lblDirectionY.Location = new System.Drawing.Point(20, 230);
             this.lblDirectionY.Name = "lblDirectionY";
             this.lblDirectionY.Size = new System.Drawing.Size(106, 24);
             this.lblDirectionY.TabIndex = 1;
-            this.lblDirectionY.Text = "&Direction Y:";
+            this.lblDirectionY.Text = "Direction &Y:";
             // 
             // cbDirectionY
             // 
@@ -141,7 +141,7 @@ namespace _8x8x8_LED.View
             "None",
             "Leftwards",
             "Rightwards"});
-            this.cbDirectionY.Location = new System.Drawing.Point(208, 302);
+            this.cbDirectionY.Location = new System.Drawing.Point(154, 227);
             this.cbDirectionY.Name = "cbDirectionY";
             this.cbDirectionY.Size = new System.Drawing.Size(121, 32);
             this.cbDirectionY.TabIndex = 3;
@@ -150,11 +150,11 @@ namespace _8x8x8_LED.View
             // lblDirectionX
             // 
             this.lblDirectionX.AutoSize = true;
-            this.lblDirectionX.Location = new System.Drawing.Point(74, 263);
+            this.lblDirectionX.Location = new System.Drawing.Point(20, 188);
             this.lblDirectionX.Name = "lblDirectionX";
             this.lblDirectionX.Size = new System.Drawing.Size(108, 24);
             this.lblDirectionX.TabIndex = 1;
-            this.lblDirectionX.Text = "&Direction X:";
+            this.lblDirectionX.Text = "Direction &X:";
             // 
             // cbDirectionX
             // 
@@ -164,7 +164,7 @@ namespace _8x8x8_LED.View
             "None",
             "Forwards",
             "Backwards"});
-            this.cbDirectionX.Location = new System.Drawing.Point(208, 260);
+            this.cbDirectionX.Location = new System.Drawing.Point(154, 185);
             this.cbDirectionX.Name = "cbDirectionX";
             this.cbDirectionX.Size = new System.Drawing.Size(121, 32);
             this.cbDirectionX.TabIndex = 3;
@@ -174,13 +174,13 @@ namespace _8x8x8_LED.View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(873, 472);
+            this.ClientSize = new System.Drawing.Size(622, 328);
             this.Controls.Add(this.cbDirectionX);
             this.Controls.Add(this.cbDirectionY);
             this.Controls.Add(this.cbDirectionZ);
             this.Controls.Add(this.tbSpeed);
             this.Controls.Add(this.lblDirectionX);
-            this.Controls.Add(this.tbStarCount);
+            this.Controls.Add(this.tbRainCount);
             this.Controls.Add(this.lblDirectionY);
             this.Controls.Add(this.lblDirectionZ);
             this.Controls.Add(this.lblSpeed);
@@ -196,7 +196,7 @@ namespace _8x8x8_LED.View
             this.Text = "Rain";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmRain_FormClosing);
             this.Load += new System.EventHandler(this.FrmRain_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.tbStarCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbRainCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -208,7 +208,7 @@ namespace _8x8x8_LED.View
         private System.Windows.Forms.CheckBox chkAnimate;
         private System.ComponentModel.BackgroundWorker bwAnimate;
         private System.Windows.Forms.Label lblStarCount;
-        private System.Windows.Forms.TrackBar tbStarCount;
+        private System.Windows.Forms.TrackBar tbRainCount;
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.TrackBar tbSpeed;
         private System.Windows.Forms.ComboBox cbDirectionZ;

@@ -22,7 +22,6 @@ namespace _8x8x8_LED.View
             this.serialPort = serialPort;
             this.cube = cube;
         }
-
         private void ChkSyncTime_CheckedChanged(object sender, EventArgs e)
         {
             // Calibrate time to count every minute:
@@ -505,21 +504,32 @@ namespace _8x8x8_LED.View
         private void FrmClock_Load(object sender, EventArgs e)
         {
             chkSyncTime.Checked = true;
+            chkShowLeadingZeros.Checked = Properties.Settings.Default.Clock_ShowLeadingZeros;
+            chk24HrStyle.Checked = Properties.Settings.Default.Clock_24HourStyle;
+            chkFlatOneStyle.Checked = Properties.Settings.Default.Clock_Flat1Style;
         }
 
         private void ChkShowLeadingZeros_CheckedChanged(object sender, EventArgs e)
         {
             DrawTime();
+            Properties.Settings.Default.Clock_ShowLeadingZeros = chkShowLeadingZeros.Checked;
         }
 
         private void Chk24HrStyle_CheckedChanged(object sender, EventArgs e)
         {
             DrawTime();
+            Properties.Settings.Default.Clock_24HourStyle = chk24HrStyle.Checked;
         }
 
         private void ChkFlatOneStyle_CheckedChanged(object sender, EventArgs e)
         {
             DrawTime();
+            Properties.Settings.Default.Clock_Flat1Style = chkFlatOneStyle.Checked;
+        }
+
+        private void FrmClock_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }

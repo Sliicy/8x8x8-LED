@@ -105,6 +105,7 @@ namespace _8x8x8_LED.View
             this.Name = "FrmClock";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clock";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmClock_FormClosing);
             this.Load += new System.EventHandler(this.FrmClock_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

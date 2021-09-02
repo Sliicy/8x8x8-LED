@@ -119,34 +119,42 @@ namespace _8x8x8_LED.View
             animate = false;
             if (bwAnimate.IsBusy)
                 bwAnimate.CancelAsync();
+            Properties.Settings.Default.Save();
         }
 
         private void Tb_Scroll(object sender, EventArgs e)
         {
-            rainCount = tbStarCount.Value;
+            rainCount = tbRainCount.Value;
             speed = tbSpeed.Value;
+            Properties.Settings.Default.Rain_Count = tbRainCount.Value;
+            Properties.Settings.Default.Rain_Speed = tbSpeed.Value;
         }
 
         private void CbDirectionX_SelectedIndexChanged(object sender, EventArgs e)
         {
             directionX = cbDirectionX.Text;
+            Properties.Settings.Default.Rain_X = cbDirectionX.SelectedIndex;
         }
 
         private void CbDirectionY_SelectedIndexChanged(object sender, EventArgs e)
         {
             directionY = cbDirectionY.Text;
+            Properties.Settings.Default.Rain_Y = cbDirectionY.SelectedIndex;
         }
 
         private void CbDirectionZ_SelectedIndexChanged(object sender, EventArgs e)
         {
             directionZ = cbDirectionZ.Text;
+            Properties.Settings.Default.Rain_Z = cbDirectionZ.SelectedIndex;
         }
 
         private void FrmRain_Load(object sender, EventArgs e)
         {
-            cbDirectionX.SelectedIndex = 0;
-            cbDirectionY.SelectedIndex = 0;
-            cbDirectionZ.SelectedIndex = 2;
+            cbDirectionX.SelectedIndex = Properties.Settings.Default.Rain_X;
+            cbDirectionY.SelectedIndex = Properties.Settings.Default.Rain_Y;
+            cbDirectionZ.SelectedIndex = Properties.Settings.Default.Rain_Z;
+            tbRainCount.Value = Properties.Settings.Default.Rain_Count;
+            tbSpeed.Value = Properties.Settings.Default.Rain_Speed;
             chkAnimate.Checked = true;
         }
     }
