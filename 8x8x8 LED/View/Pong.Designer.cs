@@ -46,7 +46,7 @@ namespace _8x8x8_LED.View
             this.btnStart.Location = new System.Drawing.Point(12, 206);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(440, 47);
-            this.btnStart.TabIndex = 0;
+            this.btnStart.TabIndex = 4;
             this.btnStart.Text = "Start &Game";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.BtnStart_Click);
@@ -63,7 +63,7 @@ namespace _8x8x8_LED.View
             this.lblPlayer1Controls.Location = new System.Drawing.Point(6, 25);
             this.lblPlayer1Controls.Name = "lblPlayer1Controls";
             this.lblPlayer1Controls.Size = new System.Drawing.Size(137, 120);
-            this.lblPlayer1Controls.TabIndex = 3;
+            this.lblPlayer1Controls.TabIndex = 1;
             this.lblPlayer1Controls.Text = "Player 1:\r\nW - Upwards\r\nS - Downwards\r\nA - Backwards\r\nD - Forwards";
             // 
             // lblPlayer2Controls
@@ -72,7 +72,7 @@ namespace _8x8x8_LED.View
             this.lblPlayer2Controls.Location = new System.Drawing.Point(149, 25);
             this.lblPlayer2Controls.Name = "lblPlayer2Controls";
             this.lblPlayer2Controls.Size = new System.Drawing.Size(174, 120);
-            this.lblPlayer2Controls.TabIndex = 3;
+            this.lblPlayer2Controls.TabIndex = 2;
             this.lblPlayer2Controls.Text = "Player 2:\r\nUp - Upwards\r\nDown - Downwards\r\nLeft - Backwards\r\nRight - Forwards";
             // 
             // lblScore
@@ -81,7 +81,7 @@ namespace _8x8x8_LED.View
             this.lblScore.Location = new System.Drawing.Point(351, 12);
             this.lblScore.Name = "lblScore";
             this.lblScore.Size = new System.Drawing.Size(97, 72);
-            this.lblScore.TabIndex = 4;
+            this.lblScore.TabIndex = 3;
             this.lblScore.Text = "Score:\r\nPlayer 1: 0\r\nPlayer 2: 0";
             // 
             // tmrScore
@@ -96,7 +96,7 @@ namespace _8x8x8_LED.View
             this.grpControls.Location = new System.Drawing.Point(12, 12);
             this.grpControls.Name = "grpControls";
             this.grpControls.Size = new System.Drawing.Size(333, 188);
-            this.grpControls.TabIndex = 5;
+            this.grpControls.TabIndex = 0;
             this.grpControls.TabStop = false;
             this.grpControls.Text = "Controls";
             // 

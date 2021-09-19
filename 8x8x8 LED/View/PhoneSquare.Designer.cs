@@ -37,6 +37,7 @@ namespace _8x8x8_LED.View
             this.bwAnimate = new System.ComponentModel.BackgroundWorker();
             this.tmrAnimate = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
+            this.LinkLabelURL = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // chkAnimate
@@ -86,11 +87,24 @@ namespace _8x8x8_LED.View
             this.label1.TabIndex = 3;
             this.label1.Text = resources.GetString("label1.Text");
             // 
+            // LinkLabelURL
+            // 
+            this.LinkLabelURL.AutoSize = true;
+            this.LinkLabelURL.Location = new System.Drawing.Point(11, 220);
+            this.LinkLabelURL.Name = "LinkLabelURL";
+            this.LinkLabelURL.Size = new System.Drawing.Size(732, 24);
+            this.LinkLabelURL.TabIndex = 4;
+            this.LinkLabelURL.TabStop = true;
+            this.LinkLabelURL.Text = "https://play.google.com/store/apps/details?id=com.pas.webcam.pro&hl=en_US&gl=US";
+            this.LinkLabelURL.UseMnemonic = false;
+            this.LinkLabelURL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelURL_LinkClicked);
+            // 
             // PhoneSquare
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(834, 253);
+            this.Controls.Add(this.LinkLabelURL);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblPhoneURL);
             this.Controls.Add(this.txtURL);
@@ -118,5 +132,6 @@ namespace _8x8x8_LED.View
         private System.ComponentModel.BackgroundWorker bwAnimate;
         private System.Windows.Forms.Timer tmrAnimate;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.LinkLabel LinkLabelURL;
     }
 }

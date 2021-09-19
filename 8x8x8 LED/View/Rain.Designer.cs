@@ -89,7 +89,7 @@ namespace _8x8x8_LED.View
             this.lblSpeed.Location = new System.Drawing.Point(20, 131);
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(71, 24);
-            this.lblSpeed.TabIndex = 1;
+            this.lblSpeed.TabIndex = 3;
             this.lblSpeed.Text = "&Speed:";
             // 
             // tbSpeed
@@ -98,7 +98,7 @@ namespace _8x8x8_LED.View
             this.tbSpeed.Maximum = 1000;
             this.tbSpeed.Name = "tbSpeed";
             this.tbSpeed.Size = new System.Drawing.Size(480, 45);
-            this.tbSpeed.TabIndex = 2;
+            this.tbSpeed.TabIndex = 4;
             this.tbSpeed.Scroll += new System.EventHandler(this.Tb_Scroll);
             // 
             // cbDirectionZ
@@ -112,7 +112,7 @@ namespace _8x8x8_LED.View
             this.cbDirectionZ.Location = new System.Drawing.Point(154, 270);
             this.cbDirectionZ.Name = "cbDirectionZ";
             this.cbDirectionZ.Size = new System.Drawing.Size(121, 32);
-            this.cbDirectionZ.TabIndex = 3;
+            this.cbDirectionZ.TabIndex = 10;
             this.cbDirectionZ.SelectedIndexChanged += new System.EventHandler(this.CbDirectionZ_SelectedIndexChanged);
             // 
             // lblDirectionZ
@@ -121,7 +121,7 @@ namespace _8x8x8_LED.View
             this.lblDirectionZ.Location = new System.Drawing.Point(20, 273);
             this.lblDirectionZ.Name = "lblDirectionZ";
             this.lblDirectionZ.Size = new System.Drawing.Size(106, 24);
-            this.lblDirectionZ.TabIndex = 1;
+            this.lblDirectionZ.TabIndex = 9;
             this.lblDirectionZ.Text = "Direction &Z:";
             // 
             // lblDirectionY
@@ -130,7 +130,7 @@ namespace _8x8x8_LED.View
             this.lblDirectionY.Location = new System.Drawing.Point(20, 230);
             this.lblDirectionY.Name = "lblDirectionY";
             this.lblDirectionY.Size = new System.Drawing.Size(106, 24);
-            this.lblDirectionY.TabIndex = 1;
+            this.lblDirectionY.TabIndex = 7;
             this.lblDirectionY.Text = "Direction &Y:";
             // 
             // cbDirectionY
@@ -144,7 +144,7 @@ namespace _8x8x8_LED.View
             this.cbDirectionY.Location = new System.Drawing.Point(154, 227);
             this.cbDirectionY.Name = "cbDirectionY";
             this.cbDirectionY.Size = new System.Drawing.Size(121, 32);
-            this.cbDirectionY.TabIndex = 3;
+            this.cbDirectionY.TabIndex = 8;
             this.cbDirectionY.SelectedIndexChanged += new System.EventHandler(this.CbDirectionY_SelectedIndexChanged);
             // 
             // lblDirectionX
@@ -153,7 +153,7 @@ namespace _8x8x8_LED.View
             this.lblDirectionX.Location = new System.Drawing.Point(20, 188);
             this.lblDirectionX.Name = "lblDirectionX";
             this.lblDirectionX.Size = new System.Drawing.Size(108, 24);
-            this.lblDirectionX.TabIndex = 1;
+            this.lblDirectionX.TabIndex = 5;
             this.lblDirectionX.Text = "Direction &X:";
             // 
             // cbDirectionX
@@ -167,7 +167,7 @@ namespace _8x8x8_LED.View
             this.cbDirectionX.Location = new System.Drawing.Point(154, 185);
             this.cbDirectionX.Name = "cbDirectionX";
             this.cbDirectionX.Size = new System.Drawing.Size(121, 32);
-            this.cbDirectionX.TabIndex = 3;
+            this.cbDirectionX.TabIndex = 6;
             this.cbDirectionX.SelectedIndexChanged += new System.EventHandler(this.CbDirectionX_SelectedIndexChanged);
             // 
             // FrmRain

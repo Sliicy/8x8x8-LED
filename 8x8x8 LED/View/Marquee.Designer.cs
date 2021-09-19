@@ -49,7 +49,7 @@ namespace _8x8x8_LED.View
             this.txtMarquee.Multiline = true;
             this.txtMarquee.Name = "txtMarquee";
             this.txtMarquee.Size = new System.Drawing.Size(726, 34);
-            this.txtMarquee.TabIndex = 0;
+            this.txtMarquee.TabIndex = 1;
             this.txtMarquee.TextChanged += new System.EventHandler(this.TxtMarquee_TextChanged);
             // 
             // bwAnimate
@@ -65,7 +65,7 @@ namespace _8x8x8_LED.View
             this.chkAnimate.Location = new System.Drawing.Point(12, 12);
             this.chkAnimate.Name = "chkAnimate";
             this.chkAnimate.Size = new System.Drawing.Size(98, 28);
-            this.chkAnimate.TabIndex = 3;
+            this.chkAnimate.TabIndex = 0;
             this.chkAnimate.Text = "&Animate";
             this.chkAnimate.UseVisualStyleBackColor = true;
             this.chkAnimate.CheckedChanged += new System.EventHandler(this.ChkAnimate_CheckedChanged);
@@ -76,7 +76,7 @@ namespace _8x8x8_LED.View
             this.lblSpacing.Location = new System.Drawing.Point(13, 106);
             this.lblSpacing.Name = "lblSpacing";
             this.lblSpacing.Size = new System.Drawing.Size(155, 24);
-            this.lblSpacing.TabIndex = 4;
+            this.lblSpacing.TabIndex = 2;
             this.lblSpacing.Text = "S&pacing Amount:";
             // 
             // nudSpacing
@@ -84,7 +84,7 @@ namespace _8x8x8_LED.View
             this.nudSpacing.Location = new System.Drawing.Point(174, 104);
             this.nudSpacing.Name = "nudSpacing";
             this.nudSpacing.Size = new System.Drawing.Size(120, 29);
-            this.nudSpacing.TabIndex = 5;
+            this.nudSpacing.TabIndex = 3;
             this.nudSpacing.Value = new decimal(new int[] {
             1,
             0,
@@ -98,7 +98,7 @@ namespace _8x8x8_LED.View
             this.lblSpeed.Location = new System.Drawing.Point(361, 106);
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(71, 24);
-            this.lblSpeed.TabIndex = 8;
+            this.lblSpeed.TabIndex = 4;
             this.lblSpeed.Text = "&Speed:";
             // 
             // trkSpeed
@@ -107,7 +107,7 @@ namespace _8x8x8_LED.View
             this.trkSpeed.Maximum = 1000;
             this.trkSpeed.Name = "trkSpeed";
             this.trkSpeed.Size = new System.Drawing.Size(300, 45);
-            this.trkSpeed.TabIndex = 9;
+            this.trkSpeed.TabIndex = 5;
             this.trkSpeed.Value = 200;
             this.trkSpeed.Scroll += new System.EventHandler(this.TrkSpeed_Scroll);
             // 
@@ -119,7 +119,7 @@ namespace _8x8x8_LED.View
             this.chkLetterEnding.Location = new System.Drawing.Point(12, 159);
             this.chkLetterEnding.Name = "chkLetterEnding";
             this.chkLetterEnding.Size = new System.Drawing.Size(240, 28);
-            this.chkLetterEnding.TabIndex = 10;
+            this.chkLetterEnding.TabIndex = 6;
             this.chkLetterEnding.Text = "&End after last letter leaves";
             this.chkLetterEnding.UseVisualStyleBackColor = true;
             this.chkLetterEnding.CheckedChanged += new System.EventHandler(this.ChkLetterEnding_CheckedChanged);

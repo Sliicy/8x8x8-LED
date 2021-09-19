@@ -40,7 +40,7 @@ namespace _8x8x8_LED.View
             this.btnStart.Location = new System.Drawing.Point(74, 214);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(136, 35);
-            this.btnStart.TabIndex = 0;
+            this.btnStart.TabIndex = 1;
             this.btnStart.Text = "Start &Game";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.BtnStart_Click);
@@ -51,7 +51,7 @@ namespace _8x8x8_LED.View
             this.lblPlayer1Controls.Location = new System.Drawing.Point(55, 9);
             this.lblPlayer1Controls.Name = "lblPlayer1Controls";
             this.lblPlayer1Controls.Size = new System.Drawing.Size(174, 168);
-            this.lblPlayer1Controls.TabIndex = 4;
+            this.lblPlayer1Controls.TabIndex = 0;
             this.lblPlayer1Controls.Text = "Player Controls:\r\nW - Forwards\r\nS - Backwards\r\nA - Leftwards\r\nD - Rightwards\r\nUp " +
     "- Upwards\r\nDown - Downwards";
             // 

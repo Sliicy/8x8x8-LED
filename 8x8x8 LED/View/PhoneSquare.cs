@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
@@ -239,6 +240,11 @@ namespace _8x8x8_LED.View
         private void TxtURL_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.PhoneSquare_URL = txtURL.Text;
+        }
+
+        private void LinkLabelURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://play.google.com/store/apps/details?id=com.pas.webcam.pro&hl=en_US&gl=US");
         }
     }
 

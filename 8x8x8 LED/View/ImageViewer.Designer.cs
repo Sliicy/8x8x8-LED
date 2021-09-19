@@ -88,7 +88,7 @@ namespace _8x8x8_LED
             this.btnShiftLeftwards.Margin = new System.Windows.Forms.Padding(6);
             this.btnShiftLeftwards.Name = "btnShiftLeftwards";
             this.btnShiftLeftwards.Size = new System.Drawing.Size(200, 42);
-            this.btnShiftLeftwards.TabIndex = 4;
+            this.btnShiftLeftwards.TabIndex = 10;
             this.btnShiftLeftwards.Text = "Shift Leftwards";
             this.btnShiftLeftwards.UseVisualStyleBackColor = true;
             this.btnShiftLeftwards.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -99,7 +99,7 @@ namespace _8x8x8_LED
             this.btnShiftRightwards.Margin = new System.Windows.Forms.Padding(6);
             this.btnShiftRightwards.Name = "btnShiftRightwards";
             this.btnShiftRightwards.Size = new System.Drawing.Size(200, 42);
-            this.btnShiftRightwards.TabIndex = 4;
+            this.btnShiftRightwards.TabIndex = 11;
             this.btnShiftRightwards.Text = "Shift Rightwards";
             this.btnShiftRightwards.UseVisualStyleBackColor = true;
             this.btnShiftRightwards.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -110,7 +110,7 @@ namespace _8x8x8_LED
             this.btnShiftUpwards.Margin = new System.Windows.Forms.Padding(6);
             this.btnShiftUpwards.Name = "btnShiftUpwards";
             this.btnShiftUpwards.Size = new System.Drawing.Size(200, 42);
-            this.btnShiftUpwards.TabIndex = 4;
+            this.btnShiftUpwards.TabIndex = 8;
             this.btnShiftUpwards.Text = "Shift Upwards";
             this.btnShiftUpwards.UseVisualStyleBackColor = true;
             this.btnShiftUpwards.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -121,7 +121,7 @@ namespace _8x8x8_LED
             this.btnShiftDownwards.Margin = new System.Windows.Forms.Padding(6);
             this.btnShiftDownwards.Name = "btnShiftDownwards";
             this.btnShiftDownwards.Size = new System.Drawing.Size(200, 42);
-            this.btnShiftDownwards.TabIndex = 4;
+            this.btnShiftDownwards.TabIndex = 13;
             this.btnShiftDownwards.Text = "Shift Downwards";
             this.btnShiftDownwards.UseVisualStyleBackColor = true;
             this.btnShiftDownwards.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -132,7 +132,7 @@ namespace _8x8x8_LED
             this.btnShiftBackwards.Margin = new System.Windows.Forms.Padding(6);
             this.btnShiftBackwards.Name = "btnShiftBackwards";
             this.btnShiftBackwards.Size = new System.Drawing.Size(200, 42);
-            this.btnShiftBackwards.TabIndex = 4;
+            this.btnShiftBackwards.TabIndex = 9;
             this.btnShiftBackwards.Text = "Shift Backwards";
             this.btnShiftBackwards.UseVisualStyleBackColor = true;
             this.btnShiftBackwards.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -143,7 +143,7 @@ namespace _8x8x8_LED
             this.btnShiftForwards.Margin = new System.Windows.Forms.Padding(6);
             this.btnShiftForwards.Name = "btnShiftForwards";
             this.btnShiftForwards.Size = new System.Drawing.Size(200, 42);
-            this.btnShiftForwards.TabIndex = 4;
+            this.btnShiftForwards.TabIndex = 12;
             this.btnShiftForwards.Text = "Shift Forwards";
             this.btnShiftForwards.UseVisualStyleBackColor = true;
             this.btnShiftForwards.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -154,7 +154,7 @@ namespace _8x8x8_LED
             this.btnRotateYCounter.Margin = new System.Windows.Forms.Padding(6);
             this.btnRotateYCounter.Name = "btnRotateYCounter";
             this.btnRotateYCounter.Size = new System.Drawing.Size(250, 42);
-            this.btnRotateYCounter.TabIndex = 4;
+            this.btnRotateYCounter.TabIndex = 22;
             this.btnRotateYCounter.Text = "Rotate Y Counterclockwise";
             this.btnRotateYCounter.UseVisualStyleBackColor = true;
             this.btnRotateYCounter.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -165,7 +165,7 @@ namespace _8x8x8_LED
             this.btnRotateXClock.Margin = new System.Windows.Forms.Padding(6);
             this.btnRotateXClock.Name = "btnRotateXClock";
             this.btnRotateXClock.Size = new System.Drawing.Size(250, 42);
-            this.btnRotateXClock.TabIndex = 4;
+            this.btnRotateXClock.TabIndex = 19;
             this.btnRotateXClock.Text = "Rotate X Clockwise";
             this.btnRotateXClock.UseVisualStyleBackColor = true;
             this.btnRotateXClock.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -176,7 +176,7 @@ namespace _8x8x8_LED
             this.btnRotateYClock.Margin = new System.Windows.Forms.Padding(6);
             this.btnRotateYClock.Name = "btnRotateYClock";
             this.btnRotateYClock.Size = new System.Drawing.Size(250, 42);
-            this.btnRotateYClock.TabIndex = 4;
+            this.btnRotateYClock.TabIndex = 21;
             this.btnRotateYClock.Text = "Rotate Y Clockwise";
             this.btnRotateYClock.UseVisualStyleBackColor = true;
             this.btnRotateYClock.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -187,7 +187,7 @@ namespace _8x8x8_LED
             this.btnRotateZClock.Margin = new System.Windows.Forms.Padding(6);
             this.btnRotateZClock.Name = "btnRotateZClock";
             this.btnRotateZClock.Size = new System.Drawing.Size(250, 42);
-            this.btnRotateZClock.TabIndex = 4;
+            this.btnRotateZClock.TabIndex = 23;
             this.btnRotateZClock.Text = "Rotate Z Clockwise";
             this.btnRotateZClock.UseVisualStyleBackColor = true;
             this.btnRotateZClock.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -198,7 +198,7 @@ namespace _8x8x8_LED
             this.btnRotateZCounter.Margin = new System.Windows.Forms.Padding(6);
             this.btnRotateZCounter.Name = "btnRotateZCounter";
             this.btnRotateZCounter.Size = new System.Drawing.Size(250, 42);
-            this.btnRotateZCounter.TabIndex = 4;
+            this.btnRotateZCounter.TabIndex = 24;
             this.btnRotateZCounter.Text = "Rotate Z Counterclockwise";
             this.btnRotateZCounter.UseVisualStyleBackColor = true;
             this.btnRotateZCounter.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -209,7 +209,7 @@ namespace _8x8x8_LED
             this.btnRotateXCounter.Margin = new System.Windows.Forms.Padding(6);
             this.btnRotateXCounter.Name = "btnRotateXCounter";
             this.btnRotateXCounter.Size = new System.Drawing.Size(250, 42);
-            this.btnRotateXCounter.TabIndex = 4;
+            this.btnRotateXCounter.TabIndex = 20;
             this.btnRotateXCounter.Text = "Rotate X Counterclockwise";
             this.btnRotateXCounter.UseVisualStyleBackColor = true;
             this.btnRotateXCounter.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -220,7 +220,7 @@ namespace _8x8x8_LED
             this.btnFlipX.Margin = new System.Windows.Forms.Padding(6);
             this.btnFlipX.Name = "btnFlipX";
             this.btnFlipX.Size = new System.Drawing.Size(250, 42);
-            this.btnFlipX.TabIndex = 4;
+            this.btnFlipX.TabIndex = 15;
             this.btnFlipX.Text = "Flip &X Axis";
             this.btnFlipX.UseVisualStyleBackColor = true;
             this.btnFlipX.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -231,7 +231,7 @@ namespace _8x8x8_LED
             this.btnFlipY.Margin = new System.Windows.Forms.Padding(6);
             this.btnFlipY.Name = "btnFlipY";
             this.btnFlipY.Size = new System.Drawing.Size(250, 42);
-            this.btnFlipY.TabIndex = 4;
+            this.btnFlipY.TabIndex = 16;
             this.btnFlipY.Text = "Flip &Y Axis";
             this.btnFlipY.UseVisualStyleBackColor = true;
             this.btnFlipY.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -242,7 +242,7 @@ namespace _8x8x8_LED
             this.btnFlipZ.Margin = new System.Windows.Forms.Padding(6);
             this.btnFlipZ.Name = "btnFlipZ";
             this.btnFlipZ.Size = new System.Drawing.Size(250, 42);
-            this.btnFlipZ.TabIndex = 4;
+            this.btnFlipZ.TabIndex = 17;
             this.btnFlipZ.Text = "Flip &Z Axis";
             this.btnFlipZ.UseVisualStyleBackColor = true;
             this.btnFlipZ.Click += new System.EventHandler(this.BtnClickOperation_Click);
@@ -255,7 +255,7 @@ namespace _8x8x8_LED
             this.chkLoop.Location = new System.Drawing.Point(6, 28);
             this.chkLoop.Name = "chkLoop";
             this.chkLoop.Size = new System.Drawing.Size(72, 28);
-            this.chkLoop.TabIndex = 5;
+            this.chkLoop.TabIndex = 7;
             this.chkLoop.Text = "Loop";
             this.chkLoop.UseVisualStyleBackColor = true;
             // 
@@ -283,7 +283,7 @@ namespace _8x8x8_LED
             this.grpFlip.Location = new System.Drawing.Point(1128, 12);
             this.grpFlip.Name = "grpFlip";
             this.grpFlip.Size = new System.Drawing.Size(267, 196);
-            this.grpFlip.TabIndex = 7;
+            this.grpFlip.TabIndex = 14;
             this.grpFlip.TabStop = false;
             this.grpFlip.Text = "Flip";
             // 
@@ -298,7 +298,7 @@ namespace _8x8x8_LED
             this.grpRotate.Location = new System.Drawing.Point(1128, 214);
             this.grpRotate.Name = "grpRotate";
             this.grpRotate.Size = new System.Drawing.Size(267, 355);
-            this.grpRotate.TabIndex = 8;
+            this.grpRotate.TabIndex = 18;
             this.grpRotate.TabStop = false;
             this.grpRotate.Text = "Rotate";
             // 
@@ -307,7 +307,7 @@ namespace _8x8x8_LED
             this.pnlMatrix.Location = new System.Drawing.Point(44, 97);
             this.pnlMatrix.Name = "pnlMatrix";
             this.pnlMatrix.Size = new System.Drawing.Size(1024, 128);
-            this.pnlMatrix.TabIndex = 9;
+            this.pnlMatrix.TabIndex = 2;
             // 
             // btnSave
             // 
@@ -315,7 +315,7 @@ namespace _8x8x8_LED
             this.btnSave.Margin = new System.Windows.Forms.Padding(6);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(138, 42);
-            this.btnSave.TabIndex = 1;
+            this.btnSave.TabIndex = 4;
             this.btnSave.Text = "&Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
@@ -326,7 +326,7 @@ namespace _8x8x8_LED
             this.lblHow.Location = new System.Drawing.Point(40, 228);
             this.lblHow.Name = "lblHow";
             this.lblHow.Size = new System.Drawing.Size(249, 24);
-            this.lblHow.TabIndex = 10;
+            this.lblHow.TabIndex = 3;
             this.lblHow.Text = "Control = Draw; Shift = Erase";
             // 
             // btnSaveNew
@@ -335,7 +335,7 @@ namespace _8x8x8_LED
             this.btnSaveNew.Margin = new System.Windows.Forms.Padding(6);
             this.btnSaveNew.Name = "btnSaveNew";
             this.btnSaveNew.Size = new System.Drawing.Size(200, 42);
-            this.btnSaveNew.TabIndex = 1;
+            this.btnSaveNew.TabIndex = 5;
             this.btnSaveNew.Text = "Save As &New Frame";
             this.btnSaveNew.UseVisualStyleBackColor = true;
             this.btnSaveNew.Click += new System.EventHandler(this.BtnSaveNew_Click);

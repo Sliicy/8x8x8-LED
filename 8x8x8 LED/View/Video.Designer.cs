@@ -48,7 +48,7 @@ namespace _8x8x8_LED.View
             this.btnSelectFile.Margin = new System.Windows.Forms.Padding(6);
             this.btnSelectFile.Name = "btnSelectFile";
             this.btnSelectFile.Size = new System.Drawing.Size(193, 42);
-            this.btnSelectFile.TabIndex = 0;
+            this.btnSelectFile.TabIndex = 1;
             this.btnSelectFile.Text = "Select &File";
             this.btnSelectFile.UseVisualStyleBackColor = true;
             this.btnSelectFile.Click += new System.EventHandler(this.BtnSelectFile_Click);
@@ -59,7 +59,7 @@ namespace _8x8x8_LED.View
             this.lblSpeed.Location = new System.Drawing.Point(8, 102);
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(71, 24);
-            this.lblSpeed.TabIndex = 1;
+            this.lblSpeed.TabIndex = 2;
             this.lblSpeed.Text = "&Speed:";
             // 
             // nudSpeed
@@ -77,7 +77,7 @@ namespace _8x8x8_LED.View
             0});
             this.nudSpeed.Name = "nudSpeed";
             this.nudSpeed.Size = new System.Drawing.Size(120, 29);
-            this.nudSpeed.TabIndex = 2;
+            this.nudSpeed.TabIndex = 3;
             this.nudSpeed.Value = new decimal(new int[] {
             50,
             0,
@@ -96,7 +96,7 @@ namespace _8x8x8_LED.View
             this.grpAnimationMethod.Location = new System.Drawing.Point(12, 135);
             this.grpAnimationMethod.Name = "grpAnimationMethod";
             this.grpAnimationMethod.Size = new System.Drawing.Size(193, 121);
-            this.grpAnimationMethod.TabIndex = 5;
+            this.grpAnimationMethod.TabIndex = 4;
             this.grpAnimationMethod.TabStop = false;
             this.grpAnimationMethod.Text = "Animation Type";
             // 
@@ -106,7 +106,7 @@ namespace _8x8x8_LED.View
             this.rbGravity.Location = new System.Drawing.Point(6, 62);
             this.rbGravity.Name = "rbGravity";
             this.rbGravity.Size = new System.Drawing.Size(84, 28);
-            this.rbGravity.TabIndex = 5;
+            this.rbGravity.TabIndex = 6;
             this.rbGravity.Text = "&Gravity";
             this.rbGravity.UseVisualStyleBackColor = true;
             // 
@@ -128,7 +128,7 @@ namespace _8x8x8_LED.View
             this.chkAnimate.Location = new System.Drawing.Point(12, 12);
             this.chkAnimate.Name = "chkAnimate";
             this.chkAnimate.Size = new System.Drawing.Size(98, 28);
-            this.chkAnimate.TabIndex = 6;
+            this.chkAnimate.TabIndex = 0;
             this.chkAnimate.Text = "&Animate";
             this.chkAnimate.UseVisualStyleBackColor = true;
             this.chkAnimate.CheckedChanged += new System.EventHandler(this.ChkAnimate_CheckedChanged);

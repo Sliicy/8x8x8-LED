@@ -50,7 +50,7 @@ namespace _8x8x8_LED.Apps
             this.chkSyncMusic.Margin = new System.Windows.Forms.Padding(6);
             this.chkSyncMusic.Name = "chkSyncMusic";
             this.chkSyncMusic.Size = new System.Drawing.Size(126, 28);
-            this.chkSyncMusic.TabIndex = 1;
+            this.chkSyncMusic.TabIndex = 0;
             this.chkSyncMusic.Text = "S&ync Music";
             this.chkSyncMusic.UseVisualStyleBackColor = true;
             this.chkSyncMusic.CheckedChanged += new System.EventHandler(this.ChkSyncMusic_CheckedChanged);
@@ -67,7 +67,7 @@ namespace _8x8x8_LED.Apps
             this.lblSamples.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblSamples.Name = "lblSamples";
             this.lblSamples.Size = new System.Drawing.Size(88, 24);
-            this.lblSamples.TabIndex = 6;
+            this.lblSamples.TabIndex = 5;
             this.lblSamples.Text = "S&amples:";
             // 
             // trkSamples
@@ -80,7 +80,7 @@ namespace _8x8x8_LED.Apps
             this.trkSamples.Name = "trkSamples";
             this.trkSamples.Size = new System.Drawing.Size(340, 45);
             this.trkSamples.SmallChange = 8;
-            this.trkSamples.TabIndex = 7;
+            this.trkSamples.TabIndex = 6;
             this.trkSamples.Value = 1024;
             this.trkSamples.Scroll += new System.EventHandler(this.TrkSamples_Scroll);
             // 
@@ -93,7 +93,7 @@ namespace _8x8x8_LED.Apps
             this.chkMirrored.Margin = new System.Windows.Forms.Padding(6);
             this.chkMirrored.Name = "chkMirrored";
             this.chkMirrored.Size = new System.Drawing.Size(155, 28);
-            this.chkMirrored.TabIndex = 2;
+            this.chkMirrored.TabIndex = 1;
             this.chkMirrored.Text = "&Mirrored Audio";
             this.chkMirrored.UseVisualStyleBackColor = true;
             // 
@@ -106,7 +106,7 @@ namespace _8x8x8_LED.Apps
             this.chkShowSilence.Margin = new System.Windows.Forms.Padding(6);
             this.chkShowSilence.Name = "chkShowSilence";
             this.chkShowSilence.Size = new System.Drawing.Size(145, 28);
-            this.chkShowSilence.TabIndex = 3;
+            this.chkShowSilence.TabIndex = 2;
             this.chkShowSilence.Text = "Show &Silence";
             this.chkShowSilence.UseVisualStyleBackColor = true;
             this.chkShowSilence.CheckedChanged += new System.EventHandler(this.ChkShowSilence_CheckedChanged);
@@ -118,7 +118,7 @@ namespace _8x8x8_LED.Apps
             this.lblResponsiveness.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblResponsiveness.Name = "lblResponsiveness";
             this.lblResponsiveness.Size = new System.Drawing.Size(154, 24);
-            this.lblResponsiveness.TabIndex = 4;
+            this.lblResponsiveness.TabIndex = 3;
             this.lblResponsiveness.Text = "&Responsiveness:";
             // 
             // lblMusicStyle
@@ -127,8 +127,8 @@ namespace _8x8x8_LED.Apps
             this.lblMusicStyle.Location = new System.Drawing.Point(11, 207);
             this.lblMusicStyle.Name = "lblMusicStyle";
             this.lblMusicStyle.Size = new System.Drawing.Size(110, 24);
-            this.lblMusicStyle.TabIndex = 9;
-            this.lblMusicStyle.Text = "Music St&yle:";
+            this.lblMusicStyle.TabIndex = 7;
+            this.lblMusicStyle.Text = "Music S&tyle:";
             // 
             // cbMusicStyle
             // 
@@ -172,7 +172,7 @@ namespace _8x8x8_LED.Apps
             this.cbResponsiveness.Location = new System.Drawing.Point(178, 126);
             this.cbResponsiveness.Name = "cbResponsiveness";
             this.cbResponsiveness.Size = new System.Drawing.Size(343, 32);
-            this.cbResponsiveness.TabIndex = 5;
+            this.cbResponsiveness.TabIndex = 4;
             this.cbResponsiveness.SelectedIndexChanged += new System.EventHandler(this.CbResponsiveness_SelectedIndexChanged);
             // 
             // FrmMusic

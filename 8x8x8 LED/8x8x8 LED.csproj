@@ -315,7 +315,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerialHelper.cs" />
+    <Compile Include="Helpers\SerialHelper.cs" />
     <Compile Include="View\Rain.cs">
       <SubType>Form</SubType>
     </Compile>
