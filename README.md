@@ -5,7 +5,7 @@ Project that can control an 8x8x8 LED matrix cube and display anything on it.
 
 ## About this Project
 
-This project was inspired by [Tomazas' firmware](https://github.com/tomazas/ledcube8x8x8) for controlling 8x8x8 LED Cubes, as well as the [Java program](https://github.com/aguegu/DotMatrixJava) used to control the cube in real-time.
+This project was inspired by [Tomazas' firmware](https://github.com/tomazas/ledcube8x8x8) for controlling 8x8x8 LED Cubes, as well as Aguegu's [Java program](https://github.com/aguegu/DotMatrixJava) used to control the cube in real-time.
 
 This project consists of a series of mini applets that can be used to display various animations on any cube that adheres to the same data standards Tomazas created.
 
