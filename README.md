@@ -1,6 +1,8 @@
 # 8x8x8-LED
 Project that can control an 8x8x8 LED matrix cube and display anything on it.
 
+<img src="/Screenshots/Logo.png" alt="8x8x8 LED Logo" width="100"/>
+
 ## About this Project
 
 This project was inspired by [Tomazas' firmware](https://github.com/tomazas/ledcube8x8x8) for controlling 8x8x8 LED Cubes, as well as the [Java program](https://github.com/aguegu/DotMatrixJava) used to control the cube in real-time.
