@@ -27,7 +27,7 @@ Since I have a slightly different cube than the aformentioned cube in [Tomazas' 
 The following are some videos of various animations in action:
 
 ### Music Visualizer
-There are 9 different styles to choose from, each animating the cube based on music being played.
+There are 9 different styles to choose from, each animating the cube based on music being played (each one is briefly shown below).
 
 ![Music](/Screenshots/Music.gif)
 ![Music Visualizer](/Screenshots/Music-Screenshot.png)
