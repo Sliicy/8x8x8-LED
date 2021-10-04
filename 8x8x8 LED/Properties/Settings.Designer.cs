@@ -406,5 +406,41 @@ namespace _8x8x8_LED.Properties {
                 this["Marquee_EndLastLetter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal OffsetX {
+            get {
+                return ((decimal)(this["OffsetX"]));
+            }
+            set {
+                this["OffsetX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal OffsetY {
+            get {
+                return ((decimal)(this["OffsetY"]));
+            }
+            set {
+                this["OffsetY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal OffsetZ {
+            get {
+                return ((decimal)(this["OffsetZ"]));
+            }
+            set {
+                this["OffsetZ"] = value;
+            }
+        }
     }
 }

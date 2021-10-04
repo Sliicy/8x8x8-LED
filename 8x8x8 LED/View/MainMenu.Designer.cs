@@ -32,7 +32,13 @@ namespace _8x8x8_LED
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMainMenu));
             this.lstApps = new System.Windows.Forms.ListBox();
             this.btnShowApp = new System.Windows.Forms.Button();
-            this.grpRotation = new System.Windows.Forms.GroupBox();
+            this.grpGeometry = new System.Windows.Forms.GroupBox();
+            this.lblOffsetZ = new System.Windows.Forms.Label();
+            this.lblOffsetY = new System.Windows.Forms.Label();
+            this.lblOffsetX = new System.Windows.Forms.Label();
+            this.nudOffsetZ = new System.Windows.Forms.NumericUpDown();
+            this.nudOffsetY = new System.Windows.Forms.NumericUpDown();
+            this.nudOffsetX = new System.Windows.Forms.NumericUpDown();
             this.btnCalibrate = new System.Windows.Forms.Button();
             this.chkFlipZ = new System.Windows.Forms.CheckBox();
             this.chkFlipY = new System.Windows.Forms.CheckBox();
@@ -48,7 +54,6 @@ namespace _8x8x8_LED
             this.btnSendPacket = new System.Windows.Forms.Button();
             this.txtBytesToSend = new System.Windows.Forms.TextBox();
             this.grpConnection = new System.Windows.Forms.GroupBox();
-            this.btnConnect = new System.Windows.Forms.Button();
             this.chkAutoconnect = new System.Windows.Forms.CheckBox();
             this.nudDataBits = new System.Windows.Forms.NumericUpDown();
             this.lblParity = new System.Windows.Forms.Label();
@@ -60,17 +65,21 @@ namespace _8x8x8_LED
             this.cbParity = new System.Windows.Forms.ComboBox();
             this.cbStopBits = new System.Windows.Forms.ComboBox();
             this.cbComPort = new System.Windows.Forms.ComboBox();
+            this.btnConnect = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tpMenu = new System.Windows.Forms.TabPage();
+            this.tpSettings = new System.Windows.Forms.TabPage();
             this.btnReset = new System.Windows.Forms.Button();
-            this.grpRotation.SuspendLayout();
+            this.grpGeometry.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetX)).BeginInit();
             this.grpSendPacket.SuspendLayout();
             this.grpConnection.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDataBits)).BeginInit();
             this.tabControl.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tpMenu.SuspendLayout();
+            this.tpSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // lstApps
@@ -92,24 +101,96 @@ namespace _8x8x8_LED
             this.btnShowApp.UseVisualStyleBackColor = true;
             this.btnShowApp.Click += new System.EventHandler(this.BtnShowApp_Click);
             // 
-            // grpRotation
+            // grpGeometry
             // 
-            this.grpRotation.Controls.Add(this.btnCalibrate);
-            this.grpRotation.Controls.Add(this.chkFlipZ);
-            this.grpRotation.Controls.Add(this.chkFlipY);
-            this.grpRotation.Controls.Add(this.chkFlipX);
-            this.grpRotation.Controls.Add(this.cbRotateZ);
-            this.grpRotation.Controls.Add(this.cbRotateY);
-            this.grpRotation.Controls.Add(this.cbRotateX);
-            this.grpRotation.Controls.Add(this.lblRotateZ);
-            this.grpRotation.Controls.Add(this.lblRotateY);
-            this.grpRotation.Controls.Add(this.lblRotateX);
-            this.grpRotation.Location = new System.Drawing.Point(621, 9);
-            this.grpRotation.Name = "grpRotation";
-            this.grpRotation.Size = new System.Drawing.Size(287, 356);
-            this.grpRotation.TabIndex = 18;
-            this.grpRotation.TabStop = false;
-            this.grpRotation.Text = "Rotation";
+            this.grpGeometry.Controls.Add(this.lblOffsetZ);
+            this.grpGeometry.Controls.Add(this.lblOffsetY);
+            this.grpGeometry.Controls.Add(this.lblOffsetX);
+            this.grpGeometry.Controls.Add(this.nudOffsetZ);
+            this.grpGeometry.Controls.Add(this.nudOffsetY);
+            this.grpGeometry.Controls.Add(this.nudOffsetX);
+            this.grpGeometry.Controls.Add(this.btnCalibrate);
+            this.grpGeometry.Controls.Add(this.chkFlipZ);
+            this.grpGeometry.Controls.Add(this.chkFlipY);
+            this.grpGeometry.Controls.Add(this.chkFlipX);
+            this.grpGeometry.Controls.Add(this.cbRotateZ);
+            this.grpGeometry.Controls.Add(this.cbRotateY);
+            this.grpGeometry.Controls.Add(this.cbRotateX);
+            this.grpGeometry.Controls.Add(this.lblRotateZ);
+            this.grpGeometry.Controls.Add(this.lblRotateY);
+            this.grpGeometry.Controls.Add(this.lblRotateX);
+            this.grpGeometry.Location = new System.Drawing.Point(621, 9);
+            this.grpGeometry.Name = "grpGeometry";
+            this.grpGeometry.Size = new System.Drawing.Size(287, 356);
+            this.grpGeometry.TabIndex = 18;
+            this.grpGeometry.TabStop = false;
+            this.grpGeometry.Text = "Geometry";
+            // 
+            // lblOffsetZ
+            // 
+            this.lblOffsetZ.AutoSize = true;
+            this.lblOffsetZ.Location = new System.Drawing.Point(120, 304);
+            this.lblOffsetZ.Name = "lblOffsetZ";
+            this.lblOffsetZ.Size = new System.Drawing.Size(79, 24);
+            this.lblOffsetZ.TabIndex = 33;
+            this.lblOffsetZ.Text = "&Offset Z:";
+            // 
+            // lblOffsetY
+            // 
+            this.lblOffsetY.AutoSize = true;
+            this.lblOffsetY.Location = new System.Drawing.Point(120, 270);
+            this.lblOffsetY.Name = "lblOffsetY";
+            this.lblOffsetY.Size = new System.Drawing.Size(79, 24);
+            this.lblOffsetY.TabIndex = 31;
+            this.lblOffsetY.Text = "&Offset Y:";
+            // 
+            // lblOffsetX
+            // 
+            this.lblOffsetX.AutoSize = true;
+            this.lblOffsetX.Location = new System.Drawing.Point(120, 236);
+            this.lblOffsetX.Name = "lblOffsetX";
+            this.lblOffsetX.Size = new System.Drawing.Size(81, 24);
+            this.lblOffsetX.TabIndex = 29;
+            this.lblOffsetX.Text = "&Offset X:";
+            // 
+            // nudOffsetZ
+            // 
+            this.nudOffsetZ.Location = new System.Drawing.Point(207, 302);
+            this.nudOffsetZ.Maximum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.nudOffsetZ.Name = "nudOffsetZ";
+            this.nudOffsetZ.Size = new System.Drawing.Size(38, 29);
+            this.nudOffsetZ.TabIndex = 34;
+            this.nudOffsetZ.ValueChanged += new System.EventHandler(this.NudOffsetZ_ValueChanged);
+            // 
+            // nudOffsetY
+            // 
+            this.nudOffsetY.Location = new System.Drawing.Point(207, 268);
+            this.nudOffsetY.Maximum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.nudOffsetY.Name = "nudOffsetY";
+            this.nudOffsetY.Size = new System.Drawing.Size(38, 29);
+            this.nudOffsetY.TabIndex = 32;
+            this.nudOffsetY.ValueChanged += new System.EventHandler(this.NudOffsetY_ValueChanged);
+            // 
+            // nudOffsetX
+            // 
+            this.nudOffsetX.Location = new System.Drawing.Point(207, 234);
+            this.nudOffsetX.Maximum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.nudOffsetX.Name = "nudOffsetX";
+            this.nudOffsetX.Size = new System.Drawing.Size(38, 29);
+            this.nudOffsetX.TabIndex = 30;
+            this.nudOffsetX.ValueChanged += new System.EventHandler(this.NudOffsetX_ValueChanged);
             // 
             // btnCalibrate
             // 
@@ -124,7 +205,7 @@ namespace _8x8x8_LED
             // chkFlipZ
             // 
             this.chkFlipZ.AutoSize = true;
-            this.chkFlipZ.Location = new System.Drawing.Point(21, 303);
+            this.chkFlipZ.Location = new System.Drawing.Point(23, 303);
             this.chkFlipZ.Name = "chkFlipZ";
             this.chkFlipZ.Size = new System.Drawing.Size(77, 28);
             this.chkFlipZ.TabIndex = 28;
@@ -163,7 +244,7 @@ namespace _8x8x8_LED
             "90",
             "180",
             "270"});
-            this.cbRotateZ.Location = new System.Drawing.Point(124, 181);
+            this.cbRotateZ.Location = new System.Drawing.Point(124, 179);
             this.cbRotateZ.Name = "cbRotateZ";
             this.cbRotateZ.Size = new System.Drawing.Size(121, 32);
             this.cbRotateZ.TabIndex = 25;
@@ -178,7 +259,7 @@ namespace _8x8x8_LED
             "90",
             "180",
             "270"});
-            this.cbRotateY.Location = new System.Drawing.Point(124, 143);
+            this.cbRotateY.Location = new System.Drawing.Point(124, 141);
             this.cbRotateY.Name = "cbRotateY";
             this.cbRotateY.Size = new System.Drawing.Size(121, 32);
             this.cbRotateY.TabIndex = 23;
@@ -193,7 +274,7 @@ namespace _8x8x8_LED
             "90",
             "180",
             "270"});
-            this.cbRotateX.Location = new System.Drawing.Point(124, 105);
+            this.cbRotateX.Location = new System.Drawing.Point(124, 103);
             this.cbRotateX.Name = "cbRotateX";
             this.cbRotateX.Size = new System.Drawing.Size(121, 32);
             this.cbRotateX.TabIndex = 21;
@@ -202,7 +283,7 @@ namespace _8x8x8_LED
             // lblRotateZ
             // 
             this.lblRotateZ.AutoSize = true;
-            this.lblRotateZ.Location = new System.Drawing.Point(21, 184);
+            this.lblRotateZ.Location = new System.Drawing.Point(19, 182);
             this.lblRotateZ.Name = "lblRotateZ";
             this.lblRotateZ.Size = new System.Drawing.Size(85, 24);
             this.lblRotateZ.TabIndex = 24;
@@ -211,7 +292,7 @@ namespace _8x8x8_LED
             // lblRotateY
             // 
             this.lblRotateY.AutoSize = true;
-            this.lblRotateY.Location = new System.Drawing.Point(19, 146);
+            this.lblRotateY.Location = new System.Drawing.Point(19, 144);
             this.lblRotateY.Name = "lblRotateY";
             this.lblRotateY.Size = new System.Drawing.Size(85, 24);
             this.lblRotateY.TabIndex = 22;
@@ -220,7 +301,7 @@ namespace _8x8x8_LED
             // lblRotateX
             // 
             this.lblRotateX.AutoSize = true;
-            this.lblRotateX.Location = new System.Drawing.Point(19, 111);
+            this.lblRotateX.Location = new System.Drawing.Point(19, 106);
             this.lblRotateX.Name = "lblRotateX";
             this.lblRotateX.Size = new System.Drawing.Size(87, 24);
             this.lblRotateX.TabIndex = 20;
@@ -299,17 +380,6 @@ namespace _8x8x8_LED
             this.grpConnection.TabIndex = 1;
             this.grpConnection.TabStop = false;
             this.grpConnection.Text = "Connection";
-            // 
-            // btnConnect
-            // 
-            this.btnConnect.Location = new System.Drawing.Point(311, 470);
-            this.btnConnect.Margin = new System.Windows.Forms.Padding(6);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(300, 42);
-            this.btnConnect.TabIndex = 13;
-            this.btnConnect.Text = "Co&nnect";
-            this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
             // 
             // chkAutoconnect
             // 
@@ -458,41 +528,52 @@ namespace _8x8x8_LED
             this.cbComPort.Click += new System.EventHandler(this.CbComPort_Click);
             this.cbComPort.Enter += new System.EventHandler(this.CbComPort_Click);
             // 
+            // btnConnect
+            // 
+            this.btnConnect.Location = new System.Drawing.Point(311, 470);
+            this.btnConnect.Margin = new System.Windows.Forms.Padding(6);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(300, 42);
+            this.btnConnect.TabIndex = 13;
+            this.btnConnect.Text = "Co&nnect";
+            this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
+            // 
             // tabControl
             // 
-            this.tabControl.Controls.Add(this.tabPage1);
-            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Controls.Add(this.tpMenu);
+            this.tabControl.Controls.Add(this.tpSettings);
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(923, 465);
             this.tabControl.TabIndex = 0;
             // 
-            // tabPage1
+            // tpMenu
             // 
-            this.tabPage1.Controls.Add(this.lstApps);
-            this.tabPage1.Controls.Add(this.btnShowApp);
-            this.tabPage1.Location = new System.Drawing.Point(4, 33);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(915, 428);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Menu";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tpMenu.Controls.Add(this.lstApps);
+            this.tpMenu.Controls.Add(this.btnShowApp);
+            this.tpMenu.Location = new System.Drawing.Point(4, 33);
+            this.tpMenu.Name = "tpMenu";
+            this.tpMenu.Padding = new System.Windows.Forms.Padding(3);
+            this.tpMenu.Size = new System.Drawing.Size(915, 428);
+            this.tpMenu.TabIndex = 0;
+            this.tpMenu.Text = "Menu";
+            this.tpMenu.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tpSettings
             // 
-            this.tabPage2.Controls.Add(this.btnReset);
-            this.tabPage2.Controls.Add(this.grpConnection);
-            this.tabPage2.Controls.Add(this.grpRotation);
-            this.tabPage2.Controls.Add(this.grpSendPacket);
-            this.tabPage2.Location = new System.Drawing.Point(4, 33);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(915, 428);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Settings";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tpSettings.Controls.Add(this.btnReset);
+            this.tpSettings.Controls.Add(this.grpConnection);
+            this.tpSettings.Controls.Add(this.grpGeometry);
+            this.tpSettings.Controls.Add(this.grpSendPacket);
+            this.tpSettings.Location = new System.Drawing.Point(4, 33);
+            this.tpSettings.Name = "tpSettings";
+            this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tpSettings.Size = new System.Drawing.Size(915, 428);
+            this.tpSettings.TabIndex = 1;
+            this.tpSettings.Text = "Settings";
+            this.tpSettings.UseVisualStyleBackColor = true;
             // 
             // btnReset
             // 
@@ -500,7 +581,7 @@ namespace _8x8x8_LED
             this.btnReset.Margin = new System.Windows.Forms.Padding(6);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(246, 42);
-            this.btnReset.TabIndex = 29;
+            this.btnReset.TabIndex = 35;
             this.btnReset.Text = "&Reset all Settings";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.BtnReset_Click);
@@ -524,16 +605,19 @@ namespace _8x8x8_LED
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyDown);
-            this.grpRotation.ResumeLayout(false);
-            this.grpRotation.PerformLayout();
+            this.grpGeometry.ResumeLayout(false);
+            this.grpGeometry.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetX)).EndInit();
             this.grpSendPacket.ResumeLayout(false);
             this.grpSendPacket.PerformLayout();
             this.grpConnection.ResumeLayout(false);
             this.grpConnection.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDataBits)).EndInit();
             this.tabControl.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            this.tpMenu.ResumeLayout(false);
+            this.tpSettings.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -556,7 +640,7 @@ namespace _8x8x8_LED
         private System.Windows.Forms.Button btnSendPacket;
         private System.Windows.Forms.TextBox txtBytesToSend;
         private System.Windows.Forms.Button btnInvertPacket;
-        private System.Windows.Forms.GroupBox grpRotation;
+        private System.Windows.Forms.GroupBox grpGeometry;
         private System.Windows.Forms.CheckBox chkFlipZ;
         private System.Windows.Forms.CheckBox chkFlipY;
         private System.Windows.Forms.CheckBox chkFlipX;
@@ -570,9 +654,15 @@ namespace _8x8x8_LED
         private System.Windows.Forms.Button btnShowApp;
         private System.Windows.Forms.ListBox lstApps;
         private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tpMenu;
+        private System.Windows.Forms.TabPage tpSettings;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Label lblOffsetZ;
+        private System.Windows.Forms.Label lblOffsetY;
+        private System.Windows.Forms.Label lblOffsetX;
+        private System.Windows.Forms.NumericUpDown nudOffsetZ;
+        private System.Windows.Forms.NumericUpDown nudOffsetY;
+        private System.Windows.Forms.NumericUpDown nudOffsetX;
     }
 }
 

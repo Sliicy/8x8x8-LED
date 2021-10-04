@@ -46,7 +46,6 @@ namespace _8x8x8_LED
                 lstApps.SelectedIndex = lstApps.FindString(requestedApp);
                 btnShowApp.PerformClick();
             }
-            
 
             // Load Previous Settings:
             chkAutoconnect.Checked = Properties.Settings.Default.Autoconnect;
@@ -62,6 +61,11 @@ namespace _8x8x8_LED
             chkFlipX.Checked = Properties.Settings.Default.FlippedX;
             chkFlipY.Checked = Properties.Settings.Default.FlippedY;
             chkFlipZ.Checked = Properties.Settings.Default.FlippedZ;
+
+            nudOffsetX.Value = Properties.Settings.Default.OffsetX;
+            nudOffsetY.Value = Properties.Settings.Default.OffsetY;
+            nudOffsetZ.Value = Properties.Settings.Default.OffsetZ;
+
             if (chkAutoconnect.Checked) btnConnect.PerformClick();
         }
 
@@ -289,6 +293,10 @@ namespace _8x8x8_LED
             cube.OrientationX = Convert.ToInt32(cbRotateX.Text);
             cube.OrientationY = Convert.ToInt32(cbRotateY.Text);
             cube.OrientationZ = Convert.ToInt32(cbRotateZ.Text);
+            cube.OffsetX = (int)nudOffsetX.Value;
+            cube.OffsetY = (int)nudOffsetY.Value;
+            cube.OffsetZ = (int)nudOffsetZ.Value;
+
             SerialHelper.Send(serialPort, cube);
 
             Properties.Settings.Default.OrientationX = cbRotateX.SelectedIndex;
@@ -298,6 +306,10 @@ namespace _8x8x8_LED
             Properties.Settings.Default.FlippedX = chkFlipX.Checked;
             Properties.Settings.Default.FlippedY = chkFlipY.Checked;
             Properties.Settings.Default.FlippedZ = chkFlipZ.Checked;
+
+            Properties.Settings.Default.OffsetX = nudOffsetX.Value;
+            Properties.Settings.Default.OffsetY = nudOffsetY.Value;
+            Properties.Settings.Default.OffsetZ = nudOffsetZ.Value;
         }
 
         private void ChkFlipX_CheckedChanged(object sender, EventArgs e)
@@ -388,7 +400,23 @@ namespace _8x8x8_LED
             if (MessageBox.Show("Reset all settings to default?", "Reset", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 Properties.Settings.Default.Reset();
+                Application.Restart();
             }
+        }
+
+        private void NudOffsetX_ValueChanged(object sender, EventArgs e)
+        {
+            RenderCube();
+        }
+
+        private void NudOffsetY_ValueChanged(object sender, EventArgs e)
+        {
+            RenderCube();
+        }
+
+        private void NudOffsetZ_ValueChanged(object sender, EventArgs e)
+        {
+            RenderCube();
         }
     }
 }

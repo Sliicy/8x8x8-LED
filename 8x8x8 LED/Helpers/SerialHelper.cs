@@ -99,6 +99,19 @@ namespace _8x8x8_LED
                     outputCube.Rotate(Orientation.ClockwiseZ, 2);
                 }
             }
+
+            if (cube.OffsetX != 0)
+            {
+                outputCube.Shift(Direction.Forwards, true, Math.Abs(cube.OffsetX) - 1);
+            }
+            if (cube.OffsetY != 0)
+            {
+                outputCube.Shift(Direction.Leftwards, true, Math.Abs(cube.OffsetY) - 1);
+            }
+            if (cube.OffsetZ != 0)
+            {
+                outputCube.Shift(Direction.Downwards, true, Math.Abs(cube.OffsetZ) - 1);
+            }
             SendPacket(serialPort, outputCube.matrix);
         }
     }

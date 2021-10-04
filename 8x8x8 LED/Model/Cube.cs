@@ -37,8 +37,7 @@ namespace _8x8x8_LED.Model
         // matrix[56] = 128
 
         /// <summary>
-        /// Represents the current state of the cube (is it rotated, flipped, etc).
-        /// -1 represents the cube not being modified.
+        /// Represents the current state of the cube (should it be rotated, flipped, have an offset, etc).
         /// </summary>
         public int OrientationX = 0;
         public int OrientationY = 0;
@@ -48,6 +47,9 @@ namespace _8x8x8_LED.Model
         public bool FlippedY = false;
         public bool FlippedZ = false;
 
+        public int OffsetX = 0;
+        public int OffsetY = 0;
+        public int OffsetZ = 0;
 
         public Cube(int size)
         {
@@ -344,7 +346,6 @@ namespace _8x8x8_LED.Model
             if (input - 1 >= 0)
             {
                 output.Add(1);
-                input -= 1;
             }
 
             return output;
@@ -530,7 +531,7 @@ namespace _8x8x8_LED.Model
 
                     counter++;
                     if (counter % 8 == 0)
-                        x = x / 2;
+                        x /= 2;
                 }
             } else if (orientation == Orientation.CounterclockwiseX)
             {
