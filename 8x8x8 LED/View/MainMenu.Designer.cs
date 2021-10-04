@@ -69,6 +69,7 @@ namespace _8x8x8_LED
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMenu = new System.Windows.Forms.TabPage();
             this.tpSettings = new System.Windows.Forms.TabPage();
+            this.btnWebsite = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.grpGeometry.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOffsetZ)).BeginInit();
@@ -563,6 +564,7 @@ namespace _8x8x8_LED
             // 
             // tpSettings
             // 
+            this.tpSettings.Controls.Add(this.btnWebsite);
             this.tpSettings.Controls.Add(this.btnReset);
             this.tpSettings.Controls.Add(this.grpConnection);
             this.tpSettings.Controls.Add(this.grpGeometry);
@@ -574,6 +576,17 @@ namespace _8x8x8_LED
             this.tpSettings.TabIndex = 1;
             this.tpSettings.Text = "Settings";
             this.tpSettings.UseVisualStyleBackColor = true;
+            // 
+            // btnWebsite
+            // 
+            this.btnWebsite.Location = new System.Drawing.Point(659, 377);
+            this.btnWebsite.Margin = new System.Windows.Forms.Padding(6);
+            this.btnWebsite.Name = "btnWebsite";
+            this.btnWebsite.Size = new System.Drawing.Size(246, 42);
+            this.btnWebsite.TabIndex = 36;
+            this.btnWebsite.Text = "&Website && Updates";
+            this.btnWebsite.UseVisualStyleBackColor = true;
+            this.btnWebsite.Click += new System.EventHandler(this.BtnWebsite_Click);
             // 
             // btnReset
             // 
@@ -588,6 +601,7 @@ namespace _8x8x8_LED
             // 
             // FrmMainMenu
             // 
+            this.AcceptButton = this.btnConnect;
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(924, 522);
@@ -663,6 +677,7 @@ namespace _8x8x8_LED
         private System.Windows.Forms.NumericUpDown nudOffsetZ;
         private System.Windows.Forms.NumericUpDown nudOffsetY;
         private System.Windows.Forms.NumericUpDown nudOffsetX;
+        private System.Windows.Forms.Button btnWebsite;
     }
 }
 

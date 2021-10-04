@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
@@ -79,6 +80,18 @@ namespace _8x8x8_LED
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Properties.Settings.Default.OrientationX = cbRotateX.SelectedIndex;
+            Properties.Settings.Default.OrientationY = cbRotateY.SelectedIndex;
+            Properties.Settings.Default.OrientationZ = cbRotateZ.SelectedIndex;
+
+            Properties.Settings.Default.FlippedX = chkFlipX.Checked;
+            Properties.Settings.Default.FlippedY = chkFlipY.Checked;
+            Properties.Settings.Default.FlippedZ = chkFlipZ.Checked;
+
+            Properties.Settings.Default.OffsetX = nudOffsetX.Value;
+            Properties.Settings.Default.OffsetY = nudOffsetY.Value;
+            Properties.Settings.Default.OffsetZ = nudOffsetZ.Value;
+
             Properties.Settings.Default.Save();
             try
             {
@@ -298,18 +311,6 @@ namespace _8x8x8_LED
             cube.OffsetZ = (int)nudOffsetZ.Value;
 
             SerialHelper.Send(serialPort, cube);
-
-            Properties.Settings.Default.OrientationX = cbRotateX.SelectedIndex;
-            Properties.Settings.Default.OrientationY = cbRotateY.SelectedIndex;
-            Properties.Settings.Default.OrientationZ = cbRotateZ.SelectedIndex;
-
-            Properties.Settings.Default.FlippedX = chkFlipX.Checked;
-            Properties.Settings.Default.FlippedY = chkFlipY.Checked;
-            Properties.Settings.Default.FlippedZ = chkFlipZ.Checked;
-
-            Properties.Settings.Default.OffsetX = nudOffsetX.Value;
-            Properties.Settings.Default.OffsetY = nudOffsetY.Value;
-            Properties.Settings.Default.OffsetZ = nudOffsetZ.Value;
         }
 
         private void ChkFlipX_CheckedChanged(object sender, EventArgs e)
@@ -417,6 +418,11 @@ namespace _8x8x8_LED
         private void NudOffsetZ_ValueChanged(object sender, EventArgs e)
         {
             RenderCube();
+        }
+
+        private void BtnWebsite_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/Sliicy/8x8x8-LED");
         }
     }
 }
