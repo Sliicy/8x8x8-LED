@@ -424,5 +424,10 @@ namespace _8x8x8_LED
         {
             Process.Start("https://github.com/Sliicy/8x8x8-LED");
         }
+
+        private void LstApps_DoubleClick(object sender, EventArgs e)
+        {
+            btnShowApp.PerformClick();
+        }
     }
 }

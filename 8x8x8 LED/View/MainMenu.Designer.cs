@@ -91,6 +91,7 @@ namespace _8x8x8_LED
             this.lstApps.Name = "lstApps";
             this.lstApps.Size = new System.Drawing.Size(300, 292);
             this.lstApps.TabIndex = 1;
+            this.lstApps.DoubleClick += new System.EventHandler(this.LstApps_DoubleClick);
             // 
             // btnShowApp
             // 
