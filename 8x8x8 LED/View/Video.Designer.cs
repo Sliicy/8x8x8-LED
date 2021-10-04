@@ -152,6 +152,7 @@ namespace _8x8x8_LED.View
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Video";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmVideo_FormClosing);
+            this.Load += new System.EventHandler(this.FrmVideo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).EndInit();
             this.grpAnimationMethod.ResumeLayout(false);
             this.grpAnimationMethod.PerformLayout();

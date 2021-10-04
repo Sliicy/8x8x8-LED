@@ -125,5 +125,10 @@ namespace _8x8x8_LED.View
                     bwRenderer.RunWorkerAsync();
             }
         }
+
+        private void FrmVideo_Load(object sender, EventArgs e)
+        {
+            chkAnimate.Checked = true;
+        }
     }
 }
