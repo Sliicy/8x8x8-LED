@@ -216,6 +216,8 @@ namespace _8x8x8_LED
         {
             foreach (Form openForm in Application.OpenForms)
             {
+                if (lstApps.SelectedItem == null)
+                    return;
                 if (openForm.Text == lstApps.SelectedItem.ToString())
                 {
                     openForm.BringToFront();
@@ -223,6 +225,8 @@ namespace _8x8x8_LED
                 }
             }
             Form form;
+            if (lstApps.SelectedItem == null)
+                return;
             if (lstApps.SelectedItem.ToString() == "Image Viewer")
             {
                 form = new FrmImageViewer(serialPort, ref cube);
