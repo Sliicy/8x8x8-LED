@@ -100,6 +100,7 @@ namespace _8x8x8_LED.View
                                 bytesToSend[i] = bytes[0];
 
                                 i++;
+                                if (!animate) return;
                             }
                         }
                         if (rbLooped.Checked)
