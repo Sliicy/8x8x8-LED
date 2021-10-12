@@ -38,6 +38,7 @@ namespace _8x8x8_LED.View
             this.rbGravity = new System.Windows.Forms.RadioButton();
             this.rbLooped = new System.Windows.Forms.RadioButton();
             this.chkAnimate = new System.Windows.Forms.CheckBox();
+            this.chkSyncMusic = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
             this.grpAnimationMethod.SuspendLayout();
             this.SuspendLayout();
@@ -83,6 +84,7 @@ namespace _8x8x8_LED.View
             0,
             0,
             0});
+            this.nudSpeed.ValueChanged += new System.EventHandler(this.nudSpeed_ValueChanged);
             // 
             // bwRenderer
             // 
@@ -133,11 +135,23 @@ namespace _8x8x8_LED.View
             this.chkAnimate.UseVisualStyleBackColor = true;
             this.chkAnimate.CheckedChanged += new System.EventHandler(this.ChkAnimate_CheckedChanged);
             // 
+            // chkSyncMusic
+            // 
+            this.chkSyncMusic.AutoSize = true;
+            this.chkSyncMusic.Location = new System.Drawing.Point(18, 262);
+            this.chkSyncMusic.Name = "chkSyncMusic";
+            this.chkSyncMusic.Size = new System.Drawing.Size(146, 28);
+            this.chkSyncMusic.TabIndex = 5;
+            this.chkSyncMusic.Text = "Sync to &Music";
+            this.chkSyncMusic.UseVisualStyleBackColor = true;
+            this.chkSyncMusic.CheckedChanged += new System.EventHandler(this.chkSyncMusic_CheckedChanged);
+            // 
             // FrmVideo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(218, 268);
+            this.ClientSize = new System.Drawing.Size(218, 351);
+            this.Controls.Add(this.chkSyncMusic);
             this.Controls.Add(this.chkAnimate);
             this.Controls.Add(this.grpAnimationMethod);
             this.Controls.Add(this.nudSpeed);
@@ -171,5 +185,6 @@ namespace _8x8x8_LED.View
         private System.Windows.Forms.RadioButton rbGravity;
         private System.Windows.Forms.RadioButton rbLooped;
         private System.Windows.Forms.CheckBox chkAnimate;
+        private System.Windows.Forms.CheckBox chkSyncMusic;
     }
 }
