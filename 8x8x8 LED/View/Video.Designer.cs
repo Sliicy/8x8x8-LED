@@ -84,7 +84,7 @@ namespace _8x8x8_LED.View
             0,
             0,
             0});
-            this.nudSpeed.ValueChanged += new System.EventHandler(this.nudSpeed_ValueChanged);
+            this.nudSpeed.ValueChanged += new System.EventHandler(this.NudSpeed_ValueChanged);
             // 
             // bwRenderer
             // 
@@ -95,10 +95,10 @@ namespace _8x8x8_LED.View
             // 
             this.grpAnimationMethod.Controls.Add(this.rbGravity);
             this.grpAnimationMethod.Controls.Add(this.rbLooped);
-            this.grpAnimationMethod.Location = new System.Drawing.Point(12, 135);
+            this.grpAnimationMethod.Location = new System.Drawing.Point(12, 169);
             this.grpAnimationMethod.Name = "grpAnimationMethod";
             this.grpAnimationMethod.Size = new System.Drawing.Size(193, 121);
-            this.grpAnimationMethod.TabIndex = 4;
+            this.grpAnimationMethod.TabIndex = 5;
             this.grpAnimationMethod.TabStop = false;
             this.grpAnimationMethod.Text = "Animation Type";
             // 
@@ -108,7 +108,7 @@ namespace _8x8x8_LED.View
             this.rbGravity.Location = new System.Drawing.Point(6, 62);
             this.rbGravity.Name = "rbGravity";
             this.rbGravity.Size = new System.Drawing.Size(84, 28);
-            this.rbGravity.TabIndex = 6;
+            this.rbGravity.TabIndex = 7;
             this.rbGravity.Text = "&Gravity";
             this.rbGravity.UseVisualStyleBackColor = true;
             // 
@@ -119,7 +119,7 @@ namespace _8x8x8_LED.View
             this.rbLooped.Location = new System.Drawing.Point(6, 28);
             this.rbLooped.Name = "rbLooped";
             this.rbLooped.Size = new System.Drawing.Size(93, 28);
-            this.rbLooped.TabIndex = 5;
+            this.rbLooped.TabIndex = 6;
             this.rbLooped.TabStop = true;
             this.rbLooped.Text = "&Looped";
             this.rbLooped.UseVisualStyleBackColor = true;
@@ -138,19 +138,19 @@ namespace _8x8x8_LED.View
             // chkSyncMusic
             // 
             this.chkSyncMusic.AutoSize = true;
-            this.chkSyncMusic.Location = new System.Drawing.Point(18, 262);
+            this.chkSyncMusic.Location = new System.Drawing.Point(12, 135);
             this.chkSyncMusic.Name = "chkSyncMusic";
             this.chkSyncMusic.Size = new System.Drawing.Size(146, 28);
-            this.chkSyncMusic.TabIndex = 5;
+            this.chkSyncMusic.TabIndex = 4;
             this.chkSyncMusic.Text = "Sync to &Music";
             this.chkSyncMusic.UseVisualStyleBackColor = true;
-            this.chkSyncMusic.CheckedChanged += new System.EventHandler(this.chkSyncMusic_CheckedChanged);
+            this.chkSyncMusic.CheckedChanged += new System.EventHandler(this.ChkSyncMusic_CheckedChanged);
             // 
             // FrmVideo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(218, 351);
+            this.ClientSize = new System.Drawing.Size(218, 298);
             this.Controls.Add(this.chkSyncMusic);
             this.Controls.Add(this.chkAnimate);
             this.Controls.Add(this.grpAnimationMethod);

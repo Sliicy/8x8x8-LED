@@ -22,10 +22,11 @@ namespace _8x8x8_LED.View
         private readonly Cube cube;
 
         private Bitmap renderImage;
+
         private bool animateMusic = false;
         private bool animate = false;
         private int speed = 50;
-        private int timeElapsed = 0; // Used to adjust speed of animation
+        private readonly int timeElapsed = 0; // Used to adjust speed of animation
 
         private readonly int samples = 1024; // How many samples to calculate wave form from.
         private double[] twoChannels = new double[2]; // Holds 2 bytes of audio.
@@ -44,16 +45,20 @@ namespace _8x8x8_LED.View
             DialogResult selection = picSelect.ShowDialog();
             if (selection == DialogResult.OK)
             {
-                var stream = File.Open(picSelect.FileName, FileMode.Open);
-                renderImage = (Bitmap) Image.FromStream(stream);
-                stream.Close();
-                if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
+                try
                 {
-                    MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    var stream = File.Open(picSelect.FileName, FileMode.Open);
+                    renderImage = (Bitmap)Image.FromStream(stream);
+                    stream.Close();
+                    if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
+                    {
+                        MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                } catch (Exception)
+                {
+                    MessageBox.Show("Unable to load image. Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                if (!bwRenderer.IsBusy)
-                    bwRenderer.RunWorkerAsync();
             }
         }
 
@@ -65,104 +70,98 @@ namespace _8x8x8_LED.View
             Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.tiff) | *.bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff"
         };
 
-        private void RenderVideo(Bitmap b)
+        private void RenderVideo()
         {
             byte[] bytesToSend = new byte[64];
             while (animate) {
                 if ((animateMusic && Math.Abs(twoChannels[0]) > 0.05 && timeElapsed % speed == 0) || !animateMusic)
                 {
-                for (int depth = 0; depth < b.Height; depth += 8)
-                {
-                    int i = 0;
-                    for (int z = 0; z < 64; z += 8)
+                    for (int depth = 0; depth < renderImage.Height; depth += 8)
                     {
-                        for (int y = 7; y > -1; y--)
+                        int i = 0;
+                        for (int z = 0; z < 64; z += 8)
                         {
-                            var bits = new BitArray(8);
-
-                            for (int x = 0; x < 8; x++)
+                            for (int y = 7; y > -1; y--)
                             {
-                                if (b.GetPixel(x + z, y + depth).R == 255 && b.GetPixel(x + z, y + depth).G == 255 && b.GetPixel(x + z, y + depth).B == 255)
+                                var bits = new BitArray(8);
+
+                                for (int x = 0; x < 8; x++)
                                 {
-                                    bits[x] = false;
-                                } else
-                                {
-                                    bits[x] = true;
+                                    if (renderImage.GetPixel(x + z, y + depth).R == 255 && renderImage.GetPixel(x + z, y + depth).G == 255 && renderImage.GetPixel(x + z, y + depth).B == 255)
+                                    {
+                                        bits[x] = false;
+                                    } else
+                                    {
+                                        bits[x] = true;
+                                    }
                                 }
+                                byte[] bytes = new byte[1];
+                                bits.CopyTo(bytes, 0);
+                                bytesToSend[i] = bytes[0];
+
+                                i++;
                             }
-                            byte[] bytes = new byte[1];
-                            bits.CopyTo(bytes, 0);
-                            bytesToSend[i] = bytes[0];
+                        }
+                        if (rbLooped.Checked)
+                        {
+                            bytesToSend.CopyTo(cube.matrix, 0);
+                            cube.Rotate(Orientation.ClockwiseZ);
+                        }
+                        if (rbGravity.Checked)
+                            cube.Shift(Direction.Downwards, true, 0);
 
-                            i++;
-                        }
-                    }
-                    if (rbLooped.Checked)
-                    {
-                        bytesToSend.CopyTo(cube.matrix, 0);
-                        cube.Rotate(Orientation.ClockwiseZ);
-                    }
-                    if (rbGravity.Checked)
-                        cube.Shift(Direction.Downwards, true, 0);
+                        if (animateMusic)
+                        {
+                            if (Math.Abs(twoChannels[0]) < .05)
+                            {
+                                speed = 45000;
+                            }
+                            if (Math.Abs(twoChannels[0]) > .05)
+                            {
+                                speed = 40000;
+                            }
+                            if (Math.Abs(twoChannels[0]) > .1)
+                            {
+                                speed = 35000;
+                            }
+                            if (Math.Abs(twoChannels[0]) > .15)
+                            {
+                                speed = 30000;
+                            }
+                            if (Math.Abs(twoChannels[0]) > .2)
+                            {
+                                speed = 25000;
+                            }
+                            if (Math.Abs(twoChannels[0]) > .25)
+                            {
+                                speed = 20000;
+                            }
+                            if (Math.Abs(twoChannels[0]) > .3)
+                            {
+                                speed = 15000;
+                            }
+                            if (Math.Abs(twoChannels[0]) > .4)
+                            {
+                                speed = 10000;
+                            }
+                            if (Math.Abs(twoChannels[0]) > .5)
+                            {
+                                speed = 5000;
+                            }
 
-
-                    if (animateMusic)
-                    {
-                        if (Math.Abs(twoChannels[0]) < .05)
+                            if ((Math.Abs(twoChannels[0]) > 0.05) && timeElapsed % speed == 0)
+                            {
+                                cube.Flip(Axis.X);
+                                SerialHelper.Send(serialPort, cube);
+                            }
+                        } else
                         {
-                            speed = 45000;
-                        }
-                        if (Math.Abs(twoChannels[0]) > .05)
-                        {
-                            speed = 40000;
-                        }
-                        if (Math.Abs(twoChannels[0]) > .1)
-                        {
-                            speed = 35000;
-                        }
-                        if (Math.Abs(twoChannels[0]) > .15)
-                        {
-                            speed = 30000;
-                        }
-                        if (Math.Abs(twoChannels[0]) > .2)
-                        {
-                            speed = 25000;
-                        }
-                        if (Math.Abs(twoChannels[0]) > .25)
-                        {
-                            speed = 20000;
-                        }
-                        if (Math.Abs(twoChannels[0]) > .3)
-                        {
-                            speed = 15000;
-                        }
-                        if (Math.Abs(twoChannels[0]) > .4)
-                        {
-                            speed = 10000;
-                        }
-                        if (Math.Abs(twoChannels[0]) > .5)
-                        {
-                            speed = 5000;
-                        }
-
-                        if ((Math.Abs(twoChannels[0]) > 0.05) && timeElapsed % speed == 0)
-                        {
-                            cube.Flip(Axis.X);
                             SerialHelper.Send(serialPort, cube);
+                            System.Threading.Thread.Sleep(int.Parse(nudSpeed.Value.ToString()));
                         }
-
-                    } else
-                    {
-                        SerialHelper.Send(serialPort, cube);
-                        System.Threading.Thread.Sleep(int.Parse(nudSpeed.Value.ToString()));
                     }
 
-                    }
-
-
-
-
-                    if (!chkAnimate.Checked) break;
+                if (!chkAnimate.Checked) break;
                 }
             }
         }
@@ -170,7 +169,7 @@ namespace _8x8x8_LED.View
         private void BwRenderer_DoWork(object sender, DoWorkEventArgs e)
         {
             if (renderImage != null)
-                RenderVideo(renderImage);
+                RenderVideo();
         }
 
         private void FrmVideo_FormClosing(object sender, FormClosingEventArgs e)
@@ -196,9 +195,11 @@ namespace _8x8x8_LED.View
         private void FrmVideo_Load(object sender, EventArgs e)
         {
             chkAnimate.Checked = true;
+            chkSyncMusic.Checked = Properties.Settings.Default.Video_SyncToMusic;
+            nudSpeed.Value = Properties.Settings.Default.Video_Speed;
         }
 
-        private void chkSyncMusic_CheckedChanged(object sender, EventArgs e)
+        private void ChkSyncMusic_CheckedChanged(object sender, EventArgs e)
         {
             if (chkSyncMusic.Checked)
             {
@@ -207,15 +208,12 @@ namespace _8x8x8_LED.View
 
                 waveIn.StartRecording();
                 animateMusic = true;
-
             } else
             {
                 waveIn.StopRecording();
                 animateMusic = false;
-                //speed = trkSpeed.Value;
             }
-            //trkSpeed.Enabled = !chkSyncMusic.Checked;
-            Properties.Settings.Default.Balls_SyncToMusic = chkSyncMusic.Checked;
+            Properties.Settings.Default.Video_SyncToMusic = chkSyncMusic.Checked;
         }
 
         static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] twoChannels, int samples = 8)
@@ -227,9 +225,10 @@ namespace _8x8x8_LED.View
             }
         }
 
-        private void nudSpeed_ValueChanged(object sender, EventArgs e)
+        private void NudSpeed_ValueChanged(object sender, EventArgs e)
         {
             speed = int.Parse(nudSpeed.Value.ToString());
+            Properties.Settings.Default.Video_Speed = int.Parse(nudSpeed.Value.ToString());
         }
     }
 }

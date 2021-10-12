@@ -442,5 +442,29 @@ namespace _8x8x8_LED.Properties {
                 this["OffsetZ"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Video_SyncToMusic {
+            get {
+                return ((bool)(this["Video_SyncToMusic"]));
+            }
+            set {
+                this["Video_SyncToMusic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int Video_Speed {
+            get {
+                return ((int)(this["Video_Speed"]));
+            }
+            set {
+                this["Video_Speed"] = value;
+            }
+        }
     }
 }
