@@ -101,7 +101,7 @@ namespace _8x8x8_LED.View
             this.grpAnimationMethod.Location = new System.Drawing.Point(12, 203);
             this.grpAnimationMethod.Name = "grpAnimationMethod";
             this.grpAnimationMethod.Size = new System.Drawing.Size(193, 121);
-            this.grpAnimationMethod.TabIndex = 5;
+            this.grpAnimationMethod.TabIndex = 6;
             this.grpAnimationMethod.TabStop = false;
             this.grpAnimationMethod.Text = "Animation Type";
             // 
@@ -111,7 +111,7 @@ namespace _8x8x8_LED.View
             this.rbGravity.Location = new System.Drawing.Point(6, 62);
             this.rbGravity.Name = "rbGravity";
             this.rbGravity.Size = new System.Drawing.Size(84, 28);
-            this.rbGravity.TabIndex = 7;
+            this.rbGravity.TabIndex = 8;
             this.rbGravity.Text = "&Gravity";
             this.rbGravity.UseVisualStyleBackColor = true;
             // 
@@ -122,7 +122,7 @@ namespace _8x8x8_LED.View
             this.rbLooped.Location = new System.Drawing.Point(6, 28);
             this.rbLooped.Name = "rbLooped";
             this.rbLooped.Size = new System.Drawing.Size(93, 28);
-            this.rbLooped.TabIndex = 6;
+            this.rbLooped.TabIndex = 7;
             this.rbLooped.TabStop = true;
             this.rbLooped.Text = "&Looped";
             this.rbLooped.UseVisualStyleBackColor = true;
@@ -155,7 +155,7 @@ namespace _8x8x8_LED.View
             this.chkSlideshow.Location = new System.Drawing.Point(12, 169);
             this.chkSlideshow.Name = "chkSlideshow";
             this.chkSlideshow.Size = new System.Drawing.Size(116, 28);
-            this.chkSlideshow.TabIndex = 6;
+            this.chkSlideshow.TabIndex = 5;
             this.chkSlideshow.Text = "S&lideshow";
             this.chkSlideshow.UseVisualStyleBackColor = true;
             this.chkSlideshow.CheckedChanged += new System.EventHandler(this.ChkSlideshow_CheckedChanged);
