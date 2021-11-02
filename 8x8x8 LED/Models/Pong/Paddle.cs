@@ -61,9 +61,8 @@ namespace _8x8x8_LED.Model.Pong
             if (location.GetX() > 7)
             {
                 if (teleport)
-                {
                     location.SetX(0);
-                } else
+                else
                 {
                     location.SetX(6);
                 }
@@ -71,9 +70,8 @@ namespace _8x8x8_LED.Model.Pong
             if (location.GetX() < 0)
             {
                 if (teleport)
-                {
                     location.SetX(7);
-                } else
+                else
                 {
                     location.SetX(1);
                 }
@@ -81,9 +79,8 @@ namespace _8x8x8_LED.Model.Pong
             if (location.GetY() > 7)
             {
                 if (teleport)
-                {
                     location.SetY(0);
-                } else
+                else
                 {
                     location.SetY(6);
                 }
@@ -91,9 +88,8 @@ namespace _8x8x8_LED.Model.Pong
             if (location.GetY() < 0)
             {
                 if (teleport)
-                {
                     location.SetY(7);
-                } else
+                else
                 {
                     location.SetY(1);
                 }
@@ -101,9 +97,8 @@ namespace _8x8x8_LED.Model.Pong
             if (location.GetZ() > 7)
             {
                 if (teleport)
-                {
                     location.SetZ(0);
-                } else
+                else
                 {
                     location.SetZ(6);
                 }
@@ -111,9 +106,8 @@ namespace _8x8x8_LED.Model.Pong
             if (location.GetZ() < 0)
             {
                 if (teleport)
-                {
                     location.SetZ(7);
-                } else
+                else
                 {
                     location.SetZ(1);
                 }

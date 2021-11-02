@@ -30,6 +30,7 @@ namespace _8x8x8_LED
 
         private void BtnAddImage_Click(object sender, EventArgs e)
         {
+            if (picSelect.FileName.Length > 0) picSelect.InitialDirectory = Path.GetDirectoryName(picSelect.FileName);
             DialogResult selection = picSelect.ShowDialog();
             if (selection == DialogResult.OK)
             {
@@ -69,9 +70,7 @@ namespace _8x8x8_LED
             foreach (Control c in pnlMatrix.Controls)
             {
                 if (c is Panel)
-                {
                     c.Dispose();
-                }
             }
 
             if (bitmap.Width != 64 || bitmap.Height % 8 != 0)
@@ -92,12 +91,9 @@ namespace _8x8x8_LED
                     for (int x = 0; x < 8; x++)
                     {
                         if (bitmap.GetPixel(x + z, y).R == 255 && bitmap.GetPixel(x + z, y).G == 255 && bitmap.GetPixel(x + z, y).B == 255)
-                        {
                             bits[x] = false;
-                        } else
-                        {
+                        else
                             bits[x] = true;
-                        }
                     }
                     byte[] bytes = new byte[1];
                     bits.CopyTo(bytes, 0);
@@ -127,7 +123,6 @@ namespace _8x8x8_LED
                     pnlMatrix.Controls.Add(p);
                     p.MouseEnter += new EventHandler(Panel_MouseEnter);
                     p.MouseDown += new MouseEventHandler(Panel_MouseDown);
-
                 }
             }
         }
@@ -159,22 +154,16 @@ namespace _8x8x8_LED
                     for (int x = 0; x < 8; x++)
                     {
                         if (bitmap.GetPixel(x + z, y).R == 255 && bitmap.GetPixel(x + z, y).G == 255 && bitmap.GetPixel(x + z, y).B == 255)
-                        {
                             bits[x] = false;
-                        }
                         else
-                        {
                             bits[x] = true;
-                        }
+                        
                         if (x + z == c.Left / 16 && y == c.Top / 16)
                         {
                             if (bits[x] == true)
-                            {
                                 bits[x] = false;
-                            } else
-                            {
+                            else
                                 bits[x] = true;
-                            }
                         }
                     }
                     byte[] bytes = new byte[1];
@@ -191,14 +180,7 @@ namespace _8x8x8_LED
         {
             var c = (Panel)sender;
 
-            if (c.BackColor == Color.Black)
-            {
-                c.BackColor = Color.White;
-            }
-            else
-            {
-                c.BackColor = Color.Black;
-            }
+            c.BackColor = c.BackColor == Color.Black ? Color.White : Color.Black;
             bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);
         }
         private void BtnClickOperation_Click(object sender, EventArgs e)
@@ -250,7 +232,6 @@ namespace _8x8x8_LED
 
         private void BtnSaveNew_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show();
             bitmap.Save(Path.GetFileNameWithoutExtension(picSelect.FileName) + fileNameIncrementor + Path.GetExtension(picSelect.FileName), System.Drawing.Imaging.ImageFormat.Png);
             RenderImage();
             fileNameIncrementor++;

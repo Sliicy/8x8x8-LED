@@ -54,11 +54,8 @@ namespace _8x8x8_LED.View
             foreach (char letter in txtMarquee.Text)
             {
                 if (letterMapping.ContainsKey(letter.ToString()))
-                {
                     images.Add(letterMapping[letter.ToString()]);
-                }
                 else
-                {
                     if (File.Exists(Path.Combine(Application.StartupPath, "Characters", letter + ".png")))
                     {
                         var stream = File.Open(Path.Combine(Application.StartupPath, "Characters", letter + ".png"), FileMode.Open);
@@ -66,7 +63,6 @@ namespace _8x8x8_LED.View
                         images.Add(letterMapping[letter.ToString()]);
                         stream.Close();
                     }
-                }
             }
 
             // Append all letters onto canvas:
@@ -205,9 +201,7 @@ namespace _8x8x8_LED.View
                 {
                     g.Clear(Color.White);
                     for (int i = 0; i < images.Count; i++)
-                    {
                         g.DrawImage(images[i], images[i].Width * i + spacing * i, 0);
-                    }
                 }
             }
             return bmp;
@@ -225,9 +219,7 @@ namespace _8x8x8_LED.View
         {
             animate = chkAnimate.Checked;
             if (!animate && bwAnimate.IsBusy)
-            {
                 bwAnimate.CancelAsync();
-            }
             if (animate)
                 bwAnimate.RunWorkerAsync();
         }

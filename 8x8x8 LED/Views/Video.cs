@@ -25,6 +25,7 @@ namespace _8x8x8_LED.View
 
         private bool animateMusic = false;
         private bool animate = false;
+        private bool slideshow = false;
         private int speed = 50;
         private readonly int timeElapsed = 0; // Used to adjust speed of animation
 
@@ -42,6 +43,7 @@ namespace _8x8x8_LED.View
 
         private void BtnSelectFile_Click(object sender, EventArgs e)
         {
+            if (picSelect.FileName.Length > 0) picSelect.InitialDirectory = Path.GetDirectoryName(picSelect.FileName);
             DialogResult selection = picSelect.ShowDialog();
             if (selection == DialogResult.OK)
             {
@@ -59,6 +61,7 @@ namespace _8x8x8_LED.View
                 {
                     MessageBox.Show("Unable to load image. Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                chkAnimate.Checked = true;
             }
         }
 
@@ -195,9 +198,9 @@ namespace _8x8x8_LED.View
 
         private void FrmVideo_Load(object sender, EventArgs e)
         {
-            chkAnimate.Checked = true;
             chkSyncMusic.Checked = Properties.Settings.Default.Video_SyncToMusic;
             nudSpeed.Value = Properties.Settings.Default.Video_Speed;
+            chkSlideshow.Checked = Properties.Settings.Default.Video_Slideshow;
         }
 
         private void ChkSyncMusic_CheckedChanged(object sender, EventArgs e)
@@ -230,6 +233,38 @@ namespace _8x8x8_LED.View
         {
             speed = int.Parse(nudSpeed.Value.ToString());
             Properties.Settings.Default.Video_Speed = int.Parse(nudSpeed.Value.ToString());
+        }
+
+        private void ChkSlideshow_CheckedChanged(object sender, EventArgs e)
+        {
+            slideshow = chkSlideshow.Checked;
+            tmrSlideshow.Enabled = slideshow;
+            Properties.Settings.Default.Video_Slideshow = chkSlideshow.Checked;
+        }
+
+        private void TmrSlideshow_Tick(object sender, EventArgs e)
+        {
+            if (picSelect.FileName.Length > 0)
+            {
+                var rand = new Random();
+                var files = Directory.GetFiles(Path.GetDirectoryName(picSelect.FileName));
+                picSelect.FileName = files[rand.Next(files.Length)];
+                try
+                {
+                    var stream = File.Open(picSelect.FileName, FileMode.Open);
+                    renderImage = (Bitmap)Image.FromStream(stream);
+                    stream.Close();
+                    if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
+                    {
+                        MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Unable to load image. Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

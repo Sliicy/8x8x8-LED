@@ -466,5 +466,17 @@ namespace _8x8x8_LED.Properties {
                 this["Video_Speed"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Video_Slideshow {
+            get {
+                return ((bool)(this["Video_Slideshow"]));
+            }
+            set {
+                this["Video_Slideshow"] = value;
+            }
+        }
     }
 }

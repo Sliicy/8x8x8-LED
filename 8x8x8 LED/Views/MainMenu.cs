@@ -115,27 +115,22 @@ namespace _8x8x8_LED
                     serialPort.DataBits = decimal.ToInt32(nudDataBits.Value);
 
                     if (cbStopBits.Text == "0")
-                    {
                         serialPort.StopBits = StopBits.None;
-                    } else if (cbStopBits.Text == "1")
-                    {
+                    else if (cbStopBits.Text == "1")
                         serialPort.StopBits = StopBits.One;
-                    } else if (cbStopBits.Text == "1.5")
-                    {
+                    else if (cbStopBits.Text == "1.5")
                         serialPort.StopBits = StopBits.OnePointFive;
-                    } else
-                    {
+                    else
                         serialPort.StopBits = StopBits.Two;
-                    }
-
+                    
                     serialPort.Parity = (Parity)Enum.Parse(typeof(Parity), cbParity.Text, true);
 
                     serialPort.Open();
                     btnConnect.Text = "Disco&nnect";
                 }
-                catch (Exception er)
+                catch (Exception)
                 {
-                    MessageBox.Show(er.Message);
+                    MessageBox.Show("Please ensure cube is connected to computer, and correct COM port and settings are configured.", "Can't find cube", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -197,7 +192,6 @@ namespace _8x8x8_LED
                 if (trimmedString == "") continue;
                 int hex = Convert.ToInt32(trimmedString, 16);
                 bytesToSend[counter] = Convert.ToByte(hex);
-
                 counter++;
             }
             SerialHelper.SendPacket(serialPort, bytesToSend, false);
@@ -245,50 +239,28 @@ namespace _8x8x8_LED
             if (lstApps.SelectedItem == null)
                 return;
             if (lstApps.SelectedItem.ToString() == "Image Viewer")
-            {
                 form = new FrmImageViewer(serialPort, ref cube);
-            }
             else if (lstApps.SelectedItem.ToString() == "Video")
-            {
                 form = new FrmVideo(serialPort, ref cube);
-            }
             else if (lstApps.SelectedItem.ToString() == "Music")
-            {
                 form = new FrmMusic(serialPort, ref cube);
-            }
             else if (lstApps.SelectedItem.ToString() == "Pong")
-            {
                 form = new FrmPong(serialPort, ref cube);
-            }
             else if (lstApps.SelectedItem.ToString() == "Marquee")
-            {
                 form = new FrmMarquee(serialPort, ref cube);
-            }
             else if (lstApps.SelectedItem.ToString() == "Rain")
-            {
                 form = new FrmRain(serialPort, ref cube);
-            }
             else if (lstApps.SelectedItem.ToString() == "Balls")
-            {
                 form = new FrmBalls(serialPort, ref cube);
-            }
             else if (lstApps.SelectedItem.ToString() == "Clock")
-            {
                 form = new FrmClock(serialPort, ref cube);
-            }
             else if (lstApps.SelectedItem.ToString() == "Snake")
-            {
                 form = new FrmSnake(serialPort, ref cube);
-            }
             else if (lstApps.SelectedItem.ToString() == "Phone Square")
-            {
                 form = new PhoneSquare(serialPort, ref cube);
-            }
             else
-            {
                 return;
-            }
-
+            
             if (minimized)
                 form.WindowState = FormWindowState.Minimized;
             form.Show();

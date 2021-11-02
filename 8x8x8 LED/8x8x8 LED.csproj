@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -256,106 +256,106 @@
     <Reference Include="UIAutomationClient" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Axis.cs" />
-    <Compile Include="Model\Cube.cs" />
-    <Compile Include="Model\Direction.cs" />
-    <Compile Include="Model\Orientation.cs" />
-    <Compile Include="Model\Pong\Ball.cs" />
-    <Compile Include="Model\Location.cs" />
-    <Compile Include="Model\Pong\Paddle.cs" />
-    <Compile Include="Model\Position.cs" />
-    <Compile Include="Model\Snake\Snake.cs" />
-    <Compile Include="View\Balls.cs">
+    <Compile Include="Models\Axis.cs" />
+    <Compile Include="Models\Cube.cs" />
+    <Compile Include="Models\Direction.cs" />
+    <Compile Include="Models\Orientation.cs" />
+    <Compile Include="Models\Pong\Ball.cs" />
+    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\Pong\Paddle.cs" />
+    <Compile Include="Models\Position.cs" />
+    <Compile Include="Models\Snake\Snake.cs" />
+    <Compile Include="Views\Balls.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Balls.Designer.cs">
+    <Compile Include="Views\Balls.Designer.cs">
       <DependentUpon>Balls.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Clock.cs">
+    <Compile Include="Views\Clock.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Clock.Designer.cs">
+    <Compile Include="Views\Clock.Designer.cs">
       <DependentUpon>Clock.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\PhoneSquare.cs">
+    <Compile Include="Views\PhoneSquare.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\PhoneSquare.Designer.cs">
+    <Compile Include="Views\PhoneSquare.Designer.cs">
       <DependentUpon>PhoneSquare.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Pong.cs">
+    <Compile Include="Views\Pong.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Pong.Designer.cs">
+    <Compile Include="Views\Pong.Designer.cs">
       <DependentUpon>Pong.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Marquee.cs">
+    <Compile Include="Views\Marquee.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Marquee.Designer.cs">
+    <Compile Include="Views\Marquee.Designer.cs">
       <DependentUpon>Marquee.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Music.cs">
+    <Compile Include="Views\Music.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Music.Designer.cs">
+    <Compile Include="Views\Music.Designer.cs">
       <DependentUpon>Music.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\MainMenu.cs">
+    <Compile Include="Views\MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\MainMenu.Designer.cs">
+    <Compile Include="Views\MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\ImageViewer.cs">
+    <Compile Include="Views\ImageViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\ImageViewer.Designer.cs">
+    <Compile Include="Views\ImageViewer.Designer.cs">
       <DependentUpon>ImageViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SerialHelper.cs" />
-    <Compile Include="View\Rain.cs">
+    <Compile Include="Views\Rain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Rain.Designer.cs">
+    <Compile Include="Views\Rain.Designer.cs">
       <DependentUpon>Rain.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Snake.cs">
+    <Compile Include="Views\Snake.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Snake.Designer.cs">
+    <Compile Include="Views\Snake.Designer.cs">
       <DependentUpon>Snake.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Video.cs">
+    <Compile Include="Views\Video.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Video.Designer.cs">
+    <Compile Include="Views\Video.Designer.cs">
       <DependentUpon>Video.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="View\Balls.resx">
+    <EmbeddedResource Include="Views\Balls.resx">
       <DependentUpon>Balls.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Clock.resx">
+    <EmbeddedResource Include="Views\Clock.resx">
       <DependentUpon>Clock.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\PhoneSquare.resx">
+    <EmbeddedResource Include="Views\PhoneSquare.resx">
       <DependentUpon>PhoneSquare.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Pong.resx">
+    <EmbeddedResource Include="Views\Pong.resx">
       <DependentUpon>Pong.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\ImageViewer.resx">
+    <EmbeddedResource Include="Views\ImageViewer.resx">
       <DependentUpon>ImageViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Marquee.resx">
+    <EmbeddedResource Include="Views\Marquee.resx">
       <DependentUpon>Marquee.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Music.resx">
+    <EmbeddedResource Include="Views\Music.resx">
       <DependentUpon>Music.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\MainMenu.resx">
+    <EmbeddedResource Include="Views\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -367,13 +367,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="View\Rain.resx">
+    <EmbeddedResource Include="Views\Rain.resx">
       <DependentUpon>Rain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Snake.resx">
+    <EmbeddedResource Include="Views\Snake.resx">
       <DependentUpon>Snake.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Video.resx">
+    <EmbeddedResource Include="Views\Video.resx">
       <DependentUpon>Video.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

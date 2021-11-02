@@ -29,6 +29,7 @@ namespace _8x8x8_LED.View
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmVideo));
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.lblSpeed = new System.Windows.Forms.Label();
@@ -39,6 +40,8 @@ namespace _8x8x8_LED.View
             this.rbLooped = new System.Windows.Forms.RadioButton();
             this.chkAnimate = new System.Windows.Forms.CheckBox();
             this.chkSyncMusic = new System.Windows.Forms.CheckBox();
+            this.chkSlideshow = new System.Windows.Forms.CheckBox();
+            this.tmrSlideshow = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
             this.grpAnimationMethod.SuspendLayout();
             this.SuspendLayout();
@@ -95,7 +98,7 @@ namespace _8x8x8_LED.View
             // 
             this.grpAnimationMethod.Controls.Add(this.rbGravity);
             this.grpAnimationMethod.Controls.Add(this.rbLooped);
-            this.grpAnimationMethod.Location = new System.Drawing.Point(12, 169);
+            this.grpAnimationMethod.Location = new System.Drawing.Point(12, 203);
             this.grpAnimationMethod.Name = "grpAnimationMethod";
             this.grpAnimationMethod.Size = new System.Drawing.Size(193, 121);
             this.grpAnimationMethod.TabIndex = 5;
@@ -146,11 +149,28 @@ namespace _8x8x8_LED.View
             this.chkSyncMusic.UseVisualStyleBackColor = true;
             this.chkSyncMusic.CheckedChanged += new System.EventHandler(this.ChkSyncMusic_CheckedChanged);
             // 
+            // chkSlideshow
+            // 
+            this.chkSlideshow.AutoSize = true;
+            this.chkSlideshow.Location = new System.Drawing.Point(12, 169);
+            this.chkSlideshow.Name = "chkSlideshow";
+            this.chkSlideshow.Size = new System.Drawing.Size(116, 28);
+            this.chkSlideshow.TabIndex = 6;
+            this.chkSlideshow.Text = "S&lideshow";
+            this.chkSlideshow.UseVisualStyleBackColor = true;
+            this.chkSlideshow.CheckedChanged += new System.EventHandler(this.ChkSlideshow_CheckedChanged);
+            // 
+            // tmrSlideshow
+            // 
+            this.tmrSlideshow.Interval = 10000;
+            this.tmrSlideshow.Tick += new System.EventHandler(this.TmrSlideshow_Tick);
+            // 
             // FrmVideo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(218, 298);
+            this.ClientSize = new System.Drawing.Size(218, 340);
+            this.Controls.Add(this.chkSlideshow);
             this.Controls.Add(this.chkSyncMusic);
             this.Controls.Add(this.chkAnimate);
             this.Controls.Add(this.grpAnimationMethod);
@@ -186,5 +206,7 @@ namespace _8x8x8_LED.View
         private System.Windows.Forms.RadioButton rbLooped;
         private System.Windows.Forms.CheckBox chkAnimate;
         private System.Windows.Forms.CheckBox chkSyncMusic;
+        private System.Windows.Forms.CheckBox chkSlideshow;
+        private System.Windows.Forms.Timer tmrSlideshow;
     }
 }
