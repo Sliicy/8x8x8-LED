@@ -1,27 +1,15 @@
 ﻿using _8x8x8_LED.Apps;
 using _8x8x8_LED.Model;
 using _8x8x8_LED.View;
-using NAudio.Wave;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.IO.Ports;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace _8x8x8_LED
 {
     public partial class FrmMainMenu : Form
     {
-
         public FrmMainMenu(string requestedApp = "", bool minimized = false)
         {
             InitializeComponent();
@@ -75,7 +63,8 @@ namespace _8x8x8_LED
             string[] ports = SerialPort.GetPortNames();
             cbComPort.Items.Clear();
             cbComPort.Items.AddRange(ports);
-            if (cbComPort.Items.Count > 0) cbComPort.SelectedIndex = 0;
+            if (cbComPort.Items.Count > 0)
+                cbComPort.SelectedIndex = 0;
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)

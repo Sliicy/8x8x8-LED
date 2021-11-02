@@ -1,15 +1,9 @@
 ﻿using _8x8x8_LED.Model;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Orientation = _8x8x8_LED.Model.Orientation;
 
