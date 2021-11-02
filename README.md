@@ -19,6 +19,9 @@ This project consists of a series of mini applets that can be used to display va
 6) Finally, you will want to ensure that the orientation is correct, so press the 'Calibrate Cube' button in the 'Rotation' subsection of Settings, to calibrate the cube.
 7) These connection settings are automatically saved. Once done with this step, head over to the 'Menu' tab, select an applet, and then open it.
 
+## Watch the Demo
+[![8x8x8 LED Cube](https://img.youtube.com/vi/v-YhtWm3FVs/0.jpg)](https://www.youtube.com/watch?v=v-YhtWm3FVs)
+
 ## Note about using the iCubeSmart
 
 Since I have a slightly different cube than the aformentioned cube in [Tomazas' firmware](https://github.com/tomazas/ledcube8x8x8), I had to fork my own version, and modify the firmware to get it to work. [Here](https://github.com/Sliicy/ledcube8x8x8) is a link to the project (I'm using the [v2-sdcc-icubesmart](https://github.com/Sliicy/ledcube8x8x8/tree/master/firmware/v2-sdcc-icubesmart)). Just flash the .ihx file as a regular .hex using the [STC flashing tool](https://github.com/tomazas/ledcube8x8x8/tree/master/tools).
