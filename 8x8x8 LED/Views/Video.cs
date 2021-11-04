@@ -50,13 +50,12 @@ namespace _8x8x8_LED.View
                     if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
                     {
                         MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    } else
+                        chkAnimate.Checked = true;
                 } catch (Exception)
                 {
                     MessageBox.Show("Unable to load image. Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                chkAnimate.Checked = true;
             }
         }
 
@@ -70,6 +69,8 @@ namespace _8x8x8_LED.View
 
         private void RenderVideo()
         {
+            if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
+                return;
             byte[] bytesToSend = new byte[64];
             while (animate) {
                 if ((animateMusic && Math.Abs(twoChannels[0]) > 0.05 && timeElapsed % speed == 0) || !animateMusic)
@@ -249,15 +250,9 @@ namespace _8x8x8_LED.View
                     var stream = File.Open(picSelect.FileName, FileMode.Open);
                     renderImage = (Bitmap)Image.FromStream(stream);
                     stream.Close();
-                    if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
-                    {
-                        MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Unable to load image. Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
