@@ -17,6 +17,8 @@ The schematic for the board I used can be found [here](https://github.com/Sliicy
  * COM Port: Select the one that has CH340
  * Min Baud Rate: 9600
  * Max Baud Rate: 9600
+
+
 ![STC Settings](https://user-images.githubusercontent.com/23116873/127097458-40155d32-88da-4519-a718-3c50a148ca29.png)
 2) Press on 'Open Code File', and select the .hex or .ihx file to flash to the cube. I modified Tomazas' existing firmware to get it to work with my board, which can be downloaded here: https://github.com/Sliicy/ledcube8x8x8/blob/master/firmware/v2-sdcc-icubesmart/firmware.ihx
 3) Before continuing, I first clicked on 'Check MCU' just to make sure that the cube was properly being recognized. After clicking on the button, I connected 5V at this point, and then the board was recognized (MCU ID : D17EC59205195F, MCU type: STC12C5A60S2, F/W version: 7.1.4I).
