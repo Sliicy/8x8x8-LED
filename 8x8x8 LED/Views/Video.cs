@@ -73,95 +73,103 @@ namespace _8x8x8_LED.View
                 return;
             byte[] bytesToSend = new byte[64];
             while (animate) {
-                if ((animateMusic && Math.Abs(twoChannels[0]) > 0.05 && timeElapsed % speed == 0) || !animateMusic)
+                try
                 {
-                    for (int depth = 0; depth < renderImage.Height; depth += 8)
+                    if ((animateMusic && Math.Abs(twoChannels[0]) > 0.05 && timeElapsed % speed == 0) || !animateMusic)
                     {
-                        int i = 0;
-                        for (int z = 0; z < 64; z += 8)
+                        for (int depth = 0; depth < renderImage.Height; depth += 8)
                         {
-                            for (int y = 7; y > -1; y--)
+                            int i = 0;
+                            for (int z = 0; z < 64; z += 8)
                             {
-                                var bits = new BitArray(8);
-
-                                for (int x = 0; x < 8; x++)
+                                for (int y = 7; y > -1; y--)
                                 {
-                                    if (renderImage.GetPixel(x + z, y + depth).R == 255 && renderImage.GetPixel(x + z, y + depth).G == 255 && renderImage.GetPixel(x + z, y + depth).B == 255)
+                                    var bits = new BitArray(8);
+
+                                    for (int x = 0; x < 8; x++)
                                     {
-                                        bits[x] = false;
-                                    } else
-                                    {
-                                        bits[x] = true;
+                                        if (renderImage.GetPixel(x + z, y + depth).R == 255 && renderImage.GetPixel(x + z, y + depth).G == 255 && renderImage.GetPixel(x + z, y + depth).B == 255)
+                                        {
+                                            bits[x] = false;
+                                        }
+                                        else
+                                        {
+                                            bits[x] = true;
+                                        }
                                     }
+                                    byte[] bytes = new byte[1];
+                                    bits.CopyTo(bytes, 0);
+                                    bytesToSend[i] = bytes[0];
+
+                                    i++;
+                                    if (!animate) return;
                                 }
-                                byte[] bytes = new byte[1];
-                                bits.CopyTo(bytes, 0);
-                                bytesToSend[i] = bytes[0];
+                            }
+                            if (rbLooped.Checked)
+                            {
+                                bytesToSend.CopyTo(cube.matrix, 0);
+                                cube.Rotate(Orientation.ClockwiseZ);
+                            }
+                            if (rbGravity.Checked)
+                                cube.Shift(Direction.Downwards, true, 0);
 
-                                i++;
-                                if (!animate) return;
-                            }
-                        }
-                        if (rbLooped.Checked)
-                        {
-                            bytesToSend.CopyTo(cube.matrix, 0);
-                            cube.Rotate(Orientation.ClockwiseZ);
-                        }
-                        if (rbGravity.Checked)
-                            cube.Shift(Direction.Downwards, true, 0);
+                            if (animateMusic)
+                            {
+                                if (Math.Abs(twoChannels[0]) < .05)
+                                {
+                                    speed = 45000;
+                                }
+                                if (Math.Abs(twoChannels[0]) > .05)
+                                {
+                                    speed = 40000;
+                                }
+                                if (Math.Abs(twoChannels[0]) > .1)
+                                {
+                                    speed = 35000;
+                                }
+                                if (Math.Abs(twoChannels[0]) > .15)
+                                {
+                                    speed = 30000;
+                                }
+                                if (Math.Abs(twoChannels[0]) > .2)
+                                {
+                                    speed = 25000;
+                                }
+                                if (Math.Abs(twoChannels[0]) > .25)
+                                {
+                                    speed = 20000;
+                                }
+                                if (Math.Abs(twoChannels[0]) > .3)
+                                {
+                                    speed = 15000;
+                                }
+                                if (Math.Abs(twoChannels[0]) > .4)
+                                {
+                                    speed = 10000;
+                                }
+                                if (Math.Abs(twoChannels[0]) > .5)
+                                {
+                                    speed = 5000;
+                                }
 
-                        if (animateMusic)
-                        {
-                            if (Math.Abs(twoChannels[0]) < .05)
-                            {
-                                speed = 45000;
+                                if ((Math.Abs(twoChannels[0]) > 0.05) && timeElapsed % speed == 0)
+                                {
+                                    cube.Flip(Axis.X);
+                                    SerialHelper.Send(serialPort, cube);
+                                }
                             }
-                            if (Math.Abs(twoChannels[0]) > .05)
+                            else
                             {
-                                speed = 40000;
-                            }
-                            if (Math.Abs(twoChannels[0]) > .1)
-                            {
-                                speed = 35000;
-                            }
-                            if (Math.Abs(twoChannels[0]) > .15)
-                            {
-                                speed = 30000;
-                            }
-                            if (Math.Abs(twoChannels[0]) > .2)
-                            {
-                                speed = 25000;
-                            }
-                            if (Math.Abs(twoChannels[0]) > .25)
-                            {
-                                speed = 20000;
-                            }
-                            if (Math.Abs(twoChannels[0]) > .3)
-                            {
-                                speed = 15000;
-                            }
-                            if (Math.Abs(twoChannels[0]) > .4)
-                            {
-                                speed = 10000;
-                            }
-                            if (Math.Abs(twoChannels[0]) > .5)
-                            {
-                                speed = 5000;
-                            }
-
-                            if ((Math.Abs(twoChannels[0]) > 0.05) && timeElapsed % speed == 0)
-                            {
-                                cube.Flip(Axis.X);
                                 SerialHelper.Send(serialPort, cube);
+                                System.Threading.Thread.Sleep(int.Parse(nudSpeed.Value.ToString()));
                             }
-                        } else
-                        {
-                            SerialHelper.Send(serialPort, cube);
-                            System.Threading.Thread.Sleep(int.Parse(nudSpeed.Value.ToString()));
                         }
-                    }
 
-                if (!chkAnimate.Checked) break;
+                        if (!chkAnimate.Checked) break;
+                    }
+                }
+                catch (Exception)
+                {
                 }
             }
         }
