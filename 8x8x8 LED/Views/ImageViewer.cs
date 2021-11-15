@@ -84,7 +84,7 @@ namespace _8x8x8_LED
                     var bits = new BitArray(8);
                     for (int x = 0; x < 8; x++)
                     {
-                        if (bitmap.GetPixel(x + z, y).R == 255 && bitmap.GetPixel(x + z, y).G == 255 && bitmap.GetPixel(x + z, y).B == 255)
+                        if (bitmap.GetPixel(x + z, y).R == 0 && bitmap.GetPixel(x + z, y).G == 0 && bitmap.GetPixel(x + z, y).B == 0)
                             bits[x] = false;
                         else
                             bits[x] = true;
@@ -126,12 +126,12 @@ namespace _8x8x8_LED
             var c = (Panel)sender;
             if (ModifierKeys.HasFlag(Keys.Control))
             {
-                c.BackColor = Color.Black;
+                c.BackColor = Color.White;
                 bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);
                 return;
             } else if (ModifierKeys.HasFlag(Keys.Shift))
             {
-                c.BackColor = Color.White;
+                c.BackColor = Color.Black;
                 bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);
                 return;
             }
@@ -147,7 +147,7 @@ namespace _8x8x8_LED
                     var bits = new BitArray(8);
                     for (int x = 0; x < 8; x++)
                     {
-                        if (bitmap.GetPixel(x + z, y).R == 255 && bitmap.GetPixel(x + z, y).G == 255 && bitmap.GetPixel(x + z, y).B == 255)
+                        if (bitmap.GetPixel(x + z, y).R == 0 && bitmap.GetPixel(x + z, y).G == 0 && bitmap.GetPixel(x + z, y).B == 0)
                             bits[x] = false;
                         else
                             bits[x] = true;

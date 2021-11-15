@@ -88,7 +88,7 @@ namespace _8x8x8_LED.View
 
                                     for (int x = 0; x < 8; x++)
                                     {
-                                        if (renderImage.GetPixel(x + z, y + depth).R == 255 && renderImage.GetPixel(x + z, y + depth).G == 255 && renderImage.GetPixel(x + z, y + depth).B == 255)
+                                        if (renderImage.GetPixel(x + z, y + depth).R == 0 && renderImage.GetPixel(x + z, y + depth).G == 0 && renderImage.GetPixel(x + z, y + depth).B == 0)
                                         {
                                             bits[x] = false;
                                         }
