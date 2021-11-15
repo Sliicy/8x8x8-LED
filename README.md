@@ -9,6 +9,20 @@ This project was inspired by [Tomazas' firmware](https://github.com/tomazas/ledc
 
 This project consists of a series of mini applets that can be used to display various animations on any cube that adheres to the same data standards Tomazas created.
 
+## How to Build for the iCubeSmart 3D8-S-DIP board
+The schematic for the board I used can be found [here](https://github.com/Sliicy/ledcube8x8x8/blob/master/schematics/iCubeSmart%20Schematic.pdf). Rather than building the PCB and all, I simply purchased a ready-to-assemble board on [Amazon](https://www.amazon.com/Icubesmart-Animation-Electronic-Teenagers-Activities/dp/B07GRDRPST).
+
+1) After purchasing and assembling the board, I connected TXD, RXD, and Ground (skipping 5V until later) to the USB to TTL adapter it shipped with, and used the STC program (https://github.com/Sliicy/ledcube8x8x8/blob/master/tools/stc-isp-15xx-v6.85.zip) to flash the cube. My particular settings were as follows:
+ * MCU Type: STC12C5A60S2
+ * COM Port: Select the one that has CH340
+ * Min Baud Rate: 9600
+ * Max Baud Rate: 9600
+![STC Settings](https://user-images.githubusercontent.com/23116873/127097458-40155d32-88da-4519-a718-3c50a148ca29.png)
+2) Press on 'Open Code File', and select the .hex or .ihx file to flash to the cube. I modified Tomazas' existing firmware to get it to work with my board, which can be downloaded here: https://github.com/Sliicy/ledcube8x8x8/blob/master/firmware/v2-sdcc-icubesmart/firmware.ihx
+3) Before continuing, I first clicked on 'Check MCU' just to make sure that the cube was properly being recognized. After clicking on the button, I connected 5V at this point, and then the board was recognized (MCU ID : D17EC59205195F, MCU type: STC12C5A60S2, F/W version: 7.1.4I).
+4) After confirming that the board was being read properly, I disconnected 5V again, and clicked on 'Download/Program', and then reconnected the 5V, to get the cube to flash the firmware.
+5) At this point, the cube should be flashed, and the cube should be able to talk to the program.
+
 ## How to Run
 
 1) Simply download the latest release [here](https://github.com/Sliicy/8x8x8-LED/releases/). Extract the .zip file and run '8x8x8 LED.exe'.
