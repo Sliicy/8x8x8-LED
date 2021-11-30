@@ -18,7 +18,7 @@ namespace _8x8x8_LED.View
     {
 
         private readonly SerialPort serialPort;
-        private readonly Cube cube;
+        private readonly MonochromeCube cube;
 
         private readonly List<Ball> balls = new List<Ball>();
 
@@ -36,7 +36,7 @@ namespace _8x8x8_LED.View
 
         readonly IWaveIn waveIn = new WasapiLoopbackCapture();
 
-        public FrmBalls(SerialPort serialPort, ref Cube cube)
+        public FrmBalls(SerialPort serialPort, ref MonochromeCube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;

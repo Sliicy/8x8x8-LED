@@ -13,7 +13,7 @@ namespace _8x8x8_LED.View
     public partial class FrmMarquee : Form
     {
         private readonly SerialPort serialPort;
-        private readonly Cube cube;
+        private readonly MonochromeCube cube;
         private bool animate = false;
 
         private Bitmap wideMarquee;
@@ -22,7 +22,7 @@ namespace _8x8x8_LED.View
         // Needle represents the current vertical line being read from the marquee:
         private int needle = 0;
 
-        public FrmMarquee(SerialPort serialPort, ref Cube cube)
+        public FrmMarquee(SerialPort serialPort, ref MonochromeCube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;

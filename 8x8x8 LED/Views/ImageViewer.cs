@@ -12,10 +12,10 @@ namespace _8x8x8_LED
     public partial class FrmImageViewer : Form
     {
         private readonly SerialPort serialPort;
-        private readonly Cube cube;
+        private readonly MonochromeCube cube;
         private int fileNameIncrementor = 0;
 
-        public FrmImageViewer(SerialPort serialPort, ref Cube cube)
+        public FrmImageViewer(SerialPort serialPort, ref MonochromeCube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;

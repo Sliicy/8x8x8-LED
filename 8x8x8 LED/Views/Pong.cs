@@ -11,7 +11,7 @@ namespace _8x8x8_LED.View
     public partial class FrmPong : Form
     {
         private readonly SerialPort serialPort;
-        private readonly Cube cube;
+        private readonly MonochromeCube cube;
 
         private bool animate = false;
         private int speed = 500;
@@ -22,7 +22,7 @@ namespace _8x8x8_LED.View
         private int player1Score = 0;
         private int player2Score = 0;
 
-        public FrmPong(SerialPort serialPort, ref Cube cube)
+        public FrmPong(SerialPort serialPort, ref MonochromeCube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;

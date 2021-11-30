@@ -14,7 +14,7 @@ namespace _8x8x8_LED.View
     public partial class FrmVideo : Form
     {
         private readonly SerialPort serialPort;
-        private readonly Cube cube;
+        private readonly MonochromeCube cube;
 
         private Bitmap renderImage;
 
@@ -29,7 +29,7 @@ namespace _8x8x8_LED.View
 
         readonly IWaveIn waveIn = new WasapiLoopbackCapture();
 
-        public FrmVideo(SerialPort serialPort, ref Cube cube)
+        public FrmVideo(SerialPort serialPort, ref MonochromeCube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;

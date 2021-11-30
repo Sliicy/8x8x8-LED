@@ -15,8 +15,8 @@ namespace _8x8x8_LED.View
     public partial class FrmClock : Form
     {
         private readonly SerialPort serialPort;
-        private readonly Cube cube;
-        public FrmClock(SerialPort serialPort, ref Cube cube)
+        private readonly MonochromeCube cube;
+        public FrmClock(SerialPort serialPort, ref MonochromeCube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;

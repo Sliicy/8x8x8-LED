@@ -11,7 +11,7 @@ namespace _8x8x8_LED.View
     public partial class FrmSnake : Form
     {
         private readonly SerialPort serialPort;
-        private readonly Cube cube;
+        private readonly MonochromeCube cube;
         private bool animate = false;
         private int speed = 500;
         
@@ -21,7 +21,7 @@ namespace _8x8x8_LED.View
         private readonly Location apple = new Location(0, 0, 0);
         private bool appleConsumed = false;
 
-        public FrmSnake(SerialPort serialPort, ref Cube cube)
+        public FrmSnake(SerialPort serialPort, ref MonochromeCube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;

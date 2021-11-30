@@ -257,7 +257,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Axis.cs" />
-    <Compile Include="Models\Cube.cs" />
+    <Compile Include="Models\CubeType.cs" />
+    <Compile Include="Models\MonochromeCube.cs" />
     <Compile Include="Models\Direction.cs" />
     <Compile Include="Models\Orientation.cs" />
     <Compile Include="Models\Pong\Ball.cs" />

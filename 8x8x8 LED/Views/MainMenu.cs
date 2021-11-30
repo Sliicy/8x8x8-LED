@@ -21,7 +21,7 @@ namespace _8x8x8_LED
 
         public readonly SerialPort serialPort = new SerialPort();
 
-        public Cube cube = new Cube(64);
+        public MonochromeCube cube = new MonochromeCube(64);
 
         private readonly string requestedApp = "";
         public bool minimized = false;
@@ -184,7 +184,7 @@ namespace _8x8x8_LED
                 bytesToSend[counter] = Convert.ToByte(hex);
                 counter++;
             }
-            SerialHelper.SendPacket(serialPort, bytesToSend, false);
+            SerialHelper.SendPacket(CubeType.Monochrome, serialPort, bytesToSend, false);
         }
 
         private void BtnInvertPacket_Click(object sender, EventArgs e)

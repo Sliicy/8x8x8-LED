@@ -10,7 +10,7 @@ namespace _8x8x8_LED.View
     {
 
         private readonly SerialPort serialPort;
-        private readonly Cube cube;
+        private readonly MonochromeCube cube;
 
         private int rainCount = 90;
         private int speed = 0;
@@ -20,7 +20,7 @@ namespace _8x8x8_LED.View
         private string directionY = "";
         private string directionZ = "";
 
-        public FrmRain(SerialPort serialPort, ref Cube cube)
+        public FrmRain(SerialPort serialPort, ref MonochromeCube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;

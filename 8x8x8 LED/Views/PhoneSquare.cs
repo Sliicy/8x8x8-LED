@@ -13,12 +13,12 @@ namespace _8x8x8_LED.View
     public partial class PhoneSquare : Form
     {
         private readonly SerialPort serialPort;
-        private readonly Cube cube;
+        private readonly MonochromeCube cube;
         private bool animate = false;
 
         private readonly List<Coordinate> queue = new List<Coordinate>();
 
-        public PhoneSquare(SerialPort serialPort, ref Cube cube)
+        public PhoneSquare(SerialPort serialPort, ref MonochromeCube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
