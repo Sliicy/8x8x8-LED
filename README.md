@@ -41,11 +41,11 @@ https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectron
 8) Select "STM32CubeProgrammer (Serial)" under Tools > Upload Method
 9) Beneath the 8x8x8 board (on the smaller yellow board), ensure the Download switch is set to 0 (Boot1=0), and the Run switch is set to 0 (Boot0=0)
 10) Power the cube with both the 5V 2A cable, as well as the 4 USB cables to the USB to TTL:
-	GND to GND
-	TXD to TXD
-	RXD to RXD
-	5V to 5V
-	Jumper connecting both 3V3 and VCC
+* GND to GND
+* TXD to TXD
+* RXD to RXD
+* 5V to 5V
+* Jumper connecting both 3V3 and VCC
 11) Press Reset Button and then "Upload" in Arduino
 12) Toggle both switches on the yellow board so that the Download switch is set to 1 (Boot0=1) and Run switch is set to 1 (Boot1=1)
 13) The cube should now be ready for UART Serial Communication
