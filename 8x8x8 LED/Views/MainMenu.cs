@@ -37,6 +37,7 @@ namespace _8x8x8_LED
             }
 
             // Load Previous Settings:
+            cbCubeType.SelectedIndex = Properties.Settings.Default.CubeType;
             chkAutoconnect.Checked = Properties.Settings.Default.Autoconnect;
             cbBaudRate.SelectedIndex = Properties.Settings.Default.BaudRate;
             nudDataBits.Value = Properties.Settings.Default.DataBits;
@@ -389,6 +390,11 @@ namespace _8x8x8_LED
         private void LstApps_DoubleClick(object sender, EventArgs e)
         {
             btnShowApp.PerformClick();
+        }
+
+        private void cbCubeType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.CubeType = cbCubeType.SelectedIndex;
         }
     }
 }
