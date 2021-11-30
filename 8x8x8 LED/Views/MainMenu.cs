@@ -57,6 +57,9 @@ namespace _8x8x8_LED
             nudOffsetZ.Value = Properties.Settings.Default.OffsetZ;
 
             if (chkAutoconnect.Checked) btnConnect.PerformClick();
+
+            Testing t = new Testing(serialPort);
+            t.Show();
         }
 
         private void ReloadAvailableComPorts()
