@@ -8,7 +8,8 @@
  * and each level containing 24 bytes (Y-Axis, and each byte controls the corresponding X-Axis).
  * 
  * Multiple cubes are rendered to add the ability to mix colors (alternating between yellow + red creates orange).
- * 
+ * Using 8 colors (Black, White, Red, Green, Blue, Cyan, Magenta, & Yellow), a color depth of 2 yields 36 different color combinations.
+ *
  * The cube is updated over UART Serial, with the following data structure:
  * HEADER + PAYLOAD
  * 
