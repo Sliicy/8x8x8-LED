@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _8x8x8_LED.Models;
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace _8x8x8_LED.Model
 {
     [Serializable]
-    public class MonochromeCube
+    public class MonochromeCube : Cube
     {
 
         public byte[] matrix = new byte[64];

@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>_8x8x8_LED</RootNamespace>
     <AssemblyName>8x8x8 LED</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -29,6 +29,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -256,7 +257,10 @@
     <Reference Include="UIAutomationClient" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ColorMapper.cs" />
     <Compile Include="Models\Axis.cs" />
+    <Compile Include="Models\Cube.cs" />
+    <Compile Include="Models\CubeColor.cs" />
     <Compile Include="Models\CubeType.cs" />
     <Compile Include="Models\MonochromeCube.cs" />
     <Compile Include="Models\Direction.cs" />
@@ -265,6 +269,7 @@
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Pong\Paddle.cs" />
     <Compile Include="Models\Position.cs" />
+    <Compile Include="Models\RGBCube.cs" />
     <Compile Include="Models\Snake\Snake.cs" />
     <Compile Include="Testing.cs">
       <SubType>Form</SubType>
@@ -376,6 +381,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Views\Rain.resx">
       <DependentUpon>Rain.cs</DependentUpon>

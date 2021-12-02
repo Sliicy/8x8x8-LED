@@ -36,7 +36,7 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnGreen = new System.Windows.Forms.Button();
             this.btnBlue = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nudDepth = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.btnYellow = new System.Windows.Forms.Button();
             this.btnCyan = new System.Windows.Forms.Button();
@@ -44,8 +44,24 @@
             this.btnWhite = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btnSunset = new System.Windows.Forms.Button();
+            this.btnSmileyFace = new System.Windows.Forms.Button();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.trackBar3 = new System.Windows.Forms.TrackBar();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.nudZ = new System.Windows.Forms.NumericUpDown();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.btnMock = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDepth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudZ)).BeginInit();
             this.SuspendLayout();
             // 
             // btnRed
@@ -120,12 +136,12 @@
             this.btnBlue.UseVisualStyleBackColor = true;
             this.btnBlue.Click += new System.EventHandler(this.BtnBlue_Click);
             // 
-            // numericUpDown1
+            // nudDepth
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(103, 162);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 31);
-            this.numericUpDown1.TabIndex = 4;
+            this.nudDepth.Location = new System.Drawing.Point(103, 162);
+            this.nudDepth.Name = "nudDepth";
+            this.nudDepth.Size = new System.Drawing.Size(120, 31);
+            this.nudDepth.TabIndex = 4;
             // 
             // label1
             // 
@@ -182,6 +198,7 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(257, 154);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 44);
@@ -200,15 +217,142 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // btnSunset
+            // 
+            this.btnSunset.Location = new System.Drawing.Point(501, 365);
+            this.btnSunset.Name = "btnSunset";
+            this.btnSunset.Size = new System.Drawing.Size(150, 44);
+            this.btnSunset.TabIndex = 6;
+            this.btnSunset.Text = "Sunset";
+            this.btnSunset.UseVisualStyleBackColor = true;
+            this.btnSunset.Click += new System.EventHandler(this.BtnSunset_Click);
+            // 
+            // btnSmileyFace
+            // 
+            this.btnSmileyFace.Location = new System.Drawing.Point(501, 415);
+            this.btnSmileyFace.Name = "btnSmileyFace";
+            this.btnSmileyFace.Size = new System.Drawing.Size(150, 44);
+            this.btnSmileyFace.TabIndex = 6;
+            this.btnSmileyFace.Text = "Smiley Face";
+            this.btnSmileyFace.UseVisualStyleBackColor = true;
+            this.btnSmileyFace.Click += new System.EventHandler(this.btnSmileyFace_Click);
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 1;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // trackBar2
+            // 
+            this.trackBar2.Location = new System.Drawing.Point(27, 345);
+            this.trackBar2.Maximum = 7;
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(104, 45);
+            this.trackBar2.TabIndex = 7;
+            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
+            // 
+            // trackBar3
+            // 
+            this.trackBar3.Location = new System.Drawing.Point(27, 406);
+            this.trackBar3.Maximum = 7;
+            this.trackBar3.Name = "trackBar3";
+            this.trackBar3.Size = new System.Drawing.Size(104, 45);
+            this.trackBar3.TabIndex = 7;
+            this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(22, 204);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 25);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Z-Axis:";
+            // 
+            // nudZ
+            // 
+            this.nudZ.Location = new System.Drawing.Point(103, 202);
+            this.nudZ.Name = "nudZ";
+            this.nudZ.Size = new System.Drawing.Size(120, 31);
+            this.nudZ.TabIndex = 4;
+            // 
+            // button3
+            // 
+            this.button3.Enabled = false;
+            this.button3.Location = new System.Drawing.Point(257, 204);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(70, 44);
+            this.button3.TabIndex = 6;
+            this.button3.Text = "0";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(333, 204);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(70, 44);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "2";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(413, 204);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(70, 44);
+            this.button5.TabIndex = 6;
+            this.button5.Text = "4";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(493, 204);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(70, 44);
+            this.button6.TabIndex = 6;
+            this.button6.Text = "6";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // btnMock
+            // 
+            this.btnMock.Location = new System.Drawing.Point(373, 484);
+            this.btnMock.Name = "btnMock";
+            this.btnMock.Size = new System.Drawing.Size(143, 55);
+            this.btnMock.TabIndex = 8;
+            this.btnMock.Text = "Mock";
+            this.btnMock.UseVisualStyleBackColor = true;
+            this.btnMock.Click += new System.EventHandler(this.btnMock_Click);
+            // 
             // Testing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(697, 351);
+            this.ClientSize = new System.Drawing.Size(697, 600);
+            this.Controls.Add(this.btnMock);
+            this.Controls.Add(this.trackBar3);
+            this.Controls.Add(this.trackBar2);
+            this.Controls.Add(this.btnSmileyFace);
+            this.Controls.Add(this.btnSunset);
             this.Controls.Add(this.button2);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.nudZ);
+            this.Controls.Add(this.nudDepth);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.btnClear);
@@ -225,7 +369,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Testing";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDepth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudZ)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -240,7 +387,7 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button btnGreen;
         private System.Windows.Forms.Button btnBlue;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nudDepth;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnYellow;
         private System.Windows.Forms.Button btnCyan;
@@ -248,5 +395,18 @@
         private System.Windows.Forms.Button btnWhite;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnSunset;
+        private System.Windows.Forms.Button btnSmileyFace;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.TrackBar trackBar2;
+        private System.Windows.Forms.TrackBar trackBar3;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown nudZ;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnMock;
     }
 }

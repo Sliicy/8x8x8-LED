@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Model;
+using _8x8x8_LED.Models;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
