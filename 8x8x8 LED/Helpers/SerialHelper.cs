@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace _8x8x8_LED
 {
-    static class SerialHelper
+    public static class SerialHelper
     {
-        const byte MONOCHROME_HEADER = 0xF2;
-        static readonly byte[] RGB_HEADER = { 0x00, 0xFF, 0x00, 0x00 };
+        public const byte MONOCHROME_HEADER = 0xF2;
+        public static readonly byte[] RGB_HEADER = { 0x00, 0xFF, 0x00, 0x00 };
 
         public static void SendPacket(CubeType cubeType, SerialPort serialPort, byte[] payload, bool prependHeader = true)
         {
