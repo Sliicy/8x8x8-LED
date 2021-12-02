@@ -69,7 +69,7 @@ namespace _8x8x8_LED
 
             if (bitmap.Width != 64 || bitmap.Height % 8 != 0)
             {
-                MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8.", "Incorrect Dimensions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
