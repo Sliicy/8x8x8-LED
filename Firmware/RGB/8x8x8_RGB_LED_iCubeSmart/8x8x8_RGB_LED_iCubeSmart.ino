@@ -136,7 +136,7 @@ int targetZLayer = 0; // Contains the destination of the 2 Z-Axes to be rendered
  */
 byte cube[colorDepth][height][yAxisStates] =
 {{
-//  G  B  B  R  R  G  G  B  B  R  R  G  G  B  B  R  R  G  G  B  B  R  R
+// G  G  B  B  R  R  G  G  B  B  R  R  G  G  B  B  R  R  G  G  B  B  R  R
 {0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 255, 255}, // Red
 {0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 255, 255}, // Red+Yellow
 {255, 255, 0, 0, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 0, 0, 255, 255}, // Yellow
@@ -340,19 +340,4 @@ void loop() {
     }
     newData = false;
   }
-
-//    // Read entire Serial Buffer to memory:
-//    while(Serial1.available()) {
-//      character = Serial1.read();
-//      dataReceived.concat(character);
-//    }
-//    // Execute Serial command:
-//    if (dataReceived != "") {
-//      if (dataReceived.indexOf('=') != -1) {
-//        String value = GetValue(dataReceived, '=', 1);
-//        if (dataReceived.indexOf("speed") != -1) {
-//          speed = value.toInt();
-//        }
-//      }
-//    }
 }
