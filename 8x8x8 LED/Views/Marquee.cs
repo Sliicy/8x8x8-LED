@@ -68,8 +68,8 @@ namespace _8x8x8_LED.View
             needle++;
             if (needle >= wideMarquee.Width)
                 needle = 0;
-            cube.Rotate(Model.Orientation.ClockwiseX);
-            cube.Rotate(Model.Orientation.CounterclockwiseZ);
+            cube.Rotate(Model.Rotation.ClockwiseX);
+            cube.Rotate(Model.Rotation.CounterclockwiseZ);
             SerialHelper.Send(serialPort, cube);
         }
 

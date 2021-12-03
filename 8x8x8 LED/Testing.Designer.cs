@@ -46,6 +46,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.btnSmileyFace = new System.Windows.Forms.Button();
             this.btnMock = new System.Windows.Forms.Button();
+            this.btnAddImage = new System.Windows.Forms.Button();
+            this.btnReload = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDepth)).BeginInit();
             this.SuspendLayout();
@@ -223,11 +225,33 @@
             this.btnMock.UseVisualStyleBackColor = true;
             this.btnMock.Click += new System.EventHandler(this.btnMock_Click);
             // 
+            // btnAddImage
+            // 
+            this.btnAddImage.Location = new System.Drawing.Point(15, 445);
+            this.btnAddImage.Name = "btnAddImage";
+            this.btnAddImage.Size = new System.Drawing.Size(150, 44);
+            this.btnAddImage.TabIndex = 8;
+            this.btnAddImage.Text = "Add Image";
+            this.btnAddImage.UseVisualStyleBackColor = true;
+            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
+            // 
+            // btnReload
+            // 
+            this.btnReload.Location = new System.Drawing.Point(15, 495);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(150, 44);
+            this.btnReload.TabIndex = 9;
+            this.btnReload.Text = "Reload";
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
+            // 
             // Testing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(697, 600);
+            this.Controls.Add(this.btnReload);
+            this.Controls.Add(this.btnAddImage);
             this.Controls.Add(this.btnMock);
             this.Controls.Add(this.btnSmileyFace);
             this.Controls.Add(this.button2);
@@ -275,5 +299,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnSmileyFace;
         private System.Windows.Forms.Button btnMock;
+        private System.Windows.Forms.Button btnAddImage;
+        private System.Windows.Forms.Button btnReload;
     }
 }

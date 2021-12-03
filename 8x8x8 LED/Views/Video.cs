@@ -7,7 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
-using Orientation = _8x8x8_LED.Model.Orientation;
+using Rotation = _8x8x8_LED.Model.Rotation;
 
 namespace _8x8x8_LED.View
 {
@@ -108,7 +108,7 @@ namespace _8x8x8_LED.View
                             if (rbLooped.Checked)
                             {
                                 bytesToSend.CopyTo(cube.matrix, 0);
-                                cube.Rotate(Orientation.ClockwiseZ);
+                                cube.Rotate(Rotation.ClockwiseZ);
                             }
                             if (rbGravity.Checked)
                                 cube.Shift(Direction.Downwards, true, 0);

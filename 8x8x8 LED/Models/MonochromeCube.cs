@@ -471,10 +471,10 @@ namespace _8x8x8_LED.Model
         /// </summary>
         /// <param name="orientation"></param>
         /// <param name="iterations"></param>
-        public void Rotate(Orientation orientation, int iterations = 0)
+        public void Rotate(Rotation orientation, int iterations = 0)
         {
             byte[] output = new byte[matrix.Length];
-            if (orientation == Orientation.ClockwiseX)
+            if (orientation == Rotation.ClockwiseX)
             {
                 int x = 1;
                 int counter = 0;
@@ -503,11 +503,11 @@ namespace _8x8x8_LED.Model
                         counter += 8;
                     }
                 }
-            } else if (orientation == Orientation.ClockwiseY)
+            } else if (orientation == Rotation.ClockwiseY)
             {
-                Rotate(Orientation.CounterclockwiseY, 2 - iterations);
+                Rotate(Rotation.CounterclockwiseY, 2 - iterations);
                 return;
-            } else if (orientation == Orientation.ClockwiseZ)
+            } else if (orientation == Rotation.ClockwiseZ)
             {
                 int x = 128;
                 int counter = 0;
@@ -534,11 +534,11 @@ namespace _8x8x8_LED.Model
                     if (counter % 8 == 0)
                         x /= 2;
                 }
-            } else if (orientation == Orientation.CounterclockwiseX)
+            } else if (orientation == Rotation.CounterclockwiseX)
             {
-                Rotate(Orientation.ClockwiseX, 2 - iterations);
+                Rotate(Rotation.ClockwiseX, 2 - iterations);
                 return;
-            } else if (orientation == Orientation.CounterclockwiseY)
+            } else if (orientation == Rotation.CounterclockwiseY)
             {
                 var array2D = new byte[8, 8];
                 int counter = 0;
@@ -560,9 +560,9 @@ namespace _8x8x8_LED.Model
                         counter++;
                     }
                 }
-            } else if (orientation == Orientation.CounterclockwiseZ)
+            } else if (orientation == Rotation.CounterclockwiseZ)
             {
-                Rotate(Orientation.ClockwiseZ, 2 - iterations);
+                Rotate(Rotation.ClockwiseZ, 2 - iterations);
                 return;
 
             }
@@ -580,7 +580,7 @@ namespace _8x8x8_LED.Model
         /// <param name="orientation"></param>
         /// <param name="iterations"></param>
         /// <returns></returns>
-        public static byte[] Rotated(MonochromeCube cube, Orientation orientation, int iterations = 0)
+        public static byte[] Rotated(MonochromeCube cube, Rotation orientation, int iterations = 0)
         {
             cube.Rotate(orientation, iterations);
             return cube.matrix;

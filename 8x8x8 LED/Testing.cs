@@ -1,10 +1,14 @@
 ﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Model;
+using _8x8x8_LED.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -22,7 +26,8 @@ namespace _8x8x8_LED
         }
 
         private readonly SerialPort serialPort;
-        int delay = 24;
+        private readonly int delay = 24;
+        Bitmap bitmap;
         private void BtnRed_Click(object sender, EventArgs e)
         {
             byte[] bytesToSend1 = new byte[] {
@@ -316,7 +321,7 @@ namespace _8x8x8_LED
                 {
                     for (int z = 0; z < 8; z++)
                     {
-                        c[z, y, x] = CubeColor.White;
+                        c[z, y, x] = CubeColor.MagentaYellow;
                     }
                 }
             }
@@ -345,22 +350,81 @@ namespace _8x8x8_LED
 
             var output = ColorMapper.MatrixToBytes(c);
 
-            byte[] header = {0, 255, 0, 0};
             byte[] colorDepth = { 0 };
 
             var layer1 = output.Take(output.Length / 2).ToArray();
             var layer2 = output.Skip(output.Length / 2).ToArray();
 
-            SerialHelper.SendPacket(CubeType.RGB, serialPort, header.Concat(colorDepth).Concat(layer1).ToArray(), false);
+            SerialHelper.SendPacket(CubeType.RGB, serialPort, SerialHelper.RGB_HEADER.Concat(colorDepth).Concat(layer1).ToArray(), false);
             System.Threading.Thread.Sleep(delay);
             colorDepth[0] = 1;
-            SerialHelper.SendPacket(CubeType.RGB, serialPort, header.Concat(colorDepth).Concat(layer1).ToArray(), false);
+            SerialHelper.SendPacket(CubeType.RGB, serialPort, SerialHelper.RGB_HEADER.Concat(colorDepth).Concat(layer2).ToArray(), false);
             System.Threading.Thread.Sleep(delay);
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private readonly OpenFileDialog picSelect = new OpenFileDialog()
+        {
+            InitialDirectory = Application.StartupPath,
+            Multiselect = false,
+            Title = "Select image to send:",
+            Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.tiff) | *.bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff"
+        };
+        private void btnAddImage_Click(object sender, EventArgs e)
+        {
+            if (picSelect.FileName.Length > 0) picSelect.InitialDirectory = Path.GetDirectoryName(picSelect.FileName);
+            DialogResult selection = picSelect.ShowDialog();
+            if (selection == DialogResult.OK)
+            {
+                var stream = File.Open(picSelect.FileName, FileMode.Open);
+                bitmap = (Bitmap)Image.FromStream(stream);
+                stream.Close();
+                RenderImage();
+            }
+
+
+            
+        }
+
+        private void RenderImage()
+        {
+            RGBCube cube = new RGBCube(8, 8, 8);
+            
+            //var c = new CubeColor[8, 8, 8];
+            
+            if (bitmap.Width != 64 || bitmap.Height % 8 != 0)
+            {
+                MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8.", "Incorrect Dimensions", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            for (int z = 0; z < 64; z += 8)
+            {
+                for (int y = 7; y > -1; y--)
+                {
+                    for (int x = 0; x < 8; x++)
+                    {
+                        cube.matrix[x, 7 - y, z / 8] = ColorMapper.ExtractColor(bitmap.GetPixel(x + z, y));
+                    }
+                }
+            }
+
+            byte[] output = ColorMapper.MatrixToBytes(Geometry.Rotate90DegreesClockwiseAroundYAxis(cube.matrix));
+            byte[] layer1 = output.Take(output.Length / 2).ToArray();
+            byte[] layer2 = output.Skip(output.Length / 2).ToArray();
+            SerialHelper.SendPacket(CubeType.RGB, serialPort, SerialHelper.RGB_HEADER.Concat(new byte[] { 0 }).Concat(layer1).ToArray(), false);
+            System.Threading.Thread.Sleep(delay);
+            SerialHelper.SendPacket(CubeType.RGB, serialPort, SerialHelper.RGB_HEADER.Concat(new byte[] { 1 }).Concat(layer2).ToArray(), false);
+            System.Threading.Thread.Sleep(delay);
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            RenderImage();
         }
     }
 }

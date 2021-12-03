@@ -1,6 +1,6 @@
 ﻿namespace _8x8x8_LED.Model
 {
-    public enum Orientation
+    public enum Rotation
     {
         ClockwiseX,
         CounterclockwiseX,

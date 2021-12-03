@@ -10,28 +10,29 @@ namespace _8x8x8_LED.Models
 {
     public class RGBCube : Cube
     {
-        static int width = 8;
-        static int length = 8;
-        static int height = 8;
+        public static int width = 8;
+        public static int length = 8;
+        public static int height = 8;
 
-        private CubeColor[,,] matrix = new CubeColor[height, length, width];
+        public int OrientationX = 0;
+        public int OrientationY = 0;
+        public int OrientationZ = 0;
 
-        public RGBCube(int x, int y, int z)
+        public bool FlippedX = false;
+        public bool FlippedY = false;
+        public bool FlippedZ = false;
+
+        public int OffsetX = 0;
+        public int OffsetY = 0;
+        public int OffsetZ = 0;
+
+        public CubeColor[,,] matrix = new CubeColor[height, length, width];
+
+        public RGBCube(int x = 8, int y = 8, int z = 8)
         {
             length = x;
             width = y;
             height = z;
         }
-
-        public void DrawPoint(int x, int y, int z, CubeColor c)
-        {
-            matrix[z, y, x] = c;
-        }
-
-        public CubeColor[,,] Render()
-        {
-            return matrix;
-        }
-
     }
 }

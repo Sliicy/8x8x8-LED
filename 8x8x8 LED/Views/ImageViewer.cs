@@ -5,7 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
-using Orientation = _8x8x8_LED.Model.Orientation;
+using Rotation = _8x8x8_LED.Model.Rotation;
 
 namespace _8x8x8_LED
 {
@@ -14,6 +14,7 @@ namespace _8x8x8_LED
         private readonly SerialPort serialPort;
         private readonly MonochromeCube cube;
         private int fileNameIncrementor = 0;
+        Bitmap bitmap;
 
         public FrmImageViewer(SerialPort serialPort, ref MonochromeCube cube)
         {
@@ -57,8 +58,6 @@ namespace _8x8x8_LED
                 
         }
 
-        Bitmap bitmap;
-
         private void RenderImage()
         {
             foreach (Control c in pnlMatrix.Controls)
@@ -98,7 +97,7 @@ namespace _8x8x8_LED
             }
 
             bytesToSend.CopyTo(cube.matrix, 0);
-            cube.Rotate(Orientation.ClockwiseZ);
+            cube.Rotate(Rotation.ClockwiseZ);
             SerialHelper.Send(serialPort, cube);
 
             
@@ -167,7 +166,7 @@ namespace _8x8x8_LED
                 }
             }
             bytesToSend.CopyTo(cube.matrix, 0);
-            cube.Rotate(Orientation.ClockwiseZ);
+            cube.Rotate(Rotation.ClockwiseZ);
             SerialHelper.Send(serialPort, cube);
         }
         private void Panel_MouseDown(object sender, MouseEventArgs e)
@@ -202,18 +201,18 @@ namespace _8x8x8_LED
                 cube.Shift(Direction.Backwards, chkLoop.Checked);
 
             if (b == btnRotateXClock)
-                cube.Rotate(Orientation.ClockwiseX);
+                cube.Rotate(Rotation.ClockwiseX);
             if (b == btnRotateYClock)
-                cube.Rotate(Orientation.ClockwiseY);
+                cube.Rotate(Rotation.ClockwiseY);
             if (b == btnRotateZClock)
-                cube.Rotate(Orientation.ClockwiseZ);
+                cube.Rotate(Rotation.ClockwiseZ);
 
             if (b == btnRotateXCounter)
-                cube.Rotate(Orientation.CounterclockwiseX);
+                cube.Rotate(Rotation.CounterclockwiseX);
             if (b == btnRotateYCounter)
-                cube.Rotate(Orientation.CounterclockwiseY);
+                cube.Rotate(Rotation.CounterclockwiseY);
             if (b == btnRotateZCounter)
-                cube.Rotate(Orientation.CounterclockwiseZ);
+                cube.Rotate(Rotation.CounterclockwiseZ);
 
             SerialHelper.Send(serialPort, cube);
         }
