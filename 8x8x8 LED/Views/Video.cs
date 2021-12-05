@@ -107,7 +107,7 @@ namespace _8x8x8_LED.View
                             }
                             if (rbLooped.Checked)
                             {
-                                bytesToSend.CopyTo(cube.matrix, 0);
+                                bytesToSend.CopyTo(cube.matrix_legacy, 0);
                                 cube.Rotate(Rotation.ClockwiseZ);
                             }
                             if (rbGravity.Checked)

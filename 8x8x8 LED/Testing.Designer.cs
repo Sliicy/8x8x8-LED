@@ -36,20 +36,14 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnGreen = new System.Windows.Forms.Button();
             this.btnBlue = new System.Windows.Forms.Button();
-            this.nudDepth = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnYellow = new System.Windows.Forms.Button();
             this.btnCyan = new System.Windows.Forms.Button();
             this.btnMagenta = new System.Windows.Forms.Button();
             this.btnWhite = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnSmileyFace = new System.Windows.Forms.Button();
             this.btnMock = new System.Windows.Forms.Button();
             this.btnAddImage = new System.Windows.Forms.Button();
             this.btnReload = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDepth)).BeginInit();
             this.SuspendLayout();
             // 
             // btnRed
@@ -124,22 +118,6 @@
             this.btnBlue.UseVisualStyleBackColor = true;
             this.btnBlue.Click += new System.EventHandler(this.BtnBlue_Click);
             // 
-            // nudDepth
-            // 
-            this.nudDepth.Location = new System.Drawing.Point(103, 162);
-            this.nudDepth.Name = "nudDepth";
-            this.nudDepth.Size = new System.Drawing.Size(120, 31);
-            this.nudDepth.TabIndex = 4;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 164);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 25);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Depth:";
-            // 
             // btnYellow
             // 
             this.btnYellow.Location = new System.Drawing.Point(177, 71);
@@ -184,37 +162,6 @@
             this.btnWhite.UseVisualStyleBackColor = true;
             this.btnWhite.Click += new System.EventHandler(this.btnWhite_Click);
             // 
-            // button1
-            // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(257, 154);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(150, 44);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "0";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(413, 154);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(150, 44);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "1";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // btnSmileyFace
-            // 
-            this.btnSmileyFace.Location = new System.Drawing.Point(15, 345);
-            this.btnSmileyFace.Name = "btnSmileyFace";
-            this.btnSmileyFace.Size = new System.Drawing.Size(150, 44);
-            this.btnSmileyFace.TabIndex = 6;
-            this.btnSmileyFace.Text = "Smiley Face";
-            this.btnSmileyFace.UseVisualStyleBackColor = true;
-            this.btnSmileyFace.Click += new System.EventHandler(this.btnSmileyFace_Click);
-            // 
             // btnMock
             // 
             this.btnMock.Location = new System.Drawing.Point(15, 395);
@@ -233,7 +180,7 @@
             this.btnAddImage.TabIndex = 8;
             this.btnAddImage.Text = "Add Image";
             this.btnAddImage.UseVisualStyleBackColor = true;
-            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
+            this.btnAddImage.Click += new System.EventHandler(this.BtnAddImage_Click);
             // 
             // btnReload
             // 
@@ -243,7 +190,7 @@
             this.btnReload.TabIndex = 9;
             this.btnReload.Text = "Reload";
             this.btnReload.UseVisualStyleBackColor = true;
-            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
+            this.btnReload.Click += new System.EventHandler(this.BtnReload_Click);
             // 
             // Testing
             // 
@@ -253,11 +200,6 @@
             this.Controls.Add(this.btnReload);
             this.Controls.Add(this.btnAddImage);
             this.Controls.Add(this.btnMock);
-            this.Controls.Add(this.btnSmileyFace);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.nudDepth);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.btnClear);
@@ -274,7 +216,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Testing";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDepth)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,15 +230,10 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button btnGreen;
         private System.Windows.Forms.Button btnBlue;
-        private System.Windows.Forms.NumericUpDown nudDepth;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnYellow;
         private System.Windows.Forms.Button btnCyan;
         private System.Windows.Forms.Button btnMagenta;
         private System.Windows.Forms.Button btnWhite;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button btnSmileyFace;
         private System.Windows.Forms.Button btnMock;
         private System.Windows.Forms.Button btnAddImage;
         private System.Windows.Forms.Button btnReload;

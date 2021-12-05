@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Model;
+using _8x8x8_LED.Models;
 using System;
 using System.Collections;
 using System.Drawing;
@@ -96,7 +97,7 @@ namespace _8x8x8_LED
                 }
             }
 
-            bytesToSend.CopyTo(cube.matrix, 0);
+            bytesToSend.CopyTo(cube.matrix_legacy, 0);
             cube.Rotate(Rotation.ClockwiseZ);
             SerialHelper.Send(serialPort, cube);
 
@@ -165,7 +166,7 @@ namespace _8x8x8_LED
                     i++;
                 }
             }
-            bytesToSend.CopyTo(cube.matrix, 0);
+            bytesToSend.CopyTo(cube.matrix_legacy, 0);
             cube.Rotate(Rotation.ClockwiseZ);
             SerialHelper.Send(serialPort, cube);
         }

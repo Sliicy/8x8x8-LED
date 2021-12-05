@@ -2,6 +2,7 @@
 {
     public enum Rotation
     {
+        None,
         ClockwiseX,
         CounterclockwiseX,
         ClockwiseY,

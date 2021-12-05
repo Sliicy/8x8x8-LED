@@ -41,7 +41,7 @@ namespace _8x8x8_LED.View
 
         private void DrawTime()
         {
-            cube.Clear();
+            cube.Clear_Legacy();
             int hour = DateTime.Now.Hour;
             int minute = DateTime.Now.Minute;
 
@@ -56,23 +56,23 @@ namespace _8x8x8_LED.View
                 case 0:
                     if (chkShowLeadingZeros.Checked)
                     {
-                        cube.matrix[2] += 128;
-                        cube.matrix[3] += 128;
-                        cube.matrix[4] += 128;
-                        cube.matrix[5] += 128;
-                        cube.matrix[6] += 128;
+                        cube.matrix_legacy[2] += 128;
+                        cube.matrix_legacy[3] += 128;
+                        cube.matrix_legacy[4] += 128;
+                        cube.matrix_legacy[5] += 128;
+                        cube.matrix_legacy[6] += 128;
 
-                        cube.matrix[10] += 128;
+                        cube.matrix_legacy[10] += 128;
                         //cube.matrix[11] += 128;
                         //cube.matrix[12] += 128;
                         //cube.matrix[13] += 128;
-                        cube.matrix[14] += 128;
+                        cube.matrix_legacy[14] += 128;
 
-                        cube.matrix[18] += 128;
-                        cube.matrix[19] += 128;
-                        cube.matrix[20] += 128;
-                        cube.matrix[21] += 128;
-                        cube.matrix[22] += 128;
+                        cube.matrix_legacy[18] += 128;
+                        cube.matrix_legacy[19] += 128;
+                        cube.matrix_legacy[20] += 128;
+                        cube.matrix_legacy[21] += 128;
+                        cube.matrix_legacy[22] += 128;
                     }
                     break;
                 case 1:
@@ -84,11 +84,11 @@ namespace _8x8x8_LED.View
                         //cube.matrix[5] += 128;
                         //cube.matrix[6] += 128;
 
-                        cube.matrix[10] += 128;
-                        cube.matrix[11] += 128;
-                        cube.matrix[12] += 128;
-                        cube.matrix[13] += 128;
-                        cube.matrix[14] += 128;
+                        cube.matrix_legacy[10] += 128;
+                        cube.matrix_legacy[11] += 128;
+                        cube.matrix_legacy[12] += 128;
+                        cube.matrix_legacy[13] += 128;
+                        cube.matrix_legacy[14] += 128;
 
                         //cube.matrix[18] += 128;
                         //cube.matrix[19] += 128;
@@ -98,19 +98,19 @@ namespace _8x8x8_LED.View
                     }
                     else
                     {
-                        cube.matrix[2] += 128;
+                        cube.matrix_legacy[2] += 128;
                         //cube.matrix[3] += 128;
                         //cube.matrix[4] += 128;
-                        cube.matrix[5] += 128;
+                        cube.matrix_legacy[5] += 128;
                         //cube.matrix[6] += 128;
 
-                        cube.matrix[10] += 128;
-                        cube.matrix[11] += 128;
-                        cube.matrix[12] += 128;
-                        cube.matrix[13] += 128;
-                        cube.matrix[14] += 128;
+                        cube.matrix_legacy[10] += 128;
+                        cube.matrix_legacy[11] += 128;
+                        cube.matrix_legacy[12] += 128;
+                        cube.matrix_legacy[13] += 128;
+                        cube.matrix_legacy[14] += 128;
 
-                        cube.matrix[18] += 128;
+                        cube.matrix_legacy[18] += 128;
                         //cube.matrix[19] += 128;
                         //cube.matrix[20] += 128;
                         //cube.matrix[21] += 128;
@@ -118,23 +118,23 @@ namespace _8x8x8_LED.View
                     }
                     break;
                 case 2:
-                    cube.matrix[2] += 128;
-                    cube.matrix[3] += 128;
-                    cube.matrix[4] += 128;
+                    cube.matrix_legacy[2] += 128;
+                    cube.matrix_legacy[3] += 128;
+                    cube.matrix_legacy[4] += 128;
                     //cube.matrix[5] += 128;
-                    cube.matrix[6] += 128;
+                    cube.matrix_legacy[6] += 128;
 
-                    cube.matrix[10] += 128;
+                    cube.matrix_legacy[10] += 128;
                     //cube.matrix[11] += 128;
-                    cube.matrix[12] += 128;
+                    cube.matrix_legacy[12] += 128;
                     //cube.matrix[13] += 128;
-                    cube.matrix[14] += 128;
+                    cube.matrix_legacy[14] += 128;
 
-                    cube.matrix[18] += 128;
+                    cube.matrix_legacy[18] += 128;
                     //cube.matrix[19] += 128;
-                    cube.matrix[20] += 128;
-                    cube.matrix[21] += 128;
-                    cube.matrix[22] += 128;
+                    cube.matrix_legacy[20] += 128;
+                    cube.matrix_legacy[21] += 128;
+                    cube.matrix_legacy[22] += 128;
                     break;
             }
 
@@ -142,23 +142,23 @@ namespace _8x8x8_LED.View
             switch (hour % 10)
             {
                 case 0:
-                    cube.matrix[34] += 128;
-                    cube.matrix[35] += 128;
-                    cube.matrix[36] += 128;
-                    cube.matrix[37] += 128;
-                    cube.matrix[38] += 128;
+                    cube.matrix_legacy[34] += 128;
+                    cube.matrix_legacy[35] += 128;
+                    cube.matrix_legacy[36] += 128;
+                    cube.matrix_legacy[37] += 128;
+                    cube.matrix_legacy[38] += 128;
 
-                    cube.matrix[42] += 128;
+                    cube.matrix_legacy[42] += 128;
                     //cube.matrix[43] += 128;
                     //cube.matrix[44] += 128;
                     //cube.matrix[45] += 128;
-                    cube.matrix[46] += 128;
+                    cube.matrix_legacy[46] += 128;
 
-                    cube.matrix[50] += 128;
-                    cube.matrix[51] += 128;
-                    cube.matrix[52] += 128;
-                    cube.matrix[53] += 128;
-                    cube.matrix[54] += 128;
+                    cube.matrix_legacy[50] += 128;
+                    cube.matrix_legacy[51] += 128;
+                    cube.matrix_legacy[52] += 128;
+                    cube.matrix_legacy[53] += 128;
+                    cube.matrix_legacy[54] += 128;
                     break;
                 case 1:
                     if (chkFlatOneStyle.Checked)
@@ -169,11 +169,11 @@ namespace _8x8x8_LED.View
                         //cube.matrix[37] += 128;
                         //cube.matrix[38] += 128;
 
-                        cube.matrix[42] += 128;
-                        cube.matrix[43] += 128;
-                        cube.matrix[44] += 128;
-                        cube.matrix[45] += 128;
-                        cube.matrix[46] += 128;
+                        cube.matrix_legacy[42] += 128;
+                        cube.matrix_legacy[43] += 128;
+                        cube.matrix_legacy[44] += 128;
+                        cube.matrix_legacy[45] += 128;
+                        cube.matrix_legacy[46] += 128;
 
                         //cube.matrix[50] += 128;
                         //cube.matrix[51] += 128;
@@ -183,19 +183,19 @@ namespace _8x8x8_LED.View
                     }
                     else
                     {
-                        cube.matrix[34] += 128;
+                        cube.matrix_legacy[34] += 128;
                         //cube.matrix[35] += 128;
                         //cube.matrix[36] += 128;
-                        cube.matrix[37] += 128;
+                        cube.matrix_legacy[37] += 128;
                         //cube.matrix[38] += 128;
 
-                        cube.matrix[42] += 128;
-                        cube.matrix[43] += 128;
-                        cube.matrix[44] += 128;
-                        cube.matrix[45] += 128;
-                        cube.matrix[46] += 128;
+                        cube.matrix_legacy[42] += 128;
+                        cube.matrix_legacy[43] += 128;
+                        cube.matrix_legacy[44] += 128;
+                        cube.matrix_legacy[45] += 128;
+                        cube.matrix_legacy[46] += 128;
 
-                        cube.matrix[50] += 128;
+                        cube.matrix_legacy[50] += 128;
                         //cube.matrix[51] += 128;
                         //cube.matrix[52] += 128;
                         //cube.matrix[53] += 128;
@@ -203,156 +203,156 @@ namespace _8x8x8_LED.View
                     }
                     break;
                 case 2:
-                    cube.matrix[34] += 128;
-                    cube.matrix[35] += 128;
-                    cube.matrix[36] += 128;
+                    cube.matrix_legacy[34] += 128;
+                    cube.matrix_legacy[35] += 128;
+                    cube.matrix_legacy[36] += 128;
                     //cube.matrix[37] += 128;
-                    cube.matrix[38] += 128;
+                    cube.matrix_legacy[38] += 128;
 
-                    cube.matrix[42] += 128;
+                    cube.matrix_legacy[42] += 128;
                     //cube.matrix[43] += 128;
-                    cube.matrix[44] += 128;
+                    cube.matrix_legacy[44] += 128;
                     //cube.matrix[45] += 128;
-                    cube.matrix[46] += 128;
+                    cube.matrix_legacy[46] += 128;
 
-                    cube.matrix[50] += 128;
+                    cube.matrix_legacy[50] += 128;
                     //cube.matrix[51] += 128;
-                    cube.matrix[52] += 128;
-                    cube.matrix[53] += 128;
-                    cube.matrix[54] += 128;
+                    cube.matrix_legacy[52] += 128;
+                    cube.matrix_legacy[53] += 128;
+                    cube.matrix_legacy[54] += 128;
                     break;
                 case 3:
-                    cube.matrix[34] += 128;
+                    cube.matrix_legacy[34] += 128;
                     //cube.matrix[35] += 128;
-                    cube.matrix[36] += 128;
+                    cube.matrix_legacy[36] += 128;
                     //cube.matrix[37] += 128;
-                    cube.matrix[38] += 128;
+                    cube.matrix_legacy[38] += 128;
 
-                    cube.matrix[42] += 128;
+                    cube.matrix_legacy[42] += 128;
                     //cube.matrix[43] += 128;
-                    cube.matrix[44] += 128;
+                    cube.matrix_legacy[44] += 128;
                     //cube.matrix[45] += 128;
-                    cube.matrix[46] += 128;
+                    cube.matrix_legacy[46] += 128;
 
-                    cube.matrix[50] += 128;
-                    cube.matrix[51] += 128;
-                    cube.matrix[52] += 128;
-                    cube.matrix[53] += 128;
-                    cube.matrix[54] += 128;
+                    cube.matrix_legacy[50] += 128;
+                    cube.matrix_legacy[51] += 128;
+                    cube.matrix_legacy[52] += 128;
+                    cube.matrix_legacy[53] += 128;
+                    cube.matrix_legacy[54] += 128;
                     break;
                 case 4:
                     //cube.matrix[34] += 128;
                     //cube.matrix[35] += 128;
-                    cube.matrix[36] += 128;
-                    cube.matrix[37] += 128;
-                    cube.matrix[38] += 128;
+                    cube.matrix_legacy[36] += 128;
+                    cube.matrix_legacy[37] += 128;
+                    cube.matrix_legacy[38] += 128;
 
                     //cube.matrix[42] += 128;
                     //cube.matrix[43] += 128;
-                    cube.matrix[44] += 128;
+                    cube.matrix_legacy[44] += 128;
                     //cube.matrix[45] += 128;
                     //cube.matrix[46] += 128;
 
-                    cube.matrix[50] += 128;
-                    cube.matrix[51] += 128;
-                    cube.matrix[52] += 128;
-                    cube.matrix[53] += 128;
-                    cube.matrix[54] += 128;
+                    cube.matrix_legacy[50] += 128;
+                    cube.matrix_legacy[51] += 128;
+                    cube.matrix_legacy[52] += 128;
+                    cube.matrix_legacy[53] += 128;
+                    cube.matrix_legacy[54] += 128;
                     break;
                 case 5:
-                    cube.matrix[34] += 128;
+                    cube.matrix_legacy[34] += 128;
                     //cube.matrix[35] += 128;
-                    cube.matrix[36] += 128;
-                    cube.matrix[37] += 128;
-                    cube.matrix[38] += 128;
+                    cube.matrix_legacy[36] += 128;
+                    cube.matrix_legacy[37] += 128;
+                    cube.matrix_legacy[38] += 128;
 
-                    cube.matrix[42] += 128;
+                    cube.matrix_legacy[42] += 128;
                     //cube.matrix[43] += 128;
-                    cube.matrix[44] += 128;
+                    cube.matrix_legacy[44] += 128;
                     //cube.matrix[45] += 128;
-                    cube.matrix[46] += 128;
+                    cube.matrix_legacy[46] += 128;
 
-                    cube.matrix[50] += 128;
-                    cube.matrix[51] += 128;
-                    cube.matrix[52] += 128;
+                    cube.matrix_legacy[50] += 128;
+                    cube.matrix_legacy[51] += 128;
+                    cube.matrix_legacy[52] += 128;
                     //cube.matrix[53] += 128;
-                    cube.matrix[54] += 128;
+                    cube.matrix_legacy[54] += 128;
                     break;
                 case 6:
-                    cube.matrix[34] += 128;
-                    cube.matrix[35] += 128;
-                    cube.matrix[36] += 128;
-                    cube.matrix[37] += 128;
-                    cube.matrix[38] += 128;
+                    cube.matrix_legacy[34] += 128;
+                    cube.matrix_legacy[35] += 128;
+                    cube.matrix_legacy[36] += 128;
+                    cube.matrix_legacy[37] += 128;
+                    cube.matrix_legacy[38] += 128;
 
-                    cube.matrix[42] += 128;
+                    cube.matrix_legacy[42] += 128;
                     //cube.matrix[43] += 128;
-                    cube.matrix[44] += 128;
+                    cube.matrix_legacy[44] += 128;
                     //cube.matrix[45] += 128;
-                    cube.matrix[46] += 128;
+                    cube.matrix_legacy[46] += 128;
 
-                    cube.matrix[50] += 128;
-                    cube.matrix[51] += 128;
-                    cube.matrix[52] += 128;
+                    cube.matrix_legacy[50] += 128;
+                    cube.matrix_legacy[51] += 128;
+                    cube.matrix_legacy[52] += 128;
                     //cube.matrix[53] += 128;
-                    cube.matrix[54] += 128;
+                    cube.matrix_legacy[54] += 128;
                     break;
                 case 7:
-                    cube.matrix[34] += 128;
+                    cube.matrix_legacy[34] += 128;
                     //cube.matrix[35] += 128;
                     //cube.matrix[36] += 128;
                     //cube.matrix[37] += 128;
-                    cube.matrix[38] += 128;
+                    cube.matrix_legacy[38] += 128;
 
                     //cube.matrix[42] += 128;
-                    cube.matrix[43] += 128;
+                    cube.matrix_legacy[43] += 128;
                     //cube.matrix[44] += 128;
                     //cube.matrix[45] += 128;
-                    cube.matrix[46] += 128;
+                    cube.matrix_legacy[46] += 128;
 
                     //cube.matrix[50] += 128;
                     //cube.matrix[51] += 128;
-                    cube.matrix[52] += 128;
-                    cube.matrix[53] += 128;
-                    cube.matrix[54] += 128;
+                    cube.matrix_legacy[52] += 128;
+                    cube.matrix_legacy[53] += 128;
+                    cube.matrix_legacy[54] += 128;
                     break;
                 case 8:
-                    cube.matrix[34] += 128;
-                    cube.matrix[35] += 128;
-                    cube.matrix[36] += 128;
-                    cube.matrix[37] += 128;
-                    cube.matrix[38] += 128;
+                    cube.matrix_legacy[34] += 128;
+                    cube.matrix_legacy[35] += 128;
+                    cube.matrix_legacy[36] += 128;
+                    cube.matrix_legacy[37] += 128;
+                    cube.matrix_legacy[38] += 128;
 
-                    cube.matrix[42] += 128;
+                    cube.matrix_legacy[42] += 128;
                     //cube.matrix[43] += 128;
-                    cube.matrix[44] += 128;
+                    cube.matrix_legacy[44] += 128;
                     //cube.matrix[45] += 128;
-                    cube.matrix[46] += 128;
+                    cube.matrix_legacy[46] += 128;
 
-                    cube.matrix[50] += 128;
-                    cube.matrix[51] += 128;
-                    cube.matrix[52] += 128;
-                    cube.matrix[53] += 128;
-                    cube.matrix[54] += 128;
+                    cube.matrix_legacy[50] += 128;
+                    cube.matrix_legacy[51] += 128;
+                    cube.matrix_legacy[52] += 128;
+                    cube.matrix_legacy[53] += 128;
+                    cube.matrix_legacy[54] += 128;
                     break;
                 case 9:
-                    cube.matrix[34] += 128;
+                    cube.matrix_legacy[34] += 128;
                     //cube.matrix[35] += 128;
-                    cube.matrix[36] += 128;
-                    cube.matrix[37] += 128;
-                    cube.matrix[38] += 128;
+                    cube.matrix_legacy[36] += 128;
+                    cube.matrix_legacy[37] += 128;
+                    cube.matrix_legacy[38] += 128;
 
-                    cube.matrix[42] += 128;
+                    cube.matrix_legacy[42] += 128;
                     //cube.matrix[43] += 128;
-                    cube.matrix[44] += 128;
+                    cube.matrix_legacy[44] += 128;
                     //cube.matrix[45] += 128;
-                    cube.matrix[46] += 128;
+                    cube.matrix_legacy[46] += 128;
 
-                    cube.matrix[50] += 128;
-                    cube.matrix[51] += 128;
-                    cube.matrix[52] += 128;
-                    cube.matrix[53] += 128;
-                    cube.matrix[54] += 128;
+                    cube.matrix_legacy[50] += 128;
+                    cube.matrix_legacy[51] += 128;
+                    cube.matrix_legacy[52] += 128;
+                    cube.matrix_legacy[53] += 128;
+                    cube.matrix_legacy[54] += 128;
                     break;
             }
 
@@ -360,56 +360,56 @@ namespace _8x8x8_LED.View
             switch (minute / 10)
             {
                 case 0:
-                    cube.matrix[58] += 16 + 32 + 64;
-                    cube.matrix[59] += 16 + 64;
-                    cube.matrix[60] += 16 + 64;
-                    cube.matrix[61] += 16 + 64;
-                    cube.matrix[62] += 16 + 32 + 64;
+                    cube.matrix_legacy[58] += 16 + 32 + 64;
+                    cube.matrix_legacy[59] += 16 + 64;
+                    cube.matrix_legacy[60] += 16 + 64;
+                    cube.matrix_legacy[61] += 16 + 64;
+                    cube.matrix_legacy[62] += 16 + 32 + 64;
                     break;
                 case 1:
                     if (chkFlatOneStyle.Checked)
                     {
-                        cube.matrix[58] += 32;
-                        cube.matrix[59] += 32;
-                        cube.matrix[60] += 32;
-                        cube.matrix[61] += 32;
-                        cube.matrix[62] += 32;
+                        cube.matrix_legacy[58] += 32;
+                        cube.matrix_legacy[59] += 32;
+                        cube.matrix_legacy[60] += 32;
+                        cube.matrix_legacy[61] += 32;
+                        cube.matrix_legacy[62] += 32;
                     } else
                     {
-                        cube.matrix[58] += 16 + 32 + 64;
-                        cube.matrix[59] += 32;
-                        cube.matrix[60] += 32;
-                        cube.matrix[61] += 32 + 64;
-                        cube.matrix[62] += 32;
+                        cube.matrix_legacy[58] += 16 + 32 + 64;
+                        cube.matrix_legacy[59] += 32;
+                        cube.matrix_legacy[60] += 32;
+                        cube.matrix_legacy[61] += 32 + 64;
+                        cube.matrix_legacy[62] += 32;
                     }
                     break;
                 case 2:
-                    cube.matrix[58] += 16 + 32 + 64;
-                    cube.matrix[59] += 64;
-                    cube.matrix[60] += 16 + 32 + 64;
-                    cube.matrix[61] += 16;
-                    cube.matrix[62] += 16 + 32 + 64;
+                    cube.matrix_legacy[58] += 16 + 32 + 64;
+                    cube.matrix_legacy[59] += 64;
+                    cube.matrix_legacy[60] += 16 + 32 + 64;
+                    cube.matrix_legacy[61] += 16;
+                    cube.matrix_legacy[62] += 16 + 32 + 64;
                     break;
                 case 3:
-                    cube.matrix[58] += 16 + 32 + 64;
-                    cube.matrix[59] += 16;
-                    cube.matrix[60] += 16 + 32 + 64;
-                    cube.matrix[61] += 16;
-                    cube.matrix[62] += 16 + 32 + 64;
+                    cube.matrix_legacy[58] += 16 + 32 + 64;
+                    cube.matrix_legacy[59] += 16;
+                    cube.matrix_legacy[60] += 16 + 32 + 64;
+                    cube.matrix_legacy[61] += 16;
+                    cube.matrix_legacy[62] += 16 + 32 + 64;
                     break;
                 case 4:
-                    cube.matrix[58] += 16;
-                    cube.matrix[59] += 16;
-                    cube.matrix[60] += 16 + 32 + 64;
-                    cube.matrix[61] += 16 + 64;
-                    cube.matrix[62] += 16 + 64;
+                    cube.matrix_legacy[58] += 16;
+                    cube.matrix_legacy[59] += 16;
+                    cube.matrix_legacy[60] += 16 + 32 + 64;
+                    cube.matrix_legacy[61] += 16 + 64;
+                    cube.matrix_legacy[62] += 16 + 64;
                     break;
                 case 5:
-                    cube.matrix[58] += 16 + 32 + 64;
-                    cube.matrix[59] += 16;
-                    cube.matrix[60] += 16 + 32 + 64;
-                    cube.matrix[61] += 64;
-                    cube.matrix[62] += 16 + 32 + 64;
+                    cube.matrix_legacy[58] += 16 + 32 + 64;
+                    cube.matrix_legacy[59] += 16;
+                    cube.matrix_legacy[60] += 16 + 32 + 64;
+                    cube.matrix_legacy[61] += 64;
+                    cube.matrix_legacy[62] += 16 + 32 + 64;
                     break;
             }
 
@@ -417,84 +417,84 @@ namespace _8x8x8_LED.View
             switch (minute % 10)
             {
                 case 0:
-                    cube.matrix[58] += 1 + 2 + 4;
-                    cube.matrix[59] += 1 + 4;
-                    cube.matrix[60] += 1 + 4;
-                    cube.matrix[61] += 1 + 4;
-                    cube.matrix[62] += 1 + 2 + 4;
+                    cube.matrix_legacy[58] += 1 + 2 + 4;
+                    cube.matrix_legacy[59] += 1 + 4;
+                    cube.matrix_legacy[60] += 1 + 4;
+                    cube.matrix_legacy[61] += 1 + 4;
+                    cube.matrix_legacy[62] += 1 + 2 + 4;
                     break;
                 case 1:
                     if (chkFlatOneStyle.Checked)
                     {
-                        cube.matrix[58] += 2;
-                        cube.matrix[59] += 2;
-                        cube.matrix[60] += 2;
-                        cube.matrix[61] += 2;
-                        cube.matrix[62] += 2;
+                        cube.matrix_legacy[58] += 2;
+                        cube.matrix_legacy[59] += 2;
+                        cube.matrix_legacy[60] += 2;
+                        cube.matrix_legacy[61] += 2;
+                        cube.matrix_legacy[62] += 2;
                     } else
                     {
-                        cube.matrix[58] += 1 + 2 + 4;
-                        cube.matrix[59] += 2;
-                        cube.matrix[60] += 2;
-                        cube.matrix[61] += 2 + 4;
-                        cube.matrix[62] += 2;
+                        cube.matrix_legacy[58] += 1 + 2 + 4;
+                        cube.matrix_legacy[59] += 2;
+                        cube.matrix_legacy[60] += 2;
+                        cube.matrix_legacy[61] += 2 + 4;
+                        cube.matrix_legacy[62] += 2;
                     }
                     break;
                 case 2:
-                    cube.matrix[58] += 1 + 2 + 4;
-                    cube.matrix[59] += 4;
-                    cube.matrix[60] += 1 + 2 + 4;
-                    cube.matrix[61] += 1;
-                    cube.matrix[62] += 1 + 2 + 4;
+                    cube.matrix_legacy[58] += 1 + 2 + 4;
+                    cube.matrix_legacy[59] += 4;
+                    cube.matrix_legacy[60] += 1 + 2 + 4;
+                    cube.matrix_legacy[61] += 1;
+                    cube.matrix_legacy[62] += 1 + 2 + 4;
                     break;
                 case 3:
-                    cube.matrix[58] += 1 + 2 + 4;
-                    cube.matrix[59] += 1;
-                    cube.matrix[60] += 1 + 2 + 4;
-                    cube.matrix[61] += 1;
-                    cube.matrix[62] += 1 + 2 + 4;
+                    cube.matrix_legacy[58] += 1 + 2 + 4;
+                    cube.matrix_legacy[59] += 1;
+                    cube.matrix_legacy[60] += 1 + 2 + 4;
+                    cube.matrix_legacy[61] += 1;
+                    cube.matrix_legacy[62] += 1 + 2 + 4;
                     break;
                 case 4:
-                    cube.matrix[58] += 1;
-                    cube.matrix[59] += 1;
-                    cube.matrix[60] += 1 + 2 + 4;
-                    cube.matrix[61] += 1 + 4;
-                    cube.matrix[62] += 1 + 4;
+                    cube.matrix_legacy[58] += 1;
+                    cube.matrix_legacy[59] += 1;
+                    cube.matrix_legacy[60] += 1 + 2 + 4;
+                    cube.matrix_legacy[61] += 1 + 4;
+                    cube.matrix_legacy[62] += 1 + 4;
                     break;
                 case 5:
-                    cube.matrix[58] += 1 + 2 + 4;
-                    cube.matrix[59] += 1;
-                    cube.matrix[60] += 1 + 2 + 4;
-                    cube.matrix[61] += 4;
-                    cube.matrix[62] += 1 + 2 + 4;
+                    cube.matrix_legacy[58] += 1 + 2 + 4;
+                    cube.matrix_legacy[59] += 1;
+                    cube.matrix_legacy[60] += 1 + 2 + 4;
+                    cube.matrix_legacy[61] += 4;
+                    cube.matrix_legacy[62] += 1 + 2 + 4;
                     break;
                 case 6:
-                    cube.matrix[58] += 1 + 2 + 4;
-                    cube.matrix[59] += 1 + 4;
-                    cube.matrix[60] += 1 + 2 + 4;
-                    cube.matrix[61] += 4;
-                    cube.matrix[62] += 1 + 2 + 4;
+                    cube.matrix_legacy[58] += 1 + 2 + 4;
+                    cube.matrix_legacy[59] += 1 + 4;
+                    cube.matrix_legacy[60] += 1 + 2 + 4;
+                    cube.matrix_legacy[61] += 4;
+                    cube.matrix_legacy[62] += 1 + 2 + 4;
                     break;
                 case 7:
-                    cube.matrix[58] += 4;
-                    cube.matrix[59] += 2;
-                    cube.matrix[60] += 1;
-                    cube.matrix[61] += 1;
-                    cube.matrix[62] += 1 + 2 + 4;
+                    cube.matrix_legacy[58] += 4;
+                    cube.matrix_legacy[59] += 2;
+                    cube.matrix_legacy[60] += 1;
+                    cube.matrix_legacy[61] += 1;
+                    cube.matrix_legacy[62] += 1 + 2 + 4;
                     break;
                 case 8:
-                    cube.matrix[58] += 1 + 2 + 4;
-                    cube.matrix[59] += 1 + 4;
-                    cube.matrix[60] += 1 + 2 + 4;
-                    cube.matrix[61] += 1 + 4;
-                    cube.matrix[62] += 1 + 2 + 4;
+                    cube.matrix_legacy[58] += 1 + 2 + 4;
+                    cube.matrix_legacy[59] += 1 + 4;
+                    cube.matrix_legacy[60] += 1 + 2 + 4;
+                    cube.matrix_legacy[61] += 1 + 4;
+                    cube.matrix_legacy[62] += 1 + 2 + 4;
                     break;
                 case 9:
-                    cube.matrix[58] += 1 + 2 + 4;
-                    cube.matrix[59] += 1;
-                    cube.matrix[60] += 1 + 2 + 4;
-                    cube.matrix[61] += 1 + 4;
-                    cube.matrix[62] += 1 + 2 + 4;
+                    cube.matrix_legacy[58] += 1 + 2 + 4;
+                    cube.matrix_legacy[59] += 1;
+                    cube.matrix_legacy[60] += 1 + 2 + 4;
+                    cube.matrix_legacy[61] += 1 + 4;
+                    cube.matrix_legacy[62] += 1 + 2 + 4;
                     break;
             }
             cube.Flip(Axis.X);

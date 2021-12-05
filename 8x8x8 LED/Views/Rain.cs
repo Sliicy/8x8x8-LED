@@ -47,35 +47,35 @@ namespace _8x8x8_LED.View
 
                 int upwardsOffset = directionZ == "Upwards" ? 7 : 0;
 
-                for (int i = 7 - upwardsOffset; i < cube.matrix.Length; i += 8)
+                for (int i = 7 - upwardsOffset; i < cube.matrix_legacy.Length; i += 8)
                 {
                     int randomNumber = random.Next(1, rainCount);
 
                     switch (randomNumber)
                     {
                         case 1:
-                            cube.matrix[i] = 1;
+                            cube.matrix_legacy[i] = 1;
                             break;
                         case 2:
-                            cube.matrix[i] = 2;
+                            cube.matrix_legacy[i] = 2;
                             break;
                         case 3:
-                            cube.matrix[i] = 4;
+                            cube.matrix_legacy[i] = 4;
                             break;
                         case 4:
-                            cube.matrix[i] = 8;
+                            cube.matrix_legacy[i] = 8;
                             break;
                         case 5:
-                            cube.matrix[i] = 16;
+                            cube.matrix_legacy[i] = 16;
                             break;
                         case 6:
-                            cube.matrix[i] = 32;
+                            cube.matrix_legacy[i] = 32;
                             break;
                         case 7:
-                            cube.matrix[i] = 64;
+                            cube.matrix_legacy[i] = 64;
                             break;
                         case 8:
-                            cube.matrix[i] = 128;
+                            cube.matrix_legacy[i] = 128;
                             break;
                     }
                 }

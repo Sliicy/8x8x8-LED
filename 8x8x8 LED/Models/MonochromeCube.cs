@@ -11,9 +11,6 @@ namespace _8x8x8_LED.Model
     [Serializable]
     public class MonochromeCube : Cube
     {
-
-        public byte[] matrix = new byte[64];
-
         // Front View of Cube, with corresponding bytes:
         //
         // 07, 15, 23, 31, 39, 47, 55, 63,
@@ -37,45 +34,15 @@ namespace _8x8x8_LED.Model
         // Lighting up the front top-right LED:
         // matrix[56] = 128
 
-        /// <summary>
-        /// Represents the current state of the cube (should it be rotated, flipped, have an offset, etc).
-        /// </summary>
-        public int OrientationX = 0;
-        public int OrientationY = 0;
-        public int OrientationZ = 0;
-
-        public bool FlippedX = false;
-        public bool FlippedY = false;
-        public bool FlippedZ = false;
-
-        public int OffsetX = 0;
-        public int OffsetY = 0;
-        public int OffsetZ = 0;
-
         public MonochromeCube(int size)
         {
-            matrix = new byte[size];
+            matrix_legacy = new byte[size];
         }
 
-        public void Set(byte[] newMatrix)
+        public void Clear_legacy()
         {
-            matrix = newMatrix;
-        }
-
-        public byte[] Get()
-        {
-            return matrix;
-        }
-
-        public void Animate(SerialPort serialPort)
-        {
-            SerialHelper.SendPacket(CubeType.Monochrome, serialPort, matrix);
-        }
-
-        public void Clear()
-        {
-            for (int i = 0; i < matrix.Length; i++)
-                matrix[i] = 0;
+            for (int i = 0; i < matrix_legacy.Length; i++)
+                matrix_legacy[i] = 0;
         }
 
         /// <summary>
@@ -151,7 +118,7 @@ namespace _8x8x8_LED.Model
         /// <param name="iterations"></param>
         public void Shift(Direction direction, bool looping = false, int iterations = 0)
         {
-            byte[] output = new byte[matrix.Length];
+            byte[] output = new byte[matrix_legacy.Length];
             switch (direction)
             {
                 case Direction.Upwards:
@@ -163,17 +130,17 @@ namespace _8x8x8_LED.Model
                             {
                                 if (CoordinatesAt(y + z, Axis.Z) == Position.Bottom)
                                 {
-                                    output[y + z] = matrix[y + z + 7];
+                                    output[y + z] = matrix_legacy[y + z + 7];
                                 } else
                                 {
-                                    output[y + z] = matrix[(y + z) - 1];
+                                    output[y + z] = matrix_legacy[(y + z) - 1];
                                 }
                             }
                             else
                             {
                                 if (CoordinatesAt(y + z, Axis.Z) != Position.Bottom)
                                 {
-                                    output[y + z] = matrix[(y + z) - 1];
+                                    output[y + z] = matrix_legacy[(y + z) - 1];
                                 }
                             }
                         }
@@ -188,18 +155,18 @@ namespace _8x8x8_LED.Model
                             {
                                 if (CoordinatesAt(y + z, Axis.Z) == Position.Top)
                                 {
-                                    output[y + z] = matrix[y + z - 7];
+                                    output[y + z] = matrix_legacy[y + z - 7];
                                 }
                                 else
                                 {
-                                    output[y + z] = matrix[y + z + 1];
+                                    output[y + z] = matrix_legacy[y + z + 1];
                                 }
                             }
                             else
                             {
                                 if (CoordinatesAt(y + z, Axis.Z) != Position.Top)
                                 {
-                                    output[y + z] = matrix[y + z + 1];
+                                    output[y + z] = matrix_legacy[y + z + 1];
                                 }
                             }
                         }
@@ -214,16 +181,16 @@ namespace _8x8x8_LED.Model
                             {
                                 if (CoordinatesAt(y + z, Axis.Y) == Position.Right)
                                 {
-                                    output[y + z] = matrix[y + z - 56];
+                                    output[y + z] = matrix_legacy[y + z - 56];
                                 } else
                                 {
-                                    output[y + z] = matrix[(y + z) + 8];
+                                    output[y + z] = matrix_legacy[(y + z) + 8];
                                 }
                             } else
                             {
                                 if (CoordinatesAt(y + z, Axis.Y) != Position.Right)
                                 {
-                                    output[y + z] = matrix[(y + z) + 8];
+                                    output[y + z] = matrix_legacy[(y + z) + 8];
                                 }
                             }
                         }
@@ -238,16 +205,16 @@ namespace _8x8x8_LED.Model
                             {
                                 if (CoordinatesAt(y + z, Axis.Y) == Position.Left)
                                 {
-                                    output[y + z] = matrix[y + z + 56];
+                                    output[y + z] = matrix_legacy[y + z + 56];
                                 } else
                                 {
-                                    output[y + z] = matrix[(y + z) - 8];
+                                    output[y + z] = matrix_legacy[(y + z) - 8];
                                 }
                             } else
                             {
                                 if (CoordinatesAt(y + z, Axis.Y) != Position.Left)
                                 {
-                                    output[y + z] = matrix[(y + z) - 8];
+                                    output[y + z] = matrix_legacy[(y + z) - 8];
                                 }
                             }
                         }
@@ -256,31 +223,31 @@ namespace _8x8x8_LED.Model
                 case Direction.Forwards:
                     for (int y = 0; y < 64; y++)
                     {
-                        if (looping && matrix[y] % 2 != 0)
+                        if (looping && matrix_legacy[y] % 2 != 0)
                         {
-                            output[y] = Convert.ToByte(((matrix[y] - 1) / 2 + 128) % 256);
+                            output[y] = Convert.ToByte(((matrix_legacy[y] - 1) / 2 + 128) % 256);
                         }
                         else
                         {
-                            output[y] = Convert.ToByte((matrix[y] / 2) % 256);
+                            output[y] = Convert.ToByte((matrix_legacy[y] / 2) % 256);
                         }
                     }
                     break;
                 case Direction.Backwards:
                     for (int y = 0; y < 64; y++)
                     {
-                        if (looping && matrix[y] - 128 > 0)
+                        if (looping && matrix_legacy[y] - 128 > 0)
                         {
-                            output[y] = Convert.ToByte(((matrix[y] + 128) * 2 + 1) % 256);
+                            output[y] = Convert.ToByte(((matrix_legacy[y] + 128) * 2 + 1) % 256);
                         }
                         else
                         {
-                            output[y] = Convert.ToByte((matrix[y] * 2) % 256);
+                            output[y] = Convert.ToByte((matrix_legacy[y] * 2) % 256);
                         }
                     }
                     break;
             }
-            output.CopyTo(matrix, 0);
+            output.CopyTo(matrix_legacy, 0);
             if (iterations > 0)
             {
                 Shift(direction, looping, iterations - 1);
@@ -298,7 +265,7 @@ namespace _8x8x8_LED.Model
         public static byte[] Shifted(MonochromeCube cube, Direction direction, bool looping = false, int iterations = 0)
         {
             cube.Shift(direction, looping, iterations);
-            return cube.matrix;
+            return cube.matrix_legacy;
         }
 
         /// <summary>
@@ -306,7 +273,7 @@ namespace _8x8x8_LED.Model
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private static List<int> BasesFromNumber(int input)
+        public static List<int> BasesFromNumber(int input)
         {
             List<int> output = new List<int>();
             if (input - 128 >= 0)
@@ -358,12 +325,12 @@ namespace _8x8x8_LED.Model
         /// <param name="axis"></param>
         public void Flip(Axis axis)
         {
-            byte[] output = new byte[matrix.Length];
+            byte[] output = new byte[matrix_legacy.Length];
             if (axis == Axis.X)
             {
-                for (int i = 0; i < matrix.Length; i++)
+                for (int i = 0; i < matrix_legacy.Length; i++)
                 {
-                    var inputComposition = BasesFromNumber(matrix[i]);
+                    var inputComposition = BasesFromNumber(matrix_legacy[i]);
                     var outputComposition = new List<int>();
                     if (inputComposition.Contains(1))
                     {
@@ -412,7 +379,7 @@ namespace _8x8x8_LED.Model
                 {
                     for (int y = 0; y < 8; y++)
                     {
-                        array2D[y, x] = matrix[counter];
+                        array2D[y, x] = matrix_legacy[counter];
                         counter++;
                     }
                 }
@@ -435,7 +402,7 @@ namespace _8x8x8_LED.Model
                 {
                     for (int x = 0; x < 8; x++)
                     {
-                        array2D[x, y] = matrix[counter];
+                        array2D[x, y] = matrix_legacy[counter];
                         counter--;
                     }
                 }
@@ -450,7 +417,7 @@ namespace _8x8x8_LED.Model
                     }
                 }
             }
-            output.CopyTo(matrix, 0);
+            output.CopyTo(matrix_legacy, 0);
         }
 
         /// <summary>
@@ -461,7 +428,7 @@ namespace _8x8x8_LED.Model
         public static byte[] Flipped(MonochromeCube cube, Axis axis)
         {
             cube.Flip(axis);
-            return cube.matrix;
+            return cube.matrix_legacy;
         }
 
         /// <summary>
@@ -473,28 +440,28 @@ namespace _8x8x8_LED.Model
         /// <param name="iterations"></param>
         public void Rotate(Rotation orientation, int iterations = 0)
         {
-            byte[] output = new byte[matrix.Length];
+            byte[] output = new byte[matrix_legacy.Length];
             if (orientation == Rotation.ClockwiseX)
             {
                 int x = 1;
                 int counter = 0;
-                for (int i = 0; i < matrix.Length; i++)
+                for (int i = 0; i < matrix_legacy.Length; i++)
                 {
-                    if (BasesFromNumber(matrix[i]).Contains(1))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(1))
                         output[counter + 7] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(2))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(2))
                         output[counter + 6] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(4))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(4))
                         output[counter + 5] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(8))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(8))
                         output[counter + 4] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(16))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(16))
                         output[counter + 3] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(32))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(32))
                         output[counter + 2] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(64))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(64))
                         output[counter + 1] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(128))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(128))
                         output[counter + 0] += Convert.ToByte(x);
                     x *= 2;
                     if (x == 256)
@@ -511,23 +478,23 @@ namespace _8x8x8_LED.Model
             {
                 int x = 128;
                 int counter = 0;
-                for (int i = 0; i < matrix.Length; i++)
+                for (int i = 0; i < matrix_legacy.Length; i++)
                 {
-                    if (BasesFromNumber(matrix[i]).Contains(128))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(128))
                         output[56 + i % 8] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(64))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(64))
                         output[48 + i % 8] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(32))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(32))
                         output[40 + i % 8] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(16))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(16))
                         output[32 + i % 8] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(8))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(8))
                         output[24 + i % 8] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(4))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(4))
                         output[16 + i % 8] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(2))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(2))
                         output[8 + i % 8] += Convert.ToByte(x);
-                    if (BasesFromNumber(matrix[i]).Contains(1))
+                    if (BasesFromNumber(matrix_legacy[i]).Contains(1))
                         output[0 + i % 8] += Convert.ToByte(x);
 
                     counter++;
@@ -546,7 +513,7 @@ namespace _8x8x8_LED.Model
                 {
                     for (int y = 0; y < 8; y++)
                     {
-                        array2D[x, y] = matrix[counter];
+                        array2D[x, y] = matrix_legacy[counter];
                         counter++;
                     }
                 }
@@ -566,7 +533,7 @@ namespace _8x8x8_LED.Model
                 return;
 
             }
-            output.CopyTo(matrix, 0);
+            output.CopyTo(matrix_legacy, 0);
             if (iterations > 0)
             {
                 Rotate(orientation, iterations - 1);
@@ -583,7 +550,7 @@ namespace _8x8x8_LED.Model
         public static byte[] Rotated(MonochromeCube cube, Rotation orientation, int iterations = 0)
         {
             cube.Rotate(orientation, iterations);
-            return cube.matrix;
+            return cube.matrix_legacy;
         }
 
         /// <summary>

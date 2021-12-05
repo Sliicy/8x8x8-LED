@@ -614,7 +614,7 @@ namespace _8x8x8_LED
             this.cbCubeType.Name = "cbCubeType";
             this.cbCubeType.Size = new System.Drawing.Size(232, 32);
             this.cbCubeType.TabIndex = 2;
-            this.cbCubeType.SelectedIndexChanged += new System.EventHandler(this.cbCubeType_SelectedIndexChanged);
+            this.cbCubeType.SelectedIndexChanged += new System.EventHandler(this.CbCubeType_SelectedIndexChanged);
             this.cbCubeType.Click += new System.EventHandler(this.CbComPort_Click);
             // 
             // btnWebsite

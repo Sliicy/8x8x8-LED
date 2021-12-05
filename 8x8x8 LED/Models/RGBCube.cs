@@ -10,29 +10,24 @@ namespace _8x8x8_LED.Models
 {
     public class RGBCube : Cube
     {
-        public static int width = 8;
-        public static int length = 8;
-        public static int height = 8;
-
-        public int OrientationX = 0;
-        public int OrientationY = 0;
-        public int OrientationZ = 0;
-
-        public bool FlippedX = false;
-        public bool FlippedY = false;
-        public bool FlippedZ = false;
-
-        public int OffsetX = 0;
-        public int OffsetY = 0;
-        public int OffsetZ = 0;
-
-        public CubeColor[,,] matrix = new CubeColor[height, length, width];
+        //public CubeColor[,,] matrix = new CubeColor[height, length, width];
 
         public RGBCube(int x = 8, int y = 8, int z = 8)
         {
-            length = x;
-            width = y;
+            width = x;
+            length = y;
             height = z;
+            matrix = new CubeColor[width, length, height];
+        }
+
+        public void Rotate(Rotation rotation)
+        {
+            var output = Geometry.Rotate(rotation, matrix);
+            // Copy new cube to old cube:
+            for (int i = 0; i < length; i++)
+                for (int j = 0; j < width; j++)
+                    for (int k = 0; k < height; k++)
+                        matrix[i, j, k] = output[i, j, k];
         }
     }
 }

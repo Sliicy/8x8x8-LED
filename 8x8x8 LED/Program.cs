@@ -38,8 +38,8 @@ namespace _8x8x8_LED
         static void Main(string[] args)
         {
             // Allow only one instance of program:
-            if (PriorProcess() != null)
-                return;
+            //if (PriorProcess() != null)
+            //    return;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

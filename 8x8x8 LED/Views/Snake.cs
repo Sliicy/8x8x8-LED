@@ -56,7 +56,7 @@ namespace _8x8x8_LED.View
         {
             while (animate)
             {
-                cube.Clear();
+                cube.Clear_Legacy();
                 snake.Crawl(defaultDirection);
                 if (!snake.alive)
                 {
@@ -95,28 +95,28 @@ namespace _8x8x8_LED.View
             switch (apple.GetX())
             {
                 case 0:
-                    cube.matrix[destination] += 1;
+                    cube.matrix_legacy[destination] += 1;
                     break;
                 case 1:
-                    cube.matrix[destination] += 2;
+                    cube.matrix_legacy[destination] += 2;
                     break;
                 case 2:
-                    cube.matrix[destination] += 4;
+                    cube.matrix_legacy[destination] += 4;
                     break;
                 case 3:
-                    cube.matrix[destination] += 8;
+                    cube.matrix_legacy[destination] += 8;
                     break;
                 case 4:
-                    cube.matrix[destination] += 16;
+                    cube.matrix_legacy[destination] += 16;
                     break;
                 case 5:
-                    cube.matrix[destination] += 32;
+                    cube.matrix_legacy[destination] += 32;
                     break;
                 case 6:
-                    cube.matrix[destination] += 64;
+                    cube.matrix_legacy[destination] += 64;
                     break;
                 case 7:
-                    cube.matrix[destination] += 128;
+                    cube.matrix_legacy[destination] += 128;
                     break;
             }
         }
@@ -129,28 +129,28 @@ namespace _8x8x8_LED.View
                 switch (bodypart.GetX())
                 {
                     case 0:
-                        cube.matrix[destination] += 1;
+                        cube.matrix_legacy[destination] += 1;
                         break;
                     case 1:
-                        cube.matrix[destination] += 2;
+                        cube.matrix_legacy[destination] += 2;
                         break;
                     case 2:
-                        cube.matrix[destination] += 4;
+                        cube.matrix_legacy[destination] += 4;
                         break;
                     case 3:
-                        cube.matrix[destination] += 8;
+                        cube.matrix_legacy[destination] += 8;
                         break;
                     case 4:
-                        cube.matrix[destination] += 16;
+                        cube.matrix_legacy[destination] += 16;
                         break;
                     case 5:
-                        cube.matrix[destination] += 32;
+                        cube.matrix_legacy[destination] += 32;
                         break;
                     case 6:
-                        cube.matrix[destination] += 64;
+                        cube.matrix_legacy[destination] += 64;
                         break;
                     case 7:
-                        cube.matrix[destination] += 128;
+                        cube.matrix_legacy[destination] += 128;
                         break;
                 }
             }

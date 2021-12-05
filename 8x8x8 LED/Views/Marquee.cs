@@ -33,7 +33,7 @@ namespace _8x8x8_LED.View
         {
             while (animate)
             {
-                cube.Clear();
+                cube.Clear_Legacy();
                 DrawLetters();
                 System.Threading.Thread.Sleep(speed);
             }
@@ -97,88 +97,88 @@ namespace _8x8x8_LED.View
                 switch (j)
                 {
                     case 0:
-                        cube.matrix[0] = bytes[0];
+                        cube.matrix_legacy[0] = bytes[0];
                         break;
                     case 1:
-                        cube.matrix[1] = bytes[0];
+                        cube.matrix_legacy[1] = bytes[0];
                         break;
                     case 2:
-                        cube.matrix[2] = bytes[0];
+                        cube.matrix_legacy[2] = bytes[0];
                         break;
                     case 3:
-                        cube.matrix[3] = bytes[0];
+                        cube.matrix_legacy[3] = bytes[0];
                         break;
                     case 4:
-                        cube.matrix[4] = bytes[0];
+                        cube.matrix_legacy[4] = bytes[0];
                         break;
                     case 5:
-                        cube.matrix[5] = bytes[0];
+                        cube.matrix_legacy[5] = bytes[0];
                         break;
                     case 6:
-                        cube.matrix[6] = bytes[0];
+                        cube.matrix_legacy[6] = bytes[0];
                         break;
                     case 7:
-                        cube.matrix[7] = bytes[0];
+                        cube.matrix_legacy[7] = bytes[0];
                         break;
                     case 8:
-                        cube.matrix[15] = bytes[0];
+                        cube.matrix_legacy[15] = bytes[0];
                         break;
                     case 9:
-                        cube.matrix[23] = bytes[0];
+                        cube.matrix_legacy[23] = bytes[0];
                         break;
                     case 10:
-                        cube.matrix[31] = bytes[0];
+                        cube.matrix_legacy[31] = bytes[0];
                         break;
                     case 11:
-                        cube.matrix[39] = bytes[0];
+                        cube.matrix_legacy[39] = bytes[0];
                         break;
                     case 12:
-                        cube.matrix[47] = bytes[0];
+                        cube.matrix_legacy[47] = bytes[0];
                         break;
                     case 13:
-                        cube.matrix[55] = bytes[0];
+                        cube.matrix_legacy[55] = bytes[0];
                         break;
                     case 14:
-                        cube.matrix[63] = bytes[0];
+                        cube.matrix_legacy[63] = bytes[0];
                         break;
                     case 15:
-                        cube.matrix[62] = bytes[0];
+                        cube.matrix_legacy[62] = bytes[0];
                         break;
                     case 16:
-                        cube.matrix[61] = bytes[0];
+                        cube.matrix_legacy[61] = bytes[0];
                         break;
                     case 17:
-                        cube.matrix[60] = bytes[0];
+                        cube.matrix_legacy[60] = bytes[0];
                         break;
                     case 18:
-                        cube.matrix[59] = bytes[0];
+                        cube.matrix_legacy[59] = bytes[0];
                         break;
                     case 19:
-                        cube.matrix[58] = bytes[0];
+                        cube.matrix_legacy[58] = bytes[0];
                         break;
                     case 20:
-                        cube.matrix[57] = bytes[0];
+                        cube.matrix_legacy[57] = bytes[0];
                         break;
                     case 21:
-                        cube.matrix[56] = bytes[0];
+                        cube.matrix_legacy[56] = bytes[0];
                         break;
                     case 22:
-                        cube.matrix[48] = bytes[0];
+                        cube.matrix_legacy[48] = bytes[0];
                         break;
                     case 23:
-                        cube.matrix[40] = bytes[0];
+                        cube.matrix_legacy[40] = bytes[0];
                         break;
                     case 24:
-                        cube.matrix[32] = bytes[0];
+                        cube.matrix_legacy[32] = bytes[0];
                         break;
                     case 25:
-                        cube.matrix[24] = bytes[0];
+                        cube.matrix_legacy[24] = bytes[0];
                         break;
                     case 26:
-                        cube.matrix[16] = bytes[0];
+                        cube.matrix_legacy[16] = bytes[0];
                         break;
                     case 27:
-                        cube.matrix[8] = bytes[0];
+                        cube.matrix_legacy[8] = bytes[0];
                         break;
                 }
             }

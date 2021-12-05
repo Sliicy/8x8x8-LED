@@ -162,7 +162,7 @@ namespace _8x8x8_LED.Apps
                 // Ensure that audio has activity, and the speed of detection is properly set:
                 if ((Math.Abs(eightChannels[0]) > 0.05 || Math.Abs(eightChannels[5]) > 0.05) && timeElapsed % speed == 0)
                 {
-                    arrayOutput.CopyTo(cube.matrix, 0);
+                    arrayOutput.CopyTo(cube.matrix_legacy, 0);
                     SerialHelper.Send(serialPort, cube);
                     matrixIsCleared = false;
                 } else
@@ -215,7 +215,7 @@ namespace _8x8x8_LED.Apps
                             }
                         }
 
-                        arrayOutput.CopyTo(cube.matrix, 0);
+                        arrayOutput.CopyTo(cube.matrix_legacy, 0);
                         SerialHelper.Send(serialPort, cube);
                         matrixIsCleared = true;
                     }

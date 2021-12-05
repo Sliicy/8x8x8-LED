@@ -61,7 +61,7 @@ namespace _8x8x8_LED.View
         private void BwGameEngine_DoWork(object sender, DoWorkEventArgs e)
         {
             while (animate) {
-                cube.Clear();
+                cube.Clear_Legacy();
                 
                 foreach (Ball b in balls)
                 {
@@ -71,28 +71,28 @@ namespace _8x8x8_LED.View
                     switch (b.location.GetX())
                     {
                         case 0:
-                            cube.matrix[destination] = 1;
+                            cube.matrix_legacy[destination] = 1;
                             break;
                         case 1:
-                            cube.matrix[destination] = 2;
+                            cube.matrix_legacy[destination] = 2;
                             break;
                         case 2:
-                            cube.matrix[destination] = 4;
+                            cube.matrix_legacy[destination] = 4;
                             break;
                         case 3:
-                            cube.matrix[destination] = 8;
+                            cube.matrix_legacy[destination] = 8;
                             break;
                         case 4:
-                            cube.matrix[destination] = 16;
+                            cube.matrix_legacy[destination] = 16;
                             break;
                         case 5:
-                            cube.matrix[destination] = 32;
+                            cube.matrix_legacy[destination] = 32;
                             break;
                         case 6:
-                            cube.matrix[destination] = 64;
+                            cube.matrix_legacy[destination] = 64;
                             break;
                         case 7:
-                            cube.matrix[destination] = 128;
+                            cube.matrix_legacy[destination] = 128;
                             break;
                     }
                     if (b.outOfBounds)
@@ -156,19 +156,19 @@ namespace _8x8x8_LED.View
                     value = 224;
                     break;
             }
-            cube.matrix[destination] = value;
+            cube.matrix_legacy[destination] = value;
             if (p.location.GetZ() == 0)
             {
-                cube.matrix[destination + 6] = value;
-                cube.matrix[destination + 7] = value;
+                cube.matrix_legacy[destination + 6] = value;
+                cube.matrix_legacy[destination + 7] = value;
             } else if (p.location.GetZ() == 1)
             {
-                cube.matrix[destination - 1] = value;
-                cube.matrix[destination + 6] = value;
+                cube.matrix_legacy[destination - 1] = value;
+                cube.matrix_legacy[destination + 6] = value;
             } else
             {
-                cube.matrix[destination - 1] = value;
-                cube.matrix[destination - 2] = value;
+                cube.matrix_legacy[destination - 1] = value;
+                cube.matrix_legacy[destination - 2] = value;
             }
         }
 

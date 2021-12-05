@@ -58,95 +58,95 @@ namespace _8x8x8_LED.View
                             double y = Math.Round(Convert.ToDouble(coordSet[1]));
                             double z = Math.Round(Convert.ToDouble(coordSet[2]));
 
-                            cube.Clear();
+                            cube.Clear_Legacy();
                             if ((y == 10 || y == -10) && x == 0 && z == 0)
                             {
-                                cube.matrix[16] = 16;
-                                cube.matrix[17] = 16;
-                                cube.matrix[18] = 16;
-                                cube.matrix[19] = 16;
-                                cube.matrix[20] = 16;
-                                cube.matrix[21] = 16;
-                                cube.matrix[22] = 16;
-                                cube.matrix[23] = 16;
+                                cube.matrix_legacy[16] = 16;
+                                cube.matrix_legacy[17] = 16;
+                                cube.matrix_legacy[18] = 16;
+                                cube.matrix_legacy[19] = 16;
+                                cube.matrix_legacy[20] = 16;
+                                cube.matrix_legacy[21] = 16;
+                                cube.matrix_legacy[22] = 16;
+                                cube.matrix_legacy[23] = 16;
 
-                                cube.matrix[24] = 16;
-                                cube.matrix[25] = 16;
-                                cube.matrix[26] = 16;
-                                cube.matrix[27] = 16;
-                                cube.matrix[28] = 16;
-                                cube.matrix[29] = 16;
-                                cube.matrix[30] = 16;
-                                cube.matrix[31] = 16;
+                                cube.matrix_legacy[24] = 16;
+                                cube.matrix_legacy[25] = 16;
+                                cube.matrix_legacy[26] = 16;
+                                cube.matrix_legacy[27] = 16;
+                                cube.matrix_legacy[28] = 16;
+                                cube.matrix_legacy[29] = 16;
+                                cube.matrix_legacy[30] = 16;
+                                cube.matrix_legacy[31] = 16;
 
-                                cube.matrix[32] = 16;
-                                cube.matrix[33] = 16;
-                                cube.matrix[34] = 16;
-                                cube.matrix[35] = 16;
-                                cube.matrix[36] = 16;
-                                cube.matrix[37] = 16;
-                                cube.matrix[38] = 16;
-                                cube.matrix[39] = 16;
+                                cube.matrix_legacy[32] = 16;
+                                cube.matrix_legacy[33] = 16;
+                                cube.matrix_legacy[34] = 16;
+                                cube.matrix_legacy[35] = 16;
+                                cube.matrix_legacy[36] = 16;
+                                cube.matrix_legacy[37] = 16;
+                                cube.matrix_legacy[38] = 16;
+                                cube.matrix_legacy[39] = 16;
 
-                                cube.matrix[40] = 16;
-                                cube.matrix[41] = 16;
-                                cube.matrix[42] = 16;
-                                cube.matrix[43] = 16;
-                                cube.matrix[44] = 16;
-                                cube.matrix[45] = 16;
-                                cube.matrix[46] = 16;
-                                cube.matrix[47] = 16;
+                                cube.matrix_legacy[40] = 16;
+                                cube.matrix_legacy[41] = 16;
+                                cube.matrix_legacy[42] = 16;
+                                cube.matrix_legacy[43] = 16;
+                                cube.matrix_legacy[44] = 16;
+                                cube.matrix_legacy[45] = 16;
+                                cube.matrix_legacy[46] = 16;
+                                cube.matrix_legacy[47] = 16;
 
                             }
                             else if (y == 0 && x == 0 && (z == 10 || z == -10))
                             {
-                                cube.matrix[19] = 255;
-                                cube.matrix[27] = 255;
-                                cube.matrix[35] = 255;
-                                cube.matrix[43] = 255;
+                                cube.matrix_legacy[19] = 255;
+                                cube.matrix_legacy[27] = 255;
+                                cube.matrix_legacy[35] = 255;
+                                cube.matrix_legacy[43] = 255;
 
                             }
                             else if (y == 0 && (x == 10 || x == -10) && z == 0)
                             {
-                                cube.matrix[2] = 16;
-                                cube.matrix[3] = 16;
-                                cube.matrix[4] = 16;
-                                cube.matrix[5] = 16;
+                                cube.matrix_legacy[2] = 16;
+                                cube.matrix_legacy[3] = 16;
+                                cube.matrix_legacy[4] = 16;
+                                cube.matrix_legacy[5] = 16;
 
-                                cube.matrix[10] = 16;
-                                cube.matrix[11] = 16;
-                                cube.matrix[12] = 16;
-                                cube.matrix[13] = 16;
+                                cube.matrix_legacy[10] = 16;
+                                cube.matrix_legacy[11] = 16;
+                                cube.matrix_legacy[12] = 16;
+                                cube.matrix_legacy[13] = 16;
 
-                                cube.matrix[18] = 16;
-                                cube.matrix[19] = 16;
-                                cube.matrix[20] = 16;
-                                cube.matrix[21] = 16;
+                                cube.matrix_legacy[18] = 16;
+                                cube.matrix_legacy[19] = 16;
+                                cube.matrix_legacy[20] = 16;
+                                cube.matrix_legacy[21] = 16;
 
-                                cube.matrix[26] = 16;
-                                cube.matrix[27] = 16;
-                                cube.matrix[28] = 16;
-                                cube.matrix[29] = 16;
+                                cube.matrix_legacy[26] = 16;
+                                cube.matrix_legacy[27] = 16;
+                                cube.matrix_legacy[28] = 16;
+                                cube.matrix_legacy[29] = 16;
 
-                                cube.matrix[34] = 16;
-                                cube.matrix[35] = 16;
-                                cube.matrix[36] = 16;
-                                cube.matrix[37] = 16;
+                                cube.matrix_legacy[34] = 16;
+                                cube.matrix_legacy[35] = 16;
+                                cube.matrix_legacy[36] = 16;
+                                cube.matrix_legacy[37] = 16;
 
-                                cube.matrix[42] = 16;
-                                cube.matrix[43] = 16;
-                                cube.matrix[44] = 16;
-                                cube.matrix[45] = 16;
+                                cube.matrix_legacy[42] = 16;
+                                cube.matrix_legacy[43] = 16;
+                                cube.matrix_legacy[44] = 16;
+                                cube.matrix_legacy[45] = 16;
 
-                                cube.matrix[50] = 16;
-                                cube.matrix[51] = 16;
-                                cube.matrix[52] = 16;
-                                cube.matrix[53] = 16;
+                                cube.matrix_legacy[50] = 16;
+                                cube.matrix_legacy[51] = 16;
+                                cube.matrix_legacy[52] = 16;
+                                cube.matrix_legacy[53] = 16;
 
-                                cube.matrix[58] = 16;
-                                cube.matrix[59] = 16;
-                                cube.matrix[60] = 16;
-                                cube.matrix[61] = 16;
+                                cube.matrix_legacy[58] = 16;
+                                cube.matrix_legacy[59] = 16;
+                                cube.matrix_legacy[60] = 16;
+                                cube.matrix_legacy[61] = 16;
                             }
 
                             cube.Flip(Axis.X);
@@ -165,52 +165,52 @@ namespace _8x8x8_LED.View
         {
             if (queue.Count > 0)
             {
-                cube.Clear();
+                cube.Clear_Legacy();
 
                 if (queue[0].y >= 9 && queue[0].x < 1 && queue[0].x > -1 && queue[0].z < 1 &&queue[0].z > -1)
                 {
-                    cube.matrix[16] = 16;
-                    cube.matrix[17] = 16;
-                    cube.matrix[18] = 16;
-                    cube.matrix[19] = 16;
-                    cube.matrix[20] = 16;
-                    cube.matrix[21] = 16;
-                    cube.matrix[22] = 16;
-                    cube.matrix[23] = 16;
+                    cube.matrix_legacy[16] = 16;
+                    cube.matrix_legacy[17] = 16;
+                    cube.matrix_legacy[18] = 16;
+                    cube.matrix_legacy[19] = 16;
+                    cube.matrix_legacy[20] = 16;
+                    cube.matrix_legacy[21] = 16;
+                    cube.matrix_legacy[22] = 16;
+                    cube.matrix_legacy[23] = 16;
 
-                    cube.matrix[24] = 16;
-                    cube.matrix[25] = 16;
-                    cube.matrix[26] = 16;
-                    cube.matrix[27] = 16;
-                    cube.matrix[28] = 16;
-                    cube.matrix[29] = 16;
-                    cube.matrix[30] = 16;
-                    cube.matrix[31] = 16;
+                    cube.matrix_legacy[24] = 16;
+                    cube.matrix_legacy[25] = 16;
+                    cube.matrix_legacy[26] = 16;
+                    cube.matrix_legacy[27] = 16;
+                    cube.matrix_legacy[28] = 16;
+                    cube.matrix_legacy[29] = 16;
+                    cube.matrix_legacy[30] = 16;
+                    cube.matrix_legacy[31] = 16;
 
-                    cube.matrix[32] = 16;
-                    cube.matrix[33] = 16;
-                    cube.matrix[34] = 16;
-                    cube.matrix[35] = 16;
-                    cube.matrix[36] = 16;
-                    cube.matrix[37] = 16;
-                    cube.matrix[38] = 16;
-                    cube.matrix[39] = 16;
+                    cube.matrix_legacy[32] = 16;
+                    cube.matrix_legacy[33] = 16;
+                    cube.matrix_legacy[34] = 16;
+                    cube.matrix_legacy[35] = 16;
+                    cube.matrix_legacy[36] = 16;
+                    cube.matrix_legacy[37] = 16;
+                    cube.matrix_legacy[38] = 16;
+                    cube.matrix_legacy[39] = 16;
 
-                    cube.matrix[40] = 16;
-                    cube.matrix[41] = 16;
-                    cube.matrix[42] = 16;
-                    cube.matrix[43] = 16;
-                    cube.matrix[44] = 16;
-                    cube.matrix[45] = 16;
-                    cube.matrix[46] = 16;
-                    cube.matrix[47] = 16;
+                    cube.matrix_legacy[40] = 16;
+                    cube.matrix_legacy[41] = 16;
+                    cube.matrix_legacy[42] = 16;
+                    cube.matrix_legacy[43] = 16;
+                    cube.matrix_legacy[44] = 16;
+                    cube.matrix_legacy[45] = 16;
+                    cube.matrix_legacy[46] = 16;
+                    cube.matrix_legacy[47] = 16;
 
                 } else if (queue[0].y < 1 && queue[0].y > -1 && queue[0].x < 1 && queue[0].x > -1 && queue[0].z >= 9)
                 {
-                    cube.matrix[19] = 255;
-                    cube.matrix[27] = 255;
-                    cube.matrix[35] = 255;
-                    cube.matrix[43] = 255;
+                    cube.matrix_legacy[19] = 255;
+                    cube.matrix_legacy[27] = 255;
+                    cube.matrix_legacy[35] = 255;
+                    cube.matrix_legacy[43] = 255;
 
                 }
                 
