@@ -167,9 +167,7 @@ namespace _8x8x8_LED
                 for (int y = 7; y > -1; y--)
                     for (int x = 0; x < 8; x++)
                         cube.matrix[x, 7 - y, z / 8] = ColorMapper.ExtractColor(bitmap.GetPixel(x + z, y));
-
-            cube.matrix = Geometry.Rotate(Rotation.ClockwiseY, cube.matrix);
-            //cube.Rotate(Rotation.ClockwiseY);
+            cube.Rotate(Rotation.ClockwiseY);
             SerialHelper.Send(serialPort, cube);
         }
 

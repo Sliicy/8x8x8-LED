@@ -134,8 +134,14 @@ namespace _8x8x8_LED
         private void Panel_MouseDown(object sender, MouseEventArgs e)
         {
             var c = (Panel)sender;
-
-            c.BackColor = c.BackColor == Color.Black ? Color.White : Color.Black;
+            if (c.BackColor.R == 0 && c.BackColor.G == 0 && c.BackColor.B == 0)
+            {
+                c.BackColor = Color.White;
+            }
+            else
+            {
+                c.BackColor = Color.Black;
+            }
             bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);
         }
         private void BtnClickOperation_Click(object sender, EventArgs e)
