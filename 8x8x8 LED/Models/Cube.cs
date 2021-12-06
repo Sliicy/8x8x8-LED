@@ -65,11 +65,11 @@ namespace _8x8x8_LED.Models
             } while (iterations > -1);
         }
 
-        public void Shift(Direction direction, int iterations = 0)
+        public void Shift(Direction direction, int iterations = 0, bool repeating = true)
         {
             do
             {
-                matrix = Shift(direction, matrix);
+                matrix = Shift(direction, matrix, repeating);
                 iterations--;
             } while (iterations > -1);
         }

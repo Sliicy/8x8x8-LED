@@ -48,7 +48,7 @@ namespace _8x8x8_LED.Helpers
             return output;
         }
 
-        public static CubeColor[,,] Shift(Direction direction, CubeColor[,,] input)
+        public static CubeColor[,,] Shift(Direction direction, CubeColor[,,] input, bool repeating = true)
         {
             int inputLength = input.GetLength(0);
             int inputWidth = input.GetLength(1);
@@ -63,21 +63,33 @@ namespace _8x8x8_LED.Helpers
                         switch (direction)
                         {
                             case Direction.Upwards:
+                                if (!repeating)
+                                    input[i, j, maxHeight] = CubeColor.Black;
                                 output[i, j, k] = input[i, j, (k + maxHeight) % output.GetLength(2)];
                                 break;
                             case Direction.Downwards:
+                                if (!repeating)
+                                    input[i, j, 0] = CubeColor.Black;
                                 output[i, j, k] = input[i, j, (k + 1) % output.GetLength(2)];
                                 break;
                             case Direction.Leftwards:
+                                if (!repeating)
+                                    input[0, j, k] = CubeColor.Black;
                                 output[i, j, k] = input[(i + 1) % output.GetLength(0), j, k];
                                 break;
                             case Direction.Rightwards:
+                                if (!repeating)
+                                    input[maxHeight, j, k] = CubeColor.Black;
                                 output[i, j, k] = input[(i + maxHeight) % output.GetLength(0), j, k];
                                 break;
                             case Direction.Forwards:
+                                if (!repeating)
+                                    input[i, 0, k] = CubeColor.Black;
                                 output[i, j, k] = input[i, (j + 1) % output.GetLength(1), k];
                                 break;
                             case Direction.Backwards:
+                                if (!repeating)
+                                    input[i, maxHeight, k] = CubeColor.Black;
                                 output[i, j, k] = input[i, (j + maxHeight) % output.GetLength(1), k];
                                 break;
                             default:

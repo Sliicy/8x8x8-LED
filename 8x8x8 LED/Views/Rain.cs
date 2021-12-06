@@ -46,66 +46,105 @@ namespace _8x8x8_LED.View
             {
                 Random random = new Random();
 
-                int upwardsOffset = directionZ == "Upwards" ? 7 : 0;
-
-                for (int i = 7 - upwardsOffset; i < cube.matrix_legacy.Length; i += 8)
+                for (int x = 0; x < cube.width; x++)
                 {
-                    int randomNumber = random.Next(1, rainCount);
-
-                    switch (randomNumber)
+                    for (int y = 0; y < cube.width; y++)
                     {
-                        case 1:
-                            cube.matrix_legacy[i] = 1;
-                            break;
-                        case 2:
-                            cube.matrix_legacy[i] = 2;
-                            break;
-                        case 3:
-                            cube.matrix_legacy[i] = 4;
-                            break;
-                        case 4:
-                            cube.matrix_legacy[i] = 8;
-                            break;
-                        case 5:
-                            cube.matrix_legacy[i] = 16;
-                            break;
-                        case 6:
-                            cube.matrix_legacy[i] = 32;
-                            break;
-                        case 7:
-                            cube.matrix_legacy[i] = 64;
-                            break;
-                        case 8:
-                            cube.matrix_legacy[i] = 128;
-                            break;
+                        int randomNumber = random.Next(1, rainCount);
+                        if (randomNumber == 1)
+                        {
+                            cube.matrix[x, y, directionZ == "Upwards" ? 0 : cube.height - 1] = chkRainbow.Checked ? RandomColor() : RandomBlue();
+                        }
                     }
                 }
+
+                //int upwardsOffset = directionZ == "Upwards" ? 7 : 0;
+                //for (int i = 7 - upwardsOffset; i < cube.matrix_legacy.Length; i += 8)
+                //{
+                //    int randomNumber = random.Next(1, rainCount);
+                //
+                //    switch (randomNumber)
+                //    {
+                //        case 1:
+                //            cube.matrix_legacy[i] = 1;
+                //            break;
+                //        case 2:
+                //            cube.matrix_legacy[i] = 2;
+                //            break;
+                //        case 3:
+                //            cube.matrix_legacy[i] = 4;
+                //            break;
+                //        case 4:
+                //            cube.matrix_legacy[i] = 8;
+                //            break;
+                //        case 5:
+                //            cube.matrix_legacy[i] = 16;
+                //            break;
+                //        case 6:
+                //            cube.matrix_legacy[i] = 32;
+                //            break;
+                //        case 7:
+                //            cube.matrix_legacy[i] = 64;
+                //            break;
+                //        case 8:
+                //            cube.matrix_legacy[i] = 128;
+                //            break;
+                //    }
+                //}
                 SerialHelper.Send(serialPort, cube);
                 if (directionX == "Forwards")
                 {
-                    cube.Shift(Direction.Forwards, 0);
+                    cube.Shift(Direction.Forwards, 0, false);
                 }
                 else if (directionX == "Backwards")
                 {
-                    cube.Shift(Direction.Backwards, 0);
+                    cube.Shift(Direction.Backwards, 0, false);
                 }
                 if (directionY == "Leftwards")
                 {
-                    cube.Shift(Direction.Leftwards, 0);
+                    cube.Shift(Direction.Leftwards, 0, false);
                 }
                 else if (directionY == "Rightwards")
                 {
-                    cube.Shift(Direction.Rightwards, 0);
+                    cube.Shift(Direction.Rightwards, 0, false);
                 }
                 if (directionZ == "Upwards")
                 {
-                    cube.Shift(Direction.Upwards, 0);
+                    cube.Shift(Direction.Upwards, 0, false);
                 }
                 else if (directionZ == "Downwards")
                 {
-                    cube.Shift(Direction.Downwards, 0);
+                    cube.Shift(Direction.Downwards, 0, false);
                 }
                 System.Threading.Thread.Sleep(speed);
+            }
+        }
+
+        private CubeColor RandomColor()
+        {
+            Random random = new Random();
+            Array enums = Enum.GetValues(typeof(CubeColor));
+            return (CubeColor)enums.GetValue(random.Next(enums.Length));
+        }
+
+        private CubeColor RandomBlue()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(1, 6);
+            switch (randomNumber)
+            {
+                case 1:
+                    return CubeColor.Blue;
+                case 2:
+                    return CubeColor.Cyan;
+                case 3:
+                    return CubeColor.BlueCyan;
+                case 4:
+                    return CubeColor.DarkBlue;
+                case 5:
+                    return CubeColor.DarkCyan;
+                default:
+                    return CubeColor.Blue;
             }
         }
 

@@ -23,7 +23,7 @@ namespace _8x8x8_LED
         public readonly SerialPort serialPort = new SerialPort();
 
         //public MonochromeCube cube_legacy = new MonochromeCube(64);
-        public Cube cube;
+        public Cube cube = new RGBCube(8, 8, 8);
 
         private readonly string requestedApp = "";
         public bool minimized = false;
@@ -122,19 +122,13 @@ namespace _8x8x8_LED
 
                     serialPort.Open();
                     btnConnect.Text = "Disco&nnect";
-                    if (cbCubeType.Text == "Monochrome")
+                    if (cbCubeType.Text == "Monochrome" && cube != null)
                     {
-                        cube = new MonochromeCube(64)
-                        {
-                            type = CubeType.Monochrome
-                        };
+                        cube.type = CubeType.Monochrome;
                     }
-                    else if (cbCubeType.Text == "RGB")
+                    else if (cbCubeType.Text == "RGB" && cube != null)
                     {
-                        cube = new RGBCube(8, 8, 8)
-                        {
-                            type = CubeType.RGB
-                        };
+                        cube.type = CubeType.RGB;
                     }
                 }
                 catch (Exception)
