@@ -1,6 +1,7 @@
 ﻿using _8x8x8_LED.Model;
 using _8x8x8_LED.Model.Pong;
 using _8x8x8_LED.Model.Snake;
+using _8x8x8_LED.Models;
 using System;
 using System.ComponentModel;
 using System.IO.Ports;
@@ -11,7 +12,7 @@ namespace _8x8x8_LED.View
     public partial class FrmSnake : Form
     {
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
+        private readonly Cube cube;
         private bool animate = false;
         private int speed = 500;
         
@@ -21,7 +22,7 @@ namespace _8x8x8_LED.View
         private readonly Location apple = new Location(0, 0, 0);
         private bool appleConsumed = false;
 
-        public FrmSnake(SerialPort serialPort, ref MonochromeCube cube)
+        public FrmSnake(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -56,7 +57,7 @@ namespace _8x8x8_LED.View
         {
             while (animate)
             {
-                cube.Clear_Legacy();
+                cube.Clear();
                 snake.Crawl(defaultDirection);
                 if (!snake.alive)
                 {

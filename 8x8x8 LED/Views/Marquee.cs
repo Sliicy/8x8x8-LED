@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Model;
+using _8x8x8_LED.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace _8x8x8_LED.View
     public partial class FrmMarquee : Form
     {
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
+        private readonly Cube cube;
         private bool animate = false;
 
         private Bitmap wideMarquee;
@@ -22,7 +23,7 @@ namespace _8x8x8_LED.View
         // Needle represents the current vertical line being read from the marquee:
         private int needle = 0;
 
-        public FrmMarquee(SerialPort serialPort, ref MonochromeCube cube)
+        public FrmMarquee(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -33,7 +34,7 @@ namespace _8x8x8_LED.View
         {
             while (animate)
             {
-                cube.Clear_Legacy();
+                cube.Clear();
                 DrawLetters();
                 System.Threading.Thread.Sleep(speed);
             }
@@ -68,8 +69,8 @@ namespace _8x8x8_LED.View
             needle++;
             if (needle >= wideMarquee.Width)
                 needle = 0;
-            cube.Rotate(Model.Rotation.ClockwiseX);
-            cube.Rotate(Model.Rotation.CounterclockwiseZ);
+            cube.Rotate(Rotation.ClockwiseX);
+            cube.Rotate(Rotation.CounterclockwiseZ);
             SerialHelper.Send(serialPort, cube);
         }
 

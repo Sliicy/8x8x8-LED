@@ -22,8 +22,8 @@ namespace _8x8x8_LED
 
         public readonly SerialPort serialPort = new SerialPort();
 
-        public MonochromeCube cube_legacy = new MonochromeCube(64);
-        public Cube cube = new RGBCube(8, 8, 8);
+        //public MonochromeCube cube_legacy = new MonochromeCube(64);
+        public Cube cube;
 
         private readonly string requestedApp = "";
         public bool minimized = false;
@@ -60,7 +60,7 @@ namespace _8x8x8_LED
 
             if (chkAutoconnect.Checked) btnConnect.PerformClick();
 
-            Testing t = new Testing(serialPort);
+            Testing t = new Testing(serialPort, ref cube);
             t.Show();
         }
 
@@ -122,6 +122,20 @@ namespace _8x8x8_LED
 
                     serialPort.Open();
                     btnConnect.Text = "Disco&nnect";
+                    if (cbCubeType.Text == "Monochrome")
+                    {
+                        cube = new MonochromeCube(64)
+                        {
+                            type = CubeType.Monochrome
+                        };
+                    }
+                    else if (cbCubeType.Text == "RGB")
+                    {
+                        cube = new RGBCube(8, 8, 8)
+                        {
+                            type = CubeType.RGB
+                        };
+                    }
                 }
                 catch (Exception)
                 {
@@ -243,25 +257,25 @@ namespace _8x8x8_LED
             if (lstApps.SelectedItem == null)
                 return;
             if (lstApps.SelectedItem.ToString() == "Image Viewer")
-                form = new FrmImageViewer(serialPort, ref cube_legacy);
+                form = new FrmImageViewer(serialPort, ref cube);
             else if (lstApps.SelectedItem.ToString() == "Video")
-                form = new FrmVideo(serialPort, ref cube_legacy);
+                form = new FrmVideo(serialPort, ref cube);
             else if (lstApps.SelectedItem.ToString() == "Music")
-                form = new FrmMusic(serialPort, ref cube_legacy);
+                form = new FrmMusic(serialPort, ref cube);
             else if (lstApps.SelectedItem.ToString() == "Pong")
-                form = new FrmPong(serialPort, ref cube_legacy);
+                form = new FrmPong(serialPort, ref cube);
             else if (lstApps.SelectedItem.ToString() == "Marquee")
-                form = new FrmMarquee(serialPort, ref cube_legacy);
+                form = new FrmMarquee(serialPort, ref cube);
             else if (lstApps.SelectedItem.ToString() == "Rain")
-                form = new FrmRain(serialPort, ref cube_legacy);
+                form = new FrmRain(serialPort, ref cube);
             else if (lstApps.SelectedItem.ToString() == "Balls")
-                form = new FrmBalls(serialPort, ref cube_legacy);
+                form = new FrmBalls(serialPort, ref cube);
             else if (lstApps.SelectedItem.ToString() == "Clock")
-                form = new FrmClock(serialPort, ref cube_legacy);
+                form = new FrmClock(serialPort, ref cube);
             else if (lstApps.SelectedItem.ToString() == "Snake")
-                form = new FrmSnake(serialPort, ref cube_legacy);
+                form = new FrmSnake(serialPort, ref cube);
             else if (lstApps.SelectedItem.ToString() == "Phone Square")
-                form = new PhoneSquare(serialPort, ref cube_legacy);
+                form = new PhoneSquare(serialPort, ref cube);
             else
                 return;
             
@@ -276,17 +290,19 @@ namespace _8x8x8_LED
             if (cbRotateY.Text == "") cbRotateY.Text = "0";
             if (cbRotateZ.Text == "") cbRotateZ.Text = "0";
 
-            cube_legacy.FlippedX = chkFlipX.Checked;
-            cube_legacy.FlippedY = chkFlipY.Checked;
-            cube_legacy.FlippedZ = chkFlipZ.Checked;
-            cube_legacy.OrientationX = Convert.ToInt32(cbRotateX.Text);
-            cube_legacy.OrientationY = Convert.ToInt32(cbRotateY.Text);
-            cube_legacy.OrientationZ = Convert.ToInt32(cbRotateZ.Text);
-            cube_legacy.OffsetX = (int)nudOffsetX.Value;
-            cube_legacy.OffsetY = (int)nudOffsetY.Value;
-            cube_legacy.OffsetZ = (int)nudOffsetZ.Value;
-
-            SerialHelper.Send(serialPort, cube_legacy);
+            if (cube != null)
+            {
+                cube.FlippedX = chkFlipX.Checked;
+                cube.FlippedY = chkFlipY.Checked;
+                cube.FlippedZ = chkFlipZ.Checked;
+                cube.OrientationX = Convert.ToInt32(cbRotateX.Text);
+                cube.OrientationY = Convert.ToInt32(cbRotateY.Text);
+                cube.OrientationZ = Convert.ToInt32(cbRotateZ.Text);
+                cube.OffsetX = (int)nudOffsetX.Value;
+                cube.OffsetY = (int)nudOffsetY.Value;
+                cube.OffsetZ = (int)nudOffsetZ.Value;
+                SerialHelper.Send(serialPort, cube);
+            }
         }
 
         private void ChkFlipX_CheckedChanged(object sender, EventArgs e)
@@ -323,54 +339,54 @@ namespace _8x8x8_LED
         {
             if (cbCubeType.Text == "RGB")
                 return; // TODO: Add support for RGB calibration.
-            cube_legacy.Clear_legacy();
-            SerialHelper.Send(serialPort, cube_legacy);
+            cube.Clear();
+            SerialHelper.Send(serialPort, cube);
             var d = MessageBox.Show("Please play with the settings until the next 5 messages are all describing the cube correctly." + Environment.NewLine + Environment.NewLine +
                 "Alternatively, there is a \"Calibration Cube.png\" image which can be loaded into the Image Viewer and used to calibrate the cube (make sure to use the controls found in settings for changes to stay persistent)." + Environment.NewLine + Environment.NewLine +
                 "Continue with manual calibration?", "Calibrate Cube", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (d != DialogResult.Yes) return;
-            cube_legacy.matrix_legacy[0] = 128;
-            SerialHelper.Send(serialPort, cube_legacy);
+            cube.matrix_legacy[0] = 128;
+            SerialHelper.Send(serialPort, cube);
             MessageBox.Show("If the LEDs are calibrated correctly, then right now, the back bottom left LED should be the only one on.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube_legacy.Clear_legacy();
-            cube_legacy.matrix_legacy[0] = 255;
-            SerialHelper.Send(serialPort, cube_legacy);
+            cube.Clear();
+            cube.matrix_legacy[0] = 255;
+            SerialHelper.Send(serialPort, cube);
             MessageBox.Show("Now, the bottom left row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube_legacy.Clear_legacy();
-            cube_legacy.matrix_legacy[0] = 128;
-            cube_legacy.matrix_legacy[8] = 128;
-            cube_legacy.matrix_legacy[16] = 128;
-            cube_legacy.matrix_legacy[24] = 128;
-            cube_legacy.matrix_legacy[32] = 128;
-            cube_legacy.matrix_legacy[40] = 128;
-            cube_legacy.matrix_legacy[48] = 128;
-            cube_legacy.matrix_legacy[56] = 128;
-            SerialHelper.Send(serialPort, cube_legacy);
+            cube.Clear();
+            cube.matrix_legacy[0] = 128;
+            cube.matrix_legacy[8] = 128;
+            cube.matrix_legacy[16] = 128;
+            cube.matrix_legacy[24] = 128;
+            cube.matrix_legacy[32] = 128;
+            cube.matrix_legacy[40] = 128;
+            cube.matrix_legacy[48] = 128;
+            cube.matrix_legacy[56] = 128;
+            SerialHelper.Send(serialPort, cube);
             MessageBox.Show("Now, the bottom back row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube_legacy.Clear_legacy();
-            cube_legacy.matrix_legacy[56] = 1;
-            cube_legacy.matrix_legacy[57] = 1;
-            cube_legacy.matrix_legacy[58] = 1;
-            cube_legacy.matrix_legacy[59] = 1;
-            cube_legacy.matrix_legacy[60] = 1;
-            cube_legacy.matrix_legacy[61] = 1;
-            cube_legacy.matrix_legacy[62] = 1;
-            cube_legacy.matrix_legacy[63] = 1;
-            SerialHelper.Send(serialPort, cube_legacy);
+            cube.Clear();
+            cube.matrix_legacy[56] = 1;
+            cube.matrix_legacy[57] = 1;
+            cube.matrix_legacy[58] = 1;
+            cube.matrix_legacy[59] = 1;
+            cube.matrix_legacy[60] = 1;
+            cube.matrix_legacy[61] = 1;
+            cube.matrix_legacy[62] = 1;
+            cube.matrix_legacy[63] = 1;
+            SerialHelper.Send(serialPort, cube);
             MessageBox.Show("Now, the right front row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube_legacy.Clear_legacy();
-            cube_legacy.matrix_legacy[7] = 255;
-            cube_legacy.matrix_legacy[15] = 255;
-            cube_legacy.matrix_legacy[23] = 255;
-            cube_legacy.matrix_legacy[31] = 255;
-            cube_legacy.matrix_legacy[39] = 255;
-            cube_legacy.matrix_legacy[47] = 255;
-            cube_legacy.matrix_legacy[55] = 255;
-            cube_legacy.matrix_legacy[63] = 255;
-            SerialHelper.Send(serialPort, cube_legacy);
+            cube.Clear();
+            cube.matrix_legacy[7] = 255;
+            cube.matrix_legacy[15] = 255;
+            cube.matrix_legacy[23] = 255;
+            cube.matrix_legacy[31] = 255;
+            cube.matrix_legacy[39] = 255;
+            cube.matrix_legacy[47] = 255;
+            cube.matrix_legacy[55] = 255;
+            cube.matrix_legacy[63] = 255;
+            SerialHelper.Send(serialPort, cube);
             MessageBox.Show("Now, the entire top section should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube_legacy.Clear_legacy();
-            SerialHelper.Send(serialPort, cube_legacy);
+            cube.Clear();
+            SerialHelper.Send(serialPort, cube);
             MessageBox.Show("If each of these message boxes were correct, then the cube is calibrated!", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -416,12 +432,14 @@ namespace _8x8x8_LED
                 case "Monochrome":
                     txtBytesToSend.Text = Properties.Resources.MonochromeExample;
                     btnInvertPacket.Enabled = true;
-                    cube.type = CubeType.Monochrome;
+                    if (cube != null)
+                        cube.type = CubeType.Monochrome;
                     break;
                 case "RGB":
                     txtBytesToSend.Text = Properties.Resources.RGBExample;
                     btnInvertPacket.Enabled = false;
-                    cube.type = CubeType.RGB;
+                    if (cube != null)
+                        cube.type = CubeType.RGB;
                     break;
             }
         }

@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Model;
+using _8x8x8_LED.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,8 +16,8 @@ namespace _8x8x8_LED.View
     public partial class FrmClock : Form
     {
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
-        public FrmClock(SerialPort serialPort, ref MonochromeCube cube)
+        private readonly Cube cube;
+        public FrmClock(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -41,7 +42,7 @@ namespace _8x8x8_LED.View
 
         private void DrawTime()
         {
-            cube.Clear_Legacy();
+            cube.Clear();
             int hour = DateTime.Now.Hour;
             int minute = DateTime.Now.Minute;
 

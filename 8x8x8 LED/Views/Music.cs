@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Model;
+using _8x8x8_LED.Models;
 using NAudio.Wave;
 using System;
 using System.ComponentModel;
@@ -10,7 +11,7 @@ namespace _8x8x8_LED.Apps
     public partial class FrmMusic : Form
     {
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
+        private readonly Cube cube;
 
         private int samples = 1024; // How many samples to calculate wave form from.
 
@@ -27,7 +28,7 @@ namespace _8x8x8_LED.Apps
 
         private string currentMusicStyle = "";
 
-        public FrmMusic(SerialPort serialPort, ref MonochromeCube cube)
+        public FrmMusic(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;

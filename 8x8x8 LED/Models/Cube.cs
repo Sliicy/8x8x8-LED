@@ -1,4 +1,5 @@
-﻿using _8x8x8_LED.Model;
+﻿using _8x8x8_LED.Helpers;
+using _8x8x8_LED.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace _8x8x8_LED.Models
 {
-    public abstract class Cube
+    public abstract class Cube : Geometry
     {
         public int width;
         public int length;
@@ -36,15 +37,41 @@ namespace _8x8x8_LED.Models
 
         public void Clear()
         {
-            for (int x = 0; x < matrix.GetLength(0); x++)
-                for (int y = 0; y < matrix.GetLength(1); y++)
-                    for (int z = 0; z < matrix.GetLength(2); z++)
-                        matrix[x, y, z] = 0;
+            if (type == CubeType.Monochrome)
+            {
+                for (int x = 0; x < 64; x++)
+                    matrix_legacy[x] = 0;
+            }
+            else if (type == CubeType.RGB)
+            {
+                for (int x = 0; x < matrix.GetLength(0); x++)
+                    for (int y = 0; y < matrix.GetLength(1); y++)
+                        for (int z = 0; z < matrix.GetLength(2); z++)
+                            matrix[x, y, z] = 0;
+            }
         }
-        public void Clear_Legacy()
+
+        public void Flip(Axis axis)
         {
-            for (int x = 0; x < 64; x++)
-                matrix_legacy[x] = 0;
+            matrix = Flip(axis, matrix);
+        }
+
+        public void Rotate(Rotation orientation, int iterations = 0)
+        {
+            do
+            {
+                matrix = Rotate(orientation, matrix);
+                iterations--;
+            } while (iterations > -1);
+        }
+
+        public void Shift(Direction direction, int iterations = 0)
+        {
+            do
+            {
+                matrix = Shift(direction, matrix);
+                iterations--;
+            } while (iterations > -1);
         }
     }
 }

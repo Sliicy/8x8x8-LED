@@ -490,5 +490,17 @@ namespace _8x8x8_LED.Properties {
                 this["CubeType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Rain_Rainbow {
+            get {
+                return ((bool)(this["Rain_Rainbow"]));
+            }
+            set {
+                this["Rain_Rainbow"] = value;
+            }
+        }
     }
 }

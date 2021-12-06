@@ -13,11 +13,11 @@ namespace _8x8x8_LED
     public partial class FrmImageViewer : Form
     {
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
+        private readonly Cube cube;
         private int fileNameIncrementor = 0;
         Bitmap bitmap;
 
-        public FrmImageViewer(SerialPort serialPort, ref MonochromeCube cube)
+        public FrmImageViewer(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -189,17 +189,17 @@ namespace _8x8x8_LED
                 cube.Flip(Axis.Z);
 
             if (b == btnShiftUpwards)
-                cube.Shift(Direction.Upwards, chkLoop.Checked);
+                cube.Shift(Direction.Upwards);
             if (b == btnShiftDownwards)
-                cube.Shift(Direction.Downwards, chkLoop.Checked);
+                cube.Shift(Direction.Downwards);
             if (b == btnShiftLeftwards)
-                cube.Shift(Direction.Leftwards, chkLoop.Checked);
+                cube.Shift(Direction.Leftwards);
             if (b == btnShiftRightwards)
-                cube.Shift(Direction.Rightwards, chkLoop.Checked);
+                cube.Shift(Direction.Rightwards);
             if (b == btnShiftForwards)
-                cube.Shift(Direction.Forwards, chkLoop.Checked);
+                cube.Shift(Direction.Forwards);
             if (b == btnShiftBackwards)
-                cube.Shift(Direction.Backwards, chkLoop.Checked);
+                cube.Shift(Direction.Backwards);
 
             if (b == btnRotateXClock)
                 cube.Rotate(Rotation.ClockwiseX);

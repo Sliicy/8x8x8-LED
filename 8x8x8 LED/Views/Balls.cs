@@ -1,5 +1,6 @@
 ﻿using _8x8x8_LED.Model;
 using _8x8x8_LED.Model.Pong;
+using _8x8x8_LED.Models;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace _8x8x8_LED.View
     {
 
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
+        private readonly Cube cube;
 
         private readonly List<Ball> balls = new List<Ball>();
 
@@ -36,7 +37,7 @@ namespace _8x8x8_LED.View
 
         readonly IWaveIn waveIn = new WasapiLoopbackCapture();
 
-        public FrmBalls(SerialPort serialPort, ref MonochromeCube cube)
+        public FrmBalls(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -137,7 +138,7 @@ namespace _8x8x8_LED.View
         {
             while (animate)
             {
-                cube.Clear_Legacy();
+                cube.Clear();
                 if ((animateMusic && Math.Abs(twoChannels[0]) > 0.05 && timeElapsed % speed == 0) || !animateMusic)
                 {
                     foreach (Ball b in balls)

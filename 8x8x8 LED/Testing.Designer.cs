@@ -40,9 +40,13 @@
             this.btnCyan = new System.Windows.Forms.Button();
             this.btnMagenta = new System.Windows.Forms.Button();
             this.btnWhite = new System.Windows.Forms.Button();
-            this.btnMock = new System.Windows.Forms.Button();
             this.btnAddImage = new System.Windows.Forms.Button();
             this.btnReload = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.btnShift = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -162,16 +166,6 @@
             this.btnWhite.UseVisualStyleBackColor = true;
             this.btnWhite.Click += new System.EventHandler(this.btnWhite_Click);
             // 
-            // btnMock
-            // 
-            this.btnMock.Location = new System.Drawing.Point(15, 395);
-            this.btnMock.Name = "btnMock";
-            this.btnMock.Size = new System.Drawing.Size(150, 44);
-            this.btnMock.TabIndex = 8;
-            this.btnMock.Text = "Mock";
-            this.btnMock.UseVisualStyleBackColor = true;
-            this.btnMock.Click += new System.EventHandler(this.btnMock_Click);
-            // 
             // btnAddImage
             // 
             this.btnAddImage.Location = new System.Drawing.Point(15, 445);
@@ -192,14 +186,68 @@
             this.btnReload.UseVisualStyleBackColor = true;
             this.btnReload.Click += new System.EventHandler(this.BtnReload_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(15, 395);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(212, 44);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Test Monochrome";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(453, 345);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(209, 55);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "Set type to RGB";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(453, 406);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(209, 73);
+            this.button3.TabIndex = 12;
+            this.button3.Text = "Set Type to Monochrome";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // btnShift
+            // 
+            this.btnShift.Location = new System.Drawing.Point(278, 395);
+            this.btnShift.Name = "btnShift";
+            this.btnShift.Size = new System.Drawing.Size(142, 66);
+            this.btnShift.TabIndex = 13;
+            this.btnShift.Text = "Shift";
+            this.btnShift.UseVisualStyleBackColor = true;
+            this.btnShift.Click += new System.EventHandler(this.BtnFlip_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(270, 495);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(150, 44);
+            this.button4.TabIndex = 9;
+            this.button4.Text = "Resend";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Testing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(697, 600);
+            this.Controls.Add(this.btnShift);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.btnReload);
             this.Controls.Add(this.btnAddImage);
-            this.Controls.Add(this.btnMock);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.btnClear);
@@ -234,8 +282,12 @@
         private System.Windows.Forms.Button btnCyan;
         private System.Windows.Forms.Button btnMagenta;
         private System.Windows.Forms.Button btnWhite;
-        private System.Windows.Forms.Button btnMock;
         private System.Windows.Forms.Button btnAddImage;
         private System.Windows.Forms.Button btnReload;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnShift;
+        private System.Windows.Forms.Button button4;
     }
 }

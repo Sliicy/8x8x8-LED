@@ -35,15 +35,11 @@ namespace _8x8x8_LED.View
             this.lblSpeed = new System.Windows.Forms.Label();
             this.nudSpeed = new System.Windows.Forms.NumericUpDown();
             this.bwRenderer = new System.ComponentModel.BackgroundWorker();
-            this.grpAnimationMethod = new System.Windows.Forms.GroupBox();
-            this.rbGravity = new System.Windows.Forms.RadioButton();
-            this.rbLooped = new System.Windows.Forms.RadioButton();
             this.chkAnimate = new System.Windows.Forms.CheckBox();
             this.chkSyncMusic = new System.Windows.Forms.CheckBox();
             this.chkSlideshow = new System.Windows.Forms.CheckBox();
             this.tmrSlideshow = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
-            this.grpAnimationMethod.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSelectFile
@@ -94,39 +90,6 @@ namespace _8x8x8_LED.View
             this.bwRenderer.WorkerSupportsCancellation = true;
             this.bwRenderer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BwRenderer_DoWork);
             // 
-            // grpAnimationMethod
-            // 
-            this.grpAnimationMethod.Controls.Add(this.rbGravity);
-            this.grpAnimationMethod.Controls.Add(this.rbLooped);
-            this.grpAnimationMethod.Location = new System.Drawing.Point(12, 203);
-            this.grpAnimationMethod.Name = "grpAnimationMethod";
-            this.grpAnimationMethod.Size = new System.Drawing.Size(193, 121);
-            this.grpAnimationMethod.TabIndex = 6;
-            this.grpAnimationMethod.TabStop = false;
-            this.grpAnimationMethod.Text = "Animation Type";
-            // 
-            // rbGravity
-            // 
-            this.rbGravity.AutoSize = true;
-            this.rbGravity.Location = new System.Drawing.Point(6, 62);
-            this.rbGravity.Name = "rbGravity";
-            this.rbGravity.Size = new System.Drawing.Size(84, 28);
-            this.rbGravity.TabIndex = 8;
-            this.rbGravity.Text = "&Gravity";
-            this.rbGravity.UseVisualStyleBackColor = true;
-            // 
-            // rbLooped
-            // 
-            this.rbLooped.AutoSize = true;
-            this.rbLooped.Checked = true;
-            this.rbLooped.Location = new System.Drawing.Point(6, 28);
-            this.rbLooped.Name = "rbLooped";
-            this.rbLooped.Size = new System.Drawing.Size(93, 28);
-            this.rbLooped.TabIndex = 7;
-            this.rbLooped.TabStop = true;
-            this.rbLooped.Text = "&Looped";
-            this.rbLooped.UseVisualStyleBackColor = true;
-            // 
             // chkAnimate
             // 
             this.chkAnimate.AutoSize = true;
@@ -169,11 +132,10 @@ namespace _8x8x8_LED.View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(218, 340);
+            this.ClientSize = new System.Drawing.Size(218, 209);
             this.Controls.Add(this.chkSlideshow);
             this.Controls.Add(this.chkSyncMusic);
             this.Controls.Add(this.chkAnimate);
-            this.Controls.Add(this.grpAnimationMethod);
             this.Controls.Add(this.nudSpeed);
             this.Controls.Add(this.lblSpeed);
             this.Controls.Add(this.btnSelectFile);
@@ -188,8 +150,6 @@ namespace _8x8x8_LED.View
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmVideo_FormClosing);
             this.Load += new System.EventHandler(this.FrmVideo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).EndInit();
-            this.grpAnimationMethod.ResumeLayout(false);
-            this.grpAnimationMethod.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,9 +161,6 @@ namespace _8x8x8_LED.View
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.NumericUpDown nudSpeed;
         private System.ComponentModel.BackgroundWorker bwRenderer;
-        private System.Windows.Forms.GroupBox grpAnimationMethod;
-        private System.Windows.Forms.RadioButton rbGravity;
-        private System.Windows.Forms.RadioButton rbLooped;
         private System.Windows.Forms.CheckBox chkAnimate;
         private System.Windows.Forms.CheckBox chkSyncMusic;
         private System.Windows.Forms.CheckBox chkSlideshow;

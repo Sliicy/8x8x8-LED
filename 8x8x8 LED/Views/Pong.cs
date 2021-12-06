@@ -1,5 +1,6 @@
 ﻿using _8x8x8_LED.Model;
 using _8x8x8_LED.Model.Pong;
+using _8x8x8_LED.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ namespace _8x8x8_LED.View
     public partial class FrmPong : Form
     {
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
+        private readonly Cube cube;
 
         private bool animate = false;
         private int speed = 500;
@@ -22,7 +23,7 @@ namespace _8x8x8_LED.View
         private int player1Score = 0;
         private int player2Score = 0;
 
-        public FrmPong(SerialPort serialPort, ref MonochromeCube cube)
+        public FrmPong(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -61,7 +62,7 @@ namespace _8x8x8_LED.View
         private void BwGameEngine_DoWork(object sender, DoWorkEventArgs e)
         {
             while (animate) {
-                cube.Clear_Legacy();
+                cube.Clear();
                 
                 foreach (Ball b in balls)
                 {

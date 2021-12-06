@@ -38,7 +38,7 @@ namespace _8x8x8_LED
                         outputPayload[0] = MONOCHROME_HEADER[0];
 
                         // Copy payload:
-                        for (int i = MONOCHROME_HEADER.Length; i < payload.Length; i++)
+                        for (int i = MONOCHROME_HEADER.Length; i < payload.Length + MONOCHROME_HEADER.Length; i++)
                         {
                             outputPayload[i] = payload[i - MONOCHROME_HEADER.Length];
                         }
@@ -152,27 +152,39 @@ namespace _8x8x8_LED
             if (cube.OffsetZ != 0)
                 outputCube.Shift(Direction.Downwards, true, Math.Abs(cube.OffsetZ) - 1);
 
-            switch (cube.type)
-            {
-                case CubeType.Monochrome:
-
-                    break;
-                case CubeType.RGB:
-
-                    break;
-            }
-
+            
+            
             if (cube.GetType().ToString().Contains("MonochromeCube"))
             {
+
+                switch (cube.type)
+                {
+                    case CubeType.Monochrome:
+                        //MonochromeCube mc = RGBToMonochromeDriver(cube);
+                        SendPacket(CubeType.Monochrome, serialPort, cube.matrix_legacy);
+                        break;
+                    case CubeType.RGB:
+                        RGBCube outputRGBCube = MonochromeToRGBDriver(cube);
+                        SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(outputRGBCube.matrix));
+
+                        //SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(cube.matrix));
+                        break;
+                }
+
                 
-                RGBCube outputRGBCube = MonochromeToRGBDriver(cube);
-                SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(outputRGBCube.matrix));
-                //SendPacket(CubeType.Monochrome, serialPort, outputCube.matrix_legacy);
             }
             else if (cube.GetType().ToString().Contains("RGBCube"))
             {
-                //RGBCube outputRGBCube = MonochromeToRGBDriver(cube);
-                SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(cube.matrix));
+                switch (cube.type)
+                {
+                    case CubeType.Monochrome:
+                        MonochromeCube mc = RGBToMonochromeDriver(cube);
+                        SendPacket(CubeType.Monochrome, serialPort, mc.matrix_legacy);
+                        break;
+                    case CubeType.RGB:
+                        SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(cube.matrix));
+                        break;
+                }
             }
         }
 
@@ -229,6 +241,22 @@ namespace _8x8x8_LED
             output.OrientationY = mc.OrientationY;
             output.OrientationZ = mc.OrientationZ;
 
+            return output;
+        }
+
+        public static MonochromeCube RGBToMonochromeDriver(Cube rgbCube)
+        {
+            MonochromeCube output = new MonochromeCube(64);
+
+            for (int x = 0; x < rgbCube.width; x++)
+                for (int y = 0; y < rgbCube.length; y++)
+                    for (int z = 0; z < rgbCube.height; z++)
+                    {
+                        if (rgbCube.matrix[x, y, z] != CubeColor.Black)
+                        {
+                            output.matrix_legacy[y + z * 8] += (byte)Math.Pow(2, x);
+                        }
+                    }
             return output;
         }
     }

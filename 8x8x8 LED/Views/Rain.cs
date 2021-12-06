@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Model;
+using _8x8x8_LED.Models;
 using System;
 using System.ComponentModel;
 using System.IO.Ports;
@@ -10,7 +11,7 @@ namespace _8x8x8_LED.View
     {
 
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
+        private readonly Cube cube;
 
         private int rainCount = 90;
         private int speed = 0;
@@ -20,7 +21,7 @@ namespace _8x8x8_LED.View
         private string directionY = "";
         private string directionZ = "";
 
-        public FrmRain(SerialPort serialPort, ref MonochromeCube cube)
+        public FrmRain(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -82,27 +83,27 @@ namespace _8x8x8_LED.View
                 SerialHelper.Send(serialPort, cube);
                 if (directionX == "Forwards")
                 {
-                    cube.Shift(Direction.Forwards, false, 0);
+                    cube.Shift(Direction.Forwards, 0);
                 }
                 else if (directionX == "Backwards")
                 {
-                    cube.Shift(Direction.Backwards, false, 0);
+                    cube.Shift(Direction.Backwards, 0);
                 }
                 if (directionY == "Leftwards")
                 {
-                    cube.Shift(Direction.Leftwards, false, 0);
+                    cube.Shift(Direction.Leftwards, 0);
                 }
                 else if (directionY == "Rightwards")
                 {
-                    cube.Shift(Direction.Rightwards, false, 0);
+                    cube.Shift(Direction.Rightwards, 0);
                 }
                 if (directionZ == "Upwards")
                 {
-                    cube.Shift(Direction.Upwards, false, 0);
+                    cube.Shift(Direction.Upwards, 0);
                 }
                 else if (directionZ == "Downwards")
                 {
-                    cube.Shift(Direction.Downwards, false, 0);
+                    cube.Shift(Direction.Downwards, 0);
                 }
                 System.Threading.Thread.Sleep(speed);
             }
@@ -149,7 +150,13 @@ namespace _8x8x8_LED.View
             cbDirectionZ.SelectedIndex = Properties.Settings.Default.Rain_Z;
             tbRainCount.Value = Properties.Settings.Default.Rain_Count;
             tbSpeed.Value = Properties.Settings.Default.Rain_Speed;
+            chkRainbow.Checked = Properties.Settings.Default.Rain_Rainbow;
             chkAnimate.Checked = true;
+        }
+
+        private void ChkRainbow_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Rain_Rainbow = chkRainbow.Checked;
         }
     }
 }

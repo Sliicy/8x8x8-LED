@@ -19,13 +19,15 @@ namespace _8x8x8_LED
 {
     public partial class Testing : Form
     {
-        public Testing(SerialPort serialPort)
+        private readonly SerialPort serialPort;
+        private readonly Cube cube;
+        public Testing(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
+            this.cube = cube;
         }
 
-        private readonly SerialPort serialPort;
         //private readonly int delay = 24;
         Bitmap bitmap;
         private readonly OpenFileDialog picSelect = new OpenFileDialog()
@@ -38,7 +40,6 @@ namespace _8x8x8_LED
 
         private void BtnRed_Click(object sender, EventArgs e)
         {
-            Cube cube = new RGBCube(8, 8, 8);
             for (int x = 0; x < cube.width; x++)
                 for (int y = 0; y < cube.length; y++)
                     for (int z = 0; z < cube.height; z++)
@@ -48,7 +49,6 @@ namespace _8x8x8_LED
 
         private void BtnClear_Click(object sender, EventArgs e)
         {
-            Cube cube = new RGBCube(8, 8, 8);
             for (int x = 0; x < cube.width; x++)
                 for (int y = 0; y < cube.length; y++)
                     for (int z = 0; z < cube.height; z++)
@@ -71,7 +71,6 @@ namespace _8x8x8_LED
         {
             if (red)
             {
-                Cube cube = new RGBCube(8, 8, 8);
                 for (int x = 0; x < cube.width; x++)
                     for (int y = 0; y < cube.length; y++)
                         for (int z = 0; z < cube.height; z++)
@@ -80,7 +79,6 @@ namespace _8x8x8_LED
             }
             else
             {
-                Cube cube = new RGBCube(8, 8, 8);
                 for (int x = 0; x < cube.width; x++)
                     for (int y = 0; y < cube.length; y++)
                         for (int z = 0; z < cube.height; z++)
@@ -92,7 +90,6 @@ namespace _8x8x8_LED
 
         private void BtnGreen_Click(object sender, EventArgs e)
         {
-            Cube cube = new RGBCube(8, 8, 8);
             for (int x = 0; x < cube.width; x++)
                 for (int y = 0; y < cube.length; y++)
                     for (int z = 0; z < cube.height; z++)
@@ -102,7 +99,6 @@ namespace _8x8x8_LED
 
         private void BtnBlue_Click(object sender, EventArgs e)
         {
-            Cube cube = new RGBCube(8, 8, 8);
             for (int x = 0; x < cube.width; x++)
                 for (int y = 0; y < cube.length; y++)
                     for (int z = 0; z < cube.height; z++)
@@ -112,7 +108,6 @@ namespace _8x8x8_LED
 
         private void btnYellow_Click(object sender, EventArgs e)
         {
-            Cube cube = new RGBCube(8, 8, 8);
             for (int x = 0; x < cube.width; x++)
                 for (int y = 0; y < cube.length; y++)
                     for (int z = 0; z < cube.height; z++)
@@ -122,7 +117,6 @@ namespace _8x8x8_LED
 
         private void btnCyan_Click(object sender, EventArgs e)
         {
-            Cube cube = new RGBCube(8, 8, 8);
             for (int x = 0; x < cube.width; x++)
                 for (int y = 0; y < cube.length; y++)
                     for (int z = 0; z < cube.height; z++)
@@ -132,7 +126,6 @@ namespace _8x8x8_LED
 
         private void btnMagenta_Click(object sender, EventArgs e)
         {
-            Cube cube = new RGBCube(8, 8, 8);
             for (int x = 0; x < cube.width; x++)
                 for (int y = 0; y < cube.length; y++)
                     for (int z = 0; z < cube.height; z++)
@@ -142,21 +135,10 @@ namespace _8x8x8_LED
         
         private void btnWhite_Click(object sender, EventArgs e)
         {
-            Cube cube = new RGBCube(8, 8, 8);
             for (int x = 0; x < cube.width; x++)
                 for (int y = 0; y < cube.length; y++)
                     for (int z = 0; z < cube.height; z++)
                         cube.matrix[x, y, z] = CubeColor.White;
-            SerialHelper.Send(serialPort, cube);
-        }
-
-        private void btnMock_Click(object sender, EventArgs e)
-        {
-            Cube cube = new RGBCube(8, 8, 8);
-            for (int x = 0; x < cube.width; x++)
-                for (int y = 0; y < cube.length; y++)
-                    for (int z = 0; z < cube.height; z++)
-                        cube.matrix[x, y, z] = CubeColor.Red;
             SerialHelper.Send(serialPort, cube);
         }
 
@@ -181,20 +163,50 @@ namespace _8x8x8_LED
                 return;
             }
 
-            RGBCube cube = new RGBCube(8, 8, 8);
             for (int z = 0; z < 64; z += 8)
                 for (int y = 7; y > -1; y--)
                     for (int x = 0; x < 8; x++)
                         cube.matrix[x, 7 - y, z / 8] = ColorMapper.ExtractColor(bitmap.GetPixel(x + z, y));
 
-            
-            cube.Rotate(Rotation.ClockwiseY);
+            cube.matrix = Geometry.Rotate(Rotation.ClockwiseY, cube.matrix);
+            //cube.Rotate(Rotation.ClockwiseY);
             SerialHelper.Send(serialPort, cube);
         }
 
         private void BtnReload_Click(object sender, EventArgs e)
         {
             RenderImage();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            for (int x = 0; x < cube.width; x++)
+                for (int y = 0; y < cube.length; y++)
+                    for (int z = 0; z < cube.height; z++)
+                        cube.matrix[x, y, z] = CubeColor.Magenta;
+            //cube.type = CubeType.Monochrome;
+            SerialHelper.Send(serialPort, cube);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            cube.type = CubeType.RGB;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            cube.type = CubeType.Monochrome;
+        }
+
+        private void BtnFlip_Click(object sender, EventArgs e)
+        {
+            cube.matrix = Geometry.Shift(Direction.Downwards, cube.matrix);
+            SerialHelper.Send(serialPort, cube);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SerialHelper.Send(serialPort, cube);
         }
     }
 }

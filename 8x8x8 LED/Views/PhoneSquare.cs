@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Model;
+using _8x8x8_LED.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,12 @@ namespace _8x8x8_LED.View
     public partial class PhoneSquare : Form
     {
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
+        private readonly Cube cube;
         private bool animate = false;
 
         private readonly List<Coordinate> queue = new List<Coordinate>();
 
-        public PhoneSquare(SerialPort serialPort, ref MonochromeCube cube)
+        public PhoneSquare(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -58,7 +59,7 @@ namespace _8x8x8_LED.View
                             double y = Math.Round(Convert.ToDouble(coordSet[1]));
                             double z = Math.Round(Convert.ToDouble(coordSet[2]));
 
-                            cube.Clear_Legacy();
+                            cube.Clear();
                             if ((y == 10 || y == -10) && x == 0 && z == 0)
                             {
                                 cube.matrix_legacy[16] = 16;
@@ -165,7 +166,7 @@ namespace _8x8x8_LED.View
         {
             if (queue.Count > 0)
             {
-                cube.Clear_Legacy();
+                cube.Clear();
 
                 if (queue[0].y >= 9 && queue[0].x < 1 && queue[0].x > -1 && queue[0].z < 1 &&queue[0].z > -1)
                 {

@@ -47,7 +47,6 @@ namespace _8x8x8_LED
             this.btnFlipX = new System.Windows.Forms.Button();
             this.btnFlipY = new System.Windows.Forms.Button();
             this.btnFlipZ = new System.Windows.Forms.Button();
-            this.chkLoop = new System.Windows.Forms.CheckBox();
             this.grpShift = new System.Windows.Forms.GroupBox();
             this.grpFlip = new System.Windows.Forms.GroupBox();
             this.grpRotate = new System.Windows.Forms.GroupBox();
@@ -247,22 +246,9 @@ namespace _8x8x8_LED
             this.btnFlipZ.UseVisualStyleBackColor = true;
             this.btnFlipZ.Click += new System.EventHandler(this.BtnClickOperation_Click);
             // 
-            // chkLoop
-            // 
-            this.chkLoop.AutoSize = true;
-            this.chkLoop.Checked = true;
-            this.chkLoop.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkLoop.Location = new System.Drawing.Point(6, 28);
-            this.chkLoop.Name = "chkLoop";
-            this.chkLoop.Size = new System.Drawing.Size(72, 28);
-            this.chkLoop.TabIndex = 7;
-            this.chkLoop.Text = "Loop";
-            this.chkLoop.UseVisualStyleBackColor = true;
-            // 
             // grpShift
             // 
             this.grpShift.Controls.Add(this.btnShiftUpwards);
-            this.grpShift.Controls.Add(this.chkLoop);
             this.grpShift.Controls.Add(this.btnShiftLeftwards);
             this.grpShift.Controls.Add(this.btnShiftBackwards);
             this.grpShift.Controls.Add(this.btnShiftForwards);
@@ -363,7 +349,6 @@ namespace _8x8x8_LED
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Image Viewer";
             this.grpShift.ResumeLayout(false);
-            this.grpShift.PerformLayout();
             this.grpFlip.ResumeLayout(false);
             this.grpRotate.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -389,7 +374,6 @@ namespace _8x8x8_LED
         private System.Windows.Forms.Button btnFlipX;
         private System.Windows.Forms.Button btnFlipY;
         private System.Windows.Forms.Button btnFlipZ;
-        private System.Windows.Forms.CheckBox chkLoop;
         private System.Windows.Forms.GroupBox grpShift;
         private System.Windows.Forms.GroupBox grpFlip;
         private System.Windows.Forms.GroupBox grpRotate;

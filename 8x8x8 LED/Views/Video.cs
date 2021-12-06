@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Model;
+using _8x8x8_LED.Models;
 using NAudio.Wave;
 using System;
 using System.Collections;
@@ -14,7 +15,7 @@ namespace _8x8x8_LED.View
     public partial class FrmVideo : Form
     {
         private readonly SerialPort serialPort;
-        private readonly MonochromeCube cube;
+        private readonly Cube cube;
 
         private Bitmap renderImage;
 
@@ -29,7 +30,7 @@ namespace _8x8x8_LED.View
 
         readonly IWaveIn waveIn = new WasapiLoopbackCapture();
 
-        public FrmVideo(SerialPort serialPort, ref MonochromeCube cube)
+        public FrmVideo(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -105,14 +106,9 @@ namespace _8x8x8_LED.View
                                     if (!animate) return;
                                 }
                             }
-                            if (rbLooped.Checked)
-                            {
-                                bytesToSend.CopyTo(cube.matrix_legacy, 0);
-                                cube.Rotate(Rotation.ClockwiseZ);
-                            }
-                            if (rbGravity.Checked)
-                                cube.Shift(Direction.Downwards, true, 0);
-
+                            bytesToSend.CopyTo(cube.matrix_legacy, 0);
+                            cube.Rotate(Rotation.ClockwiseZ);
+                            
                             if (animateMusic)
                             {
                                 if (Math.Abs(twoChannels[0]) < .05)
