@@ -1,4 +1,5 @@
-﻿using _8x8x8_LED.Model;
+﻿using _8x8x8_LED.Helpers;
+using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using NAudio.Wave;
 using System;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
+using System.Threading;
 using System.Windows.Forms;
 using Rotation = _8x8x8_LED.Model.Rotation;
 
@@ -37,6 +39,14 @@ namespace _8x8x8_LED.View
             this.cube = cube;
         }
 
+        private readonly OpenFileDialog picSelect = new OpenFileDialog()
+        {
+            InitialDirectory = Application.StartupPath,
+            Multiselect = false,
+            Title = "Select image to send:",
+            Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.tiff) | *.bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff"
+        };
+
         private void BtnSelectFile_Click(object sender, EventArgs e)
         {
             if (picSelect.FileName.Length > 0) picSelect.InitialDirectory = Path.GetDirectoryName(picSelect.FileName);
@@ -50,7 +60,7 @@ namespace _8x8x8_LED.View
                     stream.Close();
                     if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
                     {
-                        MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8.", "Incorrect Dimensions", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     } else
                         chkAnimate.Checked = true;
                 } catch (Exception)
@@ -60,19 +70,10 @@ namespace _8x8x8_LED.View
             }
         }
 
-        private readonly OpenFileDialog picSelect = new OpenFileDialog()
-        {
-            InitialDirectory = Application.StartupPath,
-            Multiselect = false,
-            Title = "Select image to send:",
-            Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.tiff) | *.bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff"
-        };
-
         private void RenderVideo()
         {
             if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
                 return;
-            byte[] bytesToSend = new byte[64];
             while (animate) {
                 try
                 {
@@ -80,73 +81,32 @@ namespace _8x8x8_LED.View
                     {
                         for (int depth = 0; depth < renderImage.Height; depth += 8)
                         {
-                            int i = 0;
                             for (int z = 0; z < 64; z += 8)
-                            {
                                 for (int y = 7; y > -1; y--)
-                                {
-                                    var bits = new BitArray(8);
-
                                     for (int x = 0; x < 8; x++)
-                                    {
-                                        if (renderImage.GetPixel(x + z, y + depth).R == 0 && renderImage.GetPixel(x + z, y + depth).G == 0 && renderImage.GetPixel(x + z, y + depth).B == 0)
-                                        {
-                                            bits[x] = false;
-                                        }
-                                        else
-                                        {
-                                            bits[x] = true;
-                                        }
-                                    }
-                                    byte[] bytes = new byte[1];
-                                    bits.CopyTo(bytes, 0);
-                                    bytesToSend[i] = bytes[0];
-
-                                    i++;
-                                    if (!animate) return;
-                                }
-                            }
-                            bytesToSend.CopyTo(cube.matrix_legacy, 0);
-                            cube.Rotate(Rotation.ClockwiseZ);
+                                        cube.matrix[x, 7 - y, z / 8] = ColorMapper.ExtractColor(renderImage.GetPixel(x + z, y + depth));
+                            cube.Rotate(Rotation.ClockwiseY);
                             
                             if (animateMusic)
                             {
                                 if (Math.Abs(twoChannels[0]) < .05)
-                                {
                                     speed = 45000;
-                                }
                                 if (Math.Abs(twoChannels[0]) > .05)
-                                {
                                     speed = 40000;
-                                }
                                 if (Math.Abs(twoChannels[0]) > .1)
-                                {
                                     speed = 35000;
-                                }
                                 if (Math.Abs(twoChannels[0]) > .15)
-                                {
                                     speed = 30000;
-                                }
                                 if (Math.Abs(twoChannels[0]) > .2)
-                                {
                                     speed = 25000;
-                                }
                                 if (Math.Abs(twoChannels[0]) > .25)
-                                {
                                     speed = 20000;
-                                }
                                 if (Math.Abs(twoChannels[0]) > .3)
-                                {
                                     speed = 15000;
-                                }
                                 if (Math.Abs(twoChannels[0]) > .4)
-                                {
                                     speed = 10000;
-                                }
                                 if (Math.Abs(twoChannels[0]) > .5)
-                                {
                                     speed = 5000;
-                                }
 
                                 if ((Math.Abs(twoChannels[0]) > 0.05) && timeElapsed % speed == 0)
                                 {
@@ -157,10 +117,9 @@ namespace _8x8x8_LED.View
                             else
                             {
                                 SerialHelper.Send(serialPort, cube);
-                                System.Threading.Thread.Sleep(int.Parse(nudSpeed.Value.ToString()));
+                                Thread.Sleep(int.Parse(nudSpeed.Value.ToString()));
                             }
                         }
-
                         if (!chkAnimate.Checked) break;
                     }
                 }
@@ -244,9 +203,11 @@ namespace _8x8x8_LED.View
 
         private void TmrSlideshow_Tick(object sender, EventArgs e)
         {
+            
             if (picSelect.FileName.Length > 0)
             {
                 var rand = new Random();
+                tmrSlideshow.Interval = rand.Next(5, 10);
                 var files = Directory.GetFiles(Path.GetDirectoryName(picSelect.FileName));
                 picSelect.FileName = files[rand.Next(files.Length)];
                 try

@@ -152,11 +152,8 @@ namespace _8x8x8_LED
             if (cube.OffsetZ != 0)
                 outputCube.Shift(Direction.Downwards, true, Math.Abs(cube.OffsetZ) - 1);
 
-            
-            
             if (cube.GetType().ToString().Contains("MonochromeCube"))
             {
-
                 switch (cube.type)
                 {
                     case CubeType.Monochrome:

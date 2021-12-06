@@ -45,7 +45,6 @@ namespace _8x8x8_LED.View
             while (animate)
             {
                 Random random = new Random();
-
                 for (int x = 0; x < cube.width; x++)
                 {
                     for (int y = 0; y < cube.width; y++)
@@ -57,41 +56,8 @@ namespace _8x8x8_LED.View
                         }
                     }
                 }
-
-                //int upwardsOffset = directionZ == "Upwards" ? 7 : 0;
-                //for (int i = 7 - upwardsOffset; i < cube.matrix_legacy.Length; i += 8)
-                //{
-                //    int randomNumber = random.Next(1, rainCount);
-                //
-                //    switch (randomNumber)
-                //    {
-                //        case 1:
-                //            cube.matrix_legacy[i] = 1;
-                //            break;
-                //        case 2:
-                //            cube.matrix_legacy[i] = 2;
-                //            break;
-                //        case 3:
-                //            cube.matrix_legacy[i] = 4;
-                //            break;
-                //        case 4:
-                //            cube.matrix_legacy[i] = 8;
-                //            break;
-                //        case 5:
-                //            cube.matrix_legacy[i] = 16;
-                //            break;
-                //        case 6:
-                //            cube.matrix_legacy[i] = 32;
-                //            break;
-                //        case 7:
-                //            cube.matrix_legacy[i] = 64;
-                //            break;
-                //        case 8:
-                //            cube.matrix_legacy[i] = 128;
-                //            break;
-                //    }
-                //}
                 SerialHelper.Send(serialPort, cube);
+                System.Threading.Thread.Sleep(speed);
                 if (directionX == "Forwards")
                 {
                     cube.Shift(Direction.Forwards, 0, false);
@@ -116,7 +82,6 @@ namespace _8x8x8_LED.View
                 {
                     cube.Shift(Direction.Downwards, 0, false);
                 }
-                System.Threading.Thread.Sleep(speed);
             }
         }
 
