@@ -1,4 +1,5 @@
-﻿using _8x8x8_LED.Model;
+﻿using _8x8x8_LED.Helpers;
+using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using System;
 using System.Collections;
@@ -24,6 +25,14 @@ namespace _8x8x8_LED
             this.cube = cube;
         }
 
+        private readonly OpenFileDialog picSelect = new OpenFileDialog()
+        {
+            InitialDirectory = Application.StartupPath,
+            Multiselect = false,
+            Title = "Select image to send:",
+            Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.tiff) | *.bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff"
+        };
+
         private void BtnAddImage_Click(object sender, EventArgs e)
         {
             if (picSelect.FileName.Length > 0) picSelect.InitialDirectory = Path.GetDirectoryName(picSelect.FileName);
@@ -38,14 +47,6 @@ namespace _8x8x8_LED
             }
                 
         }
-
-        private readonly OpenFileDialog picSelect = new OpenFileDialog()
-        {
-            InitialDirectory = Application.StartupPath,
-            Multiselect = false,
-            Title = "Select image to send:",
-            Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.tiff) | *.bmp; *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff"
-        };
 
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
@@ -73,35 +74,13 @@ namespace _8x8x8_LED
                 return;
             }
 
-            byte[] bytesToSend = new byte[64];
-
-            int i = 0;
-
             for (int z = 0; z < 64; z += 8)
-            {
                 for (int y = 7; y > -1; y--)
-                {
-                    var bits = new BitArray(8);
                     for (int x = 0; x < 8; x++)
-                    {
-                        if (bitmap.GetPixel(x + z, y).R == 0 && bitmap.GetPixel(x + z, y).G == 0 && bitmap.GetPixel(x + z, y).B == 0)
-                            bits[x] = false;
-                        else
-                            bits[x] = true;
-                    }
-                    byte[] bytes = new byte[1];
-                    bits.CopyTo(bytes, 0);
-                    bytesToSend[i] = bytes[0];
-
-                    i++;
-                }
-            }
-
-            bytesToSend.CopyTo(cube.matrix_legacy, 0);
-            cube.Rotate(Rotation.ClockwiseZ);
+                        cube.matrix[x, 7 - y, z / 8] = ColorMapper.ExtractColor(bitmap.GetPixel(x + z, y));
+            cube.Rotate(Rotation.ClockwiseY);
             SerialHelper.Send(serialPort, cube);
 
-            
             for (int x = 0; x < bitmap.Width; x++)
             {
                 for (int y = 0; y < bitmap.Height; y++)
@@ -135,39 +114,21 @@ namespace _8x8x8_LED
                 bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);
                 return;
             }
-
-
-            byte[] bytesToSend = new byte[64];
-            int i = 0;
-            
             for (int z = 0; z < 64; z += 8)
-            {
                 for (int y = 7; y > -1; y--)
-                {
-                    var bits = new BitArray(8);
                     for (int x = 0; x < 8; x++)
                     {
-                        if (bitmap.GetPixel(x + z, y).R == 0 && bitmap.GetPixel(x + z, y).G == 0 && bitmap.GetPixel(x + z, y).B == 0)
-                            bits[x] = false;
-                        else
-                            bits[x] = true;
-                        
+                        cube.matrix[x, 7 - y, z / 8] = ColorMapper.ExtractColor(bitmap.GetPixel(x + z, y));
+
                         if (x + z == c.Left / 16 && y == c.Top / 16)
                         {
-                            if (bits[x] == true)
-                                bits[x] = false;
+                            if (cube.matrix[x, 7 - y, z / 8] == CubeColor.White)
+                                cube.matrix[x, 7 - y, z / 8] = CubeColor.Black;
                             else
-                                bits[x] = true;
+                                cube.matrix[x, 7 - y, z / 8] = CubeColor.White;
                         }
                     }
-                    byte[] bytes = new byte[1];
-                    bits.CopyTo(bytes, 0);
-                    bytesToSend[i] = bytes[0];
-                    i++;
-                }
-            }
-            bytesToSend.CopyTo(cube.matrix_legacy, 0);
-            cube.Rotate(Rotation.ClockwiseZ);
+            cube.Rotate(Rotation.ClockwiseY);
             SerialHelper.Send(serialPort, cube);
         }
         private void Panel_MouseDown(object sender, MouseEventArgs e)
