@@ -98,9 +98,9 @@ int buttonPressCountNext = 0;
 int buttonPressCountCycle = 0;
 
 // Contains the state of any button being pressed:
-int startButtonPressed = 0;
-int nextButtonPressed = 0;
-int cycleButtonPressed = 0;
+bool startButtonPressed = false;
+bool nextButtonPressed = false;
+bool cycleButtonPressed = false;
 
 // Number of "cubes" that cube cycles between.
 /*
