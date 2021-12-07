@@ -207,7 +207,7 @@ namespace _8x8x8_LED.View
             if (picSelect.FileName.Length > 0)
             {
                 var rand = new Random();
-                tmrSlideshow.Interval = rand.Next(5, 10);
+                tmrSlideshow.Interval = rand.Next(5, 10) * 1000;
                 var files = Directory.GetFiles(Path.GetDirectoryName(picSelect.FileName));
                 picSelect.FileName = files[rand.Next(files.Length)];
                 try
