@@ -105,7 +105,6 @@ namespace _8x8x8_LED
 
             if (cube.OrientationX != 0)
             {
-
                 if (cube.OrientationX == 90)
                     outputCube.Rotate(Rotation.ClockwiseX, 0);
                 
@@ -114,41 +113,32 @@ namespace _8x8x8_LED
                 
                 if (cube.OrientationX == 270)
                     outputCube.Rotate(Rotation.ClockwiseX, 2);
-                
             }
                 
             if (cube.OrientationY != 0)
             {
                 if (cube.OrientationY == 90)
                     outputCube.Rotate(Rotation.ClockwiseY, 0);
-                
                 if (cube.OrientationY == 180)
                     outputCube.Rotate(Rotation.ClockwiseY, 1);
-                
                 if (cube.OrientationY == 270)
                     outputCube.Rotate(Rotation.ClockwiseY, 2);
-                
             }
                 
             if (cube.OrientationZ != 0)
             {
                 if (cube.OrientationZ == 90)
                     outputCube.Rotate(Rotation.ClockwiseZ, 0);
-                
                 if (cube.OrientationZ == 180)
                     outputCube.Rotate(Rotation.ClockwiseZ, 1);
-                
                 if (cube.OrientationZ == 270)
                     outputCube.Rotate(Rotation.ClockwiseZ, 2);
-                
             }
 
             if (cube.OffsetX != 0)
                 outputCube.Shift(Direction.Forwards, true, Math.Abs(cube.OffsetX) - 1);
-            
             if (cube.OffsetY != 0)
                 outputCube.Shift(Direction.Leftwards, true, Math.Abs(cube.OffsetY) - 1);
-            
             if (cube.OffsetZ != 0)
                 outputCube.Shift(Direction.Downwards, true, Math.Abs(cube.OffsetZ) - 1);
 

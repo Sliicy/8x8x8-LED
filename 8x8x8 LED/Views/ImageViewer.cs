@@ -16,7 +16,7 @@ namespace _8x8x8_LED
         private readonly SerialPort serialPort;
         private readonly Cube cube;
         private int fileNameIncrementor = 0;
-        Bitmap bitmap;
+        private Bitmap bitmap;
 
         public FrmImageViewer(SerialPort serialPort, ref Cube cube)
         {

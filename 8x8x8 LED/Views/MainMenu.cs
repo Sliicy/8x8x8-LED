@@ -37,6 +37,7 @@ namespace _8x8x8_LED
                 lstApps.SelectedIndex = lstApps.FindString(requestedApp);
                 btnShowApp.PerformClick();
             }
+            cbSendColor.DataSource = Enum.GetValues(typeof(CubeColor));
 
             // Load Previous Settings:
             cbCubeType.SelectedIndex = Properties.Settings.Default.CubeType;
@@ -59,9 +60,6 @@ namespace _8x8x8_LED
             nudOffsetZ.Value = Properties.Settings.Default.OffsetZ;
 
             if (chkAutoconnect.Checked) btnConnect.PerformClick();
-
-            Testing t = new Testing(serialPort, ref cube);
-            t.Show();
         }
 
         private void ReloadAvailableComPorts()
@@ -436,6 +434,15 @@ namespace _8x8x8_LED
                         cube.type = CubeType.RGB;
                     break;
             }
+        }
+
+        private void CbSendColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            for (int x = 0; x < cube.width; x++)
+                for (int y = 0; y < cube.length; y++)
+                    for (int z = 0; z < cube.height; z++)
+                        cube.matrix[x, y, z] = (CubeColor)Enum.Parse(typeof(CubeColor), cbSendColor.Text);
+            SerialHelper.Send(serialPort, cube);
         }
     }
 }
