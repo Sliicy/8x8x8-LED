@@ -20,14 +20,14 @@ namespace _8x8x8_LED.Models
             matrix = new CubeColor[width, length, height];
         }
 
-        public void Rotate(Rotation rotation)
-        {
-            var output = Geometry.Rotate(rotation, matrix);
-            // Copy new cube to old cube:
-            for (int i = 0; i < length; i++)
-                for (int j = 0; j < width; j++)
-                    for (int k = 0; k < height; k++)
-                        matrix[i, j, k] = output[i, j, k];
-        }
+        //public void Rotate(Rotation rotation)
+        //{
+        //    var output = Geometry.Rotate(rotation, matrix);
+        //    // Copy new cube to old cube:
+        //    for (int i = 0; i < length; i++)
+        //        for (int j = 0; j < width; j++)
+        //            for (int k = 0; k < height; k++)
+        //                matrix[i, j, k] = output[i, j, k];
+        //}
     }
 }

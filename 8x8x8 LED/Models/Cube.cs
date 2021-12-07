@@ -73,5 +73,49 @@ namespace _8x8x8_LED.Models
                 iterations--;
             } while (iterations > -1);
         }
+
+        public void DrawPlane(Axis axis, int offset = 0, CubeColor color = CubeColor.Black)
+        {
+            switch (axis)
+            {
+                case Axis.X:
+                    for (int y = 0; y < matrix.GetLength(1); y++)
+                        for (int z = 0; z < matrix.GetLength(2); z++)
+                            matrix[offset, y, z] = color;
+                    break;
+                case Axis.Y:
+                    for (int x = 0; x < matrix.GetLength(0); x++)
+                        for (int z = 0; z < matrix.GetLength(2); z++)
+                            matrix[x, offset, z] = color;
+                    break;
+                case Axis.Z:
+                    for (int x = 0; x < matrix.GetLength(0); x++)
+                        for (int y = 0; y < matrix.GetLength(1); y++)
+                            matrix[x, y, offset] = color;
+                    break;
+            }
+        }
+
+        public void DrawVector(Axis axis, int xOffset = 0, int yOffset = 0, CubeColor color = CubeColor.Black)
+        {
+            switch (axis) //????????????????????????
+            {
+                case Axis.X:
+                    for (int y = 0; y < matrix.GetLength(1); y++)
+                        for (int z = 0; z < matrix.GetLength(2); z++)
+                            matrix[offset, y, z] = color;
+                    break;
+                case Axis.Y:
+                    for (int x = 0; x < matrix.GetLength(0); x++)
+                        for (int z = 0; z < matrix.GetLength(2); z++)
+                            matrix[x, offset, z] = color;
+                    break;
+                case Axis.Z:
+                    for (int x = 0; x < matrix.GetLength(0); x++)
+                        for (int y = 0; y < matrix.GetLength(1); y++)
+                            matrix[x, y, offset] = color;
+                    break;
+            }
+        }
     }
 }
