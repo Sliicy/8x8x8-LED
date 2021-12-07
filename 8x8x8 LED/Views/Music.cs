@@ -24,9 +24,20 @@ namespace _8x8x8_LED.Apps
         private int speed = 1; // Speed of animation.
         private int timeElapsed = 0; // Used to adjust speed of animation
 
-        readonly IWaveIn waveIn = new WasapiLoopbackCapture();
+        private readonly IWaveIn waveIn = new WasapiLoopbackCapture();
 
         private string currentMusicStyle = "";
+
+        private readonly int[] da_map = { // Direction Of Audio Render Channels:
+                03, 02, 01, 00, 04, 05, 06, 07,
+                11, 10, 09, 08, 12, 13, 14, 15,
+                19, 18, 17, 16, 20, 21, 22, 23,
+                27, 26, 25, 24, 28, 29, 30, 31,
+                35, 34, 33, 32, 36, 37, 38, 39,
+                43, 42, 41, 40, 44, 45, 46, 47,
+                51, 50, 49, 48, 52, 53, 54, 55,
+                59, 58, 57, 56, 60, 61, 62, 63
+            };
 
         public FrmMusic(SerialPort serialPort, ref Cube cube)
         {
@@ -35,7 +46,7 @@ namespace _8x8x8_LED.Apps
             this.cube = cube;
         }
 
-        static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] eightChannels, int samples = 8, bool mirrorRightChannelToLeft = true)
+        private static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] eightChannels, int samples = 8, bool mirrorRightChannelToLeft = true)
         {
             for (int i = 0; i < e.BytesRecorded; i += samples)
             {
@@ -87,77 +98,80 @@ namespace _8x8x8_LED.Apps
             {
                 byte[] arrayOutput = new byte[64];
 
-                if (currentMusicStyle == "Floating Lines")
+                switch (currentMusicStyle)
                 {
-                    AnimateBars(arrayOutput, eightChannels, 255, false);
-                } else if (currentMusicStyle == "Floating Dots")
-                {
-                    AnimateBars(arrayOutput, eightChannels, 1, false);
-                } else if (currentMusicStyle == "Solid Lines")
-                {
-                    AnimateBars(arrayOutput, eightChannels, 255, true);
-                } else if (currentMusicStyle == "Solid Dots")
-                {
-                    AnimateBars(arrayOutput, eightChannels, 1, true);
-                } else if (currentMusicStyle == "Matrix")
-                {
-                    AnimateMatrix(arrayOutput, eightChannels);
-                } else if (currentMusicStyle == "Centered Floating Lines")
-                {
-                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, false);
-                } else if (currentMusicStyle == "Centered Floating Dots")
-                {
-                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, false);
-                }
-                else if (currentMusicStyle == "Centered Solid Lines")
-                {
-                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, true);
-                }
-                else if (currentMusicStyle == "Centered Solid Dots")
-                {
-                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
-                } else if (currentMusicStyle == "Shuffled")
-                {
-                    if (timeUntilNextShuffledAnimation > 0)
-                    {
-                        timeUntilNextShuffledAnimation--;
-                    } else
-                    {
-                        timeUntilNextShuffledAnimation = 10000;
-                        Random random = new Random();
-                        previousShuffle = random.Next(1, 10);
-                    }
-                    switch (previousShuffle)
-                    {
-                        case 1:
-                            AnimateBars(arrayOutput, eightChannels, 255, false);
+                    case "Floating Lines":
+                        AnimateBars(arrayOutput, eightChannels, 255, false);
+                        break;
+                    case "Floating Dots":
+                        AnimateBars(arrayOutput, eightChannels, 1, false);
+                        break;
+                    case "Solid Lines":
+                        AnimateBars(arrayOutput, eightChannels, 255, true);
+                        break;
+                    case "Solid Dots":
+                        AnimateBars(arrayOutput, eightChannels, 1, true);
+                        break;
+                    case "Matrix":
+                        AnimateMatrix(arrayOutput, eightChannels);
+                        break;
+                    case "Centered Floating Lines":
+                        AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, false);
+                        break;
+                    case "Centered Floating Dots":
+                        AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, false);
+                        break;
+                    case "Centered Solid Lines":
+                        AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, true);
+                        break;
+                    case "Centered Solid Dots":
+                        AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
+                        break;
+                    case "Shuffled":
+                        {
+                            if (timeUntilNextShuffledAnimation > 0)
+                            {
+                                timeUntilNextShuffledAnimation--;
+                            }
+                            else
+                            {
+                                timeUntilNextShuffledAnimation = 10000;
+                                Random random = new Random();
+                                previousShuffle = random.Next(1, 10);
+                            }
+                            switch (previousShuffle)
+                            {
+                                case 1:
+                                    AnimateBars(arrayOutput, eightChannels, 255, false);
+                                    break;
+                                case 2:
+                                    AnimateBars(arrayOutput, eightChannels, 1, false);
+                                    break;
+                                case 3:
+                                    AnimateBars(arrayOutput, eightChannels, 255, true);
+                                    break;
+                                case 4:
+                                    AnimateBars(arrayOutput, eightChannels, 1, true);
+                                    break;
+                                case 5:
+                                    AnimateMatrix(arrayOutput, eightChannels);
+                                    break;
+                                case 6:
+                                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, false);
+                                    break;
+                                case 7:
+                                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, false);
+                                    break;
+                                case 8:
+                                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
+                                    break;
+                                case 9:
+                                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
+                                    break;
+                            }
+
                             break;
-                        case 2:
-                            AnimateBars(arrayOutput, eightChannels, 1, false);
-                            break;
-                        case 3:
-                            AnimateBars(arrayOutput, eightChannels, 255, true);
-                            break;
-                        case 4:
-                            AnimateBars(arrayOutput, eightChannels, 1, true);
-                            break;
-                        case 5:
-                            AnimateMatrix(arrayOutput, eightChannels);
-                            break;
-                        case 6:
-                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, false);
-                            break;
-                        case 7:
-                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, false);
-                            break;
-                        case 8:
-                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
-                            break;
-                        case 9:
-                            AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
-                            break;
-                    }
-                    
+                        }
                 }
 
                 // Ensure that audio has activity, and the speed of detection is properly set:
@@ -168,51 +182,54 @@ namespace _8x8x8_LED.Apps
                     matrixIsCleared = false;
                 } else
                 {
-                    if (!matrixIsCleared) // Do this only once:
+                    if (!matrixIsCleared) // Animate silence only once:
                     {
                         arrayOutput = new byte[64]; // Clear the screen.
                         if (chkShowSilence.Checked)
                         {
-                            if (currentMusicStyle == "Floating Lines" || currentMusicStyle == "Solid Lines")
+                            switch (currentMusicStyle)
                             {
-                                arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
-                                arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
-                                arrayOutput[48] = arrayOutput[56] = 255;
-                            }
-                            else if (currentMusicStyle == "Centered Floating Lines" || currentMusicStyle == "Centered Solid Lines")
-                            {
-                                arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
-                                arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
-                                arrayOutput[51] = arrayOutput[59] = 255;
-                            }
-                            else if (currentMusicStyle == "Centered Floating Dots" || currentMusicStyle == "Centered Solid Dots")
-                            {
-                                arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
-                                arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
-                                arrayOutput[51] = arrayOutput[59] = 1;
-                            }
-                            else if (currentMusicStyle == "Matrix")
-                            {
-                                arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
-                                arrayOutput[40] = arrayOutput[48] = arrayOutput[56] = 231;
-                            }
-                            else if (currentMusicStyle == "Floating Dots" || currentMusicStyle == "Solid Dots")
-                            {
-                                arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
-                                arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
-                                arrayOutput[48] = arrayOutput[56] = 1;
-                            }
-                            else if (currentMusicStyle == "Shuffled")
-                            {
-                                Random random = new Random();
-                                arrayOutput[0] = Convert.ToByte(random.Next(0, 256));
-                                arrayOutput[8] = Convert.ToByte(random.Next(0, 256));
-                                arrayOutput[16] = Convert.ToByte(random.Next(0, 256));
-                                arrayOutput[24] = Convert.ToByte(random.Next(0, 256));
-                                arrayOutput[32] = Convert.ToByte(random.Next(0, 256));
-                                arrayOutput[40] = Convert.ToByte(random.Next(0, 256));
-                                arrayOutput[48] = Convert.ToByte(random.Next(0, 256));
-                                arrayOutput[56] = Convert.ToByte(random.Next(0, 256));
+                                case "Floating Lines":
+                                case "Solid Lines":
+                                    arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
+                                    arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
+                                    arrayOutput[48] = arrayOutput[56] = 255;
+                                    break;
+                                case "Centered Floating Lines":
+                                case "Centered Solid Lines":
+                                    arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
+                                    arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
+                                    arrayOutput[51] = arrayOutput[59] = 255;
+                                    break;
+                                case "Centered Floating Dots":
+                                case "Centered Solid Dots":
+                                    arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
+                                    arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
+                                    arrayOutput[51] = arrayOutput[59] = 1;
+                                    break;
+                                case "Matrix":
+                                    arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
+                                    arrayOutput[40] = arrayOutput[48] = arrayOutput[56] = 231;
+                                    break;
+                                case "Floating Dots":
+                                case "Solid Dots":
+                                    arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
+                                    arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
+                                    arrayOutput[48] = arrayOutput[56] = 1;
+                                    break;
+                                case "Shuffled":
+                                    {
+                                        Random random = new Random();
+                                        arrayOutput[0] = Convert.ToByte(random.Next(0, 256));
+                                        arrayOutput[8] = Convert.ToByte(random.Next(0, 256));
+                                        arrayOutput[16] = Convert.ToByte(random.Next(0, 256));
+                                        arrayOutput[24] = Convert.ToByte(random.Next(0, 256));
+                                        arrayOutput[32] = Convert.ToByte(random.Next(0, 256));
+                                        arrayOutput[40] = Convert.ToByte(random.Next(0, 256));
+                                        arrayOutput[48] = Convert.ToByte(random.Next(0, 256));
+                                        arrayOutput[56] = Convert.ToByte(random.Next(0, 256));
+                                        break;
+                                    }
                             }
                         }
 
@@ -350,18 +367,7 @@ namespace _8x8x8_LED.Apps
             arrayOutput[55] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
             arrayOutput[63] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
         }
-
-        readonly int[] da_map = { // Direction Of Audio Render Channels:
-                03, 02, 01, 00, 04, 05, 06, 07,
-                11, 10, 09, 08, 12, 13, 14, 15,
-                19, 18, 17, 16, 20, 21, 22, 23,
-                27, 26, 25, 24, 28, 29, 30, 31,
-                35, 34, 33, 32, 36, 37, 38, 39,
-                43, 42, 41, 40, 44, 45, 46, 47,
-                51, 50, 49, 48, 52, 53, 54, 55,
-                59, 58, 57, 56, 60, 61, 62, 63
-            };
-        
+                
         private void AnimateCenteredBars(byte[] audioChannelDepth, double[] channels, byte thickness = 1, bool filledUnderneath = false)
         {
             int channelIndex = 0;
@@ -455,7 +461,7 @@ namespace _8x8x8_LED.Apps
             currentMusicStyle = cbMusicStyle.Text;
         }
 
-        void SaveSettings()
+        private void SaveSettings()
         {
             Properties.Settings.Default.Music_MirroredAudio = chkMirrored.Checked;
             Properties.Settings.Default.Music_ShowSilence = chkShowSilence.Checked;
