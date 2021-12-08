@@ -2,6 +2,7 @@
 using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using _8x8x8_LED.View;
+using _8x8x8_LED.Views;
 using System;
 using System.Diagnostics;
 using System.IO.Ports;
@@ -251,29 +252,45 @@ namespace _8x8x8_LED
             Form form;
             if (lstApps.SelectedItem == null)
                 return;
-            if (lstApps.SelectedItem.ToString() == "Image Viewer")
-                form = new FrmImageViewer(serialPort, ref cube);
-            else if (lstApps.SelectedItem.ToString() == "Video")
-                form = new FrmVideo(serialPort, ref cube);
-            else if (lstApps.SelectedItem.ToString() == "Music")
-                form = new FrmMusic(serialPort, ref cube);
-            else if (lstApps.SelectedItem.ToString() == "Pong")
-                form = new FrmPong(serialPort, ref cube);
-            else if (lstApps.SelectedItem.ToString() == "Marquee")
-                form = new FrmMarquee(serialPort, ref cube);
-            else if (lstApps.SelectedItem.ToString() == "Rain")
-                form = new FrmRain(serialPort, ref cube);
-            else if (lstApps.SelectedItem.ToString() == "Balls")
-                form = new FrmBalls(serialPort, ref cube);
-            else if (lstApps.SelectedItem.ToString() == "Clock")
-                form = new FrmClock(serialPort, ref cube);
-            else if (lstApps.SelectedItem.ToString() == "Snake")
-                form = new FrmSnake(serialPort, ref cube);
-            else if (lstApps.SelectedItem.ToString() == "Phone Square")
-                form = new PhoneSquare(serialPort, ref cube);
-            else
-                return;
-            
+            switch (lstApps.SelectedItem.ToString())
+            {
+                case "Image Viewer":
+                    form = new FrmImageViewer(serialPort, ref cube);
+                    break;
+                case "Video":
+                    form = new FrmVideo(serialPort, ref cube);
+                    break;
+                case "Music":
+                    form = new FrmMusic(serialPort, ref cube);
+                    break;
+                case "Pong":
+                    form = new FrmPong(serialPort, ref cube);
+                    break;
+                case "Marquee":
+                    form = new FrmMarquee(serialPort, ref cube);
+                    break;
+                case "Rain":
+                    form = new FrmRain(serialPort, ref cube);
+                    break;
+                case "Balls":
+                    form = new FrmBalls(serialPort, ref cube);
+                    break;
+                case "Clock":
+                    form = new FrmClock(serialPort, ref cube);
+                    break;
+                case "Snake":
+                    form = new FrmSnake(serialPort, ref cube);
+                    break;
+                case "Phone Square":
+                    form = new PhoneSquare(serialPort, ref cube);
+                    break;
+                case "Lightning":
+                    form = new Lightning(serialPort, ref cube);
+                    break;
+                default:
+                    return;
+            }
+
             if (minimized)
                 form.WindowState = FormWindowState.Minimized;
             form.Show();

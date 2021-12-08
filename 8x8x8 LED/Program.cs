@@ -18,6 +18,7 @@ namespace _8x8x8_LED
             "Balls",
             "Clock",
             "Image Viewer",
+            "Lightning",
             "Marquee",
             "Music",
             "Phone Square",

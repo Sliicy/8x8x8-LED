@@ -502,5 +502,53 @@ namespace _8x8x8_LED.Properties {
                 this["Rain_Rainbow"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Lightning_Rainbow {
+            get {
+                return ((bool)(this["Lightning_Rainbow"]));
+            }
+            set {
+                this["Lightning_Rainbow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        public string Lightning_Color {
+            get {
+                return ((string)(this["Lightning_Color"]));
+            }
+            set {
+                this["Lightning_Color"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int Lightning_Amount {
+            get {
+                return ((int)(this["Lightning_Amount"]));
+            }
+            set {
+                this["Lightning_Amount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Lightning_Speed {
+            get {
+                return ((int)(this["Lightning_Speed"]));
+            }
+            set {
+                this["Lightning_Speed"] = value;
+            }
+        }
     }
 }
