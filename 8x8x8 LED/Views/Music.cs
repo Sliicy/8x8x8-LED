@@ -48,25 +48,31 @@ namespace _8x8x8_LED.Apps
 
         private static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] eightChannels, int samples = 8, bool mirrorRightChannelToLeft = true)
         {
-            for (int i = 0; i < e.BytesRecorded; i += samples)
+            try
             {
-                eightChannels[0] = BitConverter.ToSingle(e.Buffer, i);
-                eightChannels[1] = BitConverter.ToSingle(e.Buffer, i + samples / 4);
-                eightChannels[2] = BitConverter.ToSingle(e.Buffer, i + (samples / 4) * 2);
-                eightChannels[3] = BitConverter.ToSingle(e.Buffer, i + (samples / 4) * 3);
-                if (mirrorRightChannelToLeft)
+                for (int i = 0; i < e.BytesRecorded; i += samples)
                 {
-                    eightChannels[7] = BitConverter.ToSingle(e.Buffer, i + 4);
-                    eightChannels[6] = BitConverter.ToSingle(e.Buffer, i + 4 + samples / 4);
-                    eightChannels[5] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 2);
-                    eightChannels[4] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 3);
-                } else
-                {
-                    eightChannels[4] = BitConverter.ToSingle(e.Buffer, i + 4);
-                    eightChannels[5] = BitConverter.ToSingle(e.Buffer, i + 4 + samples / 4);
-                    eightChannels[6] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 2);
-                    eightChannels[7] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 3);
+                    eightChannels[0] = BitConverter.ToSingle(e.Buffer, i);
+                    eightChannels[1] = BitConverter.ToSingle(e.Buffer, i + samples / 4);
+                    eightChannels[2] = BitConverter.ToSingle(e.Buffer, i + (samples / 4) * 2);
+                    eightChannels[3] = BitConverter.ToSingle(e.Buffer, i + (samples / 4) * 3);
+                    if (mirrorRightChannelToLeft)
+                    {
+                        eightChannels[7] = BitConverter.ToSingle(e.Buffer, i + 4);
+                        eightChannels[6] = BitConverter.ToSingle(e.Buffer, i + 4 + samples / 4);
+                        eightChannels[5] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 2);
+                        eightChannels[4] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 3);
+                    }
+                    else
+                    {
+                        eightChannels[4] = BitConverter.ToSingle(e.Buffer, i + 4);
+                        eightChannels[5] = BitConverter.ToSingle(e.Buffer, i + 4 + samples / 4);
+                        eightChannels[6] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 2);
+                        eightChannels[7] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 3);
+                    }
                 }
+            } catch (Exception)
+            {
             }
         }
 

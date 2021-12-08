@@ -97,7 +97,7 @@ namespace _8x8x8_LED.Models
         }
 
         /// <summary>
-        /// Adapted from https://stackoverflow.com/questions/16505905/walk-a-line-between-two-points-in-a-3d-voxel-space-visiting-all-cells
+        /// Adaptation of Bresenham's Line Algorithm from https://stackoverflow.com/questions/16505905/walk-a-line-between-two-points-in-a-3d-voxel-space-visiting-all-cells
         /// </summary>
         public void DrawLine(double gx0, double gy0, double gz0, double gx1, double gy1, double gz1, CubeColor color)
         {
