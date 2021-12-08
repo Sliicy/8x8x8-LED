@@ -1,4 +1,5 @@
-﻿using _8x8x8_LED.Model;
+﻿using _8x8x8_LED.Helpers;
+using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using System;
 using System.ComponentModel;
@@ -52,7 +53,7 @@ namespace _8x8x8_LED.View
                         int randomNumber = random.Next(1, rainCount);
                         if (randomNumber == 1)
                         {
-                            cube.matrix[x, y, directionZ == "Upwards" ? 0 : cube.height - 1] = chkRainbow.Checked ? RandomColor() : RandomBlue();
+                            cube.matrix[x, y, directionZ == "Upwards" ? 0 : cube.height - 1] = chkRainbow.Checked ? ColorHelper.RandomColor() : RandomBlue();
                         }
                     }
                 }
@@ -83,13 +84,6 @@ namespace _8x8x8_LED.View
                     cube.Shift(Direction.Downwards, 0, false);
                 }
             }
-        }
-
-        private CubeColor RandomColor()
-        {
-            Random random = new Random();
-            Array enums = Enum.GetValues(typeof(CubeColor));
-            return (CubeColor)enums.GetValue(random.Next(enums.Length));
         }
 
         private CubeColor RandomBlue()

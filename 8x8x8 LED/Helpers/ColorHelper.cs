@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace _8x8x8_LED.Helpers
 {
-    public class ColorMapper
+    public class ColorHelper
     {
         
         // Converts 3D array of colors into two 192 byte arrays, ready for sending:
@@ -252,6 +252,7 @@ namespace _8x8x8_LED.Helpers
                     }
             return outputArray1.Concat(outputArray2).ToArray();
         }
+
         public static CubeColor ExtractColor(Color c)
         {
             switch (c.R)
@@ -329,6 +330,13 @@ namespace _8x8x8_LED.Helpers
                 default:
                     return CubeColor.Black;
             }
+        }
+
+        public static CubeColor RandomColor()
+        {
+            Random random = new Random();
+            Array enums = Enum.GetValues(typeof(CubeColor));
+            return (CubeColor)enums.GetValue(random.Next(enums.Length));
         }
     }
 }

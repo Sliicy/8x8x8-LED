@@ -257,7 +257,7 @@
     <Reference Include="UIAutomationClient" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\ColorMapper.cs" />
+    <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Helpers\Geometry.cs" />
     <Compile Include="Models\Axis.cs" />
     <Compile Include="Models\Cube.cs" />
@@ -289,6 +289,12 @@
     </Compile>
     <Compile Include="Views\Clock.Designer.cs">
       <DependentUpon>Clock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lightning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Lightning.Designer.cs">
+      <DependentUpon>Lightning.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\PhoneSquare.cs">
       <SubType>Form</SubType>
@@ -355,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Clock.resx">
       <DependentUpon>Clock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Lightning.resx">
+      <DependentUpon>Lightning.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\PhoneSquare.resx">
       <DependentUpon>PhoneSquare.cs</DependentUpon>

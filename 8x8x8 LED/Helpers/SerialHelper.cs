@@ -152,7 +152,7 @@ namespace _8x8x8_LED
                         break;
                     case CubeType.RGB:
                         RGBCube outputRGBCube = MonochromeToRGBDriver(cube);
-                        SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(outputRGBCube.matrix));
+                        SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(outputRGBCube.matrix));
 
                         //SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(cube.matrix));
                         break;
@@ -169,7 +169,7 @@ namespace _8x8x8_LED
                         SendPacket(CubeType.Monochrome, serialPort, mc.matrix_legacy);
                         break;
                     case CubeType.RGB:
-                        SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(cube.matrix));
+                        SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(cube.matrix));
                         break;
                 }
             }
