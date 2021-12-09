@@ -1,15 +1,10 @@
-﻿using _8x8x8_LED.Helpers;
-using _8x8x8_LED.Model;
-using _8x8x8_LED.Models;
+﻿using _8x8x8_LED.Models;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace _8x8x8_LED
+namespace _8x8x8_LED.Helpers
 {
     public static class SerialHelper
     {
@@ -68,7 +63,7 @@ namespace _8x8x8_LED
                         {
                             outputPayload[i] = payload[i - (RGB_HEADER.Length + RGB_COLOR_LAYER.Length)];
                         }
-                        
+
                         // Copy 2nd payload:
                         for (int i = payload.Length / 2 + (RGB_HEADER.Length + RGB_COLOR_LAYER.Length) * 2;
                             i < payload.Length + (RGB_HEADER.Length + RGB_COLOR_LAYER.Length) * 2;
@@ -76,7 +71,7 @@ namespace _8x8x8_LED
                         {
                             outputPayload[i] = payload[i - (RGB_HEADER.Length + RGB_COLOR_LAYER.Length) * 2];
                         }
-                        
+
                         // Send 1st bytes:
                         serialPort.Write(outputPayload.Take(outputPayload.Length / 2).ToArray(), 0, outputPayload.Length / 2);
                         System.Threading.Thread.Sleep(RGB_Delay);
@@ -107,14 +102,14 @@ namespace _8x8x8_LED
             {
                 if (cube.OrientationX == 90)
                     outputCube.Rotate(Rotation.ClockwiseX, 0);
-                
+
                 if (cube.OrientationX == 180)
                     outputCube.Rotate(Rotation.ClockwiseX, 1);
-                
+
                 if (cube.OrientationX == 270)
                     outputCube.Rotate(Rotation.ClockwiseX, 2);
             }
-                
+
             if (cube.OrientationY != 0)
             {
                 if (cube.OrientationY == 90)
@@ -124,7 +119,7 @@ namespace _8x8x8_LED
                 if (cube.OrientationY == 270)
                     outputCube.Rotate(Rotation.ClockwiseY, 2);
             }
-                
+
             if (cube.OrientationZ != 0)
             {
                 if (cube.OrientationZ == 90)
@@ -158,7 +153,7 @@ namespace _8x8x8_LED
                         break;
                 }
 
-                
+
             }
             else if (cube.GetType().ToString().Contains("RGBCube"))
             {
@@ -182,7 +177,7 @@ namespace _8x8x8_LED
             for (int i = 0; i < mc.matrix_legacy.Length; i++)
             {
                 BitArray b = new BitArray(new int[] { mc.matrix_legacy[i] });
-                
+
                 if (b[0] == true)
                 {
                     output.matrix[0, i / 8, i % 8] = CubeColor.White;
@@ -219,7 +214,7 @@ namespace _8x8x8_LED
             output.OffsetX = mc.OffsetX;
             output.OffsetY = mc.OffsetY;
             output.OffsetZ = mc.OffsetZ;
-            
+
             output.FlippedX = mc.FlippedX;
             output.FlippedY = mc.FlippedY;
             output.FlippedZ = mc.FlippedZ;

@@ -1,16 +1,9 @@
 ﻿using _8x8x8_LED.Helpers;
-using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using NAudio.Wave;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace _8x8x8_LED
@@ -69,7 +62,9 @@ namespace _8x8x8_LED
                         eightChannels[7] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 3);
                     }
                 }
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
 
             }
         }
@@ -130,12 +125,12 @@ namespace _8x8x8_LED
         {
             while (animate)
             {
-                
+
                 //for (int i = 0; i < lineCount; i++)
                 //{
-                    //cube.DrawLine(random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), rainbowMode ? ColorHelper.RandomColor(): targetColor);
+                //cube.DrawLine(random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), rainbowMode ? ColorHelper.RandomColor(): targetColor);
                 //}
-                
+
                 //SerialHelper.Send(serialPort, cube);
                 switch (currentMusicStyle)
                 {
@@ -145,31 +140,31 @@ namespace _8x8x8_LED
                     case "Floating Lines":
                         break;
                     case "Floating Dots":
-                
+
                         break;
                     case "Solid Lines":
-                
+
                         break;
                     case "Solid Dots":
-                
+
                         break;
                     case "Matrix":
-                
+
                         break;
                     case "Centered Floating Lines":
-                
+
                         break;
                     case "Centered Floating Dots":
-                
+
                         break;
                     case "Centered Solid Lines":
-                
+
                         break;
                     case "Centered Solid Dots":
-                
+
                         break;
                 }
-                
+
                 // Animate as normal if there is audio activity:
                 if ((Math.Abs(eightChannels[0]) > 0.05 || Math.Abs(eightChannels[5]) > 0.05) && timeElapsed % speed == 0)
                 {
@@ -276,7 +271,7 @@ namespace _8x8x8_LED
             cube.Clear();
             //cube.DrawLine(1, 3, 6, 5, 2, 2, CubeColor.Cyan);
             cube.DrawLine(trackBar1.Value, trackBar3.Value, trackBar5.Value, trackBar2.Value, trackBar4.Value, trackBar6.Value, CubeColor.Cyan);
-            
+
             SerialHelper.Send(serialPort, cube);
         }
 

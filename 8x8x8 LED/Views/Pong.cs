@@ -1,13 +1,13 @@
-﻿using _8x8x8_LED.Model;
-using _8x8x8_LED.Model.Pong;
+﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Pong;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Windows.Forms;
 
-namespace _8x8x8_LED.View
+namespace _8x8x8_LED.Views
 {
     public partial class FrmPong : Form
     {
@@ -47,7 +47,7 @@ namespace _8x8x8_LED.View
                     b.directionY = Direction.Rightwards;
                     balls.Add(b);
                 }
-                
+
                 bwGameEngine.RunWorkerAsync();
             }
             else
@@ -61,9 +61,10 @@ namespace _8x8x8_LED.View
 
         private void BwGameEngine_DoWork(object sender, DoWorkEventArgs e)
         {
-            while (animate) {
+            while (animate)
+            {
                 cube.Clear();
-                
+
                 foreach (Ball b in balls)
                 {
                     b.Move(false, p1, p2);
@@ -98,11 +99,12 @@ namespace _8x8x8_LED.View
                     }
                     if (b.outOfBounds)
                     {
-                        
+
                         if (b.location.GetY() == 1)
                         {
                             player2Score++;
-                        } else
+                        }
+                        else
                         {
                             player1Score++;
                         }
@@ -115,7 +117,7 @@ namespace _8x8x8_LED.View
 
                 cube.Flip(Axis.X);
                 SerialHelper.Send(serialPort, cube);
-                
+
                 System.Threading.Thread.Sleep(speed);
                 if (speed > 50) speed -= 5;
                 if (player1Score >= 10 || player2Score >= 10)
@@ -162,11 +164,13 @@ namespace _8x8x8_LED.View
             {
                 cube.matrix_legacy[destination + 6] = value;
                 cube.matrix_legacy[destination + 7] = value;
-            } else if (p.location.GetZ() == 1)
+            }
+            else if (p.location.GetZ() == 1)
             {
                 cube.matrix_legacy[destination - 1] = value;
                 cube.matrix_legacy[destination + 6] = value;
-            } else
+            }
+            else
             {
                 cube.matrix_legacy[destination - 1] = value;
                 cube.matrix_legacy[destination - 2] = value;
@@ -232,10 +236,12 @@ namespace _8x8x8_LED.View
             if (player1Score > player2Score)
             {
                 MessageBox.Show("Player 1 wins!");
-            } else if (player1Score < player2Score)
+            }
+            else if (player1Score < player2Score)
             {
                 MessageBox.Show("Player 2 wins!");
-            } else
+            }
+            else
             {
                 MessageBox.Show("It's a draw!");
             }

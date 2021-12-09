@@ -1,24 +1,22 @@
 ﻿using _8x8x8_LED.Helpers;
-using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using System;
-using System.Collections;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
-using Rotation = _8x8x8_LED.Model.Rotation;
+using Rotation = _8x8x8_LED.Models.Rotation;
 
-namespace _8x8x8_LED
+namespace _8x8x8_LED.Views
 {
-    public partial class FrmImageViewer : Form
+    public partial class FrmImage_Viewer : Form
     {
         private readonly SerialPort serialPort;
         private readonly Cube cube;
         private int fileNameIncrementor = 0;
         private Bitmap bitmap;
 
-        public FrmImageViewer(SerialPort serialPort, ref Cube cube)
+        public FrmImage_Viewer(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -45,7 +43,7 @@ namespace _8x8x8_LED
                 RenderImage();
                 fileNameIncrementor = 0;
             }
-                
+
         }
 
         private void BtnRefresh_Click(object sender, EventArgs e)
@@ -57,7 +55,7 @@ namespace _8x8x8_LED
                 stream.Close();
                 RenderImage();
             }
-                
+
         }
 
         private void RenderImage()
@@ -108,7 +106,8 @@ namespace _8x8x8_LED
                 c.BackColor = Color.White;
                 bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);
                 return;
-            } else if (ModifierKeys.HasFlag(Keys.Shift))
+            }
+            else if (ModifierKeys.HasFlag(Keys.Shift))
             {
                 c.BackColor = Color.Black;
                 bitmap.SetPixel(c.Left / 16, c.Top / 16, c.BackColor);

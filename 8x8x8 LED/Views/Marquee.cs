@@ -1,5 +1,4 @@
 ﻿using _8x8x8_LED.Helpers;
-using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using System;
 using System.Collections;
@@ -10,7 +9,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
 
-namespace _8x8x8_LED.View
+namespace _8x8x8_LED.Views
 {
     public partial class FrmMarquee : Form
     {
@@ -55,12 +54,12 @@ namespace _8x8x8_LED.View
                     images.Add(letterMapping[letter.ToString()]);
                 else
                     if (File.Exists(Path.Combine(Application.StartupPath, "Characters", letter + ".png")))
-                    {
-                        var stream = File.Open(Path.Combine(Application.StartupPath, "Characters", letter + ".png"), FileMode.Open);
-                        letterMapping.Add(letter.ToString(), (Bitmap)Image.FromStream(stream));
-                        images.Add(letterMapping[letter.ToString()]);
-                        stream.Close();
-                    }
+                {
+                    var stream = File.Open(Path.Combine(Application.StartupPath, "Characters", letter + ".png"), FileMode.Open);
+                    letterMapping.Add(letter.ToString(), (Bitmap)Image.FromStream(stream));
+                    images.Add(letterMapping[letter.ToString()]);
+                    stream.Close();
+                }
             }
 
             // Append all letters onto canvas:

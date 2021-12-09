@@ -1,19 +1,14 @@
-﻿using _8x8x8_LED.Model;
-using _8x8x8_LED.Model.Pong;
+﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Pong;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _8x8x8_LED.View
+namespace _8x8x8_LED.Views
 {
     public partial class FrmBalls : Form
     {
@@ -50,7 +45,7 @@ namespace _8x8x8_LED.View
             btnAddBall.PerformClick();
             chkSyncMusic.Checked = Properties.Settings.Default.Balls_SyncToMusic;
             trkSpeed.Value = Properties.Settings.Default.Balls_Speed;
-            
+
             bwEngine.RunWorkerAsync();
         }
 
@@ -77,7 +72,8 @@ namespace _8x8x8_LED.View
             if (randomNumber == 1)
             {
                 b.directionX = Direction.Backwards;
-            } else if (randomNumber == 2)
+            }
+            else if (randomNumber == 2)
             {
                 b.directionX = Direction.Forwards;
             }
@@ -85,7 +81,8 @@ namespace _8x8x8_LED.View
             if (randomNumber == 1)
             {
                 b.directionY = Direction.Leftwards;
-            } else if (randomNumber == 2)
+            }
+            else if (randomNumber == 2)
             {
                 b.directionY = Direction.Rightwards;
             }
@@ -93,7 +90,8 @@ namespace _8x8x8_LED.View
             if (randomNumber == 1)
             {
                 b.directionZ = Direction.Upwards;
-            } else if (randomNumber == 2)
+            }
+            else if (randomNumber == 2)
             {
                 b.directionZ = Direction.Downwards;
             }
@@ -174,8 +172,8 @@ namespace _8x8x8_LED.View
                         }
                     }
                 }
-                    
-                
+
+
                 if (animateMusic)
                 {
                     if (Math.Abs(twoChannels[0]) < .05)
@@ -221,14 +219,15 @@ namespace _8x8x8_LED.View
                         SerialHelper.Send(serialPort, cube);
                     }
 
-                } else
+                }
+                else
                 {
                     SerialHelper.Send(serialPort, cube);
                     System.Threading.Thread.Sleep(speed);
                 }
 
-                
-                
+
+
 
                 timeElapsed++;
             }
@@ -239,7 +238,8 @@ namespace _8x8x8_LED.View
             if (cbPhysics.Text == "Portal")
             {
                 teleport = true;
-            } else
+            }
+            else
             {
                 teleport = false;
             }
@@ -256,7 +256,8 @@ namespace _8x8x8_LED.View
                 waveIn.StartRecording();
                 animateMusic = true;
 
-            } else
+            }
+            else
             {
                 waveIn.StopRecording();
                 animateMusic = false;

@@ -1,17 +1,10 @@
-﻿using _8x8x8_LED.Model;
+﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _8x8x8_LED.View
+namespace _8x8x8_LED.Views
 {
     public partial class FrmClock : Form
     {
@@ -375,7 +368,8 @@ namespace _8x8x8_LED.View
                         cube.matrix_legacy[60] += 32;
                         cube.matrix_legacy[61] += 32;
                         cube.matrix_legacy[62] += 32;
-                    } else
+                    }
+                    else
                     {
                         cube.matrix_legacy[58] += 16 + 32 + 64;
                         cube.matrix_legacy[59] += 32;
@@ -432,7 +426,8 @@ namespace _8x8x8_LED.View
                         cube.matrix_legacy[60] += 2;
                         cube.matrix_legacy[61] += 2;
                         cube.matrix_legacy[62] += 2;
-                    } else
+                    }
+                    else
                     {
                         cube.matrix_legacy[58] += 1 + 2 + 4;
                         cube.matrix_legacy[59] += 2;

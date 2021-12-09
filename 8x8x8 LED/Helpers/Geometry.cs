@@ -1,9 +1,4 @@
-﻿using _8x8x8_LED.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using _8x8x8_LED.Models;
 
 namespace _8x8x8_LED.Helpers
 {
@@ -30,7 +25,7 @@ namespace _8x8x8_LED.Helpers
                                 output[i, j, k] = input[i, k, maxHeight - j];
                                 break;
                             case Rotation.ClockwiseZ:
-                                output[i, j, k] = input[maxHeight - j,  i, k];
+                                output[i, j, k] = input[maxHeight - j, i, k];
                                 break;
                             case Rotation.CounterclockwiseX:
                                 output[i, j, k] = input[k, j, maxHeight - i];

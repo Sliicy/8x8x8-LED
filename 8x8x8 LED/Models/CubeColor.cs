@@ -1,4 +1,4 @@
-﻿namespace _8x8x8_LED.Model
+﻿namespace _8x8x8_LED.Models
 {
     public enum CubeColor
     {
@@ -25,7 +25,7 @@
         BrightCyan = 18,
         BrightMagenta = 19,
         BrightYellow = 20,
-        
+
         RedGreen = 21,
         RedBlue = 22,
         RedCyan = 23,

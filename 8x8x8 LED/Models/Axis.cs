@@ -1,4 +1,4 @@
-﻿namespace _8x8x8_LED.Model
+﻿namespace _8x8x8_LED.Models
 {
     public enum Axis
     {

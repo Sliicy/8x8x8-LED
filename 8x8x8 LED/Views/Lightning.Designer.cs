@@ -1,6 +1,6 @@
 ﻿namespace _8x8x8_LED.Views
 {
-    partial class Lightning
+    partial class FrmLightning
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lightning));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLightning));
             this.chkRainbowMode = new System.Windows.Forms.CheckBox();
             this.cbColor = new System.Windows.Forms.ComboBox();
             this.nudLineCount = new System.Windows.Forms.NumericUpDown();

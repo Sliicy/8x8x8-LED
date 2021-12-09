@@ -1,10 +1,5 @@
 ﻿using _8x8x8_LED.Helpers;
-using _8x8x8_LED.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _8x8x8_LED.Models
 {
@@ -167,7 +162,7 @@ namespace _8x8x8_LED.Models
 
                 if (gx == gx1idx && gy == gy1idx && gz == gz1idx) break;
                 if (gx < 0 || gy < 0 || gz < 0) break;
-                
+
 
                 // Which plane do we cross first?
                 var xr = Math.Abs(errx);

@@ -1,18 +1,16 @@
 ﻿using _8x8x8_LED.Helpers;
-using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using NAudio.Wave;
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Threading;
 using System.Windows.Forms;
-using Rotation = _8x8x8_LED.Model.Rotation;
+using Rotation = _8x8x8_LED.Models.Rotation;
 
-namespace _8x8x8_LED.View
+namespace _8x8x8_LED.Views
 {
     public partial class FrmVideo : Form
     {
@@ -61,9 +59,11 @@ namespace _8x8x8_LED.View
                     if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
                     {
                         MessageBox.Show("Image width must be exactly 64 pixels wide. Height must be evenly divisible by 8.", "Incorrect Dimensions", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    } else
+                    }
+                    else
                         chkAnimate.Checked = true;
-                } catch (Exception)
+                }
+                catch (Exception)
                 {
                     MessageBox.Show("Unable to load image. Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -74,7 +74,8 @@ namespace _8x8x8_LED.View
         {
             if (renderImage.Width != 64 || renderImage.Height % 8 != 0)
                 return;
-            while (animate) {
+            while (animate)
+            {
                 try
                 {
                     if ((animateMusic && Math.Abs(twoChannels[0]) > 0.05 && timeElapsed % speed == 0) || !animateMusic)
@@ -86,7 +87,7 @@ namespace _8x8x8_LED.View
                                     for (int x = 0; x < 8; x++)
                                         cube.matrix[x, 7 - y, z / 8] = ColorHelper.ExtractColor(renderImage.GetPixel(x + z, y + depth));
                             cube.Rotate(Rotation.ClockwiseY);
-                            
+
                             if (animateMusic)
                             {
                                 if (Math.Abs(twoChannels[0]) < .05)
@@ -171,7 +172,8 @@ namespace _8x8x8_LED.View
 
                 waveIn.StartRecording();
                 animateMusic = true;
-            } else
+            }
+            else
             {
                 waveIn.StopRecording();
                 animateMusic = false;
@@ -203,7 +205,7 @@ namespace _8x8x8_LED.View
 
         private void TmrSlideshow_Tick(object sender, EventArgs e)
         {
-            
+
             if (picSelect.FileName.Length > 0)
             {
                 var rand = new Random();

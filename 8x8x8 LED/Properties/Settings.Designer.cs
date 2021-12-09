@@ -517,7 +517,7 @@ namespace _8x8x8_LED.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        [global::System.Configuration.DefaultSettingValueAttribute("BrightYellow")]
         public string Lightning_Color {
             get {
                 return ((string)(this["Lightning_Color"]));

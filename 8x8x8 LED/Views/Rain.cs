@@ -1,12 +1,11 @@
 ﻿using _8x8x8_LED.Helpers;
-using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using System;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Windows.Forms;
 
-namespace _8x8x8_LED.View
+namespace _8x8x8_LED.Views
 {
     public partial class FrmRain : Form
     {
@@ -35,7 +34,8 @@ namespace _8x8x8_LED.View
             if (chkAnimate.Checked && bwAnimate.IsBusy == false)
             {
                 bwAnimate.RunWorkerAsync();
-            } else
+            }
+            else
             {
                 bwAnimate.CancelAsync();
             }

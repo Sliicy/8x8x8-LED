@@ -1,5 +1,5 @@
 ﻿
-namespace _8x8x8_LED.View
+namespace _8x8x8_LED.Views
 {
     partial class FrmClock
     {

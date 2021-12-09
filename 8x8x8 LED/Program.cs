@@ -1,32 +1,13 @@
-﻿using _8x8x8_LED.View;
-using CommandLine;
-using CommandLine.Text;
+﻿using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO.Ports;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace _8x8x8_LED
 {
     public static class Program
     {
-        public static List<string> existingApps = new List<string>() {
-            "Balls",
-            "Clock",
-            "Image Viewer",
-            "Lightning",
-            "Marquee",
-            "Music",
-            "Phone Square",
-            "Pong",
-            "Rain",
-            "Snake",
-            "Video"};
-
         public class Options
         {
             [Option('o', "open", Required = false, HelpText = "Open an app automatically.")]
@@ -46,18 +27,13 @@ namespace _8x8x8_LED
             Application.SetCompatibleTextRenderingDefault(false);
             string autoOpen = "";
             bool minimized = false;
-            
+
             Parser.Default.ParseArguments<Options>(args)
                    .WithParsed(o =>
                    {
-                       
+
                        if (o.AutoOpen != null)
                        {
-                           if (!existingApps.Contains(o.AutoOpen))
-                           {
-                               MessageBox.Show("Requested app doesn't exist!");
-                               Application.Exit();
-                           }
                            autoOpen = o.AutoOpen;
                        }
                        minimized = o.Minimized;

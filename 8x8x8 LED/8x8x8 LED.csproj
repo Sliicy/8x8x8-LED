@@ -296,12 +296,6 @@
     <Compile Include="Views\Lightning.Designer.cs">
       <DependentUpon>Lightning.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\PhoneSquare.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\PhoneSquare.Designer.cs">
-      <DependentUpon>PhoneSquare.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\Pong.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -326,11 +320,11 @@
     <Compile Include="Views\MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ImageViewer.cs">
+    <Compile Include="Views\Image_Viewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\ImageViewer.Designer.cs">
-      <DependentUpon>ImageViewer.cs</DependentUpon>
+    <Compile Include="Views\Image_Viewer.Designer.cs">
+      <DependentUpon>Image_Viewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -365,14 +359,11 @@
     <EmbeddedResource Include="Views\Lightning.resx">
       <DependentUpon>Lightning.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\PhoneSquare.resx">
-      <DependentUpon>PhoneSquare.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\Pong.resx">
       <DependentUpon>Pong.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ImageViewer.resx">
-      <DependentUpon>ImageViewer.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Image_Viewer.resx">
+      <DependentUpon>Image_Viewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Marquee.resx">
       <DependentUpon>Marquee.cs</DependentUpon>

@@ -1,12 +1,7 @@
-﻿using _8x8x8_LED.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace _8x8x8_LED.Model
+namespace _8x8x8_LED.Models
 {
     [Serializable]
     public class MonochromeCube : Cube
@@ -80,7 +75,9 @@ namespace _8x8x8_LED.Model
                 {
                     return Position.Top;
                 }
-            } else {
+            }
+            else
+            {
                 if (coordinates == 0 ||
                 coordinates == 1 ||
                 coordinates == 2 ||
@@ -131,7 +128,8 @@ namespace _8x8x8_LED.Model
                                 if (CoordinatesAt(y + z, Axis.Z) == Position.Bottom)
                                 {
                                     output[y + z] = matrix_legacy[y + z + 7];
-                                } else
+                                }
+                                else
                                 {
                                     output[y + z] = matrix_legacy[(y + z) - 1];
                                 }
@@ -182,11 +180,13 @@ namespace _8x8x8_LED.Model
                                 if (CoordinatesAt(y + z, Axis.Y) == Position.Right)
                                 {
                                     output[y + z] = matrix_legacy[y + z - 56];
-                                } else
+                                }
+                                else
                                 {
                                     output[y + z] = matrix_legacy[(y + z) + 8];
                                 }
-                            } else
+                            }
+                            else
                             {
                                 if (CoordinatesAt(y + z, Axis.Y) != Position.Right)
                                 {
@@ -206,11 +206,13 @@ namespace _8x8x8_LED.Model
                                 if (CoordinatesAt(y + z, Axis.Y) == Position.Left)
                                 {
                                     output[y + z] = matrix_legacy[y + z + 56];
-                                } else
+                                }
+                                else
                                 {
                                     output[y + z] = matrix_legacy[(y + z) - 8];
                                 }
-                            } else
+                            }
+                            else
                             {
                                 if (CoordinatesAt(y + z, Axis.Y) != Position.Left)
                                 {
@@ -470,11 +472,13 @@ namespace _8x8x8_LED.Model
                         counter += 8;
                     }
                 }
-            } else if (orientation == Rotation.ClockwiseY)
+            }
+            else if (orientation == Rotation.ClockwiseY)
             {
                 Rotate(Rotation.CounterclockwiseY, 2 - iterations);
                 return;
-            } else if (orientation == Rotation.ClockwiseZ)
+            }
+            else if (orientation == Rotation.ClockwiseZ)
             {
                 int x = 128;
                 int counter = 0;
@@ -501,11 +505,13 @@ namespace _8x8x8_LED.Model
                     if (counter % 8 == 0)
                         x /= 2;
                 }
-            } else if (orientation == Rotation.CounterclockwiseX)
+            }
+            else if (orientation == Rotation.CounterclockwiseX)
             {
                 Rotate(Rotation.ClockwiseX, 2 - iterations);
                 return;
-            } else if (orientation == Rotation.CounterclockwiseY)
+            }
+            else if (orientation == Rotation.CounterclockwiseY)
             {
                 var array2D = new byte[8, 8];
                 int counter = 0;
@@ -527,7 +533,8 @@ namespace _8x8x8_LED.Model
                         counter++;
                     }
                 }
-            } else if (orientation == Rotation.CounterclockwiseZ)
+            }
+            else if (orientation == Rotation.CounterclockwiseZ)
             {
                 Rotate(Rotation.ClockwiseZ, 2 - iterations);
                 return;

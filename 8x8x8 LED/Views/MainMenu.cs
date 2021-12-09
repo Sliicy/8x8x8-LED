@@ -1,11 +1,11 @@
-﻿using _8x8x8_LED.Apps;
-using _8x8x8_LED.Model;
+﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
-using _8x8x8_LED.View;
 using _8x8x8_LED.Views;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO.Ports;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace _8x8x8_LED
@@ -32,7 +32,18 @@ namespace _8x8x8_LED
         private void FrmMain_Load(object sender, EventArgs e)
         {
             ReloadAvailableComPorts();
-            lstApps.Items.AddRange(Program.existingApps.ToArray());
+
+            // Add all Views to App List:
+            var appList = System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => t.FullName.Contains(".Views.")).ToList();
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            foreach (var app in appList)
+            {
+                if (app.Name == "MainMenu")
+                    continue;
+                lstApps.Items.Add(textInfo.ToTitleCase(app.Name.ToLower().Replace("frm", string.Empty).Replace("_", " ")));
+            }
+
             if (requestedApp != "")
             {
                 lstApps.SelectedIndex = lstApps.FindString(requestedApp);
@@ -64,6 +75,8 @@ namespace _8x8x8_LED
 
             MusicRGB mRGB = new MusicRGB(serialPort, ref cube);
             mRGB.Show();
+
+
         }
 
         private void ReloadAvailableComPorts()
@@ -119,7 +132,7 @@ namespace _8x8x8_LED
                         serialPort.StopBits = StopBits.OnePointFive;
                     else
                         serialPort.StopBits = StopBits.Two;
-                    
+
                     serialPort.Parity = (Parity)Enum.Parse(typeof(Parity), cbParity.Text, true);
 
                     serialPort.Open();
@@ -252,10 +265,11 @@ namespace _8x8x8_LED
             Form form;
             if (lstApps.SelectedItem == null)
                 return;
+
             switch (lstApps.SelectedItem.ToString())
             {
                 case "Image Viewer":
-                    form = new FrmImageViewer(serialPort, ref cube);
+                    form = new FrmImage_Viewer(serialPort, ref cube);
                     break;
                 case "Video":
                     form = new FrmVideo(serialPort, ref cube);
@@ -281,11 +295,8 @@ namespace _8x8x8_LED
                 case "Snake":
                     form = new FrmSnake(serialPort, ref cube);
                     break;
-                case "Phone Square":
-                    form = new PhoneSquare(serialPort, ref cube);
-                    break;
                 case "Lightning":
-                    form = new Lightning(serialPort, ref cube);
+                    form = new FrmLightning(serialPort, ref cube);
                     break;
                 default:
                     return;

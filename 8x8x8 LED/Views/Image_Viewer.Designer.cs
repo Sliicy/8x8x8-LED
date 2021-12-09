@@ -1,7 +1,7 @@
 ﻿
-namespace _8x8x8_LED
+namespace _8x8x8_LED.Views
 {
-    partial class FrmImageViewer
+    partial class FrmImage_Viewer
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace _8x8x8_LED
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmImageViewer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmImage_Viewer));
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnAddImage = new System.Windows.Forms.Button();
             this.btnShiftLeftwards = new System.Windows.Forms.Button();

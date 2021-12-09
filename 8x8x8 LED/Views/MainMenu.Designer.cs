@@ -96,6 +96,7 @@ namespace _8x8x8_LED
             this.lstApps.Location = new System.Drawing.Point(8, 6);
             this.lstApps.Name = "lstApps";
             this.lstApps.Size = new System.Drawing.Size(507, 676);
+            this.lstApps.Sorted = true;
             this.lstApps.TabIndex = 1;
             this.lstApps.DoubleClick += new System.EventHandler(this.LstApps_DoubleClick);
             // 

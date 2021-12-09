@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _8x8x8_LED.Model.Pong
+﻿namespace _8x8x8_LED.Models.Pong
 {
     /// <summary>
     /// Class responsible for emulating a ball in the cube.
@@ -143,10 +137,12 @@ namespace _8x8x8_LED.Model.Pong
             if (ballLocation.GetX() == paddleLocation.GetX())
             {
                 directionX = Direction.Forwards;
-            } else if (ballLocation.GetX() == paddleLocation.GetX() - 2)
+            }
+            else if (ballLocation.GetX() == paddleLocation.GetX() - 2)
             {
                 directionX = Direction.Backwards;
-            } else if (ballLocation.GetX() == paddleLocation.GetX() - 1)
+            }
+            else if (ballLocation.GetX() == paddleLocation.GetX() - 1)
             {
                 directionX = Direction.None;
             }
@@ -154,10 +150,12 @@ namespace _8x8x8_LED.Model.Pong
             if (ballLocation.GetZ() == paddleLocation.GetZ())
             {
                 directionZ = Direction.Upwards;
-            } else if (ballLocation.GetZ() == paddleLocation.GetZ() - 2)
+            }
+            else if (ballLocation.GetZ() == paddleLocation.GetZ() - 2)
             {
                 directionZ = Direction.Downwards;
-            } else if (ballLocation.GetZ() == paddleLocation.GetZ() - 1)
+            }
+            else if (ballLocation.GetZ() == paddleLocation.GetZ() - 1)
             {
                 directionZ = Direction.None;
             }

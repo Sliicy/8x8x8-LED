@@ -1,20 +1,14 @@
 ﻿using _8x8x8_LED.Helpers;
-using _8x8x8_LED.Model;
 using _8x8x8_LED.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace _8x8x8_LED.Views
 {
-    public partial class Lightning : Form
+    public partial class FrmLightning : Form
     {
         private readonly SerialPort serialPort;
         private readonly Cube cube;
@@ -24,7 +18,11 @@ namespace _8x8x8_LED.Views
         private bool rainbowMode = false;
         private bool animate = false;
         private int speed = 0;
-        public Lightning(SerialPort serialPort, ref Cube cube)
+        Random random = new Random();
+
+        private Tuple<int, int, int> previousPosition = new Tuple<int, int, int>(0, 0, 0);
+        private List<Tuple<int, int, int>> lightningStrikes = new List<Tuple<int, int, int>>();
+        public FrmLightning(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
@@ -36,20 +34,26 @@ namespace _8x8x8_LED.Views
             cbColor.DataSource = Enum.GetValues(typeof(CubeColor));
             cbColor.Text = Properties.Settings.Default.Lightning_Color;
             nudLineCount.Value = Properties.Settings.Default.Lightning_Amount;
+            lineCount = (int)nudLineCount.Value;
             chkRainbowMode.Checked = Properties.Settings.Default.Lightning_Rainbow;
             trkSpeed.Value = Properties.Settings.Default.Lightning_Speed;
             chkAnimate.Checked = true;
             speed = trkSpeed.Value;
+            for (int i = 0; i < lineCount; i++)
+                lightningStrikes.Add(Tuple.Create(random.Next(0, 8), random.Next(0, 8), random.Next(0, 8)));
         }
 
         private void BwAnimate_DoWork(object sender, DoWorkEventArgs e)
         {
             while (animate)
             {
-                Random random = new Random();
                 cube.Clear();
-                for (int i = 0; i < lineCount; i++)
-                    cube.DrawLine(random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                for (int i = 0; i < lightningStrikes.Count; i++)
+                {
+                    var newValues = Tuple.Create(random.Next(0, 8), random.Next(0, 8), random.Next(0, 8));
+                    cube.DrawLine(lightningStrikes[i].Item1, lightningStrikes[i].Item2, lightningStrikes[i].Item3, newValues.Item1, newValues.Item2, newValues.Item3, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                    lightningStrikes[i] = Tuple.Create(newValues.Item1, newValues.Item2, newValues.Item3);
+                }
                 SerialHelper.Send(serialPort, cube);
                 System.Threading.Thread.Sleep(speed);
             }
@@ -57,16 +61,11 @@ namespace _8x8x8_LED.Views
 
         private void ChkAnimate_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkAnimate.Checked)
-            {
-                animate = true;
+            animate = chkAnimate.Checked;
+            if (animate)
                 bwAnimate.RunWorkerAsync();
-            }
             else
-            {
-                animate = false;
                 bwAnimate.CancelAsync();
-            }
         }
 
         private void ChkRainbowMode_CheckedChanged(object sender, EventArgs e)
@@ -78,6 +77,9 @@ namespace _8x8x8_LED.Views
         private void NudLineCount_ValueChanged(object sender, EventArgs e)
         {
             lineCount = (int)nudLineCount.Value;
+            lightningStrikes.Clear();
+            for (int i = 0; i < lineCount; i++)
+                lightningStrikes.Add(Tuple.Create(random.Next(0, 8), random.Next(0, 8), random.Next(0, 8)));
         }
 
         private void CbColor_SelectedIndexChanged(object sender, EventArgs e)

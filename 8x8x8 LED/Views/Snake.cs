@@ -1,13 +1,12 @@
-﻿using _8x8x8_LED.Model;
-using _8x8x8_LED.Model.Pong;
-using _8x8x8_LED.Model.Snake;
+﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Snake;
 using System;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Windows.Forms;
 
-namespace _8x8x8_LED.View
+namespace _8x8x8_LED.Views
 {
     public partial class FrmSnake : Form
     {
@@ -15,10 +14,10 @@ namespace _8x8x8_LED.View
         private readonly Cube cube;
         private bool animate = false;
         private int speed = 500;
-        
+
         private readonly Snake snake = new Snake(new Location(3, 3, 3));
         private Direction defaultDirection = Direction.Forwards;
-        
+
         private readonly Location apple = new Location(0, 0, 0);
         private bool appleConsumed = false;
 
@@ -63,10 +62,11 @@ namespace _8x8x8_LED.View
                 {
                     MessageBox.Show("Snake crashed!");
                     animate = false;
-                } else
+                }
+                else
                 {
                     RenderSnake();
-                    
+
                     appleConsumed = snake.AppleConsumed(apple);
                     if (appleConsumed)
                     {

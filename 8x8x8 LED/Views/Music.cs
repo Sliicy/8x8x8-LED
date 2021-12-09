@@ -1,4 +1,4 @@
-﻿using _8x8x8_LED.Model;
+﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
 using NAudio.Wave;
 using System;
@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.IO.Ports;
 using System.Windows.Forms;
 
-namespace _8x8x8_LED.Apps
+namespace _8x8x8_LED.Views
 {
     public partial class FrmMusic : Form
     {
@@ -71,7 +71,8 @@ namespace _8x8x8_LED.Apps
                         eightChannels[7] = BitConverter.ToSingle(e.Buffer, i + 4 + (samples / 4) * 3);
                     }
                 }
-            } catch (Exception)
+            }
+            catch (Exception)
             {
             }
         }
@@ -88,7 +89,8 @@ namespace _8x8x8_LED.Apps
                 animate = true;
                 bwVisualize.RunWorkerAsync();
 
-            } else
+            }
+            else
             {
                 waveIn.StopRecording();
                 animate = false;
@@ -186,7 +188,8 @@ namespace _8x8x8_LED.Apps
                     arrayOutput.CopyTo(cube.matrix_legacy, 0);
                     SerialHelper.Send(serialPort, cube);
                     matrixIsCleared = false;
-                } else
+                }
+                else
                 {
                     if (!matrixIsCleared) // Animate silence only once:
                     {
@@ -244,7 +247,7 @@ namespace _8x8x8_LED.Apps
                         matrixIsCleared = true;
                     }
 
-                    
+
                 }
                 timeElapsed++;
             }
@@ -373,7 +376,7 @@ namespace _8x8x8_LED.Apps
             arrayOutput[55] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
             arrayOutput[63] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
         }
-                
+
         private void AnimateCenteredBars(byte[] audioChannelDepth, double[] channels, byte thickness = 1, bool filledUnderneath = false)
         {
             int channelIndex = 0;

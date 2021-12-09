@@ -1,18 +1,13 @@
-﻿using _8x8x8_LED.Model.Pong;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace _8x8x8_LED.Model.Snake
+namespace _8x8x8_LED.Models.Snake
 {
     class Snake
     {
 
         // Body of snake, consisting of points. body[0] represents the head of the snake.
         public List<Location> body = new List<Location>();
-        
+
         // Controls whether the snake is allowed to cross the edge of the boundaries:
         public bool boundedSnake = true;
 
@@ -69,7 +64,7 @@ namespace _8x8x8_LED.Model.Snake
                     alive = false;
                 }
             }
-            
+
             if (body.Count > 4)
             {
                 // Determine if head crashed into body:
@@ -84,17 +79,18 @@ namespace _8x8x8_LED.Model.Snake
                     body.Insert(0, decapitatedHead);
                 }
             }
-            
+
 
             // Remove the last bodypart if not growing:
             if (grow)
             {
                 grow = false;
-            } else
+            }
+            else
             {
                 body.RemoveAt(body.Count - 1);
             }
-                
+
         }
 
         public bool AppleConsumed(Location apple)

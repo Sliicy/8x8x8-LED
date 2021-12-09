@@ -1,16 +1,14 @@
-﻿using _8x8x8_LED.Model;
+﻿using _8x8x8_LED.Models;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _8x8x8_LED.Helpers
 {
     public class ColorHelper
     {
-        
+        private static Random random = new Random();
+
         // Converts 3D array of colors into two 192 byte arrays, ready for sending:
         public static byte[] MatrixToBytes(CubeColor[,,] c)
         {
@@ -332,11 +330,16 @@ namespace _8x8x8_LED.Helpers
             }
         }
 
-        public static CubeColor RandomColor()
+        public static CubeColor RandomColor(bool includeBlack = false)
         {
-            Random random = new Random();
             Array enums = Enum.GetValues(typeof(CubeColor));
-            return (CubeColor)enums.GetValue(random.Next(enums.Length));
+            CubeColor newColor = (CubeColor)enums.GetValue(random.Next(enums.Length));
+            if (!includeBlack)
+            {
+                while (newColor == CubeColor.Black)
+                    newColor = (CubeColor)enums.GetValue(random.Next(enums.Length));
+            }
+            return newColor;
         }
     }
 }
