@@ -38,23 +38,10 @@
             this.cbMusicStyle = new System.Windows.Forms.ComboBox();
             this.lblMusicStyle = new System.Windows.Forms.Label();
             this.bwVisualize = new System.ComponentModel.BackgroundWorker();
-            this.button1 = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.trackBar3 = new System.Windows.Forms.TrackBar();
-            this.trackBar4 = new System.Windows.Forms.TrackBar();
-            this.trackBar5 = new System.Windows.Forms.TrackBar();
-            this.trackBar6 = new System.Windows.Forms.TrackBar();
             this.nudLineCount = new System.Windows.Forms.NumericUpDown();
             this.cbColor = new System.Windows.Forms.ComboBox();
             this.chkRainbow = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trkSamples)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineCount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -191,70 +178,6 @@
             this.bwVisualize.WorkerSupportsCancellation = true;
             this.bwVisualize.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BwVisualize_DoWork);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(468, 28);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(206, 57);
-            this.trackBar1.Maximum = 7;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(306, 45);
-            this.trackBar1.TabIndex = 10;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
-            // 
-            // trackBar2
-            // 
-            this.trackBar2.Location = new System.Drawing.Point(206, 108);
-            this.trackBar2.Maximum = 7;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(309, 45);
-            this.trackBar2.TabIndex = 10;
-            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
-            // 
-            // trackBar3
-            // 
-            this.trackBar3.Location = new System.Drawing.Point(577, 57);
-            this.trackBar3.Maximum = 7;
-            this.trackBar3.Name = "trackBar3";
-            this.trackBar3.Size = new System.Drawing.Size(309, 45);
-            this.trackBar3.TabIndex = 10;
-            this.trackBar3.Scroll += new System.EventHandler(this.trackBar2_Scroll);
-            // 
-            // trackBar4
-            // 
-            this.trackBar4.Location = new System.Drawing.Point(577, 108);
-            this.trackBar4.Maximum = 7;
-            this.trackBar4.Name = "trackBar4";
-            this.trackBar4.Size = new System.Drawing.Size(309, 45);
-            this.trackBar4.TabIndex = 10;
-            this.trackBar4.Scroll += new System.EventHandler(this.trackBar2_Scroll);
-            // 
-            // trackBar5
-            // 
-            this.trackBar5.Location = new System.Drawing.Point(919, 57);
-            this.trackBar5.Maximum = 7;
-            this.trackBar5.Name = "trackBar5";
-            this.trackBar5.Size = new System.Drawing.Size(309, 45);
-            this.trackBar5.TabIndex = 10;
-            this.trackBar5.Scroll += new System.EventHandler(this.trackBar2_Scroll);
-            // 
-            // trackBar6
-            // 
-            this.trackBar6.Location = new System.Drawing.Point(919, 108);
-            this.trackBar6.Maximum = 7;
-            this.trackBar6.Name = "trackBar6";
-            this.trackBar6.Size = new System.Drawing.Size(309, 45);
-            this.trackBar6.TabIndex = 10;
-            this.trackBar6.Scroll += new System.EventHandler(this.trackBar2_Scroll);
-            // 
             // nudLineCount
             // 
             this.nudLineCount.Location = new System.Drawing.Point(710, 231);
@@ -297,13 +220,6 @@
             this.Controls.Add(this.chkRainbow);
             this.Controls.Add(this.cbColor);
             this.Controls.Add(this.nudLineCount);
-            this.Controls.Add(this.trackBar6);
-            this.Controls.Add(this.trackBar5);
-            this.Controls.Add(this.trackBar4);
-            this.Controls.Add(this.trackBar3);
-            this.Controls.Add(this.trackBar2);
-            this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.lblMusicStyle);
             this.Controls.Add(this.chkSyncMusic);
             this.Controls.Add(this.cbMusicStyle);
@@ -318,12 +234,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MusicRGB_FormClosing);
             this.Load += new System.EventHandler(this.MusicRGB_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trkSamples)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLineCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -342,13 +252,6 @@
         private System.Windows.Forms.ComboBox cbMusicStyle;
         private System.Windows.Forms.Label lblMusicStyle;
         private System.ComponentModel.BackgroundWorker bwVisualize;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.TrackBar trackBar3;
-        private System.Windows.Forms.TrackBar trackBar4;
-        private System.Windows.Forms.TrackBar trackBar5;
-        private System.Windows.Forms.TrackBar trackBar6;
         private System.Windows.Forms.NumericUpDown nudLineCount;
         private System.Windows.Forms.ComboBox cbColor;
         private System.Windows.Forms.CheckBox chkRainbow;

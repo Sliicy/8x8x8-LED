@@ -187,5 +187,10 @@ namespace _8x8x8_LED.Models
                 ;
             } while (true);
         }
+
+        public void DrawPoint(int x, int y, int z, CubeColor color)
+        {
+            matrix[x, y, z] = color;
+        }
     }
 }

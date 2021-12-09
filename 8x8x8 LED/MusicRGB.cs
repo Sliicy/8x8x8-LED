@@ -65,7 +65,6 @@ namespace _8x8x8_LED
             }
             catch (Exception)
             {
-
             }
         }
 
@@ -126,10 +125,7 @@ namespace _8x8x8_LED
             while (animate)
             {
 
-                //for (int i = 0; i < lineCount; i++)
-                //{
-                //cube.DrawLine(random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), random.Next(0, 8), rainbowMode ? ColorHelper.RandomColor(): targetColor);
-                //}
+                
 
                 //SerialHelper.Send(serialPort, cube);
                 switch (currentMusicStyle)
@@ -138,6 +134,7 @@ namespace _8x8x8_LED
                         ElectroBall(eightChannels);
                         break;
                     case "Floating Lines":
+                        FloatingLines(eightChannels);
                         break;
                     case "Floating Dots":
 
@@ -175,12 +172,88 @@ namespace _8x8x8_LED
                 {
                     if (!matrixIsCleared) // Animate silence only once:
                     {
-                        cube.DrawLine(3, 3, 3, 3, 3, 3, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                        cube.Clear();
+                        switch (currentMusicStyle)
+                        {
+                            case "Electro Ball":
+                                cube.DrawPoint(3, 3, 3, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                cube.DrawPoint(3, 4, 3, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                cube.DrawPoint(4, 3, 3, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                cube.DrawPoint(4, 4, 3, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                cube.DrawPoint(3, 3, 4, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                cube.DrawPoint(3, 4, 4, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                cube.DrawPoint(4, 3, 4, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                cube.DrawPoint(4, 4, 4, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                break;
+                            case "Floating Lines":
+                            case "Solid Lines":
+                                cube.DrawPlane(Axis.Z, 0, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                break;
+                            case "Floating Dots":
+                            case "Solid Dots":
+
+                                break;
+                            case "Matrix":
+
+                                break;
+                            case "Centered Floating Lines":
+                            case "Centered Solid Lines":
+                                cube.DrawPlane(Axis.Z, 3, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                                break;
+                            case "Centered Floating Dots":
+                            case "Centered Solid Dots":
+
+                                break;
+                        }
+                        
                         SerialHelper.Send(serialPort, cube);
                         matrixIsCleared = true;
                     }
                 }
                 timeElapsed++;
+            }
+        }
+
+        private void FloatingLines(double[] eightChannels)
+        {
+            cube.Clear();
+            for (int i = 0; i < cube.length; i++)
+            {
+                foreach (double channel in eightChannels)
+                {
+                    if (Math.Abs(channel) > .05 && Math.Abs(channel) <= .1)
+                    {
+                        cube.DrawLine(0, i, 0, 7, i, 0, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                    }
+                    if (Math.Abs(channel) > .1 && Math.Abs(channel) <= .15)
+                    {
+                        cube.DrawLine(0, i, 1, 7, i, 1, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                    }
+                    if (Math.Abs(channel) > .15 && Math.Abs(channel) <= .2)
+                    {
+                        cube.DrawLine(0, i, 2, 7, i, 2, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                    }
+                    if (Math.Abs(channel) > .2 && Math.Abs(channel) <= .25)
+                    {
+                        cube.DrawLine(0, i, 3, 7, i, 3, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                    }
+                    if (Math.Abs(channel) > .25 && Math.Abs(channel) <= .3)
+                    {
+                        cube.DrawLine(0, i, 4, 7, i, 4, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                    }
+                    if (Math.Abs(channel) > .3 && Math.Abs(channel) <= .4)
+                    {
+                        cube.DrawLine(0, i, 5, 7, i, 5, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                    }
+                    if (Math.Abs(channel) > .4 && Math.Abs(channel) <= .5)
+                    {
+                        cube.DrawLine(0, i, 6, 7, i, 6, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                    }
+                    if (Math.Abs(channel) > .5)
+                    {
+                        cube.DrawLine(0, i, 7, 7, i, 7, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                    }
+                }
             }
         }
 
@@ -196,7 +269,6 @@ namespace _8x8x8_LED
 
         private void ElectroBall(double[] channels)
         {
-            int channelIndex = 0;
             int xStart = 3;
             int xEnd = 4;
 
@@ -242,37 +314,11 @@ namespace _8x8x8_LED
                     xStart = 0;
                     xEnd = 7;
                 }
-                channelIndex++;
             }
             Random random = new Random();
             cube.Clear();
             for (int i = 0; i < lineCount; i++)
                 cube.DrawLine(random.Next(xStart, xEnd + 1), random.Next(xStart, xEnd + 1), random.Next(xStart, xEnd + 1), random.Next(xStart, xEnd + 1), random.Next(xStart, xEnd + 1), random.Next(xStart, xEnd + 1), rainbowMode ? ColorHelper.RandomColor() : targetColor);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //cube.DrawPlane(Axis.X, 7, CubeColor.Green);
-            Animate();
-        }
-
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-            Animate();
-        }
-
-        private void trackBar2_Scroll(object sender, EventArgs e)
-        {
-            Animate();
-        }
-
-        private void Animate()
-        {
-            cube.Clear();
-            //cube.DrawLine(1, 3, 6, 5, 2, 2, CubeColor.Cyan);
-            cube.DrawLine(trackBar1.Value, trackBar3.Value, trackBar5.Value, trackBar2.Value, trackBar4.Value, trackBar6.Value, CubeColor.Cyan);
-
-            SerialHelper.Send(serialPort, cube);
         }
 
         private void NudLineCount_ValueChanged(object sender, EventArgs e)
