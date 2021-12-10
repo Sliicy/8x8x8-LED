@@ -1,6 +1,8 @@
 ﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Shapes;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Windows.Forms;
@@ -41,6 +43,7 @@ namespace _8x8x8_LED.Views
             }
         }
 
+        List<Line> lines = new List<Line>();
         private void BwAnimate_DoWork(object sender, DoWorkEventArgs e)
         {
             while (animate)
@@ -59,6 +62,7 @@ namespace _8x8x8_LED.Views
                 }
                 SerialHelper.Send(serialPort, cube);
                 System.Threading.Thread.Sleep(speed);
+                
                 if (directionX == "Forwards")
                 {
                     cube.Shift(Direction.Forwards, 0, false);

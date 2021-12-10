@@ -1,5 +1,6 @@
 ﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Shapes;
 using NAudio.Wave;
 using System;
 using System.ComponentModel;
@@ -70,7 +71,7 @@ namespace _8x8x8_LED
 
         private void MusicRGB_Load(object sender, EventArgs e)
         {
-            chkSyncMusic.Checked = true;
+            //chkSyncMusic.Checked = true;
             cbColor.DataSource = Enum.GetValues(typeof(CubeColor));
             chkRainbow.Checked = true;
             cbMusicStyle.SelectedIndex = 0;
@@ -119,13 +120,87 @@ namespace _8x8x8_LED
             matrixIsCleared = false;
             currentMusicStyle = cbMusicStyle.Text;
         }
-
+        Plane previousPlane = new Plane(new Point3D(0, 0, 3), new Point3D(0, 7, 3), new Point3D(7, 7, 3), new Point3D(7, 0, 3));
         private void BwVisualize_DoWork(object sender, DoWorkEventArgs e)
         {
             while (animate)
             {
+                Random r = new Random();
+                cube.Clear();
+                Plane p = new Plane();
+                p.a = new Point3D(0, 0, previousPlane.a.z + r.Next(-1, 2));
+                p.b = new Point3D(0, 7, previousPlane.b.z + r.Next(-1, 2));
+                p.c = new Point3D(7, 7, previousPlane.c.z + r.Next(-1, 2));
+                p.d = new Point3D(7, 0, previousPlane.d.z + r.Next(-1, 2));
 
+                if (p.a.x < 0)
+                    p.a.x = 0;
+                if (p.a.x > 7)
+                    p.a.x = 7;
+
+                if (p.a.y < 0)
+                    p.a.y = 0;
+                if (p.a.y > 7)
+                    p.a.y = 7;
+
+                if (p.a.z < 0)
+                    p.a.z = 0;
+                if (p.a.z > 7)
+                    p.a.z = 7;
+
+                if (p.b.x < 0)
+                    p.b.x = 0;
+                if (p.b.x > 7)
+                    p.b.x = 7;
+
+                if (p.b.y < 0)
+                    p.b.y = 0;
+                if (p.b.y > 7)
+                    p.b.y = 7;
+
+                if (p.b.z < 0)
+                    p.b.z = 0;
+                if (p.b.z > 7)
+                    p.b.z = 7;
+
+                if (p.c.x < 0)
+                    p.c.x = 0;
+                if (p.c.x > 7)
+                    p.c.x = 7;
+
+                if (p.c.y < 0)
+                    p.c.y = 0;
+                if (p.c.y > 7)
+                    p.c.y = 7;
+
+                if (p.c.z < 0)
+                    p.c.z = 0;
+                if (p.c.z > 7)
+                    p.c.z = 7;
+
+                if (p.d.x < 0)
+                    p.d.x = 0;
+                if (p.d.x > 7)
+                    p.d.x = 7;
                 
+                if (p.d.y < 0)
+                    p.d.y = 0;
+                if (p.d.y > 7)
+                    p.d.y = 7;
+                
+                if (p.d.z < 0)
+                    p.d.z = 0;
+                if (p.d.z > 7)
+                    p.d.z = 7;
+
+                previousPlane.a = p.a;
+                previousPlane.b = p.b;
+                previousPlane.c = p.c;
+                previousPlane.d = p.d;
+
+                cube.Draw(p, rainbowMode ? ColorHelper.RandomColor() : targetColor);
+                SerialHelper.Send(serialPort, cube);
+                continue;
 
                 //SerialHelper.Send(serialPort, cube);
                 switch (currentMusicStyle)
@@ -334,6 +409,11 @@ namespace _8x8x8_LED
         private void ChkRainbow_CheckedChanged(object sender, EventArgs e)
         {
             rainbowMode = chkRainbow.Checked;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

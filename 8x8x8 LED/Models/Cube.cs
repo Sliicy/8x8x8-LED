@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Helpers;
+using _8x8x8_LED.Models.Shapes;
 using System;
 
 namespace _8x8x8_LED.Models
@@ -191,6 +192,19 @@ namespace _8x8x8_LED.Models
         public void DrawPoint(int x, int y, int z, CubeColor color)
         {
             matrix[x, y, z] = color;
+        }
+
+        public void Draw(Plane plane, CubeColor color)
+        {
+            DrawLine(plane.a.x, plane.a.y, plane.a.z, plane.b.x, plane.b.y, plane.b.z, color);
+            DrawLine(plane.b.x, plane.b.y, plane.b.z, plane.c.x, plane.c.y, plane.c.z, color);
+            DrawLine(plane.c.x, plane.c.y, plane.c.z, plane.d.x, plane.d.y, plane.d.z, color);
+            DrawLine(plane.d.x, plane.d.y, plane.d.z, plane.a.x, plane.a.y, plane.a.z, color);
+        }
+
+        public void DrawLine(Line line, CubeColor color)
+        {
+            DrawLine(line.x1, line.y1, line.z1, line.x2, line.y2, line.z2, color);
         }
     }
 }
