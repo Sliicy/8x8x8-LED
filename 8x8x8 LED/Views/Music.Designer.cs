@@ -95,7 +95,7 @@
             this.lblSamples.Margin = new System.Windows.Forms.Padding(11, 0, 11, 0);
             this.lblSamples.Name = "lblSamples";
             this.lblSamples.Size = new System.Drawing.Size(145, 24);
-            this.lblSamples.TabIndex = 5;
+            this.lblSamples.TabIndex = 6;
             this.lblSamples.Text = "S&amples (1024):";
             // 
             // trkSamples
@@ -108,7 +108,7 @@
             this.trkSamples.Name = "trkSamples";
             this.trkSamples.Size = new System.Drawing.Size(194, 45);
             this.trkSamples.SmallChange = 8;
-            this.trkSamples.TabIndex = 6;
+            this.trkSamples.TabIndex = 7;
             this.trkSamples.Value = 1024;
             this.trkSamples.Scroll += new System.EventHandler(this.TrkSamples_Scroll);
             // 
@@ -119,7 +119,7 @@
             this.lblResponsiveness.Margin = new System.Windows.Forms.Padding(11, 0, 11, 0);
             this.lblResponsiveness.Name = "lblResponsiveness";
             this.lblResponsiveness.Size = new System.Drawing.Size(154, 24);
-            this.lblResponsiveness.TabIndex = 3;
+            this.lblResponsiveness.TabIndex = 4;
             this.lblResponsiveness.Text = "&Responsiveness:";
             // 
             // cbResponsiveness
@@ -144,7 +144,7 @@
             this.cbResponsiveness.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.cbResponsiveness.Name = "cbResponsiveness";
             this.cbResponsiveness.Size = new System.Drawing.Size(191, 32);
-            this.cbResponsiveness.TabIndex = 4;
+            this.cbResponsiveness.TabIndex = 5;
             this.cbResponsiveness.Text = "1";
             this.cbResponsiveness.SelectedIndexChanged += new System.EventHandler(this.CbResponsiveness_SelectedIndexChanged);
             // 
@@ -172,7 +172,7 @@
             this.cbMusicStyle.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.cbMusicStyle.Name = "cbMusicStyle";
             this.cbMusicStyle.Size = new System.Drawing.Size(241, 32);
-            this.cbMusicStyle.TabIndex = 8;
+            this.cbMusicStyle.TabIndex = 9;
             this.cbMusicStyle.SelectedIndexChanged += new System.EventHandler(this.CbMusicStyle_SelectedIndexChanged);
             // 
             // lblMusicStyle
@@ -182,7 +182,7 @@
             this.lblMusicStyle.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblMusicStyle.Name = "lblMusicStyle";
             this.lblMusicStyle.Size = new System.Drawing.Size(110, 24);
-            this.lblMusicStyle.TabIndex = 7;
+            this.lblMusicStyle.TabIndex = 8;
             this.lblMusicStyle.Text = "Music S&tyle:";
             // 
             // bwVisualize
@@ -208,7 +208,7 @@
             this.chkRainbow.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.chkRainbow.Name = "chkRainbow";
             this.chkRainbow.Size = new System.Drawing.Size(157, 28);
-            this.chkRainbow.TabIndex = 13;
+            this.chkRainbow.TabIndex = 11;
             this.chkRainbow.Text = "&Rainbow Mode";
             this.chkRainbow.UseVisualStyleBackColor = true;
             this.chkRainbow.CheckedChanged += new System.EventHandler(this.ChkRainbow_CheckedChanged);
@@ -225,7 +225,7 @@
             this.chkShuffled.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.chkShuffled.Name = "chkShuffled";
             this.chkShuffled.Size = new System.Drawing.Size(97, 28);
-            this.chkShuffled.TabIndex = 14;
+            this.chkShuffled.TabIndex = 3;
             this.chkShuffled.Text = "Shu&ffled";
             this.chkShuffled.UseVisualStyleBackColor = true;
             this.chkShuffled.CheckedChanged += new System.EventHandler(this.ChkShuffled_CheckedChanged);
@@ -234,12 +234,12 @@
             // 
             this.grpColor.Controls.Add(this.cbColor);
             this.grpColor.Controls.Add(this.chkRainbow);
-            this.grpColor.Location = new System.Drawing.Point(14, 328);
+            this.grpColor.Location = new System.Drawing.Point(80, 328);
             this.grpColor.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.grpColor.Name = "grpColor";
             this.grpColor.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.grpColor.Size = new System.Drawing.Size(253, 162);
-            this.grpColor.TabIndex = 15;
+            this.grpColor.TabIndex = 10;
             this.grpColor.TabStop = false;
             this.grpColor.Text = "Color";
             // 
