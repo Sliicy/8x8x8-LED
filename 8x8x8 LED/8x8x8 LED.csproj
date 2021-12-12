@@ -275,11 +275,11 @@
     <Compile Include="Models\Shapes\Plane.cs" />
     <Compile Include="Models\Shapes\Point3D.cs" />
     <Compile Include="Models\Snake\Snake.cs" />
-    <Compile Include="MusicRGB.cs">
+    <Compile Include="Views\Music.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MusicRGB.Designer.cs">
-      <DependentUpon>MusicRGB.cs</DependentUpon>
+    <Compile Include="Views\Music.Designer.cs">
+      <DependentUpon>Music.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Balls.cs">
       <SubType>Form</SubType>
@@ -310,12 +310,6 @@
     </Compile>
     <Compile Include="Views\Marquee.Designer.cs">
       <DependentUpon>Marquee.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Music.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\Music.Designer.cs">
-      <DependentUpon>Music.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MainMenu.cs">
       <SubType>Form</SubType>
@@ -350,8 +344,8 @@
     <Compile Include="Views\Video.Designer.cs">
       <DependentUpon>Video.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="MusicRGB.resx">
-      <DependentUpon>MusicRGB.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Music.resx">
+      <DependentUpon>Music.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Balls.resx">
       <DependentUpon>Balls.cs</DependentUpon>
@@ -370,9 +364,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Marquee.resx">
       <DependentUpon>Marquee.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Music.resx">
-      <DependentUpon>Music.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>

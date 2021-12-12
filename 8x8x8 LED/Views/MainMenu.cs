@@ -72,11 +72,6 @@ namespace _8x8x8_LED
             nudOffsetZ.Value = Properties.Settings.Default.OffsetZ;
 
             if (chkAutoconnect.Checked) btnConnect.PerformClick();
-
-            MusicRGB mRGB = new MusicRGB(serialPort, ref cube);
-            mRGB.Show();
-
-
         }
 
         private void ReloadAvailableComPorts()

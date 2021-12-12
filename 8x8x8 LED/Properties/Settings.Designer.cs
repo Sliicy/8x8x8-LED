@@ -550,5 +550,41 @@ namespace _8x8x8_LED.Properties {
                 this["Lightning_Speed"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Music_Rainbow {
+            get {
+                return ((bool)(this["Music_Rainbow"]));
+            }
+            set {
+                this["Music_Rainbow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int Music_Color {
+            get {
+                return ((int)(this["Music_Color"]));
+            }
+            set {
+                this["Music_Color"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Music_Shuffled {
+            get {
+                return ((bool)(this["Music_Shuffled"]));
+            }
+            set {
+                this["Music_Shuffled"] = value;
+            }
+        }
     }
 }

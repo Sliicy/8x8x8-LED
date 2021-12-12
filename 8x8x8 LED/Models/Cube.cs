@@ -206,5 +206,24 @@ namespace _8x8x8_LED.Models
         {
             DrawLine(line.x1, line.y1, line.z1, line.x2, line.y2, line.z2, color);
         }
+
+        public void DrawStraightLine(Axis axis, int xOffset, int yOffset, CubeColor color)
+        {
+            switch (axis)
+            {
+                case Axis.X:
+                    for (int i = 0; i < matrix.GetLength(0); i++)
+                        matrix[xOffset, i, yOffset] = color;
+                    break;
+                case Axis.Y:
+                    for (int i = 0; i < matrix.GetLength(1); i++)
+                        matrix[i, xOffset, yOffset] = color;
+                    break;
+                case Axis.Z:
+                    for (int i = 0; i < matrix.GetLength(2); i++)
+                        matrix[xOffset, yOffset, i] = color;
+                    break;
+            }
+        }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Shapes;
 using NAudio.Wave;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO.Ports;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace _8x8x8_LED.Views
@@ -17,35 +20,56 @@ namespace _8x8x8_LED.Views
 
         private double[] eightChannels = new double[8]; // Holds 8 bytes of audio.
 
-        private bool matrixIsCleared = false; // Controls whether to clear the screen if no audio is playing.
-        private int previousShuffle = 0; // Last animation used if shuffling.
-
+        private bool cubeCleared = false; // Controls whether to clear the screen if no audio is playing.
+        
         private bool animate = false; // Whether to animate the visualizer.
         private int speed = 1; // Speed of animation.
-        private int timeElapsed = 0; // Used to adjust speed of animation
+        private int timeElapsed = 0; // Used to measure time against speed of animation.
+        private readonly Random random = new Random();
 
         private readonly IWaveIn waveIn = new WasapiLoopbackCapture();
 
         private string currentMusicStyle = "";
 
-        private readonly int[] da_map = { // Direction Of Audio Render Channels:
-                03, 02, 01, 00, 04, 05, 06, 07,
-                11, 10, 09, 08, 12, 13, 14, 15,
-                19, 18, 17, 16, 20, 21, 22, 23,
-                27, 26, 25, 24, 28, 29, 30, 31,
-                35, 34, 33, 32, 36, 37, 38, 39,
-                43, 42, 41, 40, 44, 45, 46, 47,
-                51, 50, 49, 48, 52, 53, 54, 55,
-                59, 58, 57, 56, 60, 61, 62, 63
-            };
+        private CubeColor targetColor = CubeColor.White;
 
+        private readonly List<CubeColor> fireColors = new List<CubeColor>() {
+            CubeColor.White,
+            CubeColor.White,
+            CubeColor.Yellow,
+            CubeColor.Yellow,
+            CubeColor.RedYellow,
+            CubeColor.RedYellow,
+            CubeColor.Red,
+            CubeColor.Red};
+
+        private readonly List<CubeColor> rainbowColors = new List<CubeColor>() {
+            CubeColor.Red,
+            CubeColor.RedYellow,
+            CubeColor.Yellow,
+            CubeColor.Green,
+            CubeColor.Cyan,
+            CubeColor.Blue,
+            CubeColor.BlueMagenta,
+            CubeColor.Magenta};
+
+        private readonly List<CubeColor> equalizerColors = new List<CubeColor>() {
+            CubeColor.Green,
+            CubeColor.Green,
+            CubeColor.Green,
+            CubeColor.Yellow,
+            CubeColor.Yellow,
+            CubeColor.Red,
+            CubeColor.Red,
+            CubeColor.Red};
+
+        private bool rainbowMode = false;
         public FrmMusic(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
             this.serialPort = serialPort;
             this.cube = cube;
         }
-
         private static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] eightChannels, int samples = 8, bool mirrorRightChannelToLeft = true)
         {
             try
@@ -77,6 +101,20 @@ namespace _8x8x8_LED.Views
             }
         }
 
+        private void FrmMusic_Load(object sender, EventArgs e)
+        {
+            chkMirrored.Checked = Properties.Settings.Default.Music_MirroredAudio;
+            chkShowSilence.Checked = Properties.Settings.Default.Music_ShowSilence;
+            cbResponsiveness.Text = Properties.Settings.Default.Music_Responsiveness;
+            trkSamples.Value = Properties.Settings.Default.Music_Samples;
+            cbMusicStyle.SelectedIndex = Properties.Settings.Default.Music_Style;
+            cbColor.DataSource = Enum.GetValues(typeof(CubeColor));
+            cbColor.SelectedIndex = Properties.Settings.Default.Music_Color;
+            chkRainbow.Checked = Properties.Settings.Default.Music_Rainbow;
+            chkShuffled.Checked = Properties.Settings.Default.Music_Shuffled;
+            chkSyncMusic.Checked = true;
+        }
+
         private void ChkSyncMusic_CheckedChanged(object sender, EventArgs e)
         {
             if (chkSyncMusic.Checked)
@@ -88,7 +126,6 @@ namespace _8x8x8_LED.Views
 
                 animate = true;
                 bwVisualize.RunWorkerAsync();
-
             }
             else
             {
@@ -98,330 +135,251 @@ namespace _8x8x8_LED.Views
             }
         }
 
+        private void ChkShowSilence_CheckedChanged(object sender, EventArgs e)
+        {
+            cubeCleared = false;
+        }
+
+        private void TrkSamples_Scroll(object sender, EventArgs e)
+        {
+            chkSyncMusic.Checked = false;
+            samples = trkSamples.Value;
+            lblSamples.Text = "Samples (" + samples + "):";
+        }
+
+        private void CbResponsiveness_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbResponsiveness.Text != "")
+                speed = int.Parse(cbResponsiveness.SelectedItem.ToString());
+        }
+
+        private void CbMusicStyle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cubeCleared = false;
+            currentMusicStyle = cbMusicStyle.Text;
+        }
+        
         private void BwVisualize_DoWork(object sender, DoWorkEventArgs e)
         {
-            int timeUntilNextShuffledAnimation = 0;
-
             while (animate)
             {
-                byte[] arrayOutput = new byte[64];
-
+                cube.Clear();
+                List<CubeColor> outputColors = new List<CubeColor>();
+                outputColors.AddRange(new List<CubeColor>(Enumerable.Repeat(rainbowMode ? ColorHelper.RandomColor() : targetColor, 8).ToArray()));
                 switch (currentMusicStyle)
                 {
+                    case "Tesla Ball":
+                        TeslaBall(eightChannels, outputColors[0]);
+                        break;
                     case "Floating Lines":
-                        AnimateBars(arrayOutput, eightChannels, 255, false);
+                        AnimatedLines(eightChannels, outputColors, false, false);
                         break;
                     case "Floating Dots":
-                        AnimateBars(arrayOutput, eightChannels, 1, false);
+                        AnimatedLines(eightChannels, outputColors, false, true);
                         break;
-                    case "Solid Lines":
-                        AnimateBars(arrayOutput, eightChannels, 255, true);
+                    case "Filled Lines":
+                        AnimatedLines(eightChannels, outputColors, true, false);
                         break;
-                    case "Solid Dots":
-                        AnimateBars(arrayOutput, eightChannels, 1, true);
-                        break;
-                    case "Matrix":
-                        AnimateMatrix(arrayOutput, eightChannels);
+                    case "Filled Dots":
+                        AnimatedLines(eightChannels, outputColors, true, true);
                         break;
                     case "Centered Floating Lines":
-                        AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, false);
+                        AnimatedCenteredLines(eightChannels, outputColors, false, false);
                         break;
                     case "Centered Floating Dots":
-                        AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, false);
+                        AnimatedCenteredLines(eightChannels, outputColors, false, true);
                         break;
-                    case "Centered Solid Lines":
-                        AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, true);
+                    case "Centered Filled Lines":
+                        AnimatedCenteredLines(eightChannels, outputColors, true, false);
                         break;
-                    case "Centered Solid Dots":
-                        AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
+                    case "Centered Filled Dots":
+                        AnimatedCenteredLines(eightChannels, outputColors, true, true);
                         break;
-                    case "Shuffled":
-                        {
-                            if (timeUntilNextShuffledAnimation > 0)
-                            {
-                                timeUntilNextShuffledAnimation--;
-                            }
-                            else
-                            {
-                                timeUntilNextShuffledAnimation = 10000;
-                                Random random = new Random();
-                                previousShuffle = random.Next(1, 10);
-                            }
-                            switch (previousShuffle)
-                            {
-                                case 1:
-                                    AnimateBars(arrayOutput, eightChannels, 255, false);
-                                    break;
-                                case 2:
-                                    AnimateBars(arrayOutput, eightChannels, 1, false);
-                                    break;
-                                case 3:
-                                    AnimateBars(arrayOutput, eightChannels, 255, true);
-                                    break;
-                                case 4:
-                                    AnimateBars(arrayOutput, eightChannels, 1, true);
-                                    break;
-                                case 5:
-                                    AnimateMatrix(arrayOutput, eightChannels);
-                                    break;
-                                case 6:
-                                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 255, false);
-                                    break;
-                                case 7:
-                                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, false);
-                                    break;
-                                case 8:
-                                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
-                                    break;
-                                case 9:
-                                    AnimateCenteredBars(arrayOutput, eightChannels, thickness: 1, true);
-                                    break;
-                            }
-
-                            break;
-                        }
+                    case "Filled Fire Lines":
+                        outputColors = fireColors;
+                        AnimatedLines(eightChannels, outputColors, true, false);
+                        break;
+                    case "Filled Fire Dots":
+                        outputColors = fireColors;
+                        AnimatedLines(eightChannels, outputColors, true, true);
+                        break;
+                    case "Filled Rainbow Lines":
+                        outputColors = rainbowColors;
+                        AnimatedLines(eightChannels, outputColors, true, false);
+                        break;
+                    case "Filled Rainbow Dots":
+                        outputColors = rainbowColors;
+                        AnimatedLines(eightChannels, outputColors, true, true);
+                        break;
+                    case "Filled Equalizer Lines":
+                        outputColors = equalizerColors;
+                        AnimatedLines(eightChannels, outputColors, true, false);
+                        break;
+                    case "Filled Equalizer Dots":
+                        outputColors = equalizerColors;
+                        AnimatedLines(eightChannels, outputColors, true, true);
+                        break;
                 }
 
-                // Ensure that audio has activity, and the speed of detection is properly set:
+                // Animate as normal if there is audio activity:
                 if ((Math.Abs(eightChannels[0]) > 0.05 || Math.Abs(eightChannels[5]) > 0.05) && timeElapsed % speed == 0)
                 {
-                    arrayOutput.CopyTo(cube.matrix_legacy, 0);
                     SerialHelper.Send(serialPort, cube);
-                    matrixIsCleared = false;
+                    cubeCleared = false;
                 }
                 else
                 {
-                    if (!matrixIsCleared) // Animate silence only once:
+                    if (!cubeCleared) // Animate silence only once:
                     {
-                        arrayOutput = new byte[64]; // Clear the screen.
+                        cube.Clear();
                         if (chkShowSilence.Checked)
                         {
                             switch (currentMusicStyle)
                             {
+                                case "Tesla Ball":
+                                    cube.DrawPoint(3, 3, 3, outputColors[0]);
+                                    cube.DrawPoint(3, 4, 3, outputColors[0]);
+                                    cube.DrawPoint(4, 3, 3, outputColors[0]);
+                                    cube.DrawPoint(4, 4, 3, outputColors[0]);
+                                    cube.DrawPoint(3, 3, 4, outputColors[0]);
+                                    cube.DrawPoint(3, 4, 4, outputColors[0]);
+                                    cube.DrawPoint(4, 3, 4, outputColors[0]);
+                                    cube.DrawPoint(4, 4, 4, outputColors[0]);
+                                    break;
                                 case "Floating Lines":
-                                case "Solid Lines":
-                                    arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
-                                    arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
-                                    arrayOutput[48] = arrayOutput[56] = 255;
-                                    break;
-                                case "Centered Floating Lines":
-                                case "Centered Solid Lines":
-                                    arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
-                                    arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
-                                    arrayOutput[51] = arrayOutput[59] = 255;
-                                    break;
-                                case "Centered Floating Dots":
-                                case "Centered Solid Dots":
-                                    arrayOutput[3] = arrayOutput[11] = arrayOutput[19] =
-                                    arrayOutput[27] = arrayOutput[35] = arrayOutput[43] =
-                                    arrayOutput[51] = arrayOutput[59] = 1;
-                                    break;
-                                case "Matrix":
-                                    arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
-                                    arrayOutput[40] = arrayOutput[48] = arrayOutput[56] = 231;
+                                case "Filled Lines":
+                                    cube.DrawPlane(Axis.Z, 0, outputColors[0]);
                                     break;
                                 case "Floating Dots":
-                                case "Solid Dots":
-                                    arrayOutput[0] = arrayOutput[8] = arrayOutput[16] =
-                                    arrayOutput[24] = arrayOutput[32] = arrayOutput[40] =
-                                    arrayOutput[48] = arrayOutput[56] = 1;
+                                case "Filled Dots":
+                                    for (int i = 0; i < cube.length; i++)
+                                        cube.DrawPoint(i, 0, 0, outputColors[0]);
                                     break;
-                                case "Shuffled":
-                                    {
-                                        Random random = new Random();
-                                        arrayOutput[0] = Convert.ToByte(random.Next(0, 256));
-                                        arrayOutput[8] = Convert.ToByte(random.Next(0, 256));
-                                        arrayOutput[16] = Convert.ToByte(random.Next(0, 256));
-                                        arrayOutput[24] = Convert.ToByte(random.Next(0, 256));
-                                        arrayOutput[32] = Convert.ToByte(random.Next(0, 256));
-                                        arrayOutput[40] = Convert.ToByte(random.Next(0, 256));
-                                        arrayOutput[48] = Convert.ToByte(random.Next(0, 256));
-                                        arrayOutput[56] = Convert.ToByte(random.Next(0, 256));
-                                        break;
-                                    }
+                                case "Centered Floating Lines":
+                                case "Centered Filled Lines":
+                                    cube.DrawPlane(Axis.Z, 3, outputColors[0]);
+                                    break;
+                                case "Centered Floating Dots":
+                                case "Centered Filled Dots":
+                                    for (int i = 0; i < cube.length; i++)
+                                        cube.DrawPoint(i, 0, 3, outputColors[3]);
+                                    break;
+                                case "Filled Fire Lines":
+                                case "Filled Rainbow Lines":
+                                case "Filled Equalizer Lines":
+                                    cube.DrawPlane(Axis.Z, 0, outputColors[0]);
+                                    break;
+                                case "Filled Fire Dots":
+                                case "Filled Rainbow Dots":
+                                case "Filled Equalizer Dots":
+                                    for (int i = 0; i < cube.length; i++)
+                                        cube.DrawPoint(i, 0, 0, outputColors[0]);
+                                    break;
                             }
                         }
-
-                        arrayOutput.CopyTo(cube.matrix_legacy, 0);
                         SerialHelper.Send(serialPort, cube);
-                        matrixIsCleared = true;
+                        cubeCleared = true;
                     }
-
-
                 }
                 timeElapsed++;
             }
         }
 
-        private void AnimateBars(byte[] arrayOutput, double[] channels, byte thickness, bool filledUnderneath = false)
+        private void AnimatedLines(double[] eightChannels, List<CubeColor> outputColor, bool filledUnderneath = false, bool dotted = false)
         {
-            int channelIndex = 0;
-            foreach (double channel in channels)
+            for (int i = 0; i < cube.length; i++)
             {
-                if (Math.Abs(channel) > .05 && (filledUnderneath || Math.Abs(channel) <= .1))
-                {
-                    arrayOutput[channelIndex * 8] = thickness;
-                }
-                if (Math.Abs(channel) > .1 && (filledUnderneath || Math.Abs(channel) <= .15))
-                {
-                    arrayOutput[channelIndex * 8 + 1] = thickness;
-                }
-                if (Math.Abs(channel) > .15 && (filledUnderneath || Math.Abs(channel) <= .2))
-                {
-                    arrayOutput[channelIndex * 8 + 2] = thickness;
-                }
-                if (Math.Abs(channel) > .2 && (filledUnderneath || Math.Abs(channel) <= .25))
-                {
-                    arrayOutput[channelIndex * 8 + 3] = thickness;
-                }
-                if (Math.Abs(channel) > .25 && (filledUnderneath || Math.Abs(channel) <= .3))
-                {
-                    arrayOutput[channelIndex * 8 + 4] = thickness;
-                }
-                if (Math.Abs(channel) > .3 && (filledUnderneath || Math.Abs(channel) <= .4))
-                {
-                    arrayOutput[channelIndex * 8 + 5] = thickness;
-                }
-                if (Math.Abs(channel) > .4 && (filledUnderneath || Math.Abs(channel) <= .5))
-                {
-                    arrayOutput[channelIndex * 8 + 6] = thickness;
-                }
-                if (Math.Abs(channel) > .5)
-                {
-                    arrayOutput[channelIndex * 8 + 7] = thickness;
-                }
-                channelIndex++;
+                if (Math.Abs(eightChannels[i]) > .05 && (filledUnderneath || Math.Abs(eightChannels[i]) <= .1))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 0, outputColor[0]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 0, outputColor[0]);
+                if (Math.Abs(eightChannels[i]) > .1 && (filledUnderneath || Math.Abs(eightChannels[i]) <= .15))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 1, outputColor[1]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 1, outputColor[1]);
+                if (Math.Abs(eightChannels[i]) > .15 && (filledUnderneath || Math.Abs(eightChannels[i]) <= .2))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 2, outputColor[2]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 2, outputColor[2]);
+                if (Math.Abs(eightChannels[i]) > .2 && (filledUnderneath || Math.Abs(eightChannels[i]) <= .25))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 3, outputColor[3]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 3, outputColor[3]);                
+                if (Math.Abs(eightChannels[i]) > .25 && (filledUnderneath || Math.Abs(eightChannels[i]) <= .3))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 4, outputColor[4]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 4, outputColor[4]);
+                if (Math.Abs(eightChannels[i]) > .3 && (filledUnderneath || Math.Abs(eightChannels[i]) <= .4))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 5, outputColor[5]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 5, outputColor[5]);
+                if (Math.Abs(eightChannels[i]) > .4 && (filledUnderneath || Math.Abs(eightChannels[i]) <= .5))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 6, outputColor[6]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 6, outputColor[6]);
+                
+                if (Math.Abs(eightChannels[i]) > .5)
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 7, outputColor[7]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 7, outputColor[7]);
             }
         }
-
-        private void AnimateMatrix(byte[] arrayOutput, double[] channels)
+        
+        private void AnimatedCenteredLines(double[] eightChannels, List<CubeColor> outputColor, bool filledUnderneath = false, bool dotted = false)
         {
-            channels[0] = Math.Abs(channels[0]);
-            channels[1] = Math.Abs(channels[1]);
-            channels[2] = Math.Abs(channels[2]);
-            channels[5] = Math.Abs(channels[5]);
-            channels[6] = Math.Abs(channels[6]);
-            channels[7] = Math.Abs(channels[7]);
-
-            double currentLevel = .05;
-            arrayOutput[0] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
-            arrayOutput[8] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
-            arrayOutput[16] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
-
-            arrayOutput[40] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
-            arrayOutput[48] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
-            arrayOutput[56] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
-
-            currentLevel = .1;
-            arrayOutput[1] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
-            arrayOutput[9] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
-            arrayOutput[17] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
-
-            arrayOutput[41] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
-            arrayOutput[49] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
-            arrayOutput[57] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
-
-            currentLevel = .15;
-            arrayOutput[2] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
-            arrayOutput[10] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
-            arrayOutput[18] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
-
-            arrayOutput[42] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
-            arrayOutput[50] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
-            arrayOutput[58] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
-
-            currentLevel = .2;
-            arrayOutput[3] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
-            arrayOutput[11] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
-            arrayOutput[19] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
-
-            arrayOutput[43] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
-            arrayOutput[51] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
-            arrayOutput[59] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
-
-
-            currentLevel = .25;
-            arrayOutput[4] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
-            arrayOutput[12] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
-            arrayOutput[20] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
-
-            arrayOutput[44] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
-            arrayOutput[52] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
-            arrayOutput[60] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
-
-            currentLevel = .3;
-            arrayOutput[5] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
-            arrayOutput[13] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
-            arrayOutput[21] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
-
-            arrayOutput[45] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
-            arrayOutput[53] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
-            arrayOutput[61] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
-
-            currentLevel = .4;
-            arrayOutput[6] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
-            arrayOutput[14] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
-            arrayOutput[22] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
-
-            arrayOutput[46] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
-            arrayOutput[54] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
-            arrayOutput[62] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
-
-            currentLevel = .5;
-            arrayOutput[7] = Convert.ToByte((channels[5] > currentLevel ? 7 : 0) + (channels[0] > currentLevel ? 224 : 0));
-            arrayOutput[15] = Convert.ToByte((channels[6] > currentLevel ? 7 : 0) + (channels[1] > currentLevel ? 224 : 0));
-            arrayOutput[23] = Convert.ToByte((channels[7] > currentLevel ? 7 : 0) + (channels[2] > currentLevel ? 224 : 0));
-
-            arrayOutput[47] = Convert.ToByte((channels[0] > currentLevel ? 7 : 0) + (channels[5] > currentLevel ? 224 : 0));
-            arrayOutput[55] = Convert.ToByte((channels[1] > currentLevel ? 7 : 0) + (channels[6] > currentLevel ? 224 : 0));
-            arrayOutput[63] = Convert.ToByte((channels[2] > currentLevel ? 7 : 0) + (channels[7] > currentLevel ? 224 : 0));
-        }
-
-        private void AnimateCenteredBars(byte[] audioChannelDepth, double[] channels, byte thickness = 1, bool filledUnderneath = false)
-        {
-            int channelIndex = 0;
-            int renderIndex = 0;
-            foreach (double channel in channels)
+            for (int i = 0; i < cube.length; i++)
             {
-
                 // Negatives for Channel i:
-                if (channels[channelIndex] <= -.05 && (filledUnderneath || channels[channelIndex] > -.15))
-                {
-                    audioChannelDepth[da_map[renderIndex]] = thickness;
-                }
-                if (channels[channelIndex] <= -.15 && (filledUnderneath || channels[channelIndex] > -.25))
-                {
-                    audioChannelDepth[da_map[renderIndex + 1]] = thickness;
-                }
-                if (channels[channelIndex] <= -.25 && (filledUnderneath || channels[channelIndex] > -.35))
-                {
-                    audioChannelDepth[da_map[renderIndex + 2]] = thickness;
-                }
-                if (channels[channelIndex] <= -.35)
-                {
-                    audioChannelDepth[da_map[renderIndex + 3]] = thickness;
-                }
+                if (eightChannels[i] <= -.05 && (filledUnderneath || eightChannels[i] > -.15))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 3, outputColor[3]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 3, outputColor[3]);
+                if (eightChannels[i] <= -.15 && (filledUnderneath || eightChannels[i] > -.25))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 2, outputColor[2]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 2, outputColor[2]);
+                if (eightChannels[i] <= -.25 && (filledUnderneath || eightChannels[i] > -.35))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 1, outputColor[1]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 1, outputColor[1]);
+                if (eightChannels[i] <= -.35)
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 0, outputColor[0]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 0, outputColor[0]);
 
                 // Positives for Channel i:
-                if (channels[channelIndex] >= .05 && (filledUnderneath || channels[channelIndex] < .15))
-                {
-                    audioChannelDepth[da_map[renderIndex + 4]] = thickness;
-                }
-                if (channels[channelIndex] >= .15 && (filledUnderneath || channels[channelIndex] < .25))
-                {
-                    audioChannelDepth[da_map[renderIndex + 5]] = thickness;
-                }
-                if (channels[channelIndex] >= .25 && (filledUnderneath || channels[channelIndex] < .35))
-                {
-                    audioChannelDepth[da_map[renderIndex + 6]] = thickness;
-                }
-                if (channels[channelIndex] >= .35)
-                {
-                    audioChannelDepth[da_map[renderIndex + 7]] = thickness;
-                }
-
-                channelIndex++;
-                renderIndex += 8;
+                if (eightChannels[i] >= .05 && (filledUnderneath || eightChannels[i] < .15))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 4, outputColor[4]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 4, outputColor[4]);
+                if (eightChannels[i] >= .15 && (filledUnderneath || eightChannels[i] < .25))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 5, outputColor[5]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 5, outputColor[5]);
+                if (eightChannels[i] >= .25 && (filledUnderneath || eightChannels[i] < .35))
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 6, outputColor[6]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 6, outputColor[6]);
+                if (eightChannels[i] >= .35)
+                    if (dotted)
+                        cube.DrawPoint(i, 0, 7, outputColor[7]);
+                    else
+                        cube.DrawStraightLine(Axis.X, i, 7, outputColor[7]);
             }
         }
 
@@ -436,38 +394,83 @@ namespace _8x8x8_LED.Views
             }
         }
 
-        private void TrkSamples_Scroll(object sender, EventArgs e)
+        private void TeslaBall(double[] channels, CubeColor outputColor)
         {
-            chkSyncMusic.Checked = false;
-            samples = trkSamples.Value;
-            lblSamples.Text = "Samples (" + samples + "):";
+            int xStart = 3;
+            int xEnd = 4;
+            foreach (double channel in channels)
+            {
+                if (Math.Abs(channel) > .05 && Math.Abs(channel) <= .1)
+                {
+                    xStart = 3;
+                    xEnd = 4;
+                }
+                if (Math.Abs(channel) > .1 && Math.Abs(channel) <= .15)
+                {
+                    xStart = 3;
+                    xEnd = 4;
+                }
+                if (Math.Abs(channel) > .15 && Math.Abs(channel) <= .2)
+                {
+                    xStart = 2;
+                    xEnd = 5;
+                }
+                if (Math.Abs(channel) > .2 && Math.Abs(channel) <= .25)
+                {
+                    xStart = 2;
+                    xEnd = 5;
+                }
+                if (Math.Abs(channel) > .25 && Math.Abs(channel) <= .3)
+                {
+                    xStart = 1;
+                    xEnd = 6;
+                }
+                if (Math.Abs(channel) > .3 && Math.Abs(channel) <= .4)
+                {
+                    xStart = 1;
+                    xEnd = 6;
+                }
+                if (Math.Abs(channel) > .4 && Math.Abs(channel) <= .5)
+                {
+                    xStart = 0;
+                    xEnd = 7;
+                }
+                if (Math.Abs(channel) > .5)
+                {
+                    xStart = 0;
+                    xEnd = 7;
+                }
+            }
+            cube.DrawLine(
+                random.Next(xStart, xEnd + 1),
+                random.Next(xStart, xEnd + 1),
+                random.Next(xStart, xEnd + 1),
+                random.Next(xStart, xEnd + 1),
+                random.Next(xStart, xEnd + 1),
+                random.Next(xStart, xEnd + 1),
+                outputColor);
         }
 
-        private void ChkShowSilence_CheckedChanged(object sender, EventArgs e)
+        private void CbColor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            matrixIsCleared = false;
+            targetColor = (CubeColor)Enum.Parse(typeof(CubeColor), cbColor.Text);
         }
 
-        private void FrmMusic_Load(object sender, EventArgs e)
+        private void ChkRainbow_CheckedChanged(object sender, EventArgs e)
         {
-            chkMirrored.Checked = Properties.Settings.Default.Music_MirroredAudio;
-            chkShowSilence.Checked = Properties.Settings.Default.Music_ShowSilence;
-            cbResponsiveness.Text = Properties.Settings.Default.Music_Responsiveness;
-            trkSamples.Value = Properties.Settings.Default.Music_Samples;
-            cbMusicStyle.SelectedIndex = Properties.Settings.Default.Music_Style;
-            chkSyncMusic.Checked = true;
+            rainbowMode = chkRainbow.Checked;
+            cbColor.Enabled = !chkRainbow.Checked;
         }
 
-        private void CbResponsiveness_SelectedIndexChanged(object sender, EventArgs e)
+        private void TmrShuffle_Tick(object sender, EventArgs e)
         {
-            if (cbResponsiveness.Text != "")
-                speed = int.Parse(cbResponsiveness.SelectedItem.ToString());
+            cbMusicStyle.SelectedIndex = random.Next(0, cbMusicStyle.Items.Count);
+            cbColor.SelectedIndex = random.Next(1, cbColor.Items.Count); // Skip Black
         }
 
-        private void CbMusicStyle_SelectedIndexChanged(object sender, EventArgs e)
+        private void ChkShuffled_CheckedChanged(object sender, EventArgs e)
         {
-            matrixIsCleared = false;
-            currentMusicStyle = cbMusicStyle.Text;
+            tmrShuffle.Enabled = chkShuffled.Checked;
         }
 
         private void SaveSettings()
@@ -477,6 +480,9 @@ namespace _8x8x8_LED.Views
             Properties.Settings.Default.Music_Responsiveness = cbResponsiveness.Text;
             Properties.Settings.Default.Music_Samples = trkSamples.Value;
             Properties.Settings.Default.Music_Style = cbMusicStyle.SelectedIndex;
+            Properties.Settings.Default.Music_Color = cbColor.SelectedIndex;
+            Properties.Settings.Default.Music_Rainbow = chkRainbow.Checked;
+            Properties.Settings.Default.Music_Shuffled = chkShuffled.Checked;
             Properties.Settings.Default.Save();
         }
     }

@@ -43,7 +43,6 @@ namespace _8x8x8_LED.Views
             }
         }
 
-        List<Line> lines = new List<Line>();
         private void BwAnimate_DoWork(object sender, DoWorkEventArgs e)
         {
             while (animate)
