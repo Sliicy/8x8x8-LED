@@ -598,5 +598,29 @@ namespace _8x8x8_LED.Properties {
                 this["Marquee_Color"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9")]
+        public int Clock_HourColor {
+            get {
+                return ((int)(this["Clock_HourColor"]));
+            }
+            set {
+                this["Clock_HourColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("11")]
+        public int Clock_MinuteColor {
+            get {
+                return ((int)(this["Clock_MinuteColor"]));
+            }
+            set {
+                this["Clock_MinuteColor"] = value;
+            }
+        }
     }
 }

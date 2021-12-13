@@ -134,7 +134,7 @@ namespace _8x8x8_LED.Views
             this.cbColor.Location = new System.Drawing.Point(6, 28);
             this.cbColor.Name = "cbColor";
             this.cbColor.Size = new System.Drawing.Size(200, 32);
-            this.cbColor.TabIndex = 7;
+            this.cbColor.TabIndex = 8;
             this.cbColor.SelectedIndexChanged += new System.EventHandler(this.CbColor_SelectedIndexChanged);
             // 
             // grpColor
@@ -143,7 +143,7 @@ namespace _8x8x8_LED.Views
             this.grpColor.Location = new System.Drawing.Point(522, 142);
             this.grpColor.Name = "grpColor";
             this.grpColor.Size = new System.Drawing.Size(216, 68);
-            this.grpColor.TabIndex = 8;
+            this.grpColor.TabIndex = 7;
             this.grpColor.TabStop = false;
             this.grpColor.Text = "Color";
             // 

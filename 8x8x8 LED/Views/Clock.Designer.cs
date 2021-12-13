@@ -36,6 +36,12 @@ namespace _8x8x8_LED.Views
             this.chkShowLeadingZeros = new System.Windows.Forms.CheckBox();
             this.chk24HrStyle = new System.Windows.Forms.CheckBox();
             this.chkFlatOneStyle = new System.Windows.Forms.CheckBox();
+            this.grpHourColor = new System.Windows.Forms.GroupBox();
+            this.cbColorHour = new System.Windows.Forms.ComboBox();
+            this.grpMinuteColor = new System.Windows.Forms.GroupBox();
+            this.cbColorMinute = new System.Windows.Forms.ComboBox();
+            this.grpHourColor.SuspendLayout();
+            this.grpMinuteColor.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkSyncTime
@@ -88,11 +94,53 @@ namespace _8x8x8_LED.Views
             this.chkFlatOneStyle.UseVisualStyleBackColor = true;
             this.chkFlatOneStyle.CheckedChanged += new System.EventHandler(this.ChkFlatOneStyle_CheckedChanged);
             // 
+            // grpHourColor
+            // 
+            this.grpHourColor.Controls.Add(this.cbColorHour);
+            this.grpHourColor.Location = new System.Drawing.Point(12, 154);
+            this.grpHourColor.Name = "grpHourColor";
+            this.grpHourColor.Size = new System.Drawing.Size(292, 79);
+            this.grpHourColor.TabIndex = 4;
+            this.grpHourColor.TabStop = false;
+            this.grpHourColor.Text = "Hour Color";
+            // 
+            // cbColorHour
+            // 
+            this.cbColorHour.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbColorHour.FormattingEnabled = true;
+            this.cbColorHour.Location = new System.Drawing.Point(6, 28);
+            this.cbColorHour.Name = "cbColorHour";
+            this.cbColorHour.Size = new System.Drawing.Size(280, 32);
+            this.cbColorHour.TabIndex = 5;
+            this.cbColorHour.SelectedIndexChanged += new System.EventHandler(this.CbColorHour_SelectedIndexChanged);
+            // 
+            // grpMinuteColor
+            // 
+            this.grpMinuteColor.Controls.Add(this.cbColorMinute);
+            this.grpMinuteColor.Location = new System.Drawing.Point(12, 239);
+            this.grpMinuteColor.Name = "grpMinuteColor";
+            this.grpMinuteColor.Size = new System.Drawing.Size(292, 79);
+            this.grpMinuteColor.TabIndex = 6;
+            this.grpMinuteColor.TabStop = false;
+            this.grpMinuteColor.Text = "Minute Color";
+            // 
+            // cbColorMinute
+            // 
+            this.cbColorMinute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbColorMinute.FormattingEnabled = true;
+            this.cbColorMinute.Location = new System.Drawing.Point(6, 28);
+            this.cbColorMinute.Name = "cbColorMinute";
+            this.cbColorMinute.Size = new System.Drawing.Size(280, 32);
+            this.cbColorMinute.TabIndex = 7;
+            this.cbColorMinute.SelectedIndexChanged += new System.EventHandler(this.CbColorMinute_SelectedIndexChanged);
+            // 
             // FrmClock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(316, 180);
+            this.ClientSize = new System.Drawing.Size(316, 327);
+            this.Controls.Add(this.grpMinuteColor);
+            this.Controls.Add(this.grpHourColor);
             this.Controls.Add(this.chkFlatOneStyle);
             this.Controls.Add(this.chk24HrStyle);
             this.Controls.Add(this.chkShowLeadingZeros);
@@ -107,6 +155,8 @@ namespace _8x8x8_LED.Views
             this.Text = "Clock";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmClock_FormClosing);
             this.Load += new System.EventHandler(this.FrmClock_Load);
+            this.grpHourColor.ResumeLayout(false);
+            this.grpMinuteColor.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -119,5 +169,9 @@ namespace _8x8x8_LED.Views
         private System.Windows.Forms.CheckBox chkShowLeadingZeros;
         private System.Windows.Forms.CheckBox chk24HrStyle;
         private System.Windows.Forms.CheckBox chkFlatOneStyle;
+        private System.Windows.Forms.GroupBox grpHourColor;
+        private System.Windows.Forms.ComboBox cbColorHour;
+        private System.Windows.Forms.GroupBox grpMinuteColor;
+        private System.Windows.Forms.ComboBox cbColorMinute;
     }
 }
