@@ -622,5 +622,16 @@ namespace _8x8x8_LED.Properties {
                 this["Clock_MinuteColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection Lamp_Times {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Lamp_Times"]));
+            }
+            set {
+                this["Lamp_Times"] = value;
+            }
+        }
     }
 }

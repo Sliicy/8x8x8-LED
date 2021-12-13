@@ -37,12 +37,12 @@ namespace _8x8x8_LED.Models
             matrix = new CubeColor[width, length, height];
         }
 
-        public void Clear()
+        public void Clear(CubeColor color = CubeColor.Black)
         {
             for (int x = 0; x < matrix.GetLength(0); x++)
                 for (int y = 0; y < matrix.GetLength(1); y++)
                     for (int z = 0; z < matrix.GetLength(2); z++)
-                        matrix[x, y, z] = 0;
+                        matrix[x, y, z] = color;
         }
 
         public void Flip(Axis axis)

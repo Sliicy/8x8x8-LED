@@ -163,11 +163,11 @@ namespace _8x8x8_LED.Views
         {
             btnStart.Text = "Start &Game";
             if (player1Score > player2Score)
-                MessageBox.Show("Player 1 wins!");
+                MessageBox.Show("Player 1 wins!", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else if (player1Score < player2Score)
-                MessageBox.Show("Player 2 wins!");
+                MessageBox.Show("Player 2 wins!", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                MessageBox.Show("It's a draw!");
+                MessageBox.Show("It's a draw!", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
             speed = 500;
         }
     }

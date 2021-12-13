@@ -262,11 +262,23 @@ namespace _8x8x8_LED
 
             switch (lstApps.SelectedItem.ToString())
             {
+                case "Balls":
+                    form = new FrmBalls(serialPort, ref cube);
+                    break;
+                case "Clock":
+                    form = new FrmClock(serialPort, ref cube);
+                    break;
                 case "Image Viewer":
                     form = new FrmImage_Viewer(serialPort, ref cube);
                     break;
-                case "Video":
-                    form = new FrmVideo(serialPort, ref cube);
+                case "Lamp":
+                    form = new FrmLamp(serialPort, ref cube);
+                    break;
+                case "Lightning":
+                    form = new FrmLightning(serialPort, ref cube);
+                    break;
+                case "Marquee":
+                    form = new FrmMarquee(serialPort, ref cube);
                     break;
                 case "Music":
                     form = new FrmMusic(serialPort, ref cube);
@@ -274,23 +286,14 @@ namespace _8x8x8_LED
                 case "Pong":
                     form = new FrmPong(serialPort, ref cube);
                     break;
-                case "Marquee":
-                    form = new FrmMarquee(serialPort, ref cube);
-                    break;
                 case "Rain":
                     form = new FrmRain(serialPort, ref cube);
-                    break;
-                case "Balls":
-                    form = new FrmBalls(serialPort, ref cube);
-                    break;
-                case "Clock":
-                    form = new FrmClock(serialPort, ref cube);
                     break;
                 case "Snake":
                     form = new FrmSnake(serialPort, ref cube);
                     break;
-                case "Lightning":
-                    form = new FrmLightning(serialPort, ref cube);
+                case "Video":
+                    form = new FrmVideo(serialPort, ref cube);
                     break;
                 default:
                     return;
@@ -463,10 +466,7 @@ namespace _8x8x8_LED
 
         private void CbSendColor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            for (int x = 0; x < cube.width; x++)
-                for (int y = 0; y < cube.length; y++)
-                    for (int z = 0; z < cube.height; z++)
-                        cube.matrix[x, y, z] = (CubeColor)Enum.Parse(typeof(CubeColor), cbSendColor.Text);
+            cube.Clear((CubeColor)Enum.Parse(typeof(CubeColor), cbSendColor.Text));
             SerialHelper.Send(serialPort, cube);
         }
     }

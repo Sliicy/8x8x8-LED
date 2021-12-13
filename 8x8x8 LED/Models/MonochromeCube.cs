@@ -35,7 +35,7 @@ namespace _8x8x8_LED.Models
             matrixBytes = new byte[size];
         }
 
-        public new void Clear()
+        public void Clear()
         {
             for (int i = 0; i < matrixBytes.Length; i++)
                 matrixBytes[i] = 0;

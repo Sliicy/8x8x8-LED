@@ -18,10 +18,8 @@ namespace _8x8x8_LED.Views
         private bool rainbowMode = false;
         private bool animate = false;
         private int speed = 0;
-        Random random = new Random();
-
-        private Tuple<int, int, int> previousPosition = new Tuple<int, int, int>(0, 0, 0);
-        private List<Tuple<int, int, int>> lightningStrikes = new List<Tuple<int, int, int>>();
+        private readonly Random random = new Random();
+        private readonly List<Tuple<int, int, int>> lightningStrikes = new List<Tuple<int, int, int>>();
         public FrmLightning(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
