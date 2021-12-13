@@ -79,7 +79,6 @@ namespace _8x8x8_LED.Helpers
                         serialPort.Write(outputPayload.Skip(outputPayload.Length / 2).ToArray(), 0, outputPayload.Length / 2);
                         System.Threading.Thread.Sleep(RGB_Delay);
                         
-                        
                         break;
                     default:
                         throw new ArgumentNullException("Cube Type must be specified.");
@@ -139,10 +138,7 @@ namespace _8x8x8_LED.Helpers
                     SendPacket(CubeType.Monochrome, serialPort, mc.matrixBytes);
                     break;
                 case CubeType.RGB:
-                    MonochromeCube mc3 = RGBToMonochromeDriver(cube);
-                    Cube mc4 = MonochromeToRGBDriver(mc3);
-                    SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(mc4.matrix));
-                    //SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(cube.matrix));
+                    SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(cube.matrix));
                     break;
             }
         }
