@@ -1,4 +1,6 @@
-﻿namespace _8x8x8_LED.Models.Pong
+﻿using _8x8x8_LED.Helpers;
+
+namespace _8x8x8_LED.Models.Pong
 {
     /// <summary>
     /// Class responsible for handling the paddle in the game Pong.
@@ -6,7 +8,7 @@
     public class Paddle
     {
         public Location location = new Location(0, 0, 0);
-
+        public CubeColor color = ColorHelper.RandomDarkColor();
         public Paddle(int x, int y, int z)
         {
             location.SetX(x);
@@ -14,7 +16,7 @@
             location.SetZ(z);
         }
 
-        public void Move(Direction dX, Direction dY, Direction dZ, bool teleport = true)
+        public void Move(Direction dX, Direction dY, Direction dZ, bool teleport = false)
         {
             switch (dX)
             {
@@ -50,9 +52,8 @@
                     break;
             }
 
-
             // Handle boundaries:
-            if (location.GetX() > 7)
+            if (location.GetX() > 6)
                 if (teleport)
                     location.SetX(0);
                 else
@@ -72,7 +73,7 @@
                     location.SetY(7);
                 else
                     location.SetY(1);
-            if (location.GetZ() > 7)
+            if (location.GetZ() > 6)
                 if (teleport)
                     location.SetZ(0);
                 else

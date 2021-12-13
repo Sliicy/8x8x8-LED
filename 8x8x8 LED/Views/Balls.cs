@@ -155,7 +155,7 @@ namespace _8x8x8_LED.Views
                 }
                 else
                 {
-                    SerialHelper.Send(serialPort, cube, true);
+                    SerialHelper.Send(serialPort, cube);
                     System.Threading.Thread.Sleep(speed);
                 }
                 timeElapsed++;

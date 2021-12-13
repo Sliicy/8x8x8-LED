@@ -251,7 +251,7 @@ namespace _8x8x8_LED.Helpers
             return outputArray1.Concat(outputArray2).ToArray();
         }
 
-        public static CubeColor ExtractColor(Color c)
+        public static CubeColor GetColorFromRGB(Color c)
         {
             switch (c.R)
             {
@@ -327,6 +327,85 @@ namespace _8x8x8_LED.Helpers
                     return CubeColor.MagentaYellow;
                 default:
                     return CubeColor.Black;
+            }
+        }
+
+        public static Color GetRGB(CubeColor c)
+        {
+            switch (c)
+            {
+                case CubeColor.White:
+                    return Color.FromArgb(255, 255, 255);
+                case CubeColor.Red:
+                    return Color.FromArgb(255, 0, 0);
+                case CubeColor.Green:
+                    return Color.FromArgb(0, 255, 0);
+                case CubeColor.Blue:
+                    return Color.FromArgb(0, 0, 255);
+                case CubeColor.Cyan:
+                    return Color.FromArgb(0, 255, 255);
+                case CubeColor.Magenta:
+                    return Color.FromArgb(255, 0, 255);
+                case CubeColor.Yellow:
+                    return Color.FromArgb(255, 255, 0);
+                case CubeColor.DarkRed:
+                    return Color.FromArgb(128, 0, 0);
+                case CubeColor.DarkGreen:
+                    return Color.FromArgb(0, 128, 0);
+                case CubeColor.DarkBlue:
+                    return Color.FromArgb(0, 0, 128);
+                case CubeColor.DarkCyan:
+                    return Color.FromArgb(0, 128, 128);
+                case CubeColor.DarkMagenta:
+                    return Color.FromArgb(128, 0, 128);
+                case CubeColor.DarkYellow:
+                    return Color.FromArgb(128, 128, 0);
+                case CubeColor.Gray:
+                    return Color.FromArgb(128, 128, 128);
+                case CubeColor.BrightRed:
+                    return Color.FromArgb(255, 128, 128);
+                case CubeColor.BrightGreen:
+                    return Color.FromArgb(128, 255, 128);
+                case CubeColor.BrightBlue:
+                    return Color.FromArgb(128, 128, 255);
+                case CubeColor.BrightCyan:
+                    return Color.FromArgb(128, 255, 255);
+                case CubeColor.BrightMagenta:
+                    return Color.FromArgb(255, 128, 255);
+                case CubeColor.BrightYellow:
+                    return Color.FromArgb(255, 255, 128);
+                case CubeColor.RedGreen:
+                    return Color.FromArgb(200, 255, 0);
+                case CubeColor.RedBlue:
+                    return Color.FromArgb(255, 0, 175);
+                case CubeColor.RedCyan:
+                    return Color.FromArgb(155, 230, 255);
+                case CubeColor.RedMagenta:
+                    return Color.FromArgb(255, 100, 190);
+                case CubeColor.RedYellow:
+                    return Color.FromArgb(255, 200, 30);
+                case CubeColor.GreenBlue:
+                    return Color.FromArgb(0, 236, 230);
+                case CubeColor.GreenCyan:
+                    return Color.FromArgb(30, 255, 200);
+                case CubeColor.GreenMagenta:
+                    return Color.FromArgb(200, 238, 255);
+                case CubeColor.GreenYellow:
+                    return Color.FromArgb(236, 255, 0);
+                case CubeColor.BlueCyan:
+                    return Color.FromArgb(0, 145, 255);
+                case CubeColor.BlueMagenta:
+                    return Color.FromArgb(210, 100, 255);
+                case CubeColor.BlueYellow:
+                    return Color.FromArgb(220, 255, 225);
+                case CubeColor.CyanMagenta:
+                    return Color.FromArgb(221, 231, 255);
+                case CubeColor.CyanYellow:
+                    return Color.FromArgb(111, 255, 172);
+                case CubeColor.MagentaYellow:
+                    return Color.FromArgb(255, 193, 225);
+                default:
+                    return Color.FromArgb(0, 0, 0);
             }
         }
 

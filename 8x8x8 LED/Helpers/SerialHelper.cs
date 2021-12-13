@@ -13,7 +13,7 @@ namespace _8x8x8_LED.Helpers
         public static readonly byte[] RGB_COLOR_LAYER = { 0x00 };
         public static readonly int RGB_Delay = 24;
 
-        public static void SendPacket(CubeType cubeType, SerialPort serialPort, byte[] payload, bool prependHeader = true, bool fast = false)
+        public static void SendPacket(CubeType cubeType, SerialPort serialPort, byte[] payload, bool prependHeader = true)
         {
             if (serialPort.IsOpen)
             {
@@ -77,11 +77,9 @@ namespace _8x8x8_LED.Helpers
                         System.Threading.Thread.Sleep(RGB_Delay);
 
                         // Send 2nd bytes:
-                        if (!fast) // Fast mode skips 2nd color layer:
-                        {
-                            serialPort.Write(outputPayload.Skip(outputPayload.Length / 2).ToArray(), 0, outputPayload.Length / 2);
-                            System.Threading.Thread.Sleep(RGB_Delay);
-                        }
+                        serialPort.Write(outputPayload.Skip(outputPayload.Length / 2).ToArray(), 0, outputPayload.Length / 2);
+                        System.Threading.Thread.Sleep(RGB_Delay);
+                        
                         
                         break;
                     default:
@@ -89,7 +87,7 @@ namespace _8x8x8_LED.Helpers
                 }
             }
         }
-        public static void Send(SerialPort serialPort, Cube cube, bool fast = false)
+        public static void Send(SerialPort serialPort, Cube cube)
         {
             // TODO: Update this method to only support matrix[,,], not matrix[64].
             // Create a new cube, copy the matrix, and perform orientational operations:
@@ -147,11 +145,11 @@ namespace _8x8x8_LED.Helpers
                 {
                     case CubeType.Monochrome:
                         //MonochromeCube mc = RGBToMonochromeDriver(cube);
-                        SendPacket(CubeType.Monochrome, serialPort, cube.matrix_legacy, fast);
+                        SendPacket(CubeType.Monochrome, serialPort, cube.matrix_legacy);
                         break;
                     case CubeType.RGB:
                         RGBCube outputRGBCube = MonochromeToRGBDriver(cube);
-                        SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(outputRGBCube.matrix), fast);
+                        SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(outputRGBCube.matrix));
 
                         //SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(cube.matrix));
                         break;
@@ -165,10 +163,10 @@ namespace _8x8x8_LED.Helpers
                 {
                     case CubeType.Monochrome:
                         MonochromeCube mc = RGBToMonochromeDriver(cube);
-                        SendPacket(CubeType.Monochrome, serialPort, mc.matrix_legacy, fast);
+                        SendPacket(CubeType.Monochrome, serialPort, mc.matrix_legacy);
                         break;
                     case CubeType.RGB:
-                        SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(cube.matrix), fast);
+                        SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(cube.matrix));
                         break;
                 }
             }

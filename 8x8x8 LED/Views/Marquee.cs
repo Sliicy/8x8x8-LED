@@ -90,7 +90,7 @@ namespace _8x8x8_LED.Views
                         case 4:
                         case 5:
                         case 6:
-                            cube.DrawPoint(j, 0, i, ColorHelper.ExtractColor(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
+                            cube.DrawPoint(j, 0, i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
                             break;
                         case 7:
                         case 8:
@@ -99,7 +99,7 @@ namespace _8x8x8_LED.Views
                         case 11:
                         case 12:
                         case 13:
-                            cube.DrawPoint(cube.length - 1, j % (cube.length - 1), i, ColorHelper.ExtractColor(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
+                            cube.DrawPoint(cube.length - 1, j % (cube.length - 1), i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
                             break;
                         case 14:
                         case 15:
@@ -108,7 +108,7 @@ namespace _8x8x8_LED.Views
                         case 18:
                         case 19:
                         case 20:
-                            cube.DrawPoint((cube.length - 1) - j % (cube.length - 1), cube.length - 1, i, ColorHelper.ExtractColor(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
+                            cube.DrawPoint((cube.length - 1) - j % (cube.length - 1), cube.length - 1, i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
                             break;
                         case 21:
                         case 22:
@@ -117,7 +117,7 @@ namespace _8x8x8_LED.Views
                         case 25:
                         case 26:
                         case 27:
-                            cube.DrawPoint(0, (cube.length - 1) - j % (cube.length - 1), i, ColorHelper.ExtractColor(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
+                            cube.DrawPoint(0, (cube.length - 1) - j % (cube.length - 1), i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
                             break;
                     }
                 }

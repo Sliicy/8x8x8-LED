@@ -137,30 +137,18 @@
         private bool BallHitPaddle(Location ballLocation, Location paddleLocation)
         {
             if (ballLocation.GetX() == paddleLocation.GetX())
-            {
                 directionX = Direction.Forwards;
-            }
             else if (ballLocation.GetX() == paddleLocation.GetX() - 2)
-            {
                 directionX = Direction.Backwards;
-            }
             else if (ballLocation.GetX() == paddleLocation.GetX() - 1)
-            {
                 directionX = Direction.None;
-            }
-
+            
             if (ballLocation.GetZ() == paddleLocation.GetZ())
-            {
                 directionZ = Direction.Upwards;
-            }
             else if (ballLocation.GetZ() == paddleLocation.GetZ() - 2)
-            {
                 directionZ = Direction.Downwards;
-            }
             else if (ballLocation.GetZ() == paddleLocation.GetZ() - 1)
-            {
                 directionZ = Direction.None;
-            }
 
             if (ballLocation.GetX() == paddleLocation.GetX() ||
                 ballLocation.GetX() == paddleLocation.GetX() - 1 ||

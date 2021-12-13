@@ -4,6 +4,7 @@ using _8x8x8_LED.Models.Pong;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO.Ports;
 using System.Windows.Forms;
 
@@ -18,7 +19,7 @@ namespace _8x8x8_LED.Views
         private int speed = 500;
         private readonly List<Ball> balls = new List<Ball>();
         readonly Paddle p1 = new Paddle(2, 0, 2);
-        readonly Paddle p2 = new Paddle(7, 7, 7);
+        readonly Paddle p2 = new Paddle(6, 7, 6);
 
         private int player1Score = 0;
         private int player2Score = 0;
@@ -47,12 +48,16 @@ namespace _8x8x8_LED.Views
                     b.directionY = Direction.Rightwards;
                     balls.Add(b);
                 }
+                lblPlayer1Controls.ForeColor = ColorHelper.GetRGB(p1.color);
+                lblPlayer2Controls.ForeColor = ColorHelper.GetRGB(p2.color);
                 bwGameEngine.RunWorkerAsync();
             }
             else
             {
                 animate = false;
                 btnStart.Text = "Start &Game";
+                lblPlayer1Controls.ForeColor = Color.Black;
+                lblPlayer2Controls.ForeColor = Color.Black;
                 if (bwGameEngine.IsBusy)
                     bwGameEngine.CancelAsync();
             }
@@ -66,44 +71,18 @@ namespace _8x8x8_LED.Views
                 foreach (Ball b in balls)
                 {
                     b.Move(false, p1, p2);
-                    int destination = b.location.GetZ() + (b.location.GetY() * 8);
-                    switch (b.location.GetX())
-                    {
-                        case 0:
-                            cube.matrix_legacy[destination] = 1;
-                            break;
-                        case 1:
-                            cube.matrix_legacy[destination] = 2;
-                            break;
-                        case 2:
-                            cube.matrix_legacy[destination] = 4;
-                            break;
-                        case 3:
-                            cube.matrix_legacy[destination] = 8;
-                            break;
-                        case 4:
-                            cube.matrix_legacy[destination] = 16;
-                            break;
-                        case 5:
-                            cube.matrix_legacy[destination] = 32;
-                            break;
-                        case 6:
-                            cube.matrix_legacy[destination] = 64;
-                            break;
-                        case 7:
-                            cube.matrix_legacy[destination] = 128;
-                            break;
-                    }
+                    cube.DrawPoint(b.location.GetX(), b.location.GetY(), b.location.GetZ(), b.color);
                     if (b.outOfBounds)
                     {
-
                         if (b.location.GetY() == 1)
                         {
                             player2Score++;
+                            cube.DrawPlane(Axis.Y, 0, CubeColor.DarkRed);
                         }
                         else
                         {
                             player1Score++;
+                            cube.DrawPlane(Axis.Y, 7, CubeColor.DarkRed);
                         }
                         b.outOfBounds = false; // Reset out-of-bounds
                     }
@@ -112,7 +91,6 @@ namespace _8x8x8_LED.Views
                 RenderPaddle(p1);
                 RenderPaddle(p2);
 
-                cube.Flip(Axis.X);
                 SerialHelper.Send(serialPort, cube);
 
                 System.Threading.Thread.Sleep(speed);
@@ -127,51 +105,22 @@ namespace _8x8x8_LED.Views
 
         private void RenderPaddle(Paddle p)
         {
-            int destination = p.location.GetZ() + (p.location.GetY() * 8);
-            byte value = 0;
-            switch (p.location.GetX())
-            {
-                case 0:
-                    value = 193;
-                    break;
-                case 1:
-                    value = 131;
-                    break;
-                case 2:
-                    value = 7;
-                    break;
-                case 3:
-                    value = 14;
-                    break;
-                case 4:
-                    value = 28;
-                    break;
-                case 5:
-                    value = 56;
-                    break;
-                case 6:
-                    value = 112;
-                    break;
-                case 7:
-                    value = 224;
-                    break;
-            }
-            cube.matrix_legacy[destination] = value;
-            if (p.location.GetZ() == 0)
-            {
-                cube.matrix_legacy[destination + 6] = value;
-                cube.matrix_legacy[destination + 7] = value;
-            }
-            else if (p.location.GetZ() == 1)
-            {
-                cube.matrix_legacy[destination - 1] = value;
-                cube.matrix_legacy[destination + 6] = value;
-            }
-            else
-            {
-                cube.matrix_legacy[destination - 1] = value;
-                cube.matrix_legacy[destination - 2] = value;
-            }
+            var x = p.location.GetX();
+            var y = p.location.GetY();
+            var z = p.location.GetZ();
+
+            if (x < 1) x = 1;
+            if (z < 1) z = 1;
+
+            cube.DrawPoint(x, y, z, p.color);
+            cube.DrawPoint((x + 1) % cube.width, y, z, p.color);
+            cube.DrawPoint((x - 1) % cube.width, y, z, p.color);
+            cube.DrawPoint(x % cube.width, y, (z + 1) % cube.height, p.color);
+            cube.DrawPoint(x % cube.width, y, (z - 1) % cube.height, p.color);
+            cube.DrawPoint((x + 1) % cube.width, y, (z + 1) % cube.height, p.color);
+            cube.DrawPoint((x + 1) % cube.width, y, (z - 1) % cube.height, p.color);
+            cube.DrawPoint((x - 1) % cube.width, y, (z + 1) % cube.height, p.color);
+            cube.DrawPoint((x - 1) % cube.width, y, (z - 1) % cube.height, p.color);
         }
 
         private void FrmPong_FormClosing(object sender, FormClosingEventArgs e)
@@ -184,39 +133,23 @@ namespace _8x8x8_LED.Views
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData.Equals(Keys.W))
-            {
                 p1.Move(Direction.None, Direction.None, Direction.Upwards);
-            }
             if (keyData.Equals(Keys.A))
-            {
-                p1.Move(Direction.Forwards, Direction.None, Direction.None);
-            }
-            if (keyData.Equals(Keys.S))
-            {
-                p1.Move(Direction.None, Direction.None, Direction.Downwards);
-            }
-            if (keyData.Equals(Keys.D))
-            {
                 p1.Move(Direction.Backwards, Direction.None, Direction.None);
-            }
-
+            if (keyData.Equals(Keys.S))
+                p1.Move(Direction.None, Direction.None, Direction.Downwards);
+            if (keyData.Equals(Keys.D))
+                p1.Move(Direction.Forwards, Direction.None, Direction.None);
 
             if (keyData.Equals(Keys.Up))
-            {
                 p2.Move(Direction.None, Direction.None, Direction.Upwards);
-            }
             if (keyData.Equals(Keys.Down))
-            {
                 p2.Move(Direction.None, Direction.None, Direction.Downwards);
-            }
             if (keyData.Equals(Keys.Left))
-            {
-                p2.Move(Direction.Forwards, Direction.None, Direction.None);
-            }
-            if (keyData.Equals(Keys.Right))
-            {
                 p2.Move(Direction.Backwards, Direction.None, Direction.None);
-            }
+            if (keyData.Equals(Keys.Right))
+                p2.Move(Direction.Forwards, Direction.None, Direction.None);
+            
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
