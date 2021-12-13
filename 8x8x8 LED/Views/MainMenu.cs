@@ -23,8 +23,7 @@ namespace _8x8x8_LED
 
         public readonly SerialPort serialPort = new SerialPort();
 
-        //public MonochromeCube cube_legacy = new MonochromeCube(64);
-        public Cube cube = new RGBCube(8, 8, 8);
+        public Cube cube = new Cube(8, 8, 8);
 
         private readonly string requestedApp = "";
         public bool minimized = false;
@@ -355,57 +354,57 @@ namespace _8x8x8_LED
 
         private void BtnCalibrate_Click(object sender, EventArgs e)
         {
-            if (cbCubeType.Text == "RGB")
-                return; // TODO: Add support for RGB calibration.
-            cube.Clear();
-            SerialHelper.Send(serialPort, cube);
-            var d = MessageBox.Show("Please play with the settings until the next 5 messages are all describing the cube correctly." + Environment.NewLine + Environment.NewLine +
-                "Alternatively, there is a \"Calibration Cube.png\" image which can be loaded into the Image Viewer and used to calibrate the cube (make sure to use the controls found in settings for changes to stay persistent)." + Environment.NewLine + Environment.NewLine +
-                "Continue with manual calibration?", "Calibrate Cube", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (d != DialogResult.Yes) return;
-            cube.matrix_legacy[0] = 128;
-            SerialHelper.Send(serialPort, cube);
-            MessageBox.Show("If the LEDs are calibrated correctly, then right now, the back bottom left LED should be the only one on.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube.Clear();
-            cube.matrix_legacy[0] = 255;
-            SerialHelper.Send(serialPort, cube);
-            MessageBox.Show("Now, the bottom left row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube.Clear();
-            cube.matrix_legacy[0] = 128;
-            cube.matrix_legacy[8] = 128;
-            cube.matrix_legacy[16] = 128;
-            cube.matrix_legacy[24] = 128;
-            cube.matrix_legacy[32] = 128;
-            cube.matrix_legacy[40] = 128;
-            cube.matrix_legacy[48] = 128;
-            cube.matrix_legacy[56] = 128;
-            SerialHelper.Send(serialPort, cube);
-            MessageBox.Show("Now, the bottom back row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube.Clear();
-            cube.matrix_legacy[56] = 1;
-            cube.matrix_legacy[57] = 1;
-            cube.matrix_legacy[58] = 1;
-            cube.matrix_legacy[59] = 1;
-            cube.matrix_legacy[60] = 1;
-            cube.matrix_legacy[61] = 1;
-            cube.matrix_legacy[62] = 1;
-            cube.matrix_legacy[63] = 1;
-            SerialHelper.Send(serialPort, cube);
-            MessageBox.Show("Now, the right front row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube.Clear();
-            cube.matrix_legacy[7] = 255;
-            cube.matrix_legacy[15] = 255;
-            cube.matrix_legacy[23] = 255;
-            cube.matrix_legacy[31] = 255;
-            cube.matrix_legacy[39] = 255;
-            cube.matrix_legacy[47] = 255;
-            cube.matrix_legacy[55] = 255;
-            cube.matrix_legacy[63] = 255;
-            SerialHelper.Send(serialPort, cube);
-            MessageBox.Show("Now, the entire top section should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cube.Clear();
-            SerialHelper.Send(serialPort, cube);
-            MessageBox.Show("If each of these message boxes were correct, then the cube is calibrated!", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //if (cbCubeType.Text == "RGB")
+            //    return; // TODO: Add support for RGB calibration.
+            //cube.Clear();
+            //SerialHelper.Send(serialPort, cube);
+            //var d = MessageBox.Show("Please play with the settings until the next 5 messages are all describing the cube correctly." + Environment.NewLine + Environment.NewLine +
+            //    "Alternatively, there is a \"Calibration Cube.png\" image which can be loaded into the Image Viewer and used to calibrate the cube (make sure to use the controls found in settings for changes to stay persistent)." + Environment.NewLine + Environment.NewLine +
+            //    "Continue with manual calibration?", "Calibrate Cube", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            //if (d != DialogResult.Yes) return;
+            //cube.matrix_legacy[0] = 128;
+            //SerialHelper.Send(serialPort, cube);
+            //MessageBox.Show("If the LEDs are calibrated correctly, then right now, the back bottom left LED should be the only one on.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //cube.Clear();
+            //cube.matrix_legacy[0] = 255;
+            //SerialHelper.Send(serialPort, cube);
+            //MessageBox.Show("Now, the bottom left row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //cube.Clear();
+            //cube.matrix_legacy[0] = 128;
+            //cube.matrix_legacy[8] = 128;
+            //cube.matrix_legacy[16] = 128;
+            //cube.matrix_legacy[24] = 128;
+            //cube.matrix_legacy[32] = 128;
+            //cube.matrix_legacy[40] = 128;
+            //cube.matrix_legacy[48] = 128;
+            //cube.matrix_legacy[56] = 128;
+            //SerialHelper.Send(serialPort, cube);
+            //MessageBox.Show("Now, the bottom back row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //cube.Clear();
+            //cube.matrix_legacy[56] = 1;
+            //cube.matrix_legacy[57] = 1;
+            //cube.matrix_legacy[58] = 1;
+            //cube.matrix_legacy[59] = 1;
+            //cube.matrix_legacy[60] = 1;
+            //cube.matrix_legacy[61] = 1;
+            //cube.matrix_legacy[62] = 1;
+            //cube.matrix_legacy[63] = 1;
+            //SerialHelper.Send(serialPort, cube);
+            //MessageBox.Show("Now, the right front row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //cube.Clear();
+            //cube.matrix_legacy[7] = 255;
+            //cube.matrix_legacy[15] = 255;
+            //cube.matrix_legacy[23] = 255;
+            //cube.matrix_legacy[31] = 255;
+            //cube.matrix_legacy[39] = 255;
+            //cube.matrix_legacy[47] = 255;
+            //cube.matrix_legacy[55] = 255;
+            //cube.matrix_legacy[63] = 255;
+            //SerialHelper.Send(serialPort, cube);
+            //MessageBox.Show("Now, the entire top section should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //cube.Clear();
+            //SerialHelper.Send(serialPort, cube);
+            //MessageBox.Show("If each of these message boxes were correct, then the cube is calibrated!", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BtnReset_Click(object sender, EventArgs e)

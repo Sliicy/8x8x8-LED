@@ -17,7 +17,6 @@ namespace _8x8x8_LED.Helpers
         {
             if (serialPort.IsOpen)
             {
-
                 if (!prependHeader)
                 {
                     serialPort.Write(payload, 0, payload.Length);
@@ -89,129 +88,89 @@ namespace _8x8x8_LED.Helpers
         }
         public static void Send(SerialPort serialPort, Cube cube)
         {
-            // TODO: Update this method to only support matrix[,,], not matrix[64].
-            // Create a new cube, copy the matrix, and perform orientational operations:
-            MonochromeCube outputCube = new MonochromeCube(cube.matrix_legacy.Length);
-            cube.matrix_legacy.CopyTo(outputCube.matrix_legacy, 0);
             if (cube.FlippedX)
-                outputCube.Flip(Axis.X);
+                cube.Flip(Axis.X);
             if (cube.FlippedY)
-                outputCube.Flip(Axis.Y);
+                cube.Flip(Axis.Y);
             if (cube.FlippedZ)
-                outputCube.Flip(Axis.Z);
+                cube.Flip(Axis.Z);
 
             if (cube.OrientationX != 0)
             {
                 if (cube.OrientationX == 90)
-                    outputCube.Rotate(Rotation.ClockwiseX, 0);
-
+                    cube.Rotate(Rotation.ClockwiseX, 0);
                 if (cube.OrientationX == 180)
-                    outputCube.Rotate(Rotation.ClockwiseX, 1);
-
+                    cube.Rotate(Rotation.ClockwiseX, 1);
                 if (cube.OrientationX == 270)
-                    outputCube.Rotate(Rotation.ClockwiseX, 2);
+                    cube.Rotate(Rotation.ClockwiseX, 2);
             }
 
             if (cube.OrientationY != 0)
             {
                 if (cube.OrientationY == 90)
-                    outputCube.Rotate(Rotation.ClockwiseY, 0);
+                    cube.Rotate(Rotation.ClockwiseY, 0);
                 if (cube.OrientationY == 180)
-                    outputCube.Rotate(Rotation.ClockwiseY, 1);
+                    cube.Rotate(Rotation.ClockwiseY, 1);
                 if (cube.OrientationY == 270)
-                    outputCube.Rotate(Rotation.ClockwiseY, 2);
+                    cube.Rotate(Rotation.ClockwiseY, 2);
             }
 
             if (cube.OrientationZ != 0)
             {
                 if (cube.OrientationZ == 90)
-                    outputCube.Rotate(Rotation.ClockwiseZ, 0);
+                    cube.Rotate(Rotation.ClockwiseZ, 0);
                 if (cube.OrientationZ == 180)
-                    outputCube.Rotate(Rotation.ClockwiseZ, 1);
+                    cube.Rotate(Rotation.ClockwiseZ, 1);
                 if (cube.OrientationZ == 270)
-                    outputCube.Rotate(Rotation.ClockwiseZ, 2);
+                    cube.Rotate(Rotation.ClockwiseZ, 2);
             }
 
             if (cube.OffsetX != 0)
-                outputCube.Shift(Direction.Forwards, true, Math.Abs(cube.OffsetX) - 1);
+                cube.Shift(Direction.Forwards, Math.Abs(cube.OffsetX) - 1, true);
             if (cube.OffsetY != 0)
-                outputCube.Shift(Direction.Leftwards, true, Math.Abs(cube.OffsetY) - 1);
+                cube.Shift(Direction.Leftwards, Math.Abs(cube.OffsetY) - 1, true);
             if (cube.OffsetZ != 0)
-                outputCube.Shift(Direction.Downwards, true, Math.Abs(cube.OffsetZ) - 1);
+                cube.Shift(Direction.Downwards, Math.Abs(cube.OffsetZ) - 1, true);
 
-            if (cube.GetType().ToString().Contains("MonochromeCube"))
+            switch (cube.type)
             {
-                switch (cube.type)
-                {
-                    case CubeType.Monochrome:
-                        //MonochromeCube mc = RGBToMonochromeDriver(cube);
-                        SendPacket(CubeType.Monochrome, serialPort, cube.matrix_legacy);
-                        break;
-                    case CubeType.RGB:
-                        RGBCube outputRGBCube = MonochromeToRGBDriver(cube);
-                        SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(outputRGBCube.matrix));
-
-                        //SendPacket(CubeType.RGB, serialPort, ColorMapper.MatrixToBytes(cube.matrix));
-                        break;
-                }
-
-
-            }
-            else if (cube.GetType().ToString().Contains("RGBCube"))
-            {
-                switch (cube.type)
-                {
-                    case CubeType.Monochrome:
-                        MonochromeCube mc = RGBToMonochromeDriver(cube);
-                        SendPacket(CubeType.Monochrome, serialPort, mc.matrix_legacy);
-                        break;
-                    case CubeType.RGB:
-                        SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(cube.matrix));
-                        break;
-                }
+                case CubeType.Monochrome:
+                    MonochromeCube mc = RGBToMonochromeDriver(cube);
+                    SendPacket(CubeType.Monochrome, serialPort, mc.matrixBytes);
+                    break;
+                case CubeType.RGB:
+                    MonochromeCube mc3 = RGBToMonochromeDriver(cube);
+                    Cube mc4 = MonochromeToRGBDriver(mc3);
+                    SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(mc4.matrix));
+                    //SendPacket(CubeType.RGB, serialPort, ColorHelper.MatrixToBytes(cube.matrix));
+                    break;
             }
         }
 
-        public static RGBCube MonochromeToRGBDriver(Cube mc)
+        public static Cube MonochromeToRGBDriver(MonochromeCube mc)
         {
-            RGBCube output = new RGBCube(8, 8, 8);
+            Cube output = new Cube(8, 8, 8);
 
-            for (int i = 0; i < mc.matrix_legacy.Length; i++)
+            for (int i = 0; i < mc.matrixBytes.Length; i++)
             {
-                BitArray b = new BitArray(new int[] { mc.matrix_legacy[i] });
+                BitArray b = new BitArray(new int[] { mc.matrixBytes[i] });
 
                 if (b[0] == true)
-                {
                     output.matrix[0, i / 8, i % 8] = CubeColor.White;
-                }
                 if (b[1] == true)
-                {
                     output.matrix[1, i / 8, i % 8] = CubeColor.White;
-                }
                 if (b[2] == true)
-                {
                     output.matrix[2, i / 8, i % 8] = CubeColor.White;
-                }
                 if (b[3] == true)
-                {
                     output.matrix[3, i / 8, i % 8] = CubeColor.White;
-                }
                 if (b[4] == true)
-                {
                     output.matrix[4, i / 8, i % 8] = CubeColor.White;
-                }
                 if (b[5] == true)
-                {
                     output.matrix[5, i / 8, i % 8] = CubeColor.White;
-                }
                 if (b[6] == true)
-                {
                     output.matrix[6, i / 8, i % 8] = CubeColor.White;
-                }
                 if (b[7] == true)
-                {
                     output.matrix[7, i / 8, i % 8] = CubeColor.White;
-                }
             }
             output.OffsetX = mc.OffsetX;
             output.OffsetY = mc.OffsetY;
@@ -234,12 +193,8 @@ namespace _8x8x8_LED.Helpers
             for (int x = 0; x < rgbCube.width; x++)
                 for (int y = 0; y < rgbCube.length; y++)
                     for (int z = 0; z < rgbCube.height; z++)
-                    {
-                        if (rgbCube.matrix[x, y, z] != CubeColor.Black)
-                        {
-                            output.matrix_legacy[y + z * 8] += (byte)Math.Pow(2, x);
-                        }
-                    }
+                        if (rgbCube.matrix[x, z, y] != CubeColor.Black)
+                            output.matrixBytes[y + z * 8] += (byte)Math.Pow(2, x);
             output.Rotate(Rotation.CounterclockwiseY);
             return output;
         }

@@ -4,7 +4,8 @@ using System;
 
 namespace _8x8x8_LED.Models
 {
-    public abstract class Cube : Geometry
+    [Serializable]
+    public class Cube : Geometry
     {
         public int width;
         public int length;
@@ -27,18 +28,21 @@ namespace _8x8x8_LED.Models
 
         public CubeColor[,,] matrix;
 
-        public byte[] matrix_legacy = new byte[64];
+        //public byte[] matrix_legacy = new byte[64];
 
         public CubeType type;
 
+        public Cube(int x = 8, int y = 8, int z = 8)
+        {
+            width = x;
+            length = y;
+            height = z;
+            matrix = new CubeColor[width, length, height];
+        }
+
         public void Clear()
         {
-            if (type == CubeType.Monochrome)
-            {
-                for (int x = 0; x < 64; x++)
-                    matrix_legacy[x] = 0;
-            }
-            else if (type == CubeType.RGB)
+            if (type == CubeType.RGB)
             {
                 for (int x = 0; x < matrix.GetLength(0); x++)
                     for (int y = 0; y < matrix.GetLength(1); y++)
