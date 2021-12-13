@@ -34,7 +34,6 @@ namespace _8x8x8_LED.Views
         {
             while (animate)
             {
-                cube.Clear();
                 DrawLetters();
                 System.Threading.Thread.Sleep(speed);
             }
@@ -42,6 +41,8 @@ namespace _8x8x8_LED.Views
 
         private void DrawLetters()
         {
+            cube.Clear();
+
             // Contains mappings for all letters needed:
             var letterMapping = new Dictionary<string, Bitmap>();
 
@@ -63,14 +64,13 @@ namespace _8x8x8_LED.Views
             }
 
             // Append all letters onto canvas:
-            wideMarquee = AppendBitmap(images, int.Parse(nudSpacing.Value.ToString()));
+            wideMarquee = AppendBitmap(images, int.Parse(nudSpacing.Value.ToString()), chkLetterEnding.Checked);
 
             ProjectImageToCube(wideMarquee, needle);
             needle++;
             if (needle >= wideMarquee.Width)
                 needle = 0;
-            cube.Rotate(Rotation.ClockwiseX);
-            cube.Rotate(Rotation.CounterclockwiseZ);
+            cube.Rotate(Rotation.ClockwiseX, 1);
             SerialHelper.Send(serialPort, cube);
         }
 
@@ -78,125 +78,63 @@ namespace _8x8x8_LED.Views
         {
             for (int j = 0; j < positionX + 1; j++)
             {
-                var bits = new BitArray(8);
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < cube.length; i++)
                 {
-                    if (wideMarquee.GetPixel(positionX - j, i).R == 255 &&
-                    wideMarquee.GetPixel(positionX - j, i).G == 255 &&
-                    wideMarquee.GetPixel(positionX - j, i).B == 255)
+                    switch (j)
                     {
-                        bits[i] = false;
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                            cube.DrawPoint(j, 0, i, ColorHelper.ExtractColor(wideMarquee.GetPixel(positionX - j, i)));
+                            break;
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                        case 13:
+                            cube.DrawPoint(cube.length - 1, j % (cube.length - 1), i, ColorHelper.ExtractColor(wideMarquee.GetPixel(positionX - j, i)));
+                            break;
+                        case 14:
+                        case 15:
+                        case 16:
+                        case 17:
+                        case 18:
+                        case 19:
+                        case 20:
+                            cube.DrawPoint((cube.length - 1) - j % (cube.length - 1), cube.length - 1, i, ColorHelper.ExtractColor(wideMarquee.GetPixel(positionX - j, i)));
+                            break;
+                        case 21:
+                        case 22:
+                        case 23:
+                        case 24:
+                        case 25:
+                        case 26:
+                        case 27:
+                            cube.DrawPoint(0, (cube.length - 1) - j % (cube.length - 1), i, ColorHelper.ExtractColor(wideMarquee.GetPixel(positionX - j, i)));
+                            break;
                     }
-                    else
-                    {
-                        bits[i] = true;
-                    }
-                }
-                byte[] bytes = new byte[1];
-                bits.CopyTo(bytes, 0);
-
-                switch (j)
-                {
-                    case 0:
-                        cube.matrix_legacy[0] = bytes[0];
-                        break;
-                    case 1:
-                        cube.matrix_legacy[1] = bytes[0];
-                        break;
-                    case 2:
-                        cube.matrix_legacy[2] = bytes[0];
-                        break;
-                    case 3:
-                        cube.matrix_legacy[3] = bytes[0];
-                        break;
-                    case 4:
-                        cube.matrix_legacy[4] = bytes[0];
-                        break;
-                    case 5:
-                        cube.matrix_legacy[5] = bytes[0];
-                        break;
-                    case 6:
-                        cube.matrix_legacy[6] = bytes[0];
-                        break;
-                    case 7:
-                        cube.matrix_legacy[7] = bytes[0];
-                        break;
-                    case 8:
-                        cube.matrix_legacy[15] = bytes[0];
-                        break;
-                    case 9:
-                        cube.matrix_legacy[23] = bytes[0];
-                        break;
-                    case 10:
-                        cube.matrix_legacy[31] = bytes[0];
-                        break;
-                    case 11:
-                        cube.matrix_legacy[39] = bytes[0];
-                        break;
-                    case 12:
-                        cube.matrix_legacy[47] = bytes[0];
-                        break;
-                    case 13:
-                        cube.matrix_legacy[55] = bytes[0];
-                        break;
-                    case 14:
-                        cube.matrix_legacy[63] = bytes[0];
-                        break;
-                    case 15:
-                        cube.matrix_legacy[62] = bytes[0];
-                        break;
-                    case 16:
-                        cube.matrix_legacy[61] = bytes[0];
-                        break;
-                    case 17:
-                        cube.matrix_legacy[60] = bytes[0];
-                        break;
-                    case 18:
-                        cube.matrix_legacy[59] = bytes[0];
-                        break;
-                    case 19:
-                        cube.matrix_legacy[58] = bytes[0];
-                        break;
-                    case 20:
-                        cube.matrix_legacy[57] = bytes[0];
-                        break;
-                    case 21:
-                        cube.matrix_legacy[56] = bytes[0];
-                        break;
-                    case 22:
-                        cube.matrix_legacy[48] = bytes[0];
-                        break;
-                    case 23:
-                        cube.matrix_legacy[40] = bytes[0];
-                        break;
-                    case 24:
-                        cube.matrix_legacy[32] = bytes[0];
-                        break;
-                    case 25:
-                        cube.matrix_legacy[24] = bytes[0];
-                        break;
-                    case 26:
-                        cube.matrix_legacy[16] = bytes[0];
-                        break;
-                    case 27:
-                        cube.matrix_legacy[8] = bytes[0];
-                        break;
                 }
             }
         }
 
-        public Bitmap AppendBitmap(List<Bitmap> images, int spacing)
+        private static Bitmap AppendBitmap(List<Bitmap> images, int spacing, bool letterEnding)
         {
             Bitmap bmp = new Bitmap(1, 1);
             if (images.Count > 0)
             {
-                int w = (images[0].Width * images.Count + spacing * images.Count - spacing) + (chkLetterEnding.Checked ? 30 : 0);
+                int w = (images[0].Width * images.Count + spacing * images.Count - spacing) + (letterEnding ? 30 : 0);
                 int h = images[0].Height;
                 bmp = new Bitmap(w, h);
 
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
-                    g.Clear(Color.White);
+                    g.Clear(Color.Black);
                     for (int i = 0; i < images.Count; i++)
                         g.DrawImage(images[i], images[i].Width * i + spacing * i, 0);
                 }

@@ -7,7 +7,7 @@ namespace _8x8x8_LED.Helpers
 {
     public class ColorHelper
     {
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
 
         // Converts 3D array of colors into two 192 byte arrays, ready for sending:
         public static byte[] MatrixToBytes(CubeColor[,,] c)
