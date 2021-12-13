@@ -140,7 +140,6 @@ namespace _8x8x8_LED.Views
                 p1.Move(Direction.None, Direction.None, Direction.Downwards);
             if (keyData.Equals(Keys.D))
                 p1.Move(Direction.Forwards, Direction.None, Direction.None);
-
             if (keyData.Equals(Keys.Up))
                 p2.Move(Direction.None, Direction.None, Direction.Upwards);
             if (keyData.Equals(Keys.Down))
@@ -149,7 +148,6 @@ namespace _8x8x8_LED.Views
                 p2.Move(Direction.Backwards, Direction.None, Direction.None);
             if (keyData.Equals(Keys.Right))
                 p2.Move(Direction.Forwards, Direction.None, Direction.None);
-            
             return base.ProcessCmdKey(ref msg, keyData);
         }
 

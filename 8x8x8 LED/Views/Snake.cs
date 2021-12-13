@@ -66,7 +66,6 @@ namespace _8x8x8_LED.Views
                 else
                 {
                     RenderSnake();
-
                     appleConsumed = snake.AppleConsumed(apple);
                     if (appleConsumed)
                     {
@@ -74,8 +73,6 @@ namespace _8x8x8_LED.Views
                         if (speed > 50) speed -= 5;
                     }
                     RenderApple();
-
-                    cube.Flip(Axis.X);
                     SerialHelper.Send(serialPort, cube);
                     System.Threading.Thread.Sleep(speed);
                 }
@@ -92,69 +89,13 @@ namespace _8x8x8_LED.Views
                 apple.SetZ(random.Next(0, 8));
                 appleConsumed = false;
             }
-            int destination = apple.GetZ() + (apple.GetY() * 8);
-            switch (apple.GetX())
-            {
-                case 0:
-                    cube.matrix_legacy[destination] += 1;
-                    break;
-                case 1:
-                    cube.matrix_legacy[destination] += 2;
-                    break;
-                case 2:
-                    cube.matrix_legacy[destination] += 4;
-                    break;
-                case 3:
-                    cube.matrix_legacy[destination] += 8;
-                    break;
-                case 4:
-                    cube.matrix_legacy[destination] += 16;
-                    break;
-                case 5:
-                    cube.matrix_legacy[destination] += 32;
-                    break;
-                case 6:
-                    cube.matrix_legacy[destination] += 64;
-                    break;
-                case 7:
-                    cube.matrix_legacy[destination] += 128;
-                    break;
-            }
+            cube.DrawPoint(apple.GetX(), apple.GetY(), apple.GetZ(), CubeColor.Red);
         }
 
         private void RenderSnake()
         {
             foreach (var bodypart in snake.body)
-            {
-                int destination = bodypart.GetZ() + (bodypart.GetY() * 8);
-                switch (bodypart.GetX())
-                {
-                    case 0:
-                        cube.matrix_legacy[destination] += 1;
-                        break;
-                    case 1:
-                        cube.matrix_legacy[destination] += 2;
-                        break;
-                    case 2:
-                        cube.matrix_legacy[destination] += 4;
-                        break;
-                    case 3:
-                        cube.matrix_legacy[destination] += 8;
-                        break;
-                    case 4:
-                        cube.matrix_legacy[destination] += 16;
-                        break;
-                    case 5:
-                        cube.matrix_legacy[destination] += 32;
-                        break;
-                    case 6:
-                        cube.matrix_legacy[destination] += 64;
-                        break;
-                    case 7:
-                        cube.matrix_legacy[destination] += 128;
-                        break;
-                }
-            }
+                cube.DrawPoint(bodypart.GetX(), bodypart.GetY(), bodypart.GetZ(), CubeColor.Green);
         }
 
         private void FrmSnake_FormClosing(object sender, FormClosingEventArgs e)
@@ -167,29 +108,17 @@ namespace _8x8x8_LED.Views
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData.Equals(Keys.W))
-            {
-                defaultDirection = Direction.Forwards;
-            }
-            if (keyData.Equals(Keys.A))
-            {
-                defaultDirection = Direction.Leftwards;
-            }
-            if (keyData.Equals(Keys.S))
-            {
-                defaultDirection = Direction.Backwards;
-            }
-            if (keyData.Equals(Keys.D))
-            {
                 defaultDirection = Direction.Rightwards;
-            }
+            if (keyData.Equals(Keys.A))
+                defaultDirection = Direction.Forwards;
+            if (keyData.Equals(Keys.S))
+                defaultDirection = Direction.Leftwards;
+            if (keyData.Equals(Keys.D))
+                defaultDirection = Direction.Backwards;
             if (keyData.Equals(Keys.Up))
-            {
                 defaultDirection = Direction.Upwards;
-            }
             if (keyData.Equals(Keys.Down))
-            {
                 defaultDirection = Direction.Downwards;
-            }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
