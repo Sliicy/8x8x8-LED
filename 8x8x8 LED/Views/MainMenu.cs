@@ -53,7 +53,7 @@ namespace _8x8x8_LED
             // Load Previous Settings:
             cbCubeType.SelectedIndex = Properties.Settings.Default.CubeType;
             chkAutoconnect.Checked = Properties.Settings.Default.Autoconnect;
-            cbBaudRate.SelectedIndex = Properties.Settings.Default.BaudRate;
+            cbBaudRate.Text = Properties.Settings.Default.BaudRate.ToString();
             nudDataBits.Value = Properties.Settings.Default.DataBits;
             cbStopBits.SelectedIndex = Properties.Settings.Default.StopBits;
             cbParity.SelectedIndex = Properties.Settings.Default.Parity;
@@ -169,7 +169,7 @@ namespace _8x8x8_LED
 
         private void CbBaudRate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.BaudRate = cbBaudRate.SelectedIndex;
+            Properties.Settings.Default.BaudRate = int.Parse(cbBaudRate.Text);
         }
 
         private void NudDataBits_ValueChanged(object sender, EventArgs e)

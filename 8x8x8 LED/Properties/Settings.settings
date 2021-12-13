@@ -153,7 +153,12 @@
       <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="Lamp_Times" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;string&gt;7:00:00 PM - RedYellow&lt;/string&gt;
+  &lt;string&gt;8:00:00 PM - White&lt;/string&gt;
+  &lt;string&gt;11:30:00 PM - Black&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

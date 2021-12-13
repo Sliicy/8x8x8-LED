@@ -625,6 +625,12 @@ namespace _8x8x8_LED.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <string>7:00:00 PM - RedYellow</string>
+  <string>8:00:00 PM - White</string>
+  <string>11:30:00 PM - Black</string>
+</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection Lamp_Times {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["Lamp_Times"]));
