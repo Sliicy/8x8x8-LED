@@ -38,8 +38,11 @@ namespace _8x8x8_LED.Views
             this.lblSpeed = new System.Windows.Forms.Label();
             this.trkSpeed = new System.Windows.Forms.TrackBar();
             this.chkLetterEnding = new System.Windows.Forms.CheckBox();
+            this.cbColor = new System.Windows.Forms.ComboBox();
+            this.grpColor = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudSpacing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).BeginInit();
+            this.grpColor.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMarquee
@@ -124,11 +127,32 @@ namespace _8x8x8_LED.Views
             this.chkLetterEnding.UseVisualStyleBackColor = true;
             this.chkLetterEnding.CheckedChanged += new System.EventHandler(this.ChkLetterEnding_CheckedChanged);
             // 
+            // cbColor
+            // 
+            this.cbColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbColor.FormattingEnabled = true;
+            this.cbColor.Location = new System.Drawing.Point(6, 28);
+            this.cbColor.Name = "cbColor";
+            this.cbColor.Size = new System.Drawing.Size(200, 32);
+            this.cbColor.TabIndex = 7;
+            this.cbColor.SelectedIndexChanged += new System.EventHandler(this.CbColor_SelectedIndexChanged);
+            // 
+            // grpColor
+            // 
+            this.grpColor.Controls.Add(this.cbColor);
+            this.grpColor.Location = new System.Drawing.Point(522, 142);
+            this.grpColor.Name = "grpColor";
+            this.grpColor.Size = new System.Drawing.Size(216, 68);
+            this.grpColor.TabIndex = 8;
+            this.grpColor.TabStop = false;
+            this.grpColor.Text = "Color";
+            // 
             // FrmMarquee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 222);
+            this.Controls.Add(this.grpColor);
             this.Controls.Add(this.chkLetterEnding);
             this.Controls.Add(this.trkSpeed);
             this.Controls.Add(this.lblSpeed);
@@ -148,6 +172,7 @@ namespace _8x8x8_LED.Views
             this.Load += new System.EventHandler(this.FrmMarquee_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudSpacing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
+            this.grpColor.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,5 +187,7 @@ namespace _8x8x8_LED.Views
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.TrackBar trkSpeed;
         private System.Windows.Forms.CheckBox chkLetterEnding;
+        private System.Windows.Forms.ComboBox cbColor;
+        private System.Windows.Forms.GroupBox grpColor;
     }
 }
