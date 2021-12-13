@@ -43,7 +43,7 @@ namespace _8x8x8_LED.Views
 
             if (!chk24HrStyle.Checked)
                 hour %= 12;
-            
+
             // Handle hour tens column:
             switch (hour / 10)
             {

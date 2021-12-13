@@ -142,7 +142,7 @@
                 directionX = Direction.Backwards;
             else if (ballLocation.GetX() == paddleLocation.GetX() - 1)
                 directionX = Direction.None;
-            
+
             if (ballLocation.GetZ() == paddleLocation.GetZ())
                 directionZ = Direction.Upwards;
             else if (ballLocation.GetZ() == paddleLocation.GetZ() - 2)

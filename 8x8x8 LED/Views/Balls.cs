@@ -87,7 +87,7 @@ namespace _8x8x8_LED.Views
                 b.directionZ = Direction.Upwards;
             else if (randomNumber == 2)
                 b.directionZ = Direction.Downwards;
-            
+
             b.location.SetX(random.Next(0, 8));
             b.location.SetY(random.Next(0, 8));
             b.location.SetZ(random.Next(0, 8));

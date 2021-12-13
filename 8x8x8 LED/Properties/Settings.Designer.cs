@@ -37,7 +37,7 @@ namespace _8x8x8_LED.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("38400")]
         public int BaudRate {
             get {
                 return ((int)(this["BaudRate"]));
@@ -481,7 +481,7 @@ namespace _8x8x8_LED.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int CubeType {
             get {
                 return ((int)(this["CubeType"]));
@@ -589,7 +589,7 @@ namespace _8x8x8_LED.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int Marquee_Color {
             get {
                 return ((int)(this["Marquee_Color"]));
@@ -601,7 +601,7 @@ namespace _8x8x8_LED.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int Clock_HourColor {
             get {
                 return ((int)(this["Clock_HourColor"]));
@@ -613,7 +613,7 @@ namespace _8x8x8_LED.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("11")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public int Clock_MinuteColor {
             get {
                 return ((int)(this["Clock_MinuteColor"]));

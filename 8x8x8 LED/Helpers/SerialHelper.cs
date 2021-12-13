@@ -78,7 +78,7 @@ namespace _8x8x8_LED.Helpers
                         // Send 2nd bytes:
                         serialPort.Write(outputPayload.Skip(outputPayload.Length / 2).ToArray(), 0, outputPayload.Length / 2);
                         System.Threading.Thread.Sleep(RGB_Delay);
-                        
+
                         break;
                     default:
                         throw new ArgumentNullException("Cube Type must be specified.");

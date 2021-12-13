@@ -6,7 +6,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="BaudRate" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">38400</Value>
     </Setting>
     <Setting Name="DataBits" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8</Value>
@@ -117,7 +117,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="CubeType" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="Rain_Rainbow" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -144,13 +144,13 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Marquee_Color" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="Clock_HourColor" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">9</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="Clock_MinuteColor" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">11</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
   </Settings>
 </SettingsFile>

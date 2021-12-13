@@ -1,6 +1,5 @@
 ﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
-using _8x8x8_LED.Models.Shapes;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -21,7 +20,7 @@ namespace _8x8x8_LED.Views
         private double[] eightChannels = new double[8]; // Holds 8 bytes of audio.
 
         private bool cubeCleared = false; // Controls whether to clear the screen if no audio is playing.
-        
+
         private bool animate = false; // Whether to animate the visualizer.
         private int speed = 1; // Speed of animation.
         private int timeElapsed = 0; // Used to measure time against speed of animation.
@@ -158,7 +157,7 @@ namespace _8x8x8_LED.Views
             cubeCleared = false;
             currentMusicStyle = cbMusicStyle.Text;
         }
-        
+
         private void BwVisualize_DoWork(object sender, DoWorkEventArgs e)
         {
             while (animate)
@@ -308,7 +307,7 @@ namespace _8x8x8_LED.Views
                     if (dotted)
                         cube.DrawPoint(i, 0, 3, outputColor[3]);
                     else
-                        cube.DrawStraightLine(Axis.X, i, 3, outputColor[3]);                
+                        cube.DrawStraightLine(Axis.X, i, 3, outputColor[3]);
                 if (Math.Abs(eightChannels[i]) > .25 && (filledUnderneath || Math.Abs(eightChannels[i]) <= .3))
                     if (dotted)
                         cube.DrawPoint(i, 0, 4, outputColor[4]);
@@ -324,7 +323,7 @@ namespace _8x8x8_LED.Views
                         cube.DrawPoint(i, 0, 6, outputColor[6]);
                     else
                         cube.DrawStraightLine(Axis.X, i, 6, outputColor[6]);
-                
+
                 if (Math.Abs(eightChannels[i]) > .5)
                     if (dotted)
                         cube.DrawPoint(i, 0, 7, outputColor[7]);
@@ -332,7 +331,7 @@ namespace _8x8x8_LED.Views
                         cube.DrawStraightLine(Axis.X, i, 7, outputColor[7]);
             }
         }
-        
+
         private void AnimatedCenteredLines(double[] eightChannels, List<CubeColor> outputColor, bool filledUnderneath = false, bool dotted = false)
         {
             for (int i = 0; i < cube.length; i++)

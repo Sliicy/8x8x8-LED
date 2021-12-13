@@ -270,7 +270,6 @@
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Pong\Paddle.cs" />
     <Compile Include="Models\Position.cs" />
-    <Compile Include="Models\RGBCube.cs" />
     <Compile Include="Models\Shapes\Line.cs" />
     <Compile Include="Models\Shapes\Plane.cs" />
     <Compile Include="Models\Shapes\Point3D.cs" />

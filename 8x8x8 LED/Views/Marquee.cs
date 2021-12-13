@@ -1,7 +1,6 @@
 ﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
