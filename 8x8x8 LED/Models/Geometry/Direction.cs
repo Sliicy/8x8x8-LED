@@ -1,4 +1,4 @@
-﻿namespace _8x8x8_LED.Models
+﻿namespace _8x8x8_LED.Models.Geometry
 {
     public enum Direction
     {

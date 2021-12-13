@@ -1,11 +1,11 @@
 ﻿using _8x8x8_LED.Helpers;
-using _8x8x8_LED.Models.Shapes;
+using _8x8x8_LED.Models.Geometry;
 using System;
 
 namespace _8x8x8_LED.Models
 {
     [Serializable]
-    public class Cube : Geometry
+    public class Cube : CubeManipulation
     {
         public int width;
         public int length;
@@ -27,9 +27,6 @@ namespace _8x8x8_LED.Models
         public int OffsetZ = 0;
 
         public CubeColor[,,] matrix;
-
-        //public byte[] matrix_legacy = new byte[64];
-
         public CubeType type;
 
         public Cube(int x = 8, int y = 8, int z = 8)
@@ -42,13 +39,10 @@ namespace _8x8x8_LED.Models
 
         public void Clear()
         {
-            if (type == CubeType.RGB)
-            {
-                for (int x = 0; x < matrix.GetLength(0); x++)
-                    for (int y = 0; y < matrix.GetLength(1); y++)
-                        for (int z = 0; z < matrix.GetLength(2); z++)
-                            matrix[x, y, z] = 0;
-            }
+            for (int x = 0; x < matrix.GetLength(0); x++)
+                for (int y = 0; y < matrix.GetLength(1); y++)
+                    for (int z = 0; z < matrix.GetLength(2); z++)
+                        matrix[x, y, z] = 0;
         }
 
         public void Flip(Axis axis)
@@ -169,7 +163,7 @@ namespace _8x8x8_LED.Models
                 if (gx < 0 || gy < 0 || gz < 0) break;
 
 
-                // Which plane do we cross first?
+                // Which plane to cross first
                 var xr = Math.Abs(errx);
                 var yr = Math.Abs(erry);
                 var zr = Math.Abs(errz);
@@ -196,19 +190,6 @@ namespace _8x8x8_LED.Models
         public void DrawPoint(int x, int y, int z, CubeColor color)
         {
             matrix[x, y, z] = color;
-        }
-
-        public void Draw(Plane plane, CubeColor color)
-        {
-            DrawLine(plane.a.x, plane.a.y, plane.a.z, plane.b.x, plane.b.y, plane.b.z, color);
-            DrawLine(plane.b.x, plane.b.y, plane.b.z, plane.c.x, plane.c.y, plane.c.z, color);
-            DrawLine(plane.c.x, plane.c.y, plane.c.z, plane.d.x, plane.d.y, plane.d.z, color);
-            DrawLine(plane.d.x, plane.d.y, plane.d.z, plane.a.x, plane.a.y, plane.a.z, color);
-        }
-
-        public void DrawLine(Line line, CubeColor color)
-        {
-            DrawLine(line.x1, line.y1, line.z1, line.x2, line.y2, line.z2, color);
         }
 
         public void DrawStraightLine(Axis axis, int xOffset, int yOffset, CubeColor color)

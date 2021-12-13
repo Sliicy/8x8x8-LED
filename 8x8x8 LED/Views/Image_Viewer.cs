@@ -1,11 +1,11 @@
 ﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Geometry;
 using System;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
-using Rotation = _8x8x8_LED.Models.Rotation;
 
 namespace _8x8x8_LED.Views
 {

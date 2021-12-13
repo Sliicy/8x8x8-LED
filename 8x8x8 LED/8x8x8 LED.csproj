@@ -258,21 +258,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ColorHelper.cs" />
-    <Compile Include="Helpers\Geometry.cs" />
-    <Compile Include="Models\Axis.cs" />
+    <Compile Include="Helpers\CubeManipulation.cs" />
+    <Compile Include="Models\Geometry\Axis.cs" />
     <Compile Include="Models\Cube.cs" />
     <Compile Include="Models\CubeColor.cs" />
     <Compile Include="Models\CubeType.cs" />
     <Compile Include="Models\MonochromeCube.cs" />
-    <Compile Include="Models\Direction.cs" />
-    <Compile Include="Models\Rotation.cs" />
+    <Compile Include="Models\Geometry\Direction.cs" />
+    <Compile Include="Models\Geometry\Rotation.cs" />
     <Compile Include="Models\Pong\Ball.cs" />
-    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\Geometry\Location.cs" />
     <Compile Include="Models\Pong\Paddle.cs" />
-    <Compile Include="Models\Position.cs" />
-    <Compile Include="Models\Shapes\Line.cs" />
-    <Compile Include="Models\Shapes\Plane.cs" />
-    <Compile Include="Models\Shapes\Point3D.cs" />
+    <Compile Include="Models\Geometry\Position.cs" />
     <Compile Include="Models\Snake\Snake.cs" />
     <Compile Include="Views\Music.cs">
       <SubType>Form</SubType>

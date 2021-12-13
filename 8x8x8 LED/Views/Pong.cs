@@ -1,5 +1,6 @@
 ﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Geometry;
 using _8x8x8_LED.Models.Pong;
 using System;
 using System.Collections.Generic;

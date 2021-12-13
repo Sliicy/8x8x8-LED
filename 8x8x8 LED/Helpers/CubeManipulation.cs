@@ -1,8 +1,9 @@
 ﻿using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Geometry;
 
 namespace _8x8x8_LED.Helpers
 {
-    public class Geometry
+    public class CubeManipulation
     {
         public static CubeColor[,,] Rotate(Rotation rotation, CubeColor[,,] input)
         {

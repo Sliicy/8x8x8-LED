@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using _8x8x8_LED.Models.Geometry;
+using System.Collections.Generic;
 
 namespace _8x8x8_LED.Models.Snake
 {

@@ -1,4 +1,5 @@
 ﻿using _8x8x8_LED.Helpers;
+using _8x8x8_LED.Models.Geometry;
 
 namespace _8x8x8_LED.Models.Pong
 {
