@@ -53,59 +53,35 @@
 
             // Handle boundaries:
             if (location.GetX() > 7)
-            {
                 if (teleport)
                     location.SetX(0);
                 else
-                {
                     location.SetX(6);
-                }
-            }
             if (location.GetX() < 0)
-            {
                 if (teleport)
                     location.SetX(7);
                 else
-                {
                     location.SetX(1);
-                }
-            }
             if (location.GetY() > 7)
-            {
                 if (teleport)
                     location.SetY(0);
                 else
-                {
                     location.SetY(6);
-                }
-            }
             if (location.GetY() < 0)
-            {
                 if (teleport)
                     location.SetY(7);
                 else
-                {
                     location.SetY(1);
-                }
-            }
             if (location.GetZ() > 7)
-            {
                 if (teleport)
                     location.SetZ(0);
                 else
-                {
                     location.SetZ(6);
-                }
-            }
             if (location.GetZ() < 0)
-            {
                 if (teleport)
                     location.SetZ(7);
                 else
-                {
                     location.SetZ(1);
-                }
-            }
         }
     }
 }

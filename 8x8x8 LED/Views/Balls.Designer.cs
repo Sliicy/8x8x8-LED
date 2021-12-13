@@ -81,9 +81,9 @@ namespace _8x8x8_LED.Views
             this.lblSpeed.AutoSize = true;
             this.lblSpeed.Location = new System.Drawing.Point(12, 97);
             this.lblSpeed.Name = "lblSpeed";
-            this.lblSpeed.Size = new System.Drawing.Size(71, 24);
+            this.lblSpeed.Size = new System.Drawing.Size(108, 24);
             this.lblSpeed.TabIndex = 3;
-            this.lblSpeed.Text = "&Speed:";
+            this.lblSpeed.Text = "&Speed (50):";
             // 
             // cbPhysics
             // 

@@ -47,7 +47,6 @@ namespace _8x8x8_LED.Views
                     b.directionY = Direction.Rightwards;
                     balls.Add(b);
                 }
-
                 bwGameEngine.RunWorkerAsync();
             }
             else
@@ -64,11 +63,9 @@ namespace _8x8x8_LED.Views
             while (animate)
             {
                 cube.Clear();
-
                 foreach (Ball b in balls)
                 {
                     b.Move(false, p1, p2);
-
                     int destination = b.location.GetZ() + (b.location.GetY() * 8);
                     switch (b.location.GetX())
                     {
@@ -234,17 +231,11 @@ namespace _8x8x8_LED.Views
         {
             btnStart.Text = "Start &Game";
             if (player1Score > player2Score)
-            {
                 MessageBox.Show("Player 1 wins!");
-            }
             else if (player1Score < player2Score)
-            {
                 MessageBox.Show("Player 2 wins!");
-            }
             else
-            {
                 MessageBox.Show("It's a draw!");
-            }
             speed = 500;
         }
     }

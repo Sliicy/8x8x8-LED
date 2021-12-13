@@ -21,11 +21,10 @@ namespace _8x8x8_LED.Views
         private int speed = 50;
         private int timeElapsed = 0; // Used to adjust speed of animation
 
-
         private bool animate = true;
         private bool animateMusic = false;
         private bool teleport = false;
-
+        private readonly Random random = new Random();
 
         private readonly int samples = 1024; // How many samples to calculate wave form from.
         private double[] twoChannels = new double[2]; // Holds 2 bytes of audio.
@@ -45,7 +44,6 @@ namespace _8x8x8_LED.Views
             btnAddBall.PerformClick();
             chkSyncMusic.Checked = Properties.Settings.Default.Balls_SyncToMusic;
             trkSpeed.Value = Properties.Settings.Default.Balls_Speed;
-
             bwEngine.RunWorkerAsync();
         }
 
@@ -66,40 +64,35 @@ namespace _8x8x8_LED.Views
         {
             bool restartWhenReady = chkSyncMusic.Checked;
             chkSyncMusic.Checked = false;
-            Ball b = new Ball();
-            Random random = new Random();
+            Ball b = new Ball
+            {
+                color = ColorHelper.RandomDarkColor(false)
+            };
             int randomNumber = random.Next(1, 4);
             if (randomNumber == 1)
-            {
                 b.directionX = Direction.Backwards;
-            }
             else if (randomNumber == 2)
-            {
                 b.directionX = Direction.Forwards;
-            }
+
             randomNumber = random.Next(1, 4);
+
             if (randomNumber == 1)
-            {
                 b.directionY = Direction.Leftwards;
-            }
             else if (randomNumber == 2)
-            {
                 b.directionY = Direction.Rightwards;
-            }
+
             randomNumber = random.Next(1, 4);
+
             if (randomNumber == 1)
-            {
                 b.directionZ = Direction.Upwards;
-            }
             else if (randomNumber == 2)
-            {
                 b.directionZ = Direction.Downwards;
-            }
+            
             b.location.SetX(random.Next(0, 8));
             b.location.SetY(random.Next(0, 8));
             b.location.SetZ(random.Next(0, 8));
 
-            // If ball isn't moving:
+            // If ball isn't moving, default to downwards:
             if (b.directionX != Direction.Backwards &&
                 b.directionX != Direction.Forwards &&
                 b.directionY != Direction.Leftwards &&
@@ -142,107 +135,36 @@ namespace _8x8x8_LED.Views
                     foreach (Ball b in balls)
                     {
                         b.Move(teleport);
-                        int destination = b.location.GetZ() + (b.location.GetY() * 8);
-                        switch (b.location.GetX())
-                        {
-                            case 0:
-                                cube.matrix_legacy[destination] = 1;
-                                break;
-                            case 1:
-                                cube.matrix_legacy[destination] = 2;
-                                break;
-                            case 2:
-                                cube.matrix_legacy[destination] = 4;
-                                break;
-                            case 3:
-                                cube.matrix_legacy[destination] = 8;
-                                break;
-                            case 4:
-                                cube.matrix_legacy[destination] = 16;
-                                break;
-                            case 5:
-                                cube.matrix_legacy[destination] = 32;
-                                break;
-                            case 6:
-                                cube.matrix_legacy[destination] = 64;
-                                break;
-                            case 7:
-                                cube.matrix_legacy[destination] = 128;
-                                break;
-                        }
+                        cube.DrawPoint(b.location.GetX(), b.location.GetY(), b.location.GetZ(), b.color);
                     }
                 }
-
 
                 if (animateMusic)
                 {
-                    if (Math.Abs(twoChannels[0]) < .05)
-                    {
-                        speed = 45000;
-                    }
-                    if (Math.Abs(twoChannels[0]) > .05)
-                    {
-                        speed = 40000;
-                    }
-                    if (Math.Abs(twoChannels[0]) > .1)
-                    {
-                        speed = 35000;
-                    }
-                    if (Math.Abs(twoChannels[0]) > .15)
-                    {
-                        speed = 30000;
-                    }
-                    if (Math.Abs(twoChannels[0]) > .2)
-                    {
-                        speed = 25000;
-                    }
-                    if (Math.Abs(twoChannels[0]) > .25)
-                    {
-                        speed = 20000;
-                    }
-                    if (Math.Abs(twoChannels[0]) > .3)
-                    {
-                        speed = 15000;
-                    }
-                    if (Math.Abs(twoChannels[0]) > .4)
-                    {
-                        speed = 10000;
-                    }
-                    if (Math.Abs(twoChannels[0]) > .5)
-                    {
-                        speed = 5000;
-                    }
-
+                    if (Math.Abs(twoChannels[0]) < .05) speed = 45000;
+                    if (Math.Abs(twoChannels[0]) > .05) speed = 40000;
+                    if (Math.Abs(twoChannels[0]) > .1) speed = 35000;
+                    if (Math.Abs(twoChannels[0]) > .15) speed = 30000;
+                    if (Math.Abs(twoChannels[0]) > .2) speed = 25000;
+                    if (Math.Abs(twoChannels[0]) > .25) speed = 20000;
+                    if (Math.Abs(twoChannels[0]) > .3) speed = 15000;
+                    if (Math.Abs(twoChannels[0]) > .4) speed = 10000;
+                    if (Math.Abs(twoChannels[0]) > .5) speed = 5000;
                     if ((Math.Abs(twoChannels[0]) > 0.05) && timeElapsed % speed == 0)
-                    {
-                        cube.Flip(Axis.X);
                         SerialHelper.Send(serialPort, cube);
-                    }
-
                 }
                 else
                 {
-                    SerialHelper.Send(serialPort, cube);
+                    SerialHelper.Send(serialPort, cube, true);
                     System.Threading.Thread.Sleep(speed);
                 }
-
-
-
-
                 timeElapsed++;
             }
         }
 
         private void CbPhysics_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbPhysics.Text == "Portal")
-            {
-                teleport = true;
-            }
-            else
-            {
-                teleport = false;
-            }
+            teleport = cbPhysics.Text == "Portal";
             Properties.Settings.Default.Balls_Physics = cbPhysics.SelectedIndex;
         }
 
@@ -252,10 +174,8 @@ namespace _8x8x8_LED.Views
             {
                 waveIn.DataAvailable += delegate (object sender2, WaveInEventArgs e2)
                 { WaveIn_DataAvailable(e2, ref twoChannels, samples); };
-
                 waveIn.StartRecording();
                 animateMusic = true;
-
             }
             else
             {
@@ -267,12 +187,18 @@ namespace _8x8x8_LED.Views
             Properties.Settings.Default.Balls_SyncToMusic = chkSyncMusic.Checked;
         }
 
-        static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] twoChannels, int samples = 8)
+        private static void WaveIn_DataAvailable(WaveInEventArgs e, ref double[] twoChannels, int samples = 8)
         {
-            for (int i = 0; i < e.BytesRecorded; i += samples)
+            try
             {
-                twoChannels[0] = BitConverter.ToSingle(e.Buffer, i);
-                twoChannels[1] = BitConverter.ToSingle(e.Buffer, i + 4);
+                for (int i = 0; i < e.BytesRecorded; i += samples)
+                {
+                    twoChannels[0] = BitConverter.ToSingle(e.Buffer, i);
+                    twoChannels[1] = BitConverter.ToSingle(e.Buffer, i + 4);
+                }
+            }
+            catch (Exception)
+            {
             }
         }
     }

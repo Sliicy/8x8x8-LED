@@ -341,5 +341,14 @@ namespace _8x8x8_LED.Helpers
             }
             return newColor;
         }
+
+        public static CubeColor RandomDarkColor(bool includeBlack = false)
+        {
+            CubeColor newColor = RandomColor(includeBlack);
+            while (!newColor.ToString().Contains("Dark")) {
+                newColor = RandomColor(includeBlack);
+            }
+            return newColor;
+        }
     }
 }

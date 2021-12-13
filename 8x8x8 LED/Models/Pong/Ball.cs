@@ -12,6 +12,8 @@
         public Direction directionY = Direction.None;
         public Direction directionZ = Direction.None;
 
+        public CubeColor color = CubeColor.DarkBlue;
+
         public bool outOfBounds = false;
 
         public void Move(bool teleport = false, Paddle p1 = null, Paddle p2 = null)
