@@ -29,8 +29,8 @@ You can type any message into the textbox, and the cube will continuously scroll
 ### Clock
 This will display the current time on the cube.
 
+![Clock using RGB Cube](/Screenshots/Clock.png)
 ![Clock Demonstrating Standard Time](/Screenshots/Standard-Time.jpg)
-![Clock Demonstrating Army Time](/Screenshots/Army-Time.jpg)
 
 ### Pong Game
 This will let you play the classic 'Pong Game' with a friend.
