@@ -40,8 +40,10 @@ This will let you play the classic 'Pong Game' with a friend.
 ### Image Viewer
 This will let you open an image and project it onto the cube.
 
-![Clock Demonstrating Army Time](/Screenshots/Image-Viewer.jpg)
-![Clock Demonstrating Army Time](/Screenshots/Image-Viewer.png)
+![Circle](/Screenshots/Image-Viewer.jpg)
+![Drawing a Circle](/Screenshots/Image-Viewer.png)
+![Heart](/Screenshots/Heart.png)
+![Smiley Face](/Screenshots/Smiley.png)
 
 ### Video Player
 This will let you open an image and animate it onto the cube.
