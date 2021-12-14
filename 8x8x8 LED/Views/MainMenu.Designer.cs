@@ -50,7 +50,6 @@ namespace _8x8x8_LED
             this.lblRotateY = new System.Windows.Forms.Label();
             this.lblRotateX = new System.Windows.Forms.Label();
             this.grpSendPacket = new System.Windows.Forms.GroupBox();
-            this.btnInvertPacket = new System.Windows.Forms.Button();
             this.btnSendPacket = new System.Windows.Forms.Button();
             this.txtBytesToSend = new System.Windows.Forms.TextBox();
             this.grpConnection = new System.Windows.Forms.GroupBox();
@@ -203,7 +202,7 @@ namespace _8x8x8_LED
             // 
             // btnCalibrate
             // 
-            this.btnCalibrate.Location = new System.Drawing.Point(16, 55);
+            this.btnCalibrate.Location = new System.Drawing.Point(16, 50);
             this.btnCalibrate.Name = "btnCalibrate";
             this.btnCalibrate.Size = new System.Drawing.Size(222, 42);
             this.btnCalibrate.TabIndex = 18;
@@ -318,7 +317,6 @@ namespace _8x8x8_LED
             // 
             // grpSendPacket
             // 
-            this.grpSendPacket.Controls.Add(this.btnInvertPacket);
             this.grpSendPacket.Controls.Add(this.btnSendPacket);
             this.grpSendPacket.Controls.Add(this.txtBytesToSend);
             this.grpSendPacket.Location = new System.Drawing.Point(6, 452);
@@ -329,18 +327,6 @@ namespace _8x8x8_LED
             this.grpSendPacket.TabIndex = 34;
             this.grpSendPacket.TabStop = false;
             this.grpSendPacket.Text = "Send Packet";
-            // 
-            // btnInvertPacket
-            // 
-            this.btnInvertPacket.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInvertPacket.Location = new System.Drawing.Point(359, 171);
-            this.btnInvertPacket.Margin = new System.Windows.Forms.Padding(6);
-            this.btnInvertPacket.Name = "btnInvertPacket";
-            this.btnInvertPacket.Size = new System.Drawing.Size(138, 42);
-            this.btnInvertPacket.TabIndex = 37;
-            this.btnInvertPacket.Text = "&Invert";
-            this.btnInvertPacket.UseVisualStyleBackColor = true;
-            this.btnInvertPacket.Click += new System.EventHandler(this.BtnInvertPacket_Click);
             // 
             // btnSendPacket
             // 
@@ -366,7 +352,6 @@ namespace _8x8x8_LED
             this.txtBytesToSend.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtBytesToSend.Size = new System.Drawing.Size(483, 109);
             this.txtBytesToSend.TabIndex = 35;
-            this.txtBytesToSend.Text = resources.GetString("txtBytesToSend.Text");
             // 
             // grpConnection
             // 
@@ -554,7 +539,7 @@ namespace _8x8x8_LED
             this.btnConnect.Margin = new System.Windows.Forms.Padding(6);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(300, 42);
-            this.btnConnect.TabIndex = 40;
+            this.btnConnect.TabIndex = 39;
             this.btnConnect.Text = "Co&nnect";
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
@@ -649,7 +634,7 @@ namespace _8x8x8_LED
             this.btnWebsite.Margin = new System.Windows.Forms.Padding(6);
             this.btnWebsite.Name = "btnWebsite";
             this.btnWebsite.Size = new System.Drawing.Size(246, 42);
-            this.btnWebsite.TabIndex = 38;
+            this.btnWebsite.TabIndex = 37;
             this.btnWebsite.Text = "&Website && Updates";
             this.btnWebsite.UseVisualStyleBackColor = true;
             this.btnWebsite.Click += new System.EventHandler(this.BtnWebsite_Click);
@@ -660,7 +645,7 @@ namespace _8x8x8_LED
             this.btnReset.Margin = new System.Windows.Forms.Padding(6);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(246, 42);
-            this.btnReset.TabIndex = 39;
+            this.btnReset.TabIndex = 38;
             this.btnReset.Text = "&Reset all Settings";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.BtnReset_Click);
@@ -721,7 +706,6 @@ namespace _8x8x8_LED
         private System.Windows.Forms.GroupBox grpSendPacket;
         private System.Windows.Forms.Button btnSendPacket;
         private System.Windows.Forms.TextBox txtBytesToSend;
-        private System.Windows.Forms.Button btnInvertPacket;
         private System.Windows.Forms.GroupBox grpGeometry;
         private System.Windows.Forms.CheckBox chkFlipZ;
         private System.Windows.Forms.CheckBox chkFlipY;

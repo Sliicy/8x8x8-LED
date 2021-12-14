@@ -217,35 +217,6 @@ namespace _8x8x8_LED
             }
         }
 
-        private void BtnInvertPacket_Click(object sender, EventArgs e)
-        {
-            // TODO: Add support for packet inversion for RGB Cube type.
-            if (cube.type == CubeType.Monochrome)
-            {
-
-            }
-            else if (cube.type == CubeType.RGB)
-            {
-
-            }
-            string sb = "";
-            bool ignoreHeaderBytes = true;
-
-            foreach (string byteFound in txtBytesToSend.Text.Split(','))
-            {
-                if (ignoreHeaderBytes)
-                {
-                    ignoreHeaderBytes = false;
-                    continue;
-                }
-                string trimmedString = byteFound.Replace("0x", "").Trim();
-                if (trimmedString == "") continue;
-                int hex = Convert.ToInt32(trimmedString, 16);
-                sb += "0x" + (~hex).ToString("X").Substring(6) + ", ";
-            }
-            txtBytesToSend.Text = "0xF2, " + Environment.NewLine + sb;
-        }
-
         private void FrmMain_KeyDown(object sender, KeyEventArgs e)
         {
             if (ModifierKeys == Keys.Control && e.KeyCode == Keys.W)
@@ -404,13 +375,11 @@ namespace _8x8x8_LED
             {
                 case "Monochrome":
                     txtBytesToSend.Text = Properties.Resources.MonochromeExample;
-                    btnInvertPacket.Enabled = true;
                     if (cube != null)
                         cube.type = CubeType.Monochrome;
                     break;
                 case "RGB":
                     txtBytesToSend.Text = Properties.Resources.RGBExample;
-                    btnInvertPacket.Enabled = false;
                     if (cube != null)
                         cube.type = CubeType.RGB;
                     break;
