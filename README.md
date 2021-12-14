@@ -32,11 +32,6 @@ This will display the current time on the cube.
 ![Clock Demonstrating Standard Time](/Screenshots/Standard-Time.jpg)
 ![Clock Demonstrating Army Time](/Screenshots/Army-Time.jpg)
 
-### Snake Game
-This will let you play the classic 'Snake Game' (it currently is a little buggy).
-
-![Clock Demonstrating Army Time](/Screenshots/Snake.gif)
-
 ### Pong Game
 This will let you play the classic 'Pong Game' with a friend.
 
