@@ -187,12 +187,13 @@ namespace _8x8x8_LED.Helpers
         public static MonochromeCube RGBToMonochromeDriver(Cube rgbCube)
         {
             MonochromeCube output = new MonochromeCube(64);
+            rgbCube.Rotate(Rotation.ClockwiseY, 2);
+            rgbCube.Rotate(Rotation.ClockwiseX, 2);
             for (int x = 0; x < rgbCube.width; x++)
                 for (int y = 0; y < rgbCube.length; y++)
                     for (int z = 0; z < rgbCube.height; z++)
-                        if (rgbCube.matrix[x, z, y] != CubeColor.Black)
+                        if (rgbCube.matrix[x, y, z] != CubeColor.Black)
                             output.matrixBytes[y + z * 8] += (byte)Math.Pow(2, x);
-            output.Rotate(Rotation.CounterclockwiseY);
             return output;
         }
     }

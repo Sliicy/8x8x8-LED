@@ -17,6 +17,7 @@ namespace _8x8x8_LED.Views
         private int rainCount = 90;
         private int speed = 0;
         private bool animate = false;
+        private readonly Random random = new Random();
 
         private string directionX = "";
         private string directionY = "";
@@ -32,14 +33,10 @@ namespace _8x8x8_LED.Views
         private void ChkAnimate_CheckedChanged(object sender, EventArgs e)
         {
             animate = chkAnimate.Checked;
-            if (chkAnimate.Checked && bwAnimate.IsBusy == false)
-            {
+            if (animate && bwAnimate.IsBusy == false)
                 bwAnimate.RunWorkerAsync();
-            }
             else
-            {
                 bwAnimate.CancelAsync();
-            }
         }
 
         private void BwAnimate_DoWork(object sender, DoWorkEventArgs e)
@@ -48,49 +45,46 @@ namespace _8x8x8_LED.Views
             {
                 Random random = new Random();
                 for (int x = 0; x < cube.width; x++)
-                {
                     for (int y = 0; y < cube.width; y++)
                     {
                         int randomNumber = random.Next(1, rainCount);
                         if (randomNumber == 1)
-                        {
                             cube.matrix[x, y, directionZ == "Upwards" ? 0 : cube.height - 1] = chkRainbow.Checked ? ColorHelper.RandomColor() : RandomBlue();
-                        }
                     }
-                }
                 SerialHelper.Send(serialPort, cube);
                 System.Threading.Thread.Sleep(speed);
-
-                if (directionX == "Forwards")
+                switch (directionX)
                 {
-                    cube.Shift(Direction.Forwards, 0, false);
+                    case "Forwards":
+                        cube.Shift(Direction.Forwards, 0, false);
+                        break;
+                    case "Backwards":
+                        cube.Shift(Direction.Backwards, 0, false);
+                        break;
                 }
-                else if (directionX == "Backwards")
+                switch (directionY)
                 {
-                    cube.Shift(Direction.Backwards, 0, false);
+                    case "Leftwards":
+                        cube.Shift(Direction.Leftwards, 0, false);
+                        break;
+                    case "Rightwards":
+                        cube.Shift(Direction.Rightwards, 0, false);
+                        break;
                 }
-                if (directionY == "Leftwards")
+                switch (directionZ)
                 {
-                    cube.Shift(Direction.Leftwards, 0, false);
-                }
-                else if (directionY == "Rightwards")
-                {
-                    cube.Shift(Direction.Rightwards, 0, false);
-                }
-                if (directionZ == "Upwards")
-                {
-                    cube.Shift(Direction.Upwards, 0, false);
-                }
-                else if (directionZ == "Downwards")
-                {
-                    cube.Shift(Direction.Downwards, 0, false);
+                    case "Upwards":
+                        cube.Shift(Direction.Upwards, 0, false);
+                        break;
+                    case "Downwards":
+                        cube.Shift(Direction.Downwards, 0, false);
+                        break;
                 }
             }
         }
 
         private CubeColor RandomBlue()
         {
-            Random random = new Random();
             int randomNumber = random.Next(1, 6);
             switch (randomNumber)
             {
