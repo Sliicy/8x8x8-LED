@@ -493,13 +493,13 @@ namespace _8x8x8_LED.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Rain_Rainbow {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Rain_Type {
             get {
-                return ((bool)(this["Rain_Rainbow"]));
+                return ((int)(this["Rain_Type"]));
             }
             set {
-                this["Rain_Rainbow"] = value;
+                this["Rain_Type"] = value;
             }
         }
         

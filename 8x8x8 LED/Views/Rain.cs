@@ -17,6 +17,7 @@ namespace _8x8x8_LED.Views
         private int rainCount = 90;
         private int speed = 0;
         private bool animate = false;
+        private string animationType = "";
         private readonly Random random = new Random();
 
         private string directionX = "";
@@ -46,11 +47,23 @@ namespace _8x8x8_LED.Views
                 Random random = new Random();
                 for (int x = 0; x < cube.width; x++)
                     for (int y = 0; y < cube.width; y++)
-                    {
-                        int randomNumber = random.Next(1, rainCount);
-                        if (randomNumber == 1)
-                            cube.matrix[x, y, directionZ == "Upwards" ? 0 : cube.height - 1] = chkRainbow.Checked ? ColorHelper.RandomColor() : RandomBlue();
-                    }
+                        if (random.Next(1, rainCount) == 1)
+                        {
+                            CubeColor color = CubeColor.Black;
+                            switch (animationType)
+                            {
+                                case "Rain":
+                                    color = RandomBlue();
+                                    break;
+                                case "Rainbow":
+                                    color = ColorHelper.RandomColor();
+                                    break;
+                                case "Matrix":
+                                    color = RandomGreenWhite();
+                                    break;
+                            }
+                            cube.matrix[x, y, directionZ == "Upwards" ? 0 : cube.height - 1] = color;
+                        }
                 SerialHelper.Send(serialPort, cube);
                 System.Threading.Thread.Sleep(speed);
                 switch (directionX)
@@ -83,10 +96,26 @@ namespace _8x8x8_LED.Views
             }
         }
 
+        private CubeColor RandomGreenWhite()
+        {
+            switch (random.Next(1, 5))
+            {
+                case 1:
+                    return CubeColor.Green;
+                case 2:
+                    return CubeColor.DarkGreen;
+                case 3:
+                    return CubeColor.BrightGreen;
+                case 4:
+                    return CubeColor.GreenYellow;
+                default:
+                    return CubeColor.White;
+            }
+        }
+
         private CubeColor RandomBlue()
         {
-            int randomNumber = random.Next(1, 6);
-            switch (randomNumber)
+            switch (random.Next(1, 6))
             {
                 case 1:
                     return CubeColor.Blue;
@@ -96,15 +125,14 @@ namespace _8x8x8_LED.Views
                     return CubeColor.BlueCyan;
                 case 4:
                     return CubeColor.DarkBlue;
-                case 5:
-                    return CubeColor.DarkCyan;
                 default:
-                    return CubeColor.Blue;
+                    return CubeColor.DarkCyan;
             }
         }
 
         private void FrmRain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Properties.Settings.Default.Rain_Type = cbAnimationType.SelectedIndex;
             animate = false;
             if (bwAnimate.IsBusy)
                 bwAnimate.CancelAsync();
@@ -144,13 +172,13 @@ namespace _8x8x8_LED.Views
             cbDirectionZ.SelectedIndex = Properties.Settings.Default.Rain_Z;
             tbRainCount.Value = Properties.Settings.Default.Rain_Count;
             tbSpeed.Value = Properties.Settings.Default.Rain_Speed;
-            chkRainbow.Checked = Properties.Settings.Default.Rain_Rainbow;
+            cbAnimationType.SelectedIndex = Properties.Settings.Default.Rain_Type;
             chkAnimate.Checked = true;
         }
 
-        private void ChkRainbow_CheckedChanged(object sender, EventArgs e)
+        private void CbAnimationType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.Rain_Rainbow = chkRainbow.Checked;
+            animationType = cbAnimationType.Text;
         }
     }
 }

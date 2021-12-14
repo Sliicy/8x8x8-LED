@@ -119,8 +119,8 @@
     <Setting Name="CubeType" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="Rain_Rainbow" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="Rain_Type" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Lightning_Rainbow" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

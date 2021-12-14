@@ -42,7 +42,7 @@ namespace _8x8x8_LED.Views
             this.cbDirectionY = new System.Windows.Forms.ComboBox();
             this.lblDirectionX = new System.Windows.Forms.Label();
             this.cbDirectionX = new System.Windows.Forms.ComboBox();
-            this.chkRainbow = new System.Windows.Forms.CheckBox();
+            this.cbAnimationType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbRainCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).BeginInit();
             this.SuspendLayout();
@@ -50,7 +50,7 @@ namespace _8x8x8_LED.Views
             // chkAnimate
             // 
             this.chkAnimate.AutoSize = true;
-            this.chkAnimate.Location = new System.Drawing.Point(24, 24);
+            this.chkAnimate.Location = new System.Drawing.Point(15, 15);
             this.chkAnimate.Margin = new System.Windows.Forms.Padding(6);
             this.chkAnimate.Name = "chkAnimate";
             this.chkAnimate.Size = new System.Drawing.Size(98, 28);
@@ -67,7 +67,7 @@ namespace _8x8x8_LED.Views
             // lblStarCount
             // 
             this.lblStarCount.AutoSize = true;
-            this.lblStarCount.Location = new System.Drawing.Point(19, 92);
+            this.lblStarCount.Location = new System.Drawing.Point(11, 92);
             this.lblStarCount.Name = "lblStarCount";
             this.lblStarCount.Size = new System.Drawing.Size(108, 24);
             this.lblStarCount.TabIndex = 2;
@@ -87,7 +87,7 @@ namespace _8x8x8_LED.Views
             // lblSpeed
             // 
             this.lblSpeed.AutoSize = true;
-            this.lblSpeed.Location = new System.Drawing.Point(20, 131);
+            this.lblSpeed.Location = new System.Drawing.Point(11, 131);
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(71, 24);
             this.lblSpeed.TabIndex = 4;
@@ -110,7 +110,7 @@ namespace _8x8x8_LED.Views
             "None",
             "Upwards",
             "Downwards"});
-            this.cbDirectionZ.Location = new System.Drawing.Point(154, 270);
+            this.cbDirectionZ.Location = new System.Drawing.Point(129, 270);
             this.cbDirectionZ.Name = "cbDirectionZ";
             this.cbDirectionZ.Size = new System.Drawing.Size(121, 32);
             this.cbDirectionZ.TabIndex = 11;
@@ -119,7 +119,7 @@ namespace _8x8x8_LED.Views
             // lblDirectionZ
             // 
             this.lblDirectionZ.AutoSize = true;
-            this.lblDirectionZ.Location = new System.Drawing.Point(20, 273);
+            this.lblDirectionZ.Location = new System.Drawing.Point(8, 273);
             this.lblDirectionZ.Name = "lblDirectionZ";
             this.lblDirectionZ.Size = new System.Drawing.Size(106, 24);
             this.lblDirectionZ.TabIndex = 10;
@@ -128,7 +128,7 @@ namespace _8x8x8_LED.Views
             // lblDirectionY
             // 
             this.lblDirectionY.AutoSize = true;
-            this.lblDirectionY.Location = new System.Drawing.Point(20, 230);
+            this.lblDirectionY.Location = new System.Drawing.Point(8, 230);
             this.lblDirectionY.Name = "lblDirectionY";
             this.lblDirectionY.Size = new System.Drawing.Size(106, 24);
             this.lblDirectionY.TabIndex = 8;
@@ -142,7 +142,7 @@ namespace _8x8x8_LED.Views
             "None",
             "Leftwards",
             "Rightwards"});
-            this.cbDirectionY.Location = new System.Drawing.Point(154, 227);
+            this.cbDirectionY.Location = new System.Drawing.Point(129, 227);
             this.cbDirectionY.Name = "cbDirectionY";
             this.cbDirectionY.Size = new System.Drawing.Size(121, 32);
             this.cbDirectionY.TabIndex = 9;
@@ -151,7 +151,7 @@ namespace _8x8x8_LED.Views
             // lblDirectionX
             // 
             this.lblDirectionX.AutoSize = true;
-            this.lblDirectionX.Location = new System.Drawing.Point(20, 188);
+            this.lblDirectionX.Location = new System.Drawing.Point(8, 188);
             this.lblDirectionX.Name = "lblDirectionX";
             this.lblDirectionX.Size = new System.Drawing.Size(108, 24);
             this.lblDirectionX.TabIndex = 6;
@@ -165,29 +165,32 @@ namespace _8x8x8_LED.Views
             "None",
             "Forwards",
             "Backwards"});
-            this.cbDirectionX.Location = new System.Drawing.Point(154, 185);
+            this.cbDirectionX.Location = new System.Drawing.Point(129, 185);
             this.cbDirectionX.Name = "cbDirectionX";
             this.cbDirectionX.Size = new System.Drawing.Size(121, 32);
             this.cbDirectionX.TabIndex = 7;
             this.cbDirectionX.SelectedIndexChanged += new System.EventHandler(this.CbDirectionX_SelectedIndexChanged);
             // 
-            // chkRainbow
+            // cbAnimationType
             // 
-            this.chkRainbow.AutoSize = true;
-            this.chkRainbow.Location = new System.Drawing.Point(24, 61);
-            this.chkRainbow.Name = "chkRainbow";
-            this.chkRainbow.Size = new System.Drawing.Size(103, 28);
-            this.chkRainbow.TabIndex = 1;
-            this.chkRainbow.Text = "&Rainbow";
-            this.chkRainbow.UseVisualStyleBackColor = true;
-            this.chkRainbow.CheckedChanged += new System.EventHandler(this.ChkRainbow_CheckedChanged);
+            this.cbAnimationType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAnimationType.FormattingEnabled = true;
+            this.cbAnimationType.Items.AddRange(new object[] {
+            "Rain",
+            "Rainbow",
+            "Matrix"});
+            this.cbAnimationType.Location = new System.Drawing.Point(12, 52);
+            this.cbAnimationType.Name = "cbAnimationType";
+            this.cbAnimationType.Size = new System.Drawing.Size(121, 32);
+            this.cbAnimationType.TabIndex = 1;
+            this.cbAnimationType.SelectedIndexChanged += new System.EventHandler(this.CbAnimationType_SelectedIndexChanged);
             // 
             // FrmRain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(622, 328);
-            this.Controls.Add(this.chkRainbow);
+            this.Controls.Add(this.cbAnimationType);
             this.Controls.Add(this.cbDirectionX);
             this.Controls.Add(this.cbDirectionY);
             this.Controls.Add(this.cbDirectionZ);
@@ -230,6 +233,6 @@ namespace _8x8x8_LED.Views
         private System.Windows.Forms.ComboBox cbDirectionY;
         private System.Windows.Forms.Label lblDirectionX;
         private System.Windows.Forms.ComboBox cbDirectionX;
-        private System.Windows.Forms.CheckBox chkRainbow;
+        private System.Windows.Forms.ComboBox cbAnimationType;
     }
 }
