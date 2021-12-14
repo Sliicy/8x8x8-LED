@@ -207,7 +207,7 @@ namespace _8x8x8_LED
             this.btnCalibrate.Name = "btnCalibrate";
             this.btnCalibrate.Size = new System.Drawing.Size(222, 42);
             this.btnCalibrate.TabIndex = 18;
-            this.btnCalibrate.Text = "Calibrate Cube";
+            this.btnCalibrate.Text = "Calibration";
             this.btnCalibrate.UseVisualStyleBackColor = true;
             this.btnCalibrate.Click += new System.EventHandler(this.BtnCalibrate_Click);
             // 
@@ -544,6 +544,7 @@ namespace _8x8x8_LED
             this.cbComPort.Name = "cbComPort";
             this.cbComPort.Size = new System.Drawing.Size(107, 32);
             this.cbComPort.TabIndex = 7;
+            this.cbComPort.SelectedIndexChanged += new System.EventHandler(this.CbComPort_SelectedIndexChanged);
             this.cbComPort.Click += new System.EventHandler(this.CbComPort_Click);
             this.cbComPort.Enter += new System.EventHandler(this.CbComPort_Click);
             // 

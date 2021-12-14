@@ -1,5 +1,6 @@
 ﻿using _8x8x8_LED.Helpers;
 using _8x8x8_LED.Models;
+using _8x8x8_LED.Models.Geometry;
 using _8x8x8_LED.Views;
 using System;
 using System.Diagnostics;
@@ -168,6 +169,7 @@ namespace _8x8x8_LED
         private void CbBaudRate_SelectedIndexChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.BaudRate = int.Parse(cbBaudRate.Text);
+            DisconnectIfConnected();
         }
 
         private void NudDataBits_ValueChanged(object sender, EventArgs e)
@@ -218,6 +220,14 @@ namespace _8x8x8_LED
         private void BtnInvertPacket_Click(object sender, EventArgs e)
         {
             // TODO: Add support for packet inversion for RGB Cube type.
+            if (cube.type == CubeType.Monochrome)
+            {
+
+            }
+            else if (cube.type == CubeType.RGB)
+            {
+
+            }
             string sb = "";
             bool ignoreHeaderBytes = true;
 
@@ -353,61 +363,6 @@ namespace _8x8x8_LED
             RenderCube();
         }
 
-        private void BtnCalibrate_Click(object sender, EventArgs e)
-        {
-            //if (cbCubeType.Text == "RGB")
-            //    return; // TODO: Add support for RGB calibration.
-            //cube.Clear();
-            //SerialHelper.Send(serialPort, cube);
-            //var d = MessageBox.Show("Please play with the settings until the next 5 messages are all describing the cube correctly." + Environment.NewLine + Environment.NewLine +
-            //    "Alternatively, there is a \"Calibration Cube.png\" image which can be loaded into the Image Viewer and used to calibrate the cube (make sure to use the controls found in settings for changes to stay persistent)." + Environment.NewLine + Environment.NewLine +
-            //    "Continue with manual calibration?", "Calibrate Cube", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            //if (d != DialogResult.Yes) return;
-            //cube.matrix_legacy[0] = 128;
-            //SerialHelper.Send(serialPort, cube);
-            //MessageBox.Show("If the LEDs are calibrated correctly, then right now, the back bottom left LED should be the only one on.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //cube.Clear();
-            //cube.matrix_legacy[0] = 255;
-            //SerialHelper.Send(serialPort, cube);
-            //MessageBox.Show("Now, the bottom left row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //cube.Clear();
-            //cube.matrix_legacy[0] = 128;
-            //cube.matrix_legacy[8] = 128;
-            //cube.matrix_legacy[16] = 128;
-            //cube.matrix_legacy[24] = 128;
-            //cube.matrix_legacy[32] = 128;
-            //cube.matrix_legacy[40] = 128;
-            //cube.matrix_legacy[48] = 128;
-            //cube.matrix_legacy[56] = 128;
-            //SerialHelper.Send(serialPort, cube);
-            //MessageBox.Show("Now, the bottom back row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //cube.Clear();
-            //cube.matrix_legacy[56] = 1;
-            //cube.matrix_legacy[57] = 1;
-            //cube.matrix_legacy[58] = 1;
-            //cube.matrix_legacy[59] = 1;
-            //cube.matrix_legacy[60] = 1;
-            //cube.matrix_legacy[61] = 1;
-            //cube.matrix_legacy[62] = 1;
-            //cube.matrix_legacy[63] = 1;
-            //SerialHelper.Send(serialPort, cube);
-            //MessageBox.Show("Now, the right front row should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //cube.Clear();
-            //cube.matrix_legacy[7] = 255;
-            //cube.matrix_legacy[15] = 255;
-            //cube.matrix_legacy[23] = 255;
-            //cube.matrix_legacy[31] = 255;
-            //cube.matrix_legacy[39] = 255;
-            //cube.matrix_legacy[47] = 255;
-            //cube.matrix_legacy[55] = 255;
-            //cube.matrix_legacy[63] = 255;
-            //SerialHelper.Send(serialPort, cube);
-            //MessageBox.Show("Now, the entire top section should be lit.", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //cube.Clear();
-            //SerialHelper.Send(serialPort, cube);
-            //MessageBox.Show("If each of these message boxes were correct, then the cube is calibrated!", "Calibrate Cube", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void BtnReset_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Reset all settings to default?", "Reset", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
@@ -460,12 +415,50 @@ namespace _8x8x8_LED
                         cube.type = CubeType.RGB;
                     break;
             }
+            DisconnectIfConnected();
+        }
+
+        private void DisconnectIfConnected()
+        {
+            if (btnConnect.Text == "Disco&nnect")
+                btnConnect.PerformClick();
         }
 
         private void CbSendColor_SelectedIndexChanged(object sender, EventArgs e)
         {
             cube.Clear((CubeColor)Enum.Parse(typeof(CubeColor), cbSendColor.Text));
             SerialHelper.Send(serialPort, cube);
+        }
+
+        private void BtnCalibrate_Click(object sender, EventArgs e)
+        {
+            cube.Clear();
+            cube.DrawPlane(Axis.Y, 0, CubeColor.Red);
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("The front of the cube should be red.", "Calibration Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear();
+            cube.DrawPlane(Axis.X, 0, CubeColor.Green);
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("The left side of the cube should be green.", "Calibration Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear();
+            cube.DrawPlane(Axis.Z, cube.height - 1, CubeColor.Blue);
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("The top of the cube should be blue.", "Calibration Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear(CubeColor.White);
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("The entire cube should be white.", "Calibration Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear();
+            cube.DrawPoint(0, 0, 0, CubeColor.Yellow);
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("The front bottom left of the cube should be a yellow point.", "Calibration Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cube.Clear();
+            SerialHelper.Send(serialPort, cube);
+            MessageBox.Show("If all the previous colors were displayed correctly, then the cube is calibrated.", "Calibration Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void CbComPort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DisconnectIfConnected();
         }
     }
 }
