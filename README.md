@@ -40,7 +40,7 @@ This will let you play the classic 'Snake Game' (it currently is a little buggy)
 ### Pong Game
 This will let you play the classic 'Pong Game' with a friend.
 
-![Clock Demonstrating Army Time](/Screenshots/Pong.gif)
+![Clock Demonstrating Army Time](/Screenshots/Pong.png)
 
 ### Image Viewer
 This will let you open an image and project it onto the cube.
@@ -66,7 +66,7 @@ This will display bouncing balls (optionally syncable to music being played).
 ## How to Build
 <details>
   <summary>iCubeSmart 3D8-S-DIP board (Monochrome version)</summary>
-  
+
   ## How to Build for the iCubeSmart 3D8-S-DIP board (Monochrome version)
   The schematic for the board I used can be found [here](https://github.com/Sliicy/ledcube8x8x8/blob/master/schematics/iCubeSmart%20Schematic.pdf). Rather than building the PCB and all, I simply purchased a ready-to-assemble board on [Amazon](https://www.amazon.com/Icubesmart-Animation-Electronic-Teenagers-Activities/dp/B07GRDRPST).
 
@@ -89,7 +89,7 @@ Since I have a slightly different cube than the aformentioned cube in [Tomazas' 
 </details>
 <details>
   <summary>iCubeSmart 3D8RGB board (RGB version)</summary>
-  
+
   ## How to Build for the iCubeSmart 3D8RGB board (RGB version)
 This cube's motherboard features a separately mounted yellow board, controlled by a GD32F103RET6 microcontroller (similar to the STM32 series).
 
