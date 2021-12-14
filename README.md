@@ -19,7 +19,7 @@ The following are some videos of various animations in action:
 There are a bunch of different styles to choose from, each animating the cube based on music being played (some are briefly shown below via the Monochrome Cube).
 
 ![Music](/Screenshots/Music.gif)
-![Music Visualizer](/Screenshots/Music-Screenshot.png)
+![Fire Music](/Screenshots/Fire-Music.png)
 
 ### Marquee
 You can type any message into the textbox, and the cube will continuously scroll the text into view.
