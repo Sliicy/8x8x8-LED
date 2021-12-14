@@ -150,10 +150,8 @@ namespace _8x8x8_LED
                 try
                 {
                     if (serialPort.IsOpen)
-                    {
                         serialPort.Close();
-                        btnConnect.Text = "Co&nnect";
-                    }
+                    btnConnect.Text = "Co&nnect";
                 }
                 catch (Exception er)
                 {
