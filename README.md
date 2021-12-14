@@ -8,8 +8,9 @@ This project was inspired by [Tomazas' firmware](https://github.com/tomazas/ledc
 
 This project consists of a series of mini applets that can be used to display various animations on both Monochrome and RGB cubes.
 
-## Video Demo
-[![8x8x8 LED Cube](https://img.youtube.com/vi/v-YhtWm3FVs/0.jpg)](https://www.youtube.com/watch?v=v-YhtWm3FVs)
+## Video Demo RGB
+[![8x8x8 RGB Cube](https://img.youtube.com/vi/DU16Db5-o1E/0.jpg)](https://www.youtube.com/watch?v=DU16Db5-o1E)
+
 
 ## Examples
 The following are some videos of various animations in action:
