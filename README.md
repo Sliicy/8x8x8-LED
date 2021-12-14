@@ -16,7 +16,7 @@ This project consists of a series of mini applets that can be used to display va
 The following are some videos of various animations in action:
 
 ### Music Visualizer
-There are 9 different styles to choose from, each animating the cube based on music being played (each one is briefly shown below).
+There are a bunch of different styles to choose from, each animating the cube based on music being played (some are briefly shown below via the Monochrome Cube).
 
 ![Music](/Screenshots/Music.gif)
 ![Music Visualizer](/Screenshots/Music-Screenshot.png)
@@ -59,6 +59,11 @@ This will display rain droplets.
 This will display bouncing balls (optionally syncable to music being played).
 
 ![Clock Demonstrating Army Time](/Screenshots/Balls.gif)
+
+### Not Pictured
+- Lamp - Lights up the cube at specified times (like a nightlight).
+- Lightning - Bolts of lightning travel around the cube sporatically.
+- Snake - Simple snake game.
 
 ## How to Build
 <details>
