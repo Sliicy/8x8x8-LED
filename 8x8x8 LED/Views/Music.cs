@@ -226,6 +226,7 @@ namespace _8x8x8_LED.Views
                 {
                     SerialHelper.Send(serialPort, cube);
                     cubeCleared = false;
+                    timeElapsed = 0;
                 }
                 else
                 {
