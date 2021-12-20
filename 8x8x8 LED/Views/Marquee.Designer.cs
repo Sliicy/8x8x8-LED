@@ -40,9 +40,12 @@ namespace _8x8x8_LED.Views
             this.chkLetterEnding = new System.Windows.Forms.CheckBox();
             this.cbColor = new System.Windows.Forms.ComboBox();
             this.grpColor = new System.Windows.Forms.GroupBox();
+            this.grpBackcolor = new System.Windows.Forms.GroupBox();
+            this.cbBackcolor = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudSpacing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).BeginInit();
             this.grpColor.SuspendLayout();
+            this.grpBackcolor.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMarquee
@@ -140,18 +143,39 @@ namespace _8x8x8_LED.Views
             // grpColor
             // 
             this.grpColor.Controls.Add(this.cbColor);
-            this.grpColor.Location = new System.Drawing.Point(522, 142);
+            this.grpColor.Location = new System.Drawing.Point(300, 143);
             this.grpColor.Name = "grpColor";
             this.grpColor.Size = new System.Drawing.Size(216, 68);
             this.grpColor.TabIndex = 7;
             this.grpColor.TabStop = false;
-            this.grpColor.Text = "Color";
+            this.grpColor.Text = "&Color";
+            // 
+            // grpBackcolor
+            // 
+            this.grpBackcolor.Controls.Add(this.cbBackcolor);
+            this.grpBackcolor.Location = new System.Drawing.Point(522, 143);
+            this.grpBackcolor.Name = "grpBackcolor";
+            this.grpBackcolor.Size = new System.Drawing.Size(216, 68);
+            this.grpBackcolor.TabIndex = 9;
+            this.grpBackcolor.TabStop = false;
+            this.grpBackcolor.Text = "&Back Color";
+            // 
+            // cbBackcolor
+            // 
+            this.cbBackcolor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBackcolor.FormattingEnabled = true;
+            this.cbBackcolor.Location = new System.Drawing.Point(6, 28);
+            this.cbBackcolor.Name = "cbBackcolor";
+            this.cbBackcolor.Size = new System.Drawing.Size(200, 32);
+            this.cbBackcolor.TabIndex = 10;
+            this.cbBackcolor.SelectedIndexChanged += new System.EventHandler(this.CbBackcolor_SelectedIndexChanged);
             // 
             // FrmMarquee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 222);
+            this.Controls.Add(this.grpBackcolor);
             this.Controls.Add(this.grpColor);
             this.Controls.Add(this.chkLetterEnding);
             this.Controls.Add(this.trkSpeed);
@@ -173,6 +197,7 @@ namespace _8x8x8_LED.Views
             ((System.ComponentModel.ISupportInitialize)(this.nudSpacing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
             this.grpColor.ResumeLayout(false);
+            this.grpBackcolor.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,5 +214,7 @@ namespace _8x8x8_LED.Views
         private System.Windows.Forms.CheckBox chkLetterEnding;
         private System.Windows.Forms.ComboBox cbColor;
         private System.Windows.Forms.GroupBox grpColor;
+        private System.Windows.Forms.GroupBox grpBackcolor;
+        private System.Windows.Forms.ComboBox cbBackcolor;
     }
 }

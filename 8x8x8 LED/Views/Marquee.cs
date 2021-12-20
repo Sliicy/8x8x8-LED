@@ -20,6 +20,7 @@ namespace _8x8x8_LED.Views
         private Bitmap wideMarquee;
         private int speed = 200;
         private CubeColor targetColor = CubeColor.White;
+        private CubeColor targetBackColor = CubeColor.Black;
 
         // Needle represents the current vertical line being read from the marquee:
         private int needle = 0;
@@ -42,7 +43,7 @@ namespace _8x8x8_LED.Views
 
         private void DrawLetters()
         {
-            cube.Clear();
+            cube.Clear(targetBackColor);
 
             // Contains mappings for all letters needed:
             var letterMapping = new Dictionary<string, Bitmap>();
@@ -90,7 +91,7 @@ namespace _8x8x8_LED.Views
                         case 4:
                         case 5:
                         case 6:
-                            cube.DrawPoint(j, 0, i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
+                            cube.DrawPoint(j, 0, i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? targetBackColor : targetColor);
                             break;
                         case 7:
                         case 8:
@@ -99,7 +100,7 @@ namespace _8x8x8_LED.Views
                         case 11:
                         case 12:
                         case 13:
-                            cube.DrawPoint(cube.length - 1, j % (cube.length - 1), i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
+                            cube.DrawPoint(cube.length - 1, j % (cube.length - 1), i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? targetBackColor : targetColor);
                             break;
                         case 14:
                         case 15:
@@ -108,7 +109,7 @@ namespace _8x8x8_LED.Views
                         case 18:
                         case 19:
                         case 20:
-                            cube.DrawPoint((cube.length - 1) - j % (cube.length - 1), cube.length - 1, i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
+                            cube.DrawPoint((cube.length - 1) - j % (cube.length - 1), cube.length - 1, i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? targetBackColor : targetColor);
                             break;
                         case 21:
                         case 22:
@@ -117,7 +118,7 @@ namespace _8x8x8_LED.Views
                         case 25:
                         case 26:
                         case 27:
-                            cube.DrawPoint(0, (cube.length - 1) - j % (cube.length - 1), i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? CubeColor.Black : targetColor);
+                            cube.DrawPoint(0, (cube.length - 1) - j % (cube.length - 1), i, ColorHelper.GetColorFromRGB(wideMarquee.GetPixel(positionX - j, i)) == CubeColor.Black ? targetBackColor : targetColor);
                             break;
                     }
                 }
@@ -146,6 +147,7 @@ namespace _8x8x8_LED.Views
         private void FrmMarquee_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Marquee_Color = cbColor.SelectedIndex;
+            Properties.Settings.Default.Marquee_BackColor = cbBackcolor.SelectedIndex;
             Properties.Settings.Default.Save();
             animate = false;
             if (bwAnimate.IsBusy)
@@ -181,6 +183,8 @@ namespace _8x8x8_LED.Views
             chkLetterEnding.Checked = Properties.Settings.Default.Marquee_EndLastLetter;
             cbColor.DataSource = Enum.GetValues(typeof(CubeColor));
             cbColor.SelectedIndex = Properties.Settings.Default.Marquee_Color;
+            cbBackcolor.DataSource = Enum.GetValues(typeof(CubeColor));
+            cbBackcolor.SelectedIndex = Properties.Settings.Default.Marquee_BackColor;
         }
 
         private void ChkLetterEnding_CheckedChanged(object sender, EventArgs e)
@@ -196,6 +200,11 @@ namespace _8x8x8_LED.Views
         private void CbColor_SelectedIndexChanged(object sender, EventArgs e)
         {
             targetColor = (CubeColor)Enum.Parse(typeof(CubeColor), cbColor.Text);
+        }
+
+        private void CbBackcolor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            targetBackColor = (CubeColor)Enum.Parse(typeof(CubeColor), cbBackcolor.Text);
         }
     }
 }

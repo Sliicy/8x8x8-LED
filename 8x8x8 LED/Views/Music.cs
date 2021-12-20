@@ -25,6 +25,7 @@ namespace _8x8x8_LED.Views
         private bool animate = false; // Whether to animate the visualizer.
         private int speed = 1; // Speed of animation.
         private int timeElapsed = 0; // Used to measure time against speed of animation.
+        private bool flashToBeat = false; // Controls whether cube flashes to silence.
         private readonly Random random = new Random();
 
         private readonly IWaveIn waveIn = new WasapiLoopbackCapture();
@@ -32,6 +33,7 @@ namespace _8x8x8_LED.Views
         private string currentMusicStyle = "";
 
         private CubeColor targetColor = CubeColor.White;
+        private CubeColor targetBackcolor = CubeColor.Black;
 
         private readonly List<CubeColor> fireColors = new List<CubeColor>() {
             CubeColor.White,
@@ -64,6 +66,7 @@ namespace _8x8x8_LED.Views
             CubeColor.Red};
 
         private bool rainbowMode = false;
+        private bool rainbowModeBackcolor = false;
         public FrmMusic(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
@@ -109,9 +112,13 @@ namespace _8x8x8_LED.Views
             trkSamples.Value = Properties.Settings.Default.Music_Samples;
             cbMusicStyle.SelectedIndex = Properties.Settings.Default.Music_Style;
             cbColor.DataSource = Enum.GetValues(typeof(CubeColor));
+            cbBackcolor.DataSource = Enum.GetValues(typeof(CubeColor));
             cbColor.SelectedIndex = Properties.Settings.Default.Music_Color;
+            cbBackcolor.SelectedIndex = Properties.Settings.Default.Music_BackColor;
+            chkBackcolorRainbow.Checked = Properties.Settings.Default.Music_BackColor_Rainbow;
             chkRainbow.Checked = Properties.Settings.Default.Music_Rainbow;
             chkShuffled.Checked = Properties.Settings.Default.Music_Shuffled;
+            chkFlashtoBeat.Checked = Properties.Settings.Default.Music_Flash_Beat;
             chkSyncMusic.Checked = true;
         }
 
@@ -163,7 +170,11 @@ namespace _8x8x8_LED.Views
         {
             while (animate)
             {
-                cube.Clear();
+                if (flashToBeat)
+                    cube.Clear();
+                else
+                    cube.Clear(rainbowModeBackcolor ? ColorHelper.RandomColor() : targetBackcolor);
+                
                 List<CubeColor> outputColors = new List<CubeColor>();
                 outputColors.AddRange(new List<CubeColor>(Enumerable.Repeat(rainbowMode ? ColorHelper.RandomColor() : targetColor, 8).ToArray()));
                 switch (currentMusicStyle)
@@ -232,7 +243,7 @@ namespace _8x8x8_LED.Views
                 {
                     if (!cubeCleared) // Animate silence only once:
                     {
-                        cube.Clear();
+                        cube.Clear(rainbowModeBackcolor ? ColorHelper.RandomColor() : targetBackcolor);
                         if (chkShowSilence.Checked)
                         {
                             switch (currentMusicStyle)
@@ -482,9 +493,28 @@ namespace _8x8x8_LED.Views
             Properties.Settings.Default.Music_Samples = trkSamples.Value;
             Properties.Settings.Default.Music_Style = cbMusicStyle.SelectedIndex;
             Properties.Settings.Default.Music_Color = cbColor.SelectedIndex;
+            Properties.Settings.Default.Music_BackColor = cbBackcolor.SelectedIndex;
             Properties.Settings.Default.Music_Rainbow = chkRainbow.Checked;
+            Properties.Settings.Default.Music_BackColor_Rainbow = chkBackcolorRainbow.Checked;
             Properties.Settings.Default.Music_Shuffled = chkShuffled.Checked;
+            Properties.Settings.Default.Music_Flash_Beat = chkFlashtoBeat.Checked;
             Properties.Settings.Default.Save();
+        }
+
+        private void ChkBackcolorRainbow_CheckedChanged(object sender, EventArgs e)
+        {
+            rainbowModeBackcolor = chkBackcolorRainbow.Checked;
+            cbBackcolor.Enabled = !chkBackcolorRainbow.Checked;
+        }
+
+        private void CbBackcolor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            targetBackcolor = (CubeColor)Enum.Parse(typeof(CubeColor), cbBackcolor.Text);
+        }
+
+        private void ChkFlashToBeat_CheckedChanged(object sender, EventArgs e)
+        {
+            flashToBeat = chkFlashtoBeat.Checked;
         }
     }
 }

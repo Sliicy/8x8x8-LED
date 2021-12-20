@@ -50,6 +50,7 @@ namespace _8x8x8_LED.Views
 
         private void FrmBalls_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Properties.Settings.Default.Balls_Speed = speed;
             animate = false;
             if (bwEngine.IsBusy)
                 bwEngine.CancelAsync();
@@ -123,7 +124,6 @@ namespace _8x8x8_LED.Views
         {
             speed = trkSpeed.Value;
             lblSpeed.Text = "&Speed (" + speed + "):";
-            Properties.Settings.Default.Balls_Speed = speed;
         }
 
         private void BwEngine_DoWork(object sender, DoWorkEventArgs e)

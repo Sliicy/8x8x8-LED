@@ -12,6 +12,7 @@ namespace _8x8x8_LED.Views
         private readonly Cube cube;
         private CubeColor targetHourColor;
         private CubeColor targetMinuteColor;
+        private CubeColor targetBackColor;
         public FrmClock(SerialPort serialPort, ref Cube cube)
         {
             InitializeComponent();
@@ -37,7 +38,7 @@ namespace _8x8x8_LED.Views
 
         private void DrawTime()
         {
-            cube.Clear();
+            cube.Clear(targetBackColor);
             int hour = DateTime.Now.Hour;
             int minute = DateTime.Now.Minute;
 
@@ -487,6 +488,8 @@ namespace _8x8x8_LED.Views
             cbColorHour.SelectedIndex = Properties.Settings.Default.Clock_HourColor;
             cbColorMinute.DataSource = Enum.GetValues(typeof(CubeColor));
             cbColorMinute.SelectedIndex = Properties.Settings.Default.Clock_MinuteColor;
+            cbBackcolor.DataSource = Enum.GetValues(typeof(CubeColor));
+            cbBackcolor.SelectedIndex = Properties.Settings.Default.Clock_BackColor;
         }
 
         private void ChkShowLeadingZeros_CheckedChanged(object sender, EventArgs e)
@@ -511,6 +514,7 @@ namespace _8x8x8_LED.Views
         {
             Properties.Settings.Default.Clock_HourColor = cbColorHour.SelectedIndex;
             Properties.Settings.Default.Clock_MinuteColor = cbColorMinute.SelectedIndex;
+            Properties.Settings.Default.Clock_BackColor = cbBackcolor.SelectedIndex;
             Properties.Settings.Default.Save();
         }
 
@@ -523,6 +527,12 @@ namespace _8x8x8_LED.Views
         private void CbColorMinute_SelectedIndexChanged(object sender, EventArgs e)
         {
             targetMinuteColor = (CubeColor)Enum.Parse(typeof(CubeColor), cbColorMinute.Text);
+            DrawTime();
+        }
+
+        private void CbBackcolor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            targetBackColor = (CubeColor)Enum.Parse(typeof(CubeColor), cbBackcolor.Text);
             DrawTime();
         }
     }

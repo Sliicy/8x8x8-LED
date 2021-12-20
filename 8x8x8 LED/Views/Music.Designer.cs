@@ -45,8 +45,13 @@
             this.tmrShuffle = new System.Windows.Forms.Timer(this.components);
             this.chkShuffled = new System.Windows.Forms.CheckBox();
             this.grpColor = new System.Windows.Forms.GroupBox();
+            this.grpBackcolor = new System.Windows.Forms.GroupBox();
+            this.chkFlashtoBeat = new System.Windows.Forms.CheckBox();
+            this.cbBackcolor = new System.Windows.Forms.ComboBox();
+            this.chkBackcolorRainbow = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trkSamples)).BeginInit();
             this.grpColor.SuspendLayout();
+            this.grpBackcolor.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkSyncMusic
@@ -241,13 +246,62 @@
             this.grpColor.Size = new System.Drawing.Size(253, 162);
             this.grpColor.TabIndex = 10;
             this.grpColor.TabStop = false;
-            this.grpColor.Text = "Color";
+            this.grpColor.Text = "&Color";
+            // 
+            // grpBackcolor
+            // 
+            this.grpBackcolor.Controls.Add(this.chkFlashtoBeat);
+            this.grpBackcolor.Controls.Add(this.cbBackcolor);
+            this.grpBackcolor.Controls.Add(this.chkBackcolorRainbow);
+            this.grpBackcolor.Location = new System.Drawing.Point(80, 502);
+            this.grpBackcolor.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.grpBackcolor.Name = "grpBackcolor";
+            this.grpBackcolor.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.grpBackcolor.Size = new System.Drawing.Size(253, 162);
+            this.grpBackcolor.TabIndex = 13;
+            this.grpBackcolor.TabStop = false;
+            this.grpBackcolor.Text = "&Back Color";
+            // 
+            // chkFlashtoBeat
+            // 
+            this.chkFlashtoBeat.AutoSize = true;
+            this.chkFlashtoBeat.Location = new System.Drawing.Point(11, 72);
+            this.chkFlashtoBeat.Name = "chkFlashtoBeat";
+            this.chkFlashtoBeat.Size = new System.Drawing.Size(137, 28);
+            this.chkFlashtoBeat.TabIndex = 15;
+            this.chkFlashtoBeat.Text = "&Flash to Beat";
+            this.chkFlashtoBeat.UseVisualStyleBackColor = true;
+            this.chkFlashtoBeat.CheckedChanged += new System.EventHandler(this.ChkFlashToBeat_CheckedChanged);
+            // 
+            // cbBackcolor
+            // 
+            this.cbBackcolor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBackcolor.FormattingEnabled = true;
+            this.cbBackcolor.Location = new System.Drawing.Point(10, 109);
+            this.cbBackcolor.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.cbBackcolor.Name = "cbBackcolor";
+            this.cbBackcolor.Size = new System.Drawing.Size(219, 32);
+            this.cbBackcolor.TabIndex = 16;
+            this.cbBackcolor.SelectedIndexChanged += new System.EventHandler(this.CbBackcolor_SelectedIndexChanged);
+            // 
+            // chkBackcolorRainbow
+            // 
+            this.chkBackcolorRainbow.AutoSize = true;
+            this.chkBackcolorRainbow.Location = new System.Drawing.Point(11, 35);
+            this.chkBackcolorRainbow.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.chkBackcolorRainbow.Name = "chkBackcolorRainbow";
+            this.chkBackcolorRainbow.Size = new System.Drawing.Size(157, 28);
+            this.chkBackcolorRainbow.TabIndex = 14;
+            this.chkBackcolorRainbow.Text = "&Rainbow Mode";
+            this.chkBackcolorRainbow.UseVisualStyleBackColor = true;
+            this.chkBackcolorRainbow.CheckedChanged += new System.EventHandler(this.ChkBackcolorRainbow_CheckedChanged);
             // 
             // FrmMusic
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 529);
+            this.ClientSize = new System.Drawing.Size(413, 674);
+            this.Controls.Add(this.grpBackcolor);
             this.Controls.Add(this.grpColor);
             this.Controls.Add(this.chkShuffled);
             this.Controls.Add(this.lblMusicStyle);
@@ -271,6 +325,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trkSamples)).EndInit();
             this.grpColor.ResumeLayout(false);
             this.grpColor.PerformLayout();
+            this.grpBackcolor.ResumeLayout(false);
+            this.grpBackcolor.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -293,5 +349,9 @@
         private System.Windows.Forms.Timer tmrShuffle;
         private System.Windows.Forms.CheckBox chkShuffled;
         private System.Windows.Forms.GroupBox grpColor;
+        private System.Windows.Forms.GroupBox grpBackcolor;
+        private System.Windows.Forms.ComboBox cbBackcolor;
+        private System.Windows.Forms.CheckBox chkBackcolorRainbow;
+        private System.Windows.Forms.CheckBox chkFlashtoBeat;
     }
 }

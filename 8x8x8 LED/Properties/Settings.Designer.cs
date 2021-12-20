@@ -639,5 +639,89 @@ namespace _8x8x8_LED.Properties {
                 this["Lamp_Times"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Music_BackColor {
+            get {
+                return ((int)(this["Music_BackColor"]));
+            }
+            set {
+                this["Music_BackColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Music_BackColor_Rainbow {
+            get {
+                return ((bool)(this["Music_BackColor_Rainbow"]));
+            }
+            set {
+                this["Music_BackColor_Rainbow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Music_Flash_Beat {
+            get {
+                return ((bool)(this["Music_Flash_Beat"]));
+            }
+            set {
+                this["Music_Flash_Beat"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Clock_BackColor {
+            get {
+                return ((int)(this["Clock_BackColor"]));
+            }
+            set {
+                this["Clock_BackColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Marquee_BackColor {
+            get {
+                return ((int)(this["Marquee_BackColor"]));
+            }
+            set {
+                this["Marquee_BackColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Rain_BackColor {
+            get {
+                return ((int)(this["Rain_BackColor"]));
+            }
+            set {
+                this["Rain_BackColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Rain_BackColorShuffled {
+            get {
+                return ((bool)(this["Rain_BackColorShuffled"]));
+            }
+            set {
+                this["Rain_BackColorShuffled"] = value;
+            }
+        }
     }
 }

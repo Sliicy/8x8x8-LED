@@ -18,6 +18,7 @@ namespace _8x8x8_LED.Views
         private int speed = 0;
         private bool animate = false;
         private string animationType = "";
+        private CubeColor targetBackColor;
         private readonly Random random = new Random();
 
         private string directionX = "";
@@ -63,6 +64,10 @@ namespace _8x8x8_LED.Views
                                     break;
                             }
                             cube.matrix[x, y, directionZ == "Upwards" ? 0 : cube.height - 1] = color;
+                        }
+                        else
+                        {
+                            cube.matrix[x, y, directionZ == "Upwards" ? 0 : cube.height - 1] = targetBackColor;
                         }
                 SerialHelper.Send(serialPort, cube);
                 System.Threading.Thread.Sleep(speed);
@@ -133,6 +138,10 @@ namespace _8x8x8_LED.Views
         private void FrmRain_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Rain_Type = cbAnimationType.SelectedIndex;
+            Properties.Settings.Default.Rain_BackColor = cbBackcolor.SelectedIndex;
+            Properties.Settings.Default.Rain_BackColorShuffled = chkShuffled.Checked;
+            Properties.Settings.Default.Rain_Count = tbRainCount.Value;
+            Properties.Settings.Default.Rain_Speed = tbSpeed.Value;
             animate = false;
             if (bwAnimate.IsBusy)
                 bwAnimate.CancelAsync();
@@ -143,8 +152,7 @@ namespace _8x8x8_LED.Views
         {
             rainCount = tbRainCount.Value;
             speed = tbSpeed.Value;
-            Properties.Settings.Default.Rain_Count = tbRainCount.Value;
-            Properties.Settings.Default.Rain_Speed = tbSpeed.Value;
+            tmrColorShuffle.Interval = speed == 0 ? 1 : speed;
         }
 
         private void CbDirectionX_SelectedIndexChanged(object sender, EventArgs e)
@@ -173,12 +181,30 @@ namespace _8x8x8_LED.Views
             tbRainCount.Value = Properties.Settings.Default.Rain_Count;
             tbSpeed.Value = Properties.Settings.Default.Rain_Speed;
             cbAnimationType.SelectedIndex = Properties.Settings.Default.Rain_Type;
+            cbBackcolor.DataSource = Enum.GetValues(typeof(CubeColor));
+            cbBackcolor.SelectedIndex = Properties.Settings.Default.Rain_BackColor;
+            chkShuffled.Checked = Properties.Settings.Default.Rain_BackColorShuffled;
             chkAnimate.Checked = true;
         }
 
         private void CbAnimationType_SelectedIndexChanged(object sender, EventArgs e)
         {
             animationType = cbAnimationType.Text;
+        }
+
+        private void CbBackcolor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            targetBackColor = (CubeColor)Enum.Parse(typeof(CubeColor), cbBackcolor.Text);
+        }
+
+        private void ChkShuffled_CheckedChanged(object sender, EventArgs e)
+        {
+            tmrColorShuffle.Enabled = chkShuffled.Checked;
+        }
+
+        private void TmrColorShuffle_Tick(object sender, EventArgs e)
+        {
+            cbBackcolor.SelectedIndex = random.Next(0, cbBackcolor.Items.Count);
         }
     }
 }

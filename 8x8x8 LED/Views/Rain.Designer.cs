@@ -29,6 +29,7 @@ namespace _8x8x8_LED.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmRain));
             this.chkAnimate = new System.Windows.Forms.CheckBox();
             this.bwAnimate = new System.ComponentModel.BackgroundWorker();
@@ -43,8 +44,13 @@ namespace _8x8x8_LED.Views
             this.lblDirectionX = new System.Windows.Forms.Label();
             this.cbDirectionX = new System.Windows.Forms.ComboBox();
             this.cbAnimationType = new System.Windows.Forms.ComboBox();
+            this.cbBackcolor = new System.Windows.Forms.ComboBox();
+            this.grpBackcolor = new System.Windows.Forms.GroupBox();
+            this.chkShuffled = new System.Windows.Forms.CheckBox();
+            this.tmrColorShuffle = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tbRainCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).BeginInit();
+            this.grpBackcolor.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkAnimate
@@ -185,11 +191,48 @@ namespace _8x8x8_LED.Views
             this.cbAnimationType.TabIndex = 1;
             this.cbAnimationType.SelectedIndexChanged += new System.EventHandler(this.CbAnimationType_SelectedIndexChanged);
             // 
+            // cbBackcolor
+            // 
+            this.cbBackcolor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBackcolor.FormattingEnabled = true;
+            this.cbBackcolor.Location = new System.Drawing.Point(6, 62);
+            this.cbBackcolor.Name = "cbBackcolor";
+            this.cbBackcolor.Size = new System.Drawing.Size(188, 32);
+            this.cbBackcolor.TabIndex = 14;
+            this.cbBackcolor.SelectedIndexChanged += new System.EventHandler(this.CbBackcolor_SelectedIndexChanged);
+            // 
+            // grpBackcolor
+            // 
+            this.grpBackcolor.Controls.Add(this.chkShuffled);
+            this.grpBackcolor.Controls.Add(this.cbBackcolor);
+            this.grpBackcolor.Location = new System.Drawing.Point(410, 208);
+            this.grpBackcolor.Name = "grpBackcolor";
+            this.grpBackcolor.Size = new System.Drawing.Size(200, 108);
+            this.grpBackcolor.TabIndex = 12;
+            this.grpBackcolor.TabStop = false;
+            this.grpBackcolor.Text = "&Back Color";
+            // 
+            // chkShuffled
+            // 
+            this.chkShuffled.AutoSize = true;
+            this.chkShuffled.Location = new System.Drawing.Point(6, 28);
+            this.chkShuffled.Name = "chkShuffled";
+            this.chkShuffled.Size = new System.Drawing.Size(97, 28);
+            this.chkShuffled.TabIndex = 13;
+            this.chkShuffled.Text = "Shu&ffled";
+            this.chkShuffled.UseVisualStyleBackColor = true;
+            this.chkShuffled.CheckedChanged += new System.EventHandler(this.ChkShuffled_CheckedChanged);
+            // 
+            // tmrColorShuffle
+            // 
+            this.tmrColorShuffle.Tick += new System.EventHandler(this.TmrColorShuffle_Tick);
+            // 
             // FrmRain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(622, 328);
+            this.Controls.Add(this.grpBackcolor);
             this.Controls.Add(this.cbAnimationType);
             this.Controls.Add(this.cbDirectionX);
             this.Controls.Add(this.cbDirectionY);
@@ -214,6 +257,8 @@ namespace _8x8x8_LED.Views
             this.Load += new System.EventHandler(this.FrmRain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tbRainCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).EndInit();
+            this.grpBackcolor.ResumeLayout(false);
+            this.grpBackcolor.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,5 +279,9 @@ namespace _8x8x8_LED.Views
         private System.Windows.Forms.Label lblDirectionX;
         private System.Windows.Forms.ComboBox cbDirectionX;
         private System.Windows.Forms.ComboBox cbAnimationType;
+        private System.Windows.Forms.ComboBox cbBackcolor;
+        private System.Windows.Forms.GroupBox grpBackcolor;
+        private System.Windows.Forms.CheckBox chkShuffled;
+        private System.Windows.Forms.Timer tmrColorShuffle;
     }
 }

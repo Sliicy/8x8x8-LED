@@ -40,8 +40,11 @@ namespace _8x8x8_LED.Views
             this.cbColorHour = new System.Windows.Forms.ComboBox();
             this.grpMinuteColor = new System.Windows.Forms.GroupBox();
             this.cbColorMinute = new System.Windows.Forms.ComboBox();
+            this.grpBackcolor = new System.Windows.Forms.GroupBox();
+            this.cbBackcolor = new System.Windows.Forms.ComboBox();
             this.grpHourColor.SuspendLayout();
             this.grpMinuteColor.SuspendLayout();
+            this.grpBackcolor.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkSyncTime
@@ -102,7 +105,7 @@ namespace _8x8x8_LED.Views
             this.grpHourColor.Size = new System.Drawing.Size(292, 79);
             this.grpHourColor.TabIndex = 4;
             this.grpHourColor.TabStop = false;
-            this.grpHourColor.Text = "Hour Color";
+            this.grpHourColor.Text = "&Hour Color";
             // 
             // cbColorHour
             // 
@@ -122,7 +125,7 @@ namespace _8x8x8_LED.Views
             this.grpMinuteColor.Size = new System.Drawing.Size(292, 79);
             this.grpMinuteColor.TabIndex = 6;
             this.grpMinuteColor.TabStop = false;
-            this.grpMinuteColor.Text = "Minute Color";
+            this.grpMinuteColor.Text = "&Minute Color";
             // 
             // cbColorMinute
             // 
@@ -134,11 +137,32 @@ namespace _8x8x8_LED.Views
             this.cbColorMinute.TabIndex = 7;
             this.cbColorMinute.SelectedIndexChanged += new System.EventHandler(this.CbColorMinute_SelectedIndexChanged);
             // 
+            // grpBackcolor
+            // 
+            this.grpBackcolor.Controls.Add(this.cbBackcolor);
+            this.grpBackcolor.Location = new System.Drawing.Point(12, 324);
+            this.grpBackcolor.Name = "grpBackcolor";
+            this.grpBackcolor.Size = new System.Drawing.Size(292, 79);
+            this.grpBackcolor.TabIndex = 8;
+            this.grpBackcolor.TabStop = false;
+            this.grpBackcolor.Text = "&Back Color";
+            // 
+            // cbBackcolor
+            // 
+            this.cbBackcolor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBackcolor.FormattingEnabled = true;
+            this.cbBackcolor.Location = new System.Drawing.Point(6, 28);
+            this.cbBackcolor.Name = "cbBackcolor";
+            this.cbBackcolor.Size = new System.Drawing.Size(280, 32);
+            this.cbBackcolor.TabIndex = 9;
+            this.cbBackcolor.SelectedIndexChanged += new System.EventHandler(this.CbBackcolor_SelectedIndexChanged);
+            // 
             // FrmClock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(316, 327);
+            this.ClientSize = new System.Drawing.Size(316, 428);
+            this.Controls.Add(this.grpBackcolor);
             this.Controls.Add(this.grpMinuteColor);
             this.Controls.Add(this.grpHourColor);
             this.Controls.Add(this.chkFlatOneStyle);
@@ -157,6 +181,7 @@ namespace _8x8x8_LED.Views
             this.Load += new System.EventHandler(this.FrmClock_Load);
             this.grpHourColor.ResumeLayout(false);
             this.grpMinuteColor.ResumeLayout(false);
+            this.grpBackcolor.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,5 +198,7 @@ namespace _8x8x8_LED.Views
         private System.Windows.Forms.ComboBox cbColorHour;
         private System.Windows.Forms.GroupBox grpMinuteColor;
         private System.Windows.Forms.ComboBox cbColorMinute;
+        private System.Windows.Forms.GroupBox grpBackcolor;
+        private System.Windows.Forms.ComboBox cbBackcolor;
     }
 }
