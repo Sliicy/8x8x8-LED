@@ -46,11 +46,13 @@ namespace _8x8x8_LED.Views
             this.cbAnimationType = new System.Windows.Forms.ComboBox();
             this.cbBackcolor = new System.Windows.Forms.ComboBox();
             this.grpBackcolor = new System.Windows.Forms.GroupBox();
+            this.nudShuffleSpeed = new System.Windows.Forms.NumericUpDown();
             this.chkShuffled = new System.Windows.Forms.CheckBox();
             this.tmrColorShuffle = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tbRainCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).BeginInit();
             this.grpBackcolor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudShuffleSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // chkAnimate
@@ -198,11 +200,12 @@ namespace _8x8x8_LED.Views
             this.cbBackcolor.Location = new System.Drawing.Point(6, 62);
             this.cbBackcolor.Name = "cbBackcolor";
             this.cbBackcolor.Size = new System.Drawing.Size(188, 32);
-            this.cbBackcolor.TabIndex = 14;
+            this.cbBackcolor.TabIndex = 15;
             this.cbBackcolor.SelectedIndexChanged += new System.EventHandler(this.CbBackcolor_SelectedIndexChanged);
             // 
             // grpBackcolor
             // 
+            this.grpBackcolor.Controls.Add(this.nudShuffleSpeed);
             this.grpBackcolor.Controls.Add(this.chkShuffled);
             this.grpBackcolor.Controls.Add(this.cbBackcolor);
             this.grpBackcolor.Location = new System.Drawing.Point(410, 208);
@@ -211,6 +214,29 @@ namespace _8x8x8_LED.Views
             this.grpBackcolor.TabIndex = 12;
             this.grpBackcolor.TabStop = false;
             this.grpBackcolor.Text = "&Back Color";
+            // 
+            // nudShuffleSpeed
+            // 
+            this.nudShuffleSpeed.Location = new System.Drawing.Point(109, 28);
+            this.nudShuffleSpeed.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudShuffleSpeed.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudShuffleSpeed.Name = "nudShuffleSpeed";
+            this.nudShuffleSpeed.Size = new System.Drawing.Size(85, 29);
+            this.nudShuffleSpeed.TabIndex = 14;
+            this.nudShuffleSpeed.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.nudShuffleSpeed.ValueChanged += new System.EventHandler(this.NudShuffleSpeed_ValueChanged);
             // 
             // chkShuffled
             // 
@@ -259,6 +285,7 @@ namespace _8x8x8_LED.Views
             ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).EndInit();
             this.grpBackcolor.ResumeLayout(false);
             this.grpBackcolor.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudShuffleSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,5 +310,6 @@ namespace _8x8x8_LED.Views
         private System.Windows.Forms.GroupBox grpBackcolor;
         private System.Windows.Forms.CheckBox chkShuffled;
         private System.Windows.Forms.Timer tmrColorShuffle;
+        private System.Windows.Forms.NumericUpDown nudShuffleSpeed;
     }
 }

@@ -723,5 +723,17 @@ namespace _8x8x8_LED.Properties {
                 this["Rain_BackColorShuffled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int Rain_ShuffleSpeed {
+            get {
+                return ((int)(this["Rain_ShuffleSpeed"]));
+            }
+            set {
+                this["Rain_ShuffleSpeed"] = value;
+            }
+        }
     }
 }

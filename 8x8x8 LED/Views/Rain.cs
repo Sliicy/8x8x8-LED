@@ -142,6 +142,7 @@ namespace _8x8x8_LED.Views
             Properties.Settings.Default.Rain_BackColorShuffled = chkShuffled.Checked;
             Properties.Settings.Default.Rain_Count = tbRainCount.Value;
             Properties.Settings.Default.Rain_Speed = tbSpeed.Value;
+            Properties.Settings.Default.Rain_ShuffleSpeed = (int)nudShuffleSpeed.Value;
             animate = false;
             if (bwAnimate.IsBusy)
                 bwAnimate.CancelAsync();
@@ -152,7 +153,7 @@ namespace _8x8x8_LED.Views
         {
             rainCount = tbRainCount.Value;
             speed = tbSpeed.Value;
-            tmrColorShuffle.Interval = speed == 0 ? 1 : speed;
+            //tmrColorShuffle.Interval = speed == 0 ? 1 : speed;
         }
 
         private void CbDirectionX_SelectedIndexChanged(object sender, EventArgs e)
@@ -184,6 +185,7 @@ namespace _8x8x8_LED.Views
             cbBackcolor.DataSource = Enum.GetValues(typeof(CubeColor));
             cbBackcolor.SelectedIndex = Properties.Settings.Default.Rain_BackColor;
             chkShuffled.Checked = Properties.Settings.Default.Rain_BackColorShuffled;
+            nudShuffleSpeed.Value = Properties.Settings.Default.Rain_ShuffleSpeed;
             chkAnimate.Checked = true;
         }
 
@@ -199,12 +201,19 @@ namespace _8x8x8_LED.Views
 
         private void ChkShuffled_CheckedChanged(object sender, EventArgs e)
         {
+            targetBackColor = (CubeColor)Enum.Parse(typeof(CubeColor), cbBackcolor.Text);
             tmrColorShuffle.Enabled = chkShuffled.Checked;
+            cbBackcolor.Enabled = !chkShuffled.Checked;
         }
 
         private void TmrColorShuffle_Tick(object sender, EventArgs e)
         {
-            cbBackcolor.SelectedIndex = random.Next(0, cbBackcolor.Items.Count);
+            targetBackColor = ColorHelper.RandomColor();
+        }
+
+        private void NudShuffleSpeed_ValueChanged(object sender, EventArgs e)
+        {
+            tmrColorShuffle.Interval = (int)nudShuffleSpeed.Value;
         }
     }
 }
