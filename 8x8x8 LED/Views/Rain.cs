@@ -197,12 +197,14 @@ namespace _8x8x8_LED.Views
         private void CbBackcolor_SelectedIndexChanged(object sender, EventArgs e)
         {
             targetBackColor = (CubeColor)Enum.Parse(typeof(CubeColor), cbBackcolor.Text);
+            tmrColorShuffle.Interval = (int)nudShuffleSpeed.Value;
         }
 
         private void ChkShuffled_CheckedChanged(object sender, EventArgs e)
         {
             targetBackColor = (CubeColor)Enum.Parse(typeof(CubeColor), cbBackcolor.Text);
             tmrColorShuffle.Enabled = chkShuffled.Checked;
+            tmrColorShuffle.Interval = (int)nudShuffleSpeed.Value;
             cbBackcolor.Enabled = !chkShuffled.Checked;
         }
 
