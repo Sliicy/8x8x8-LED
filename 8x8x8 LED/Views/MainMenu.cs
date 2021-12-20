@@ -47,7 +47,7 @@ namespace _8x8x8_LED
             if (requestedApp != "")
             {
                 lstApps.SelectedIndex = lstApps.FindString(requestedApp);
-                btnShowApp.PerformClick();
+                btnOpen.PerformClick();
             }
             cbSendColor.DataSource = Enum.GetValues(typeof(CubeColor));
 
@@ -223,7 +223,7 @@ namespace _8x8x8_LED
                 Close();
         }
 
-        private void BtnShowApp_Click(object sender, EventArgs e)
+        private void BtnOpen_Click(object sender, EventArgs e)
         {
             foreach (Form openForm in Application.OpenForms)
             {
@@ -365,7 +365,7 @@ namespace _8x8x8_LED
 
         private void LstApps_DoubleClick(object sender, EventArgs e)
         {
-            btnShowApp.PerformClick();
+            btnOpen.PerformClick();
         }
 
         private void CbCubeType_SelectedIndexChanged(object sender, EventArgs e)
@@ -428,6 +428,12 @@ namespace _8x8x8_LED
         private void CbComPort_SelectedIndexChanged(object sender, EventArgs e)
         {
             DisconnectIfConnected();
+        }
+
+        private void LstApps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstApps.SelectedIndex != -1)
+                btnOpen.Enabled = true;
         }
     }
 }

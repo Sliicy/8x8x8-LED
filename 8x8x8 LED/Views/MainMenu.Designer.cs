@@ -31,7 +31,7 @@ namespace _8x8x8_LED
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMainMenu));
             this.lstApps = new System.Windows.Forms.ListBox();
-            this.btnShowApp = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
             this.grpGeometry = new System.Windows.Forms.GroupBox();
             this.lblOffsetZ = new System.Windows.Forms.Label();
             this.lblOffsetY = new System.Windows.Forms.Label();
@@ -97,17 +97,19 @@ namespace _8x8x8_LED
             this.lstApps.Size = new System.Drawing.Size(507, 676);
             this.lstApps.Sorted = true;
             this.lstApps.TabIndex = 1;
+            this.lstApps.SelectedIndexChanged += new System.EventHandler(this.LstApps_SelectedIndexChanged);
             this.lstApps.DoubleClick += new System.EventHandler(this.LstApps_DoubleClick);
             // 
-            // btnShowApp
+            // btnOpen
             // 
-            this.btnShowApp.Location = new System.Drawing.Point(112, 698);
-            this.btnShowApp.Name = "btnShowApp";
-            this.btnShowApp.Size = new System.Drawing.Size(300, 42);
-            this.btnShowApp.TabIndex = 2;
-            this.btnShowApp.Text = "&Open";
-            this.btnShowApp.UseVisualStyleBackColor = true;
-            this.btnShowApp.Click += new System.EventHandler(this.BtnShowApp_Click);
+            this.btnOpen.Enabled = false;
+            this.btnOpen.Location = new System.Drawing.Point(112, 698);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(300, 42);
+            this.btnOpen.TabIndex = 2;
+            this.btnOpen.Text = "&Open";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.BtnOpen_Click);
             // 
             // grpGeometry
             // 
@@ -557,7 +559,7 @@ namespace _8x8x8_LED
             // tpMenu
             // 
             this.tpMenu.Controls.Add(this.lstApps);
-            this.tpMenu.Controls.Add(this.btnShowApp);
+            this.tpMenu.Controls.Add(this.btnOpen);
             this.tpMenu.Location = new System.Drawing.Point(4, 33);
             this.tpMenu.Name = "tpMenu";
             this.tpMenu.Padding = new System.Windows.Forms.Padding(3);
@@ -717,7 +719,7 @@ namespace _8x8x8_LED
         private System.Windows.Forms.Label lblRotateY;
         private System.Windows.Forms.Label lblRotateX;
         private System.Windows.Forms.Button btnCalibrate;
-        private System.Windows.Forms.Button btnShowApp;
+        private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.ListBox lstApps;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tpMenu;
