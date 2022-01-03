@@ -395,8 +395,12 @@ namespace _8x8x8_LED
 
         private void CbSendColor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cube.Clear((CubeColor)Enum.Parse(typeof(CubeColor), cbSendColor.Text));
-            SerialHelper.Send(serialPort, cube);
+            // Send 3x (to ensure cube receives data):
+            for (int i = 0; i < 3; i++)
+            {
+                cube.Clear((CubeColor)Enum.Parse(typeof(CubeColor), cbSendColor.Text));
+                SerialHelper.Send(serialPort, cube);
+            }
         }
 
         private void BtnCalibrate_Click(object sender, EventArgs e)
