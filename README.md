@@ -130,5 +130,8 @@ https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectron
 7) Finally, you will want to ensure that the orientation is correct, so press the 'Calibrate Cube' button in the 'Rotation' subsection of Settings, to calibrate the cube.
 8) These connection settings are automatically saved. Once done with this step, head over to the 'Menu' tab, select an applet, and then open it.
 
+## Hardware
+I designed & 3D printed a custom bottom for the cube in Blender. It can be found here: https://www.thingiverse.com/thing:5236752
+
 ## Future Development
 Anyone is welcome to provide suggestions, improvements, changes, bugs found, etc.
