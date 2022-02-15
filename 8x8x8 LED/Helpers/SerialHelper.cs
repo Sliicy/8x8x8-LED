@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace _8x8x8_LED.Helpers
 {
+    /// <summary>
+    /// Provides commonly used operations for cube communication.
+    /// </summary>
     public static class SerialHelper
     {
         public static readonly byte[] MONOCHROME_HEADER = { 0xF2 };
@@ -14,6 +17,14 @@ namespace _8x8x8_LED.Helpers
         public static readonly byte[] RGB_COLOR_LAYER = { 0x00 };
         public static readonly int RGB_Delay = 24;
 
+        /// <summary>
+        /// Send a raw byte array packet to a cube over serial.
+        /// </summary>
+        /// <param name="cubeType">Type of cube to use.</param>
+        /// <param name="serialPort">SerialPort the cube is listening on.</param>
+        /// <param name="payload">Byte array to send to cube.</param>
+        /// <param name="prependHeader">Boolean to determine whether a header should be prepended to the byte array.</param>
+        /// <exception cref="ArgumentNullException">Valid Cube type must be provided.</exception>
         public static void SendPacket(CubeType cubeType, SerialPort serialPort, byte[] payload, bool prependHeader = true)
         {
             if (serialPort.IsOpen)
@@ -86,6 +97,12 @@ namespace _8x8x8_LED.Helpers
                 }
             }
         }
+
+        /// <summary>
+        /// Send a Cube object to a cube over serial.
+        /// </summary>
+        /// <param name="serialPort">SerialPort the cube is listening on.</param>
+        /// <param name="cube">Cube object to send.</param>
         public static void Send(SerialPort serialPort, Cube cube)
         {
             if (cube.FlippedX)
@@ -144,46 +161,12 @@ namespace _8x8x8_LED.Helpers
             }
         }
 
-        public static Cube MonochromeToRGBDriver(MonochromeCube mc)
-        {
-            Cube output = new Cube(8, 8, 8);
-
-            for (int i = 0; i < mc.matrixBytes.Length; i++)
-            {
-                BitArray b = new BitArray(new int[] { mc.matrixBytes[i] });
-
-                if (b[0] == true)
-                    output.matrix[0, i / 8, i % 8] = CubeColor.White;
-                if (b[1] == true)
-                    output.matrix[1, i / 8, i % 8] = CubeColor.White;
-                if (b[2] == true)
-                    output.matrix[2, i / 8, i % 8] = CubeColor.White;
-                if (b[3] == true)
-                    output.matrix[3, i / 8, i % 8] = CubeColor.White;
-                if (b[4] == true)
-                    output.matrix[4, i / 8, i % 8] = CubeColor.White;
-                if (b[5] == true)
-                    output.matrix[5, i / 8, i % 8] = CubeColor.White;
-                if (b[6] == true)
-                    output.matrix[6, i / 8, i % 8] = CubeColor.White;
-                if (b[7] == true)
-                    output.matrix[7, i / 8, i % 8] = CubeColor.White;
-            }
-            output.OffsetX = mc.OffsetX;
-            output.OffsetY = mc.OffsetY;
-            output.OffsetZ = mc.OffsetZ;
-
-            output.FlippedX = mc.FlippedX;
-            output.FlippedY = mc.FlippedY;
-            output.FlippedZ = mc.FlippedZ;
-
-            output.OrientationX = mc.OrientationX;
-            output.OrientationY = mc.OrientationY;
-            output.OrientationZ = mc.OrientationZ;
-
-            return output;
-        }
-
+        /// <summary>
+        /// Method for converting a Cube into a MonochromeCube object.
+        /// This enables support for monochrome cubes.
+        /// </summary>
+        /// <param name="rgbCube">Cube object to convert.</param>
+        /// <returns>MonochromeCube object.</returns>
         public static MonochromeCube RGBToMonochromeDriver(Cube rgbCube)
         {
             MonochromeCube output = new MonochromeCube(64);

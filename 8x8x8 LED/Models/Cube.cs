@@ -4,16 +4,17 @@ using System;
 
 namespace _8x8x8_LED.Models
 {
+    /// <summary>
+    /// Cube object that is passed to the cube over serial. By default, it is RGB.
+    /// </summary>
     [Serializable]
-    public class Cube : CubeManipulation
+    public class Cube : ICube
     {
-        public int width;
-        public int length;
-        public int height;
 
-        /// <summary>
-        /// Represents the current state of the cube (should it be rotated, flipped, have an offset, etc).
-        /// </summary>
+        #region Cube State
+
+        // Represents the current state of the cube (should it be rotated, flipped, have an offset, etc):
+        
         public int OrientationX = 0;
         public int OrientationY = 0;
         public int OrientationZ = 0;
@@ -25,9 +26,13 @@ namespace _8x8x8_LED.Models
         public int OffsetX = 0;
         public int OffsetY = 0;
         public int OffsetZ = 0;
+        #endregion
 
         public CubeColor[,,] matrix;
         public CubeType type;
+        public int width;
+        public int length;
+        public int height;
 
         public Cube(int x = 8, int y = 8, int z = 8)
         {
@@ -35,6 +40,126 @@ namespace _8x8x8_LED.Models
             length = y;
             height = z;
             matrix = new CubeColor[width, length, height];
+        }
+
+        public CubeColor[,,] Rotate(Rotation rotation, CubeColor[,,] input)
+        {
+            int inputLength = input.GetLength(0);
+            int inputWidth = input.GetLength(1);
+            int inputHeight = input.GetLength(2);
+
+            var output = new CubeColor[inputWidth, inputLength, inputHeight];
+            int maxHeight = inputWidth - 1;
+
+            for (int k = 0; k < output.GetLength(2); k++)
+                for (int j = 0; j < output.GetLength(1); j++)
+                    for (int i = 0; i < output.GetLength(0); i++)
+                        switch (rotation)
+                        {
+                            case Rotation.ClockwiseX:
+                                output[i, j, k] = input[maxHeight - k, j, i];
+                                break;
+                            case Rotation.ClockwiseY:
+                                output[i, j, k] = input[i, k, maxHeight - j];
+                                break;
+                            case Rotation.ClockwiseZ:
+                                output[i, j, k] = input[maxHeight - j, i, k];
+                                break;
+                            case Rotation.CounterclockwiseX:
+                                output[i, j, k] = input[k, j, maxHeight - i];
+                                break;
+                            case Rotation.CounterclockwiseY:
+                                output[i, j, k] = input[i, k, maxHeight - j];
+                                break;
+                            case Rotation.CounterclockwiseZ:
+                                output[i, j, k] = input[j, maxHeight - i, k];
+                                break;
+                            default:
+                                output[i, j, k] = input[i, j, k];
+                                break;
+                        }
+            return output;
+        }
+
+        public CubeColor[,,] Shift(Direction direction, CubeColor[,,] input, bool repeating = true, CubeColor backColor = CubeColor.Black)
+        {
+            int inputLength = input.GetLength(0);
+            int inputWidth = input.GetLength(1);
+            int inputHeight = input.GetLength(2);
+            int maxHeight = inputWidth - 1;
+
+            var output = new CubeColor[inputWidth, inputLength, inputHeight];
+
+            for (int k = 0; k < output.GetLength(2); k++)
+                for (int j = 0; j < output.GetLength(1); j++)
+                    for (int i = 0; i < output.GetLength(0); i++)
+                        switch (direction)
+                        {
+                            case Direction.Upwards:
+                                if (!repeating)
+                                    input[i, j, maxHeight] = backColor;
+                                output[i, j, k] = input[i, j, (k + maxHeight) % output.GetLength(2)];
+                                break;
+                            case Direction.Downwards:
+                                if (!repeating)
+                                    input[i, j, 0] = backColor;
+                                output[i, j, k] = input[i, j, (k + 1) % output.GetLength(2)];
+                                break;
+                            case Direction.Leftwards:
+                                if (!repeating)
+                                    input[0, j, k] = backColor;
+                                output[i, j, k] = input[(i + 1) % output.GetLength(0), j, k];
+                                break;
+                            case Direction.Rightwards:
+                                if (!repeating)
+                                    input[maxHeight, j, k] = backColor;
+                                output[i, j, k] = input[(i + maxHeight) % output.GetLength(0), j, k];
+                                break;
+                            case Direction.Forwards:
+                                if (!repeating)
+                                    input[i, 0, k] = backColor;
+                                output[i, j, k] = input[i, (j + 1) % output.GetLength(1), k];
+                                break;
+                            case Direction.Backwards:
+                                if (!repeating)
+                                    input[i, maxHeight, k] = backColor;
+                                output[i, j, k] = input[i, (j + maxHeight) % output.GetLength(1), k];
+                                break;
+                            default:
+                                output[i, j, k] = input[i, j, k];
+                                break;
+                        }
+            return output;
+        }
+
+        public CubeColor[,,] Flip(Axis axis, CubeColor[,,] input)
+        {
+            int inputLength = input.GetLength(0);
+            int inputWidth = input.GetLength(1);
+            int inputHeight = input.GetLength(2);
+
+            var output = new CubeColor[inputWidth, inputLength, inputHeight];
+            int maxHeight = inputWidth - 1;
+
+            for (int k = 0; k < output.GetLength(2); k++)
+                for (int j = 0; j < output.GetLength(1); j++)
+                    for (int i = 0; i < output.GetLength(0); i++)
+                        switch (axis)
+                        {
+                            case Axis.X:
+                                output[i, j, k] = input[maxHeight - i, j, k];
+                                break;
+                            case Axis.Y:
+                                output[i, j, k] = input[i, maxHeight - j, k];
+                                break;
+                            case Axis.Z:
+                                output[i, j, k] = input[i, j, maxHeight - k];
+                                break;
+                            default:
+                                output[i, j, k] = input[i, j, k];
+                                break;
+                        }
+            return output;
         }
 
         public void Clear(CubeColor color = CubeColor.Black)
@@ -68,34 +193,57 @@ namespace _8x8x8_LED.Models
             } while (iterations > -1);
         }
 
-        public void DrawPlane(Axis axis, int offset = 0, CubeColor color = CubeColor.Black)
+        /// <summary>
+        /// Draw a point on the cube.
+        /// </summary>
+        /// <param name="x">X position of point.</param>
+        /// <param name="y">Y position of point.</param>
+        /// <param name="z">Z position of point.</param>
+        /// <param name="color">Color to draw with.</param>
+        public void DrawPoint(int x, int y, int z, CubeColor color)
+        {
+            matrix[x, y, z] = color;
+        }
+
+        /// <summary>
+        /// Draw a straight line on the cube.
+        /// </summary>
+        /// <param name="axis">Axis to draw on.</param>
+        /// <param name="offset1">First offset from edge.</param>
+        /// <param name="offset2">Second offset from edge.</param>
+        /// <param name="color">Color to draw with.</param>
+        public void DrawStraightLine(Axis axis, int offset1, int offset2, CubeColor color)
         {
             switch (axis)
             {
                 case Axis.X:
-                    for (int y = 0; y < matrix.GetLength(1); y++)
-                        for (int z = 0; z < matrix.GetLength(2); z++)
-                            matrix[offset, y, z] = color;
+                    for (int i = 0; i < matrix.GetLength(0); i++)
+                        matrix[offset1, i, offset2] = color;
                     break;
                 case Axis.Y:
-                    for (int x = 0; x < matrix.GetLength(0); x++)
-                        for (int z = 0; z < matrix.GetLength(2); z++)
-                            matrix[x, offset, z] = color;
+                    for (int i = 0; i < matrix.GetLength(1); i++)
+                        matrix[i, offset1, offset2] = color;
                     break;
                 case Axis.Z:
-                    for (int x = 0; x < matrix.GetLength(0); x++)
-                        for (int y = 0; y < matrix.GetLength(1); y++)
-                            matrix[x, y, offset] = color;
+                    for (int i = 0; i < matrix.GetLength(2); i++)
+                        matrix[offset1, offset2, i] = color;
                     break;
             }
         }
 
         /// <summary>
-        /// Adaptation of Bresenham's Line Algorithm from https://stackoverflow.com/questions/16505905/walk-a-line-between-two-points-in-a-3d-voxel-space-visiting-all-cells
+        /// Draw a line on the cube.
         /// </summary>
+        /// <param name="gx0">X position of first point.</param>
+        /// <param name="gy0">Y position of first point.</param>
+        /// <param name="gz0">Z position of first point.</param>
+        /// <param name="gx1">X position of second point.</param>
+        /// <param name="gy1">Y position of second point.</param>
+        /// <param name="gz1">Z position of second point.</param>
+        /// <param name="color">Color to draw with.</param>
         public void DrawLine(double gx0, double gy0, double gz0, double gx1, double gy1, double gz1, CubeColor color)
         {
-
+            // This method is adapted from Bresenham's Line Algorithm: https://stackoverflow.com/questions/16505905/walk-a-line-between-two-points-in-a-3d-voxel-space-visiting-all-cells
             var gx0idx = Math.Floor(gx0);
             var gy0idx = Math.Floor(gy0);
             var gz0idx = Math.Floor(gz0);
@@ -187,26 +335,30 @@ namespace _8x8x8_LED.Models
             } while (true);
         }
 
-        public void DrawPoint(int x, int y, int z, CubeColor color)
-        {
-            matrix[x, y, z] = color;
-        }
-
-        public void DrawStraightLine(Axis axis, int xOffset, int yOffset, CubeColor color)
+        /// <summary>
+        /// Draw a plane on the cube.
+        /// </summary>
+        /// <param name="axis">Axis to draw on.</param>
+        /// <param name="offset">Offset from the edge.</param>
+        /// <param name="color">Color to draw with.</param>
+        public void DrawPlane(Axis axis, int offset = 0, CubeColor color = CubeColor.Black)
         {
             switch (axis)
             {
                 case Axis.X:
-                    for (int i = 0; i < matrix.GetLength(0); i++)
-                        matrix[xOffset, i, yOffset] = color;
+                    for (int y = 0; y < matrix.GetLength(1); y++)
+                        for (int z = 0; z < matrix.GetLength(2); z++)
+                            matrix[offset, y, z] = color;
                     break;
                 case Axis.Y:
-                    for (int i = 0; i < matrix.GetLength(1); i++)
-                        matrix[i, xOffset, yOffset] = color;
+                    for (int x = 0; x < matrix.GetLength(0); x++)
+                        for (int z = 0; z < matrix.GetLength(2); z++)
+                            matrix[x, offset, z] = color;
                     break;
                 case Axis.Z:
-                    for (int i = 0; i < matrix.GetLength(2); i++)
-                        matrix[xOffset, yOffset, i] = color;
+                    for (int x = 0; x < matrix.GetLength(0); x++)
+                        for (int y = 0; y < matrix.GetLength(1); y++)
+                            matrix[x, y, offset] = color;
                     break;
             }
         }

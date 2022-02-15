@@ -146,14 +146,9 @@ namespace _8x8x8_LED.Views
         {
             animate = chkAnimate.Checked;
             if (chkAnimate.Checked == false)
-            {
                 bwRenderer.CancelAsync();
-            }
-            else
-            {
-                if (!bwRenderer.IsBusy)
-                    bwRenderer.RunWorkerAsync();
-            }
+            else if (!bwRenderer.IsBusy)
+                bwRenderer.RunWorkerAsync();
         }
 
         private void FrmVideo_Load(object sender, EventArgs e)
@@ -205,7 +200,6 @@ namespace _8x8x8_LED.Views
 
         private void TmrSlideshow_Tick(object sender, EventArgs e)
         {
-
             if (picSelect.FileName.Length > 0)
             {
                 var rand = new Random();
@@ -220,6 +214,7 @@ namespace _8x8x8_LED.Views
                 }
                 catch (Exception)
                 {
+                    // Avoid throwing any exception so that slideshow continues.
                 }
             }
         }

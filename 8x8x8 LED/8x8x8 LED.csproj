@@ -258,7 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ColorHelper.cs" />
-    <Compile Include="Helpers\CubeManipulation.cs" />
+    <Compile Include="Helpers\ICube.cs" />
     <Compile Include="Models\Geometry\Axis.cs" />
     <Compile Include="Models\Cube.cs" />
     <Compile Include="Models\CubeColor.cs" />

@@ -3,13 +3,19 @@ using System.Collections.Generic;
 
 namespace _8x8x8_LED.Models.Snake
 {
-    class Snake
+    /// <summary>
+    /// Snake class used for simulating the classic 'Snake' game.
+    /// </summary>
+    public class Snake
     {
-
-        // Body of snake, consisting of points. body[0] represents the head of the snake.
+        /// <summary>
+        /// Body of snake, consisting of points. body[0] represents the head of the snake.
+        /// </summary>
         public List<Location> body = new List<Location>();
 
-        // Controls whether the snake is allowed to cross the edge of the boundaries:
+        /// <summary>
+        /// Controls whether the snake is allowed to cross the edge of the boundaries.
+        /// </summary>
         public bool boundedSnake = true;
 
         public bool alive = true;
@@ -17,10 +23,7 @@ namespace _8x8x8_LED.Models.Snake
 
         public Snake(Location headLocation)
         {
-            body = new List<Location>
-            {
-                headLocation
-            };
+            body = new List<Location>{headLocation};
         }
 
         public Location GetHead()
@@ -72,26 +75,16 @@ namespace _8x8x8_LED.Models.Snake
                 Location decapitatedHead = GetHead();
                 body.RemoveAt(0);
                 if (body.Contains(GetHead()))
-                {
                     alive = false;
-                }
                 else
-                {
                     body.Insert(0, decapitatedHead);
-                }
             }
-
 
             // Remove the last bodypart if not growing:
             if (grow)
-            {
                 grow = false;
-            }
             else
-            {
                 body.RemoveAt(body.Count - 1);
-            }
-
         }
 
         public bool AppleConsumed(Location apple)
@@ -99,9 +92,7 @@ namespace _8x8x8_LED.Models.Snake
             if (GetHead().GetX() == apple.GetX() &&
                 GetHead().GetY() == apple.GetY() &&
                 GetHead().GetZ() == apple.GetZ())
-            {
                 return true;
-            }
             return false;
         }
 

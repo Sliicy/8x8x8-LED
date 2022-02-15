@@ -2,6 +2,9 @@
 
 namespace _8x8x8_LED.Models
 {
+    /// <summary>
+    /// Cube that has LEDs which can only be either on or off.
+    /// </summary>
     [Serializable]
     public class MonochromeCube : Cube
     {

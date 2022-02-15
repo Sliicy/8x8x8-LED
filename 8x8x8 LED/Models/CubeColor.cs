@@ -1,5 +1,8 @@
 ﻿namespace _8x8x8_LED.Models
 {
+    /// <summary>
+    /// CubeColor is used to specify valid color types on the cube.
+    /// </summary>
     public enum CubeColor
     {
         Black = 0,

@@ -13,34 +13,43 @@ namespace _8x8x8_LED
             public string AutoOpen { get; set; }
             [Option('m', "minimized", Required = false, HelpText = "Minimize on launch.")]
             public bool Minimized { get; set; }
+            [Option('s', "single", Required = false, HelpText = "Allow only single-instance of app.")]
+            public bool SingleInstance { get; set; }
         }
 
         [STAThread]
         static void Main(string[] args)
         {
-            // Allow only one instance of program:
-            //if (PriorProcess() != null)
-            //    return;
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             string autoOpen = "";
             bool minimized = false;
+            bool singleInstance = false;
 
             Parser.Default.ParseArguments<Options>(args)
                    .WithParsed(o =>
                    {
-
                        if (o.AutoOpen != null)
                        {
                            autoOpen = o.AutoOpen;
                        }
                        minimized = o.Minimized;
+                       singleInstance = o.SingleInstance;
                    });
 
+            // Allow only one instance of program if specified:
+            if (PriorProcess() != null && singleInstance)
+            {
+                Debug.WriteLine("Only a single instance can run at a time since -s was provided as an argument!");
+                return;
+            }
             Application.Run(new FrmMainMenu(autoOpen, minimized));
         }
 
+        /// <summary>
+        /// Method to retrieve any prior process identical to current process.
+        /// </summary>
+        /// <returns>Process that was already running from before this one.</returns>
         private static Process PriorProcess()
         {
             Process current = Process.GetCurrentProcess();

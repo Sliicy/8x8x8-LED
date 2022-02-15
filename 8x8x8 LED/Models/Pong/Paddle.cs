@@ -4,7 +4,7 @@ using _8x8x8_LED.Models.Geometry;
 namespace _8x8x8_LED.Models.Pong
 {
     /// <summary>
-    /// Class responsible for handling the paddle in the game Pong.
+    /// Class responsible for handling the paddle in the game 'Pong'.
     /// </summary>
     public class Paddle
     {

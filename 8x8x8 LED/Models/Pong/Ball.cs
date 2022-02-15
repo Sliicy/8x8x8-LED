@@ -4,7 +4,7 @@ namespace _8x8x8_LED.Models.Pong
 {
     /// <summary>
     /// Class responsible for emulating a ball in the cube.
-    /// Can be used for either the game "Pong" or for a simple bouncing simulation.
+    /// Can be used for either the game 'Pong' or for a simple bouncing simulation.
     /// </summary>
     public class Ball
     {

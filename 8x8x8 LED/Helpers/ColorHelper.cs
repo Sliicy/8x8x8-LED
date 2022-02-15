@@ -5,11 +5,16 @@ using System.Linq;
 
 namespace _8x8x8_LED.Helpers
 {
-    public class ColorHelper
+    /// <summary>
+    /// Provides commonly used operations for colors.
+    /// </summary>
+    public static class ColorHelper
     {
-        private static readonly Random random = new Random();
-
-        // Converts 3D array of colors into two 192 byte arrays, ready for sending:
+        /// <summary>
+        /// Convert 3D CubeColor array into bytes.
+        /// </summary>
+        /// <param name="c">3-dimensional array of colors.</param>
+        /// <returns>Two concatenated 192 byte arrays.</returns>
         public static byte[] MatrixToBytes(CubeColor[,,] c)
         {
             byte[] outputArray1 = new byte[192];
@@ -251,6 +256,11 @@ namespace _8x8x8_LED.Helpers
             return outputArray1.Concat(outputArray2).ToArray();
         }
 
+        /// <summary>
+        /// Convert RGB color to CubeColor.
+        /// </summary>
+        /// <param name="c">RGB Color</param>
+        /// <returns>CubeColor representation of RGB.</returns>
         public static CubeColor GetColorFromRGB(Color c)
         {
             switch (c.R)
@@ -330,6 +340,11 @@ namespace _8x8x8_LED.Helpers
             }
         }
 
+        /// <summary>
+        /// Convert CubeColor to RGB color.
+        /// </summary>
+        /// <param name="c">CubeColor</param>
+        /// <returns>Color from CubeColor.</returns>
         public static Color GetRGB(CubeColor c)
         {
             switch (c)
@@ -409,8 +424,14 @@ namespace _8x8x8_LED.Helpers
             }
         }
 
+        /// <summary>
+        /// Generate a random CubeColor.
+        /// </summary>
+        /// <param name="includeBlack">Boolean to determine whether black is included as a color.</param>
+        /// <returns>Random CubeColor.</returns>
         public static CubeColor RandomColor(bool includeBlack = false)
         {
+            Random random = new Random();
             Array enums = Enum.GetValues(typeof(CubeColor));
             CubeColor newColor = (CubeColor)enums.GetValue(random.Next(enums.Length));
             if (!includeBlack)
@@ -421,13 +442,16 @@ namespace _8x8x8_LED.Helpers
             return newColor;
         }
 
+        /// <summary>
+        /// Generate a random dark CubeColor.
+        /// </summary>
+        /// <param name="includeBlack">Boolean to determine whether black is included as a color.</param>
+        /// <returns>Random dark CubeColor.</returns>
         public static CubeColor RandomDarkColor(bool includeBlack = false)
         {
             CubeColor newColor = RandomColor(includeBlack);
             while (!newColor.ToString().Contains("Dark"))
-            {
                 newColor = RandomColor(includeBlack);
-            }
             return newColor;
         }
     }
