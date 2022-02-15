@@ -26,6 +26,7 @@ namespace _8x8x8_LED.Models
         public int OffsetX = 0;
         public int OffsetY = 0;
         public int OffsetZ = 0;
+
         #endregion
 
         public CubeColor[,,] matrix;
@@ -193,25 +194,11 @@ namespace _8x8x8_LED.Models
             } while (iterations > -1);
         }
 
-        /// <summary>
-        /// Draw a point on the cube.
-        /// </summary>
-        /// <param name="x">X position of point.</param>
-        /// <param name="y">Y position of point.</param>
-        /// <param name="z">Z position of point.</param>
-        /// <param name="color">Color to draw with.</param>
         public void DrawPoint(int x, int y, int z, CubeColor color)
         {
             matrix[x, y, z] = color;
         }
 
-        /// <summary>
-        /// Draw a straight line on the cube.
-        /// </summary>
-        /// <param name="axis">Axis to draw on.</param>
-        /// <param name="offset1">First offset from edge.</param>
-        /// <param name="offset2">Second offset from edge.</param>
-        /// <param name="color">Color to draw with.</param>
         public void DrawStraightLine(Axis axis, int offset1, int offset2, CubeColor color)
         {
             switch (axis)
@@ -231,16 +218,6 @@ namespace _8x8x8_LED.Models
             }
         }
 
-        /// <summary>
-        /// Draw a line on the cube.
-        /// </summary>
-        /// <param name="gx0">X position of first point.</param>
-        /// <param name="gy0">Y position of first point.</param>
-        /// <param name="gz0">Z position of first point.</param>
-        /// <param name="gx1">X position of second point.</param>
-        /// <param name="gy1">Y position of second point.</param>
-        /// <param name="gz1">Z position of second point.</param>
-        /// <param name="color">Color to draw with.</param>
         public void DrawLine(double gx0, double gy0, double gz0, double gx1, double gy1, double gz1, CubeColor color)
         {
             // This method is adapted from Bresenham's Line Algorithm: https://stackoverflow.com/questions/16505905/walk-a-line-between-two-points-in-a-3d-voxel-space-visiting-all-cells
@@ -335,12 +312,6 @@ namespace _8x8x8_LED.Models
             } while (true);
         }
 
-        /// <summary>
-        /// Draw a plane on the cube.
-        /// </summary>
-        /// <param name="axis">Axis to draw on.</param>
-        /// <param name="offset">Offset from the edge.</param>
-        /// <param name="color">Color to draw with.</param>
         public void DrawPlane(Axis axis, int offset = 0, CubeColor color = CubeColor.Black)
         {
             switch (axis)
