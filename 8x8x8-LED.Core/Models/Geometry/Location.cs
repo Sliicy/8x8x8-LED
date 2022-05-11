@@ -1,5 +1,8 @@
 ﻿namespace _8x8x8_LED.Core.Models.Geometry
 {
+    /// <summary>
+    /// Defines a point in the <see cref="Cube"/>.
+    /// </summary>
     public class Location
     {
         private int x = 0;

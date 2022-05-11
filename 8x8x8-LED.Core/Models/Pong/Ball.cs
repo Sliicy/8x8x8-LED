@@ -4,9 +4,9 @@ using _8x8x8_LED.Core.Models.Geometry;
 namespace _8x8x8_LED.Core.Models.Pong
 {
     /// <summary>
-    /// Class responsible for emulating a ball in the cube.
-    /// Can be used for either the game 'Pong' or for a simple bouncing simulation.
+    /// Emulates a ball that can animate in the <see cref="Cube"/>.
     /// </summary>
+    /// <remarks>Can be used for the game 'Pong' or for a simple bouncing simulation.</remarks>
     public class Ball
     {
         public Location location = new(3, 3, 3);
@@ -19,6 +19,12 @@ namespace _8x8x8_LED.Core.Models.Pong
 
         public bool outOfBounds = false;
 
+        /// <summary>
+        /// Animates the <see cref="Ball"/>.
+        /// </summary>
+        /// <param name="teleport"><see cref="bool"/> whether <see cref="Ball"/> should reappear on other side of <see cref="Cube"/>.</param>
+        /// <param name="p1"><see cref="Paddle"/> of Player 1.</param>
+        /// <param name="p2"><see cref="Paddle"/> of Player 2.</param>
         public void Move(bool teleport = false, Paddle? p1 = null, Paddle? p2 = null)
         {
             switch (directionX)
@@ -137,6 +143,12 @@ namespace _8x8x8_LED.Core.Models.Pong
             }
         }
 
+        /// <summary>
+        /// <see cref="bool"/> defining if a <paramref name="ballLocation"/> is intersecting a <paramref name="paddleLocation"/>.
+        /// </summary>
+        /// <param name="ballLocation">Location of <see cref="Ball"/>.</param>
+        /// <param name="paddleLocation">Location of <see cref="Paddle"/>.</param>
+        /// <returns><see cref="bool"/> if <see cref="Ball"/> is intersecting <see cref="Paddle"/>.</returns>
         private bool BallHitPaddle(Location ballLocation, Location paddleLocation)
         {
             if (ballLocation.GetX() == paddleLocation.GetX())

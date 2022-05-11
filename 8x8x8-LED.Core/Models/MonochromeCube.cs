@@ -3,7 +3,7 @@
 namespace _8x8x8_LED.Core.Models
 {
     /// <summary>
-    /// Cube that has LEDs which can only be either on or off.
+    /// Type of <see cref="Cube"/> that has monochrome LEDs (can only be on/off, not multicolored).
     /// </summary>
     [Serializable]
     public class MonochromeCube : Cube
@@ -31,13 +31,23 @@ namespace _8x8x8_LED.Core.Models
         // Lighting up the front top-right LED:
         // matrix[56] = 128
 
+        /// <summary>
+        /// Payload sent over serial.
+        /// </summary>
         public byte[] matrixBytes = new byte[64];
 
+        /// <summary>
+        /// Initializes a new <see cref="MonochromeCube"/>.
+        /// </summary>
+        /// <param name="size">Size to initialize the <see cref="MonochromeCube"/>.</param>
         public MonochromeCube(int size)
         {
             matrixBytes = new byte[size];
         }
 
+        /// <summary>
+        /// Clears the <see cref="MonochromeCube"/>.
+        /// </summary>
         public void Clear()
         {
             for (int i = 0; i < matrixBytes.Length; i++)

@@ -36,7 +36,7 @@ namespace _8x8x8_LED
                    });
 
             // Allow only one instance of program if specified:
-            if (PriorProcess() != null && singleInstance)
+            if (GetPriorProcess() != null && singleInstance)
             {
                 Debug.WriteLine("Only a single instance can run at a time since -s was provided as an argument!");
                 return;
@@ -45,10 +45,10 @@ namespace _8x8x8_LED
         }
 
         /// <summary>
-        /// Method to retrieve any prior process identical to current process.
+        /// Method to retrieve any prior <see cref="Process"/> identical to current one.
         /// </summary>
-        /// <returns>Process that was already running from before this one.</returns>
-        private static Process PriorProcess()
+        /// <returns><see cref="Process"/> that was already running prior to this one.</returns>
+        private static Process GetPriorProcess()
         {
             Process current = Process.GetCurrentProcess();
             Process[] prosesses = Process.GetProcessesByName(current.ProcessName);

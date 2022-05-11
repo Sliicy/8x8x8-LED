@@ -8,23 +8,41 @@ using System.Linq;
 namespace _8x8x8_LED.Core.Helpers
 {
     /// <summary>
-    /// Provides commonly used operations for cube communication.
+    /// Provides commonly used operations for sending <see cref="Cube"/> over USB serial.
     /// </summary>
     public static class SerialHelper
     {
+        /// <summary>
+        /// Header used for <see cref="MonochromeCube"/>.
+        /// </summary>
         public static readonly byte[] MONOCHROME_HEADER = { 0xF2 };
+
+        /// <summary>
+        /// Header used for <see cref="Cube"/>.
+        /// </summary>
         public static readonly byte[] RGB_HEADER = { 0x00, 0xFF, 0x00, 0x00 };
+
+        /// <summary>
+        /// Layer being updated in <see cref="Cube"/> (typically either layer 1 or 2).
+        /// </summary>
+        /// <remarks><c>0x00</c> = Layer 1, <c>0x01</c> = Layer 2, etc.<br/>
+        /// This property is stored as a <see cref="byte"/> array since it is appended to <see cref="RGB_HEADER"/>.</remarks>
         public static readonly byte[] RGB_COLOR_LAYER = { 0x00 };
+
+        /// <summary>
+        /// Delay in milliseconds between updating the cube over USB serial.
+        /// </summary>
         public static readonly int RGB_Delay = 24;
 
         /// <summary>
-        /// Send a raw byte array packet to a cube over serial.
+        /// Sends a <see cref="byte"/> array <paramref name="payload"/> to a cube over USB serial.
         /// </summary>
-        /// <param name="cubeType">Type of cube to use.</param>
-        /// <param name="serialPort">SerialPort the cube is listening on.</param>
-        /// <param name="payload">Byte array to send to cube.</param>
-        /// <param name="prependHeader">Boolean to determine whether a header should be prepended to the byte array.</param>
-        /// <exception cref="ArgumentNullException">Valid Cube type must be provided.</exception>
+        /// <remarks>A <see cref="RGB_HEADER"/> or <see cref="MONOCHROME_HEADER"/> can optionally be prepended to the <paramref name="payload"/> if <paramref name="prependHeader"/> is true.</remarks>
+        /// <param name="cubeType">Type of <see cref="Cube"/> to use (ie: <see cref="Cube"/>, <see cref="MonochromeCube"/>).</param>
+        /// <param name="serialPort"><see cref="SerialPort"/> the cube is listening on.</param>
+        /// <param name="payload"><see cref="byte"/> array to send to cube.</param>
+        /// <param name="prependHeader"><see cref="bool"/> to determine whether a header should be prepended to the byte array.</param>
+        /// <exception cref="ArgumentNullException"><para><paramref name="cubeType"/> must be valid.</para></exception>
         public static void SendPacket(CubeType cubeType, SerialPort serialPort, byte[] payload, bool prependHeader = true)
         {
             if (serialPort.IsOpen)
@@ -99,10 +117,10 @@ namespace _8x8x8_LED.Core.Helpers
         }
 
         /// <summary>
-        /// Send a Cube object to a cube over serial.
+        /// Sends a <see cref="Cube"/> object to a cube over USB serial.
         /// </summary>
-        /// <param name="serialPort">SerialPort the cube is listening on.</param>
-        /// <param name="cube">Cube object to send.</param>
+        /// <param name="serialPort"><see cref="SerialPort"/> the cube is listening on.</param>
+        /// <param name="cube"><see cref="Cube"/> object to send.</param>
         public static void Send(SerialPort serialPort, Cube cube)
         {
             if (cube.FlippedX)
@@ -162,11 +180,11 @@ namespace _8x8x8_LED.Core.Helpers
         }
 
         /// <summary>
-        /// Method for converting a Cube into a MonochromeCube object.
-        /// This enables support for monochrome cubes.
+        /// Converts a <see cref="Cube"/> into a <see cref="MonochromeCube"/> object.
         /// </summary>
-        /// <param name="rgbCube">Cube object to convert.</param>
-        /// <returns>MonochromeCube object.</returns>
+        /// <remarks>This method enables support for monochrome cubes.</remarks>
+        /// <param name="rgbCube"><see cref="Cube"/> to convert into <see cref="MonochromeCube"/>.</param>
+        /// <returns><see cref="MonochromeCube"/> object.</returns>
         public static MonochromeCube RGBToMonochromeDriver(Cube rgbCube)
         {
             var output = new MonochromeCube(64);

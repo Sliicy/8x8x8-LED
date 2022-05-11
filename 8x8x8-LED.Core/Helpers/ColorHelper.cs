@@ -6,15 +6,15 @@ using System.Linq;
 namespace _8x8x8_LED.Core.Helpers
 {
     /// <summary>
-    /// Provides commonly used operations for colors.
+    /// Provides commonly used color/<see cref="CubeColor"/> operations.
     /// </summary>
     public static class ColorHelper
     {
         /// <summary>
-        /// Convert 3D CubeColor array into bytes.
+        /// Converts 3D <see cref="CubeColor"/> array into <see cref="List{T}"/> of <see cref="Byte"/>.
         /// </summary>
-        /// <param name="c">3-dimensional array of colors.</param>
-        /// <returns>Two concatenated 192 byte arrays.</returns>
+        /// <param name="c">3-dimensional array of <see cref="CubeColor"/>.</param>
+        /// <returns>Two concatenated 192 <see cref="byte"/> arrays.</returns>
         public static byte[] MatrixToBytes(CubeColor[,,] c)
         {
             byte[] outputArray1 = new byte[192];
@@ -257,10 +257,10 @@ namespace _8x8x8_LED.Core.Helpers
         }
 
         /// <summary>
-        /// Convert RGB color to CubeColor.
+        /// Converts <see cref="Color"/> to <see cref="CubeColor"/>.
         /// </summary>
-        /// <param name="c">RGB Color</param>
-        /// <returns>CubeColor representation of RGB.</returns>
+        /// <param name="c">RGB input <see cref="Color"/>.</param>
+        /// <returns><see cref="CubeColor"/> representation of RGB.</returns>
         public static CubeColor GetColorFromRGB(Color c)
         {
             return c.R switch
@@ -305,10 +305,10 @@ namespace _8x8x8_LED.Core.Helpers
         }
 
         /// <summary>
-        /// Convert CubeColor to RGB color.
+        /// Converts <see cref="CubeColor"/> to <see cref="Color"/>.
         /// </summary>
-        /// <param name="c">CubeColor</param>
-        /// <returns>Color from CubeColor.</returns>
+        /// <param name="c"><see cref="CubeColor"/> input.</param>
+        /// <returns><see cref="Color"/> from <see cref="CubeColor"/>.</returns>
         public static Color GetRGB(CubeColor c)
         {
             return c switch
@@ -353,10 +353,10 @@ namespace _8x8x8_LED.Core.Helpers
         }
 
         /// <summary>
-        /// Generate a random CubeColor.
+        /// Returns a random <see cref="CubeColor"/>.
         /// </summary>
-        /// <param name="includeBlack">Boolean to determine whether black is included as a color.</param>
-        /// <returns>Random CubeColor.</returns>
+        /// <param name="includeBlack"><see cref="bool"/> to determine whether black should be included in selection.</param>
+        /// <returns>Random <see cref="CubeColor"/>.</returns>
         public static CubeColor RandomColor(bool includeBlack = false)
         {
             Random random = new();
@@ -371,10 +371,10 @@ namespace _8x8x8_LED.Core.Helpers
         }
 
         /// <summary>
-        /// Generate a random dark CubeColor.
+        /// Returns a random dark <see cref="CubeColor"/>.
         /// </summary>
-        /// <param name="includeBlack">Boolean to determine whether black is included as a color.</param>
-        /// <returns>Random dark CubeColor.</returns>
+        /// <param name="includeBlack"><see cref="bool"/> to determine whether black should be included in selection.</param>
+        /// <returns>Random dark <see cref="CubeColor"/>.</returns>
         public static CubeColor RandomDarkColor(bool includeBlack = false)
         {
             CubeColor newColor = RandomColor(includeBlack);

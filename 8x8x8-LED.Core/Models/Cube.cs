@@ -4,7 +4,7 @@ using System;
 namespace _8x8x8_LED.Core.Models
 {
     /// <summary>
-    /// Cube object that is passed to the cube over serial. By default, it is RGB.
+    /// Class that is passed to the cube over USB serial. By default, it supports RGB.
     /// </summary>
     [Serializable]
     public class Cube : ICube
@@ -34,6 +34,12 @@ namespace _8x8x8_LED.Core.Models
         public int length;
         public int height;
 
+        /// <summary>
+        /// Initializes a <see cref="Cube"/>, optionally by custom dimensions (default is 8x8x8).
+        /// </summary>
+        /// <param name="x">Width of <see cref="Cube"/>.</param>
+        /// <param name="y">Length of <see cref="Cube"/>.</param>
+        /// <param name="z">Height of <see cref="Cube"/>.</param>
         public Cube(int x = 8, int y = 8, int z = 8)
         {
             width = x;
@@ -54,32 +60,19 @@ namespace _8x8x8_LED.Core.Models
             for (int k = 0; k < output.GetLength(2); k++)
                 for (int j = 0; j < output.GetLength(1); j++)
                     for (int i = 0; i < output.GetLength(0); i++)
-                        switch (rotation)
+                        output[i, j, k] = rotation switch
                         {
-                            case Rotation.ClockwiseX:
-                                output[i, j, k] = input[maxHeight - k, j, i];
-                                break;
-                            case Rotation.ClockwiseY:
-                                output[i, j, k] = input[i, k, maxHeight - j];
-                                break;
-                            case Rotation.ClockwiseZ:
-                                output[i, j, k] = input[maxHeight - j, i, k];
-                                break;
-                            case Rotation.CounterclockwiseX:
-                                output[i, j, k] = input[k, j, maxHeight - i];
-                                break;
-                            case Rotation.CounterclockwiseY:
-                                output[i, j, k] = input[i, k, maxHeight - j];
-                                break;
-                            case Rotation.CounterclockwiseZ:
-                                output[i, j, k] = input[j, maxHeight - i, k];
-                                break;
-                            default:
-                                output[i, j, k] = input[i, j, k];
-                                break;
-                        }
+                            Rotation.ClockwiseX => input[maxHeight - k, j, i],
+                            Rotation.ClockwiseY => input[i, k, maxHeight - j],
+                            Rotation.ClockwiseZ => input[maxHeight - j, i, k],
+                            Rotation.CounterclockwiseX => input[k, j, maxHeight - i],
+                            Rotation.CounterclockwiseY => input[i, k, maxHeight - j],
+                            Rotation.CounterclockwiseZ => input[j, maxHeight - i, k],
+                            _ => input[i, j, k],
+                        };
             return output;
         }
+
 
         public CubeColor[,,] Shift(Direction direction, CubeColor[,,] input, bool repeating = true, CubeColor backColor = CubeColor.Black)
         {
@@ -144,21 +137,13 @@ namespace _8x8x8_LED.Core.Models
             for (int k = 0; k < output.GetLength(2); k++)
                 for (int j = 0; j < output.GetLength(1); j++)
                     for (int i = 0; i < output.GetLength(0); i++)
-                        switch (axis)
+                        output[i, j, k] = axis switch
                         {
-                            case Axis.X:
-                                output[i, j, k] = input[maxHeight - i, j, k];
-                                break;
-                            case Axis.Y:
-                                output[i, j, k] = input[i, maxHeight - j, k];
-                                break;
-                            case Axis.Z:
-                                output[i, j, k] = input[i, j, maxHeight - k];
-                                break;
-                            default:
-                                output[i, j, k] = input[i, j, k];
-                                break;
-                        }
+                            Axis.X => input[maxHeight - i, j, k],
+                            Axis.Y => input[i, maxHeight - j, k],
+                            Axis.Z => input[i, j, maxHeight - k],
+                            _ => input[i, j, k],
+                        };
             return output;
         }
 
@@ -170,20 +155,36 @@ namespace _8x8x8_LED.Core.Models
                         matrix[x, y, z] = color;
         }
 
+        /// <summary>
+        /// Flips the <see cref="Cube"/> by <paramref name="axis"/>.
+        /// </summary>
+        /// <param name="axis"><see cref="Axis"/> to flip on.</param>
         public void Flip(Axis axis)
         {
             matrix = Flip(axis, matrix);
         }
 
-        public void Rotate(Rotation orientation, int iterations = 0)
+        /// <summary>
+        /// Rotates the <see cref="Cube"/> by <paramref name="direction"/>, <paramref name="iterations"/> number of times.
+        /// </summary>
+        /// <param name="direction">Direction of <see cref="Rotation"/>.</param>
+        /// <param name="iterations"><see cref="int"/> number of times to rotate.</param>
+        public void Rotate(Rotation direction, int iterations = 0)
         {
             do
             {
-                matrix = Rotate(orientation, matrix);
+                matrix = Rotate(direction, matrix);
                 iterations--;
             } while (iterations > -1);
         }
 
+        /// <summary>
+        /// Shifts the <see cref="Cube"/> by <paramref name="direction"/>, <paramref name="iterations"/> number of times.
+        /// </summary>
+        /// <remarks>If <paramref name="repeating"/>, edges will reappear on the opposite side.</remarks>
+        /// <param name="direction"><see cref="Direction"/> to shift.</param>
+        /// <param name="iterations"><see cref="int"/> number of times to shift.</param>
+        /// <param name="repeating"><see cref="bool"/> whether or not to repeat on the opposite side.</param>
         public void Shift(Direction direction, int iterations = 0, bool repeating = true)
         {
             do

@@ -1,7 +1,7 @@
 ﻿namespace _8x8x8_LED.Core.Models
 {
     /// <summary>
-    /// CubeColor is used to specify valid color types on the cube.
+    /// Class used to specify valid color types on the <see cref="Cube"/>.
     /// </summary>
     public enum CubeColor
     {
