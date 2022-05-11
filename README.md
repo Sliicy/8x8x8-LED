@@ -121,7 +121,7 @@ https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectron
 
 
 ## How to Run
-1) Simply download the latest release [here](https://github.com/Sliicy/8x8x8-LED/releases/). Extract the .zip file and run '8x8x8 LED.exe'.
+1) Download the latest release [here](https://github.com/Sliicy/8x8x8-LED/releases/) (it should say something like 8x8x8.LED.Vxxx.zip). Extract the .zip file and run '8x8x8 LED.exe'.
 2) When opening the program the first time, head to the 2nd tab titled 'Settings', then the subsection 'Connection', and ensure the correct COM port is selected for the cube. This can be tested by disconnecting & reconnecting the cube from your PC, and watching which COM port populates.
 3) Make sure the appropriate cube type is selected (Monochrome or RGB).
 4) The Monochrome version uses a baud rate of 19,200 bps. The RGB version uses a baud rate of 2,000,000 bps. Both versions use 8 Data bits, 1 Stop bits, and no Parity.
