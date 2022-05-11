@@ -122,16 +122,16 @@ https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectron
 
 ## How to Run
 1) Simply download the latest release [here](https://github.com/Sliicy/8x8x8-LED/releases/). Extract the .zip file and run '8x8x8 LED.exe'.
-2) When using for the first time, after opening the program, head to the 2nd tab titled 'Settings', then the subsection 'Connection', and ensure the COM port has the right port selected for the cube.
-3) Make sure the appropriate cube is selected (Monochrome or RGB).
-4) For the Monochrome version, the baud rate is 19200 bps. For the RGB version, the baud rate is 2000000 bps. Both versions use 8 Data bits, 1 Stop bits, and no Parity.
-5) Next, press the 'Connect' button at the bottom.
+2) When opening the program the first time, head to the 2nd tab titled 'Settings', then the subsection 'Connection', and ensure the correct COM port is selected for the cube. This can be tested by disconnecting & reconnecting the cube from your PC, and watching which COM port populates.
+3) Make sure the appropriate cube type is selected (Monochrome or RGB).
+4) The Monochrome version uses a baud rate of 19,200 bps. The RGB version uses a baud rate of 2,000,000 bps. Both versions use 8 Data bits, 1 Stop bits, and no Parity.
+5) Next, press the 'Connect' button at the bottom of the window.
 6) If done correctly, there shouldn't be any error messages. You can also send a test packet in the 'Send Packet' subsection, to light up all the LEDs.
 7) Finally, you will want to ensure that the orientation is correct, so press the 'Calibrate Cube' button in the 'Rotation' subsection of Settings, to calibrate the cube.
-8) These connection settings are automatically saved. Once done with this step, head over to the 'Menu' tab, select an applet, and then open it.
+8) These connection settings are automatically saved. Once completed, head over to the 'Menu' tab, select an applet, open it, and enjoy!
 
 ## Hardware
-I designed & 3D printed a custom bottom for the cube in Blender. It can be found here: https://www.thingiverse.com/thing:5236752
+I designed & 3D printed a custom bottom for the cube using [Blender](https://www.blender.org). It can be found here: https://www.thingiverse.com/thing:5236752
 
 ## Future Development
 Anyone is welcome to provide suggestions, improvements, changes, bugs found, etc.
