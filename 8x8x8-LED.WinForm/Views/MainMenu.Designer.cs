@@ -53,6 +53,7 @@ namespace _8x8x8_LED
             this.btnSendPacket = new System.Windows.Forms.Button();
             this.txtBytesToSend = new System.Windows.Forms.TextBox();
             this.grpConnection = new System.Windows.Forms.GroupBox();
+            this.chkBlinkOnConnect = new System.Windows.Forms.CheckBox();
             this.chkAutoconnect = new System.Windows.Forms.CheckBox();
             this.nudDataBits = new System.Windows.Forms.NumericUpDown();
             this.lblParity = new System.Windows.Forms.Label();
@@ -74,6 +75,7 @@ namespace _8x8x8_LED
             this.cbCubeType = new System.Windows.Forms.ComboBox();
             this.btnWebsite = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.grpGeometry.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudOffsetZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOffsetY)).BeginInit();
@@ -132,7 +134,7 @@ namespace _8x8x8_LED
             this.grpGeometry.Location = new System.Drawing.Point(265, 87);
             this.grpGeometry.Name = "grpGeometry";
             this.grpGeometry.Size = new System.Drawing.Size(250, 356);
-            this.grpGeometry.TabIndex = 17;
+            this.grpGeometry.TabIndex = 18;
             this.grpGeometry.TabStop = false;
             this.grpGeometry.Text = "Geometry";
             // 
@@ -142,7 +144,7 @@ namespace _8x8x8_LED
             this.lblOffsetZ.Location = new System.Drawing.Point(113, 304);
             this.lblOffsetZ.Name = "lblOffsetZ";
             this.lblOffsetZ.Size = new System.Drawing.Size(79, 24);
-            this.lblOffsetZ.TabIndex = 32;
+            this.lblOffsetZ.TabIndex = 33;
             this.lblOffsetZ.Text = "&Offset Z:";
             // 
             // lblOffsetY
@@ -151,7 +153,7 @@ namespace _8x8x8_LED
             this.lblOffsetY.Location = new System.Drawing.Point(113, 270);
             this.lblOffsetY.Name = "lblOffsetY";
             this.lblOffsetY.Size = new System.Drawing.Size(79, 24);
-            this.lblOffsetY.TabIndex = 29;
+            this.lblOffsetY.TabIndex = 30;
             this.lblOffsetY.Text = "&Offset Y:";
             // 
             // lblOffsetX
@@ -160,7 +162,7 @@ namespace _8x8x8_LED
             this.lblOffsetX.Location = new System.Drawing.Point(113, 236);
             this.lblOffsetX.Name = "lblOffsetX";
             this.lblOffsetX.Size = new System.Drawing.Size(81, 24);
-            this.lblOffsetX.TabIndex = 26;
+            this.lblOffsetX.TabIndex = 27;
             this.lblOffsetX.Text = "&Offset X:";
             // 
             // nudOffsetZ
@@ -173,7 +175,7 @@ namespace _8x8x8_LED
             0});
             this.nudOffsetZ.Name = "nudOffsetZ";
             this.nudOffsetZ.Size = new System.Drawing.Size(38, 29);
-            this.nudOffsetZ.TabIndex = 33;
+            this.nudOffsetZ.TabIndex = 34;
             this.nudOffsetZ.ValueChanged += new System.EventHandler(this.NudOffsetZ_ValueChanged);
             // 
             // nudOffsetY
@@ -186,7 +188,7 @@ namespace _8x8x8_LED
             0});
             this.nudOffsetY.Name = "nudOffsetY";
             this.nudOffsetY.Size = new System.Drawing.Size(38, 29);
-            this.nudOffsetY.TabIndex = 30;
+            this.nudOffsetY.TabIndex = 31;
             this.nudOffsetY.ValueChanged += new System.EventHandler(this.NudOffsetY_ValueChanged);
             // 
             // nudOffsetX
@@ -199,7 +201,7 @@ namespace _8x8x8_LED
             0});
             this.nudOffsetX.Name = "nudOffsetX";
             this.nudOffsetX.Size = new System.Drawing.Size(38, 29);
-            this.nudOffsetX.TabIndex = 27;
+            this.nudOffsetX.TabIndex = 28;
             this.nudOffsetX.ValueChanged += new System.EventHandler(this.NudOffsetX_ValueChanged);
             // 
             // btnCalibrate
@@ -207,7 +209,7 @@ namespace _8x8x8_LED
             this.btnCalibrate.Location = new System.Drawing.Point(16, 50);
             this.btnCalibrate.Name = "btnCalibrate";
             this.btnCalibrate.Size = new System.Drawing.Size(222, 42);
-            this.btnCalibrate.TabIndex = 18;
+            this.btnCalibrate.TabIndex = 19;
             this.btnCalibrate.Text = "Calibration";
             this.btnCalibrate.UseVisualStyleBackColor = true;
             this.btnCalibrate.Click += new System.EventHandler(this.BtnCalibrate_Click);
@@ -218,7 +220,7 @@ namespace _8x8x8_LED
             this.chkFlipZ.Location = new System.Drawing.Point(16, 303);
             this.chkFlipZ.Name = "chkFlipZ";
             this.chkFlipZ.Size = new System.Drawing.Size(77, 28);
-            this.chkFlipZ.TabIndex = 31;
+            this.chkFlipZ.TabIndex = 32;
             this.chkFlipZ.Text = "Flip &Z";
             this.chkFlipZ.UseVisualStyleBackColor = true;
             this.chkFlipZ.CheckedChanged += new System.EventHandler(this.ChkFlipZ_CheckedChanged);
@@ -229,7 +231,7 @@ namespace _8x8x8_LED
             this.chkFlipY.Location = new System.Drawing.Point(16, 269);
             this.chkFlipY.Name = "chkFlipY";
             this.chkFlipY.Size = new System.Drawing.Size(77, 28);
-            this.chkFlipY.TabIndex = 28;
+            this.chkFlipY.TabIndex = 29;
             this.chkFlipY.Text = "Flip &Y";
             this.chkFlipY.UseVisualStyleBackColor = true;
             this.chkFlipY.CheckedChanged += new System.EventHandler(this.ChkFlipY_CheckedChanged);
@@ -240,7 +242,7 @@ namespace _8x8x8_LED
             this.chkFlipX.Location = new System.Drawing.Point(16, 235);
             this.chkFlipX.Name = "chkFlipX";
             this.chkFlipX.Size = new System.Drawing.Size(79, 28);
-            this.chkFlipX.TabIndex = 25;
+            this.chkFlipX.TabIndex = 26;
             this.chkFlipX.Text = "Flip &X";
             this.chkFlipX.UseVisualStyleBackColor = true;
             this.chkFlipX.CheckedChanged += new System.EventHandler(this.ChkFlipX_CheckedChanged);
@@ -257,7 +259,7 @@ namespace _8x8x8_LED
             this.cbRotateZ.Location = new System.Drawing.Point(117, 179);
             this.cbRotateZ.Name = "cbRotateZ";
             this.cbRotateZ.Size = new System.Drawing.Size(121, 32);
-            this.cbRotateZ.TabIndex = 24;
+            this.cbRotateZ.TabIndex = 25;
             this.cbRotateZ.SelectedIndexChanged += new System.EventHandler(this.CbRotateZ_SelectedIndexChanged);
             // 
             // cbRotateY
@@ -272,7 +274,7 @@ namespace _8x8x8_LED
             this.cbRotateY.Location = new System.Drawing.Point(117, 141);
             this.cbRotateY.Name = "cbRotateY";
             this.cbRotateY.Size = new System.Drawing.Size(121, 32);
-            this.cbRotateY.TabIndex = 22;
+            this.cbRotateY.TabIndex = 23;
             this.cbRotateY.SelectedIndexChanged += new System.EventHandler(this.CbRotateY_SelectedIndexChanged);
             // 
             // cbRotateX
@@ -287,7 +289,7 @@ namespace _8x8x8_LED
             this.cbRotateX.Location = new System.Drawing.Point(117, 103);
             this.cbRotateX.Name = "cbRotateX";
             this.cbRotateX.Size = new System.Drawing.Size(121, 32);
-            this.cbRotateX.TabIndex = 20;
+            this.cbRotateX.TabIndex = 21;
             this.cbRotateX.SelectedIndexChanged += new System.EventHandler(this.CbRotateX_SelectedIndexChanged);
             // 
             // lblRotateZ
@@ -296,7 +298,7 @@ namespace _8x8x8_LED
             this.lblRotateZ.Location = new System.Drawing.Point(12, 182);
             this.lblRotateZ.Name = "lblRotateZ";
             this.lblRotateZ.Size = new System.Drawing.Size(85, 24);
-            this.lblRotateZ.TabIndex = 23;
+            this.lblRotateZ.TabIndex = 24;
             this.lblRotateZ.Text = "&Rotate Z:";
             // 
             // lblRotateY
@@ -305,7 +307,7 @@ namespace _8x8x8_LED
             this.lblRotateY.Location = new System.Drawing.Point(12, 144);
             this.lblRotateY.Name = "lblRotateY";
             this.lblRotateY.Size = new System.Drawing.Size(85, 24);
-            this.lblRotateY.TabIndex = 21;
+            this.lblRotateY.TabIndex = 22;
             this.lblRotateY.Text = "&Rotate Y:";
             // 
             // lblRotateX
@@ -314,11 +316,12 @@ namespace _8x8x8_LED
             this.lblRotateX.Location = new System.Drawing.Point(12, 106);
             this.lblRotateX.Name = "lblRotateX";
             this.lblRotateX.Size = new System.Drawing.Size(87, 24);
-            this.lblRotateX.TabIndex = 19;
+            this.lblRotateX.TabIndex = 20;
             this.lblRotateX.Text = "&Rotate X:";
             // 
             // grpSendPacket
             // 
+            this.grpSendPacket.Controls.Add(this.lblVersion);
             this.grpSendPacket.Controls.Add(this.btnSendPacket);
             this.grpSendPacket.Controls.Add(this.txtBytesToSend);
             this.grpSendPacket.Location = new System.Drawing.Point(6, 452);
@@ -326,7 +329,7 @@ namespace _8x8x8_LED
             this.grpSendPacket.Name = "grpSendPacket";
             this.grpSendPacket.Padding = new System.Windows.Forms.Padding(6);
             this.grpSendPacket.Size = new System.Drawing.Size(509, 225);
-            this.grpSendPacket.TabIndex = 34;
+            this.grpSendPacket.TabIndex = 35;
             this.grpSendPacket.TabStop = false;
             this.grpSendPacket.Text = "Send Packet";
             // 
@@ -337,7 +340,7 @@ namespace _8x8x8_LED
             this.btnSendPacket.Margin = new System.Windows.Forms.Padding(6);
             this.btnSendPacket.Name = "btnSendPacket";
             this.btnSendPacket.Size = new System.Drawing.Size(138, 42);
-            this.btnSendPacket.TabIndex = 36;
+            this.btnSendPacket.TabIndex = 37;
             this.btnSendPacket.Text = "S&end";
             this.btnSendPacket.UseVisualStyleBackColor = true;
             this.btnSendPacket.Click += new System.EventHandler(this.BtnSendPacket_Click);
@@ -353,10 +356,11 @@ namespace _8x8x8_LED
             this.txtBytesToSend.Name = "txtBytesToSend";
             this.txtBytesToSend.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtBytesToSend.Size = new System.Drawing.Size(483, 109);
-            this.txtBytesToSend.TabIndex = 35;
+            this.txtBytesToSend.TabIndex = 36;
             // 
             // grpConnection
             // 
+            this.grpConnection.Controls.Add(this.chkBlinkOnConnect);
             this.grpConnection.Controls.Add(this.chkAutoconnect);
             this.grpConnection.Controls.Add(this.nudDataBits);
             this.grpConnection.Controls.Add(this.lblParity);
@@ -377,10 +381,21 @@ namespace _8x8x8_LED
             this.grpConnection.TabStop = false;
             this.grpConnection.Text = "Connection";
             // 
+            // chkBlinkOnConnect
+            // 
+            this.chkBlinkOnConnect.AutoSize = true;
+            this.chkBlinkOnConnect.Location = new System.Drawing.Point(15, 328);
+            this.chkBlinkOnConnect.Name = "chkBlinkOnConnect";
+            this.chkBlinkOnConnect.Size = new System.Drawing.Size(172, 28);
+            this.chkBlinkOnConnect.TabIndex = 17;
+            this.chkBlinkOnConnect.Text = "B&link on Connect";
+            this.chkBlinkOnConnect.UseVisualStyleBackColor = true;
+            this.chkBlinkOnConnect.CheckedChanged += new System.EventHandler(this.ChkBlinkOnConnect_CheckedChanged);
+            // 
             // chkAutoconnect
             // 
             this.chkAutoconnect.AutoSize = true;
-            this.chkAutoconnect.Location = new System.Drawing.Point(65, 315);
+            this.chkAutoconnect.Location = new System.Drawing.Point(15, 307);
             this.chkAutoconnect.Margin = new System.Windows.Forms.Padding(6);
             this.chkAutoconnect.Name = "chkAutoconnect";
             this.chkAutoconnect.Size = new System.Drawing.Size(136, 28);
@@ -541,7 +556,7 @@ namespace _8x8x8_LED
             this.btnConnect.Margin = new System.Windows.Forms.Padding(6);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(300, 42);
-            this.btnConnect.TabIndex = 39;
+            this.btnConnect.TabIndex = 41;
             this.btnConnect.Text = "Co&nnect";
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
@@ -636,7 +651,7 @@ namespace _8x8x8_LED
             this.btnWebsite.Margin = new System.Windows.Forms.Padding(6);
             this.btnWebsite.Name = "btnWebsite";
             this.btnWebsite.Size = new System.Drawing.Size(246, 42);
-            this.btnWebsite.TabIndex = 37;
+            this.btnWebsite.TabIndex = 39;
             this.btnWebsite.Text = "&Website && Updates";
             this.btnWebsite.UseVisualStyleBackColor = true;
             this.btnWebsite.Click += new System.EventHandler(this.BtnWebsite_Click);
@@ -647,10 +662,19 @@ namespace _8x8x8_LED
             this.btnReset.Margin = new System.Windows.Forms.Padding(6);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(246, 42);
-            this.btnReset.TabIndex = 38;
+            this.btnReset.TabIndex = 40;
             this.btnReset.Text = "&Reset all Settings";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.BtnReset_Click);
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Location = new System.Drawing.Point(390, 195);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(110, 24);
+            this.lblVersion.TabIndex = 38;
+            this.lblVersion.Text = "Version: 2.1";
             // 
             // FrmMainMenu
             // 
@@ -736,6 +760,8 @@ namespace _8x8x8_LED
         private System.Windows.Forms.ComboBox cbCubeType;
         private System.Windows.Forms.GroupBox grpSendColor;
         private System.Windows.Forms.ComboBox cbSendColor;
+        private System.Windows.Forms.CheckBox chkBlinkOnConnect;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 

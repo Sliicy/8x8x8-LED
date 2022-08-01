@@ -56,6 +56,7 @@ namespace _8x8x8_LED
             // Load Previous Settings:
             cbCubeType.SelectedIndex = Properties.Settings.Default.CubeType;
             chkAutoconnect.Checked = Properties.Settings.Default.Autoconnect;
+            chkBlinkOnConnect.Checked = Properties.Settings.Default.BlinkOnConnect;
             cbBaudRate.Text = Properties.Settings.Default.BaudRate.ToString();
             nudDataBits.Value = Properties.Settings.Default.DataBits;
             cbStopBits.SelectedIndex = Properties.Settings.Default.StopBits;
@@ -144,6 +145,20 @@ namespace _8x8x8_LED
                     {
                         cube.type = CubeType.RGB;
                     }
+
+                    // Blink on connection:
+                    if (chkBlinkOnConnect.Checked)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            cube.Clear(CubeColor.Green);
+                            SerialHelper.Send(serialPort, cube);
+                            SerialHelper.Send(serialPort, cube);
+                            cube.Clear(CubeColor.Black);
+                            SerialHelper.Send(serialPort, cube);
+                            SerialHelper.Send(serialPort, cube);
+                        }
+                    }
                 }
                 catch (Exception)
                 {
@@ -168,6 +183,10 @@ namespace _8x8x8_LED
         private void ChkAutoconnect_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.Autoconnect = chkAutoconnect.Checked;
+        }
+        private void ChkBlinkOnConnect_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.BlinkOnConnect = chkBlinkOnConnect.Checked;
         }
 
         private void CbBaudRate_SelectedIndexChanged(object sender, EventArgs e)
