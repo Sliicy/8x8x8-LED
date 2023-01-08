@@ -167,6 +167,11 @@ namespace _8x8x8_LED.Core.Helpers
             if (cube.OffsetZ != 0)
                 cube.Shift(Direction.Downwards, Math.Abs(cube.OffsetZ) - 1, true);
 
+            if (cube.inverted)
+            {
+                cube.Invert();
+            }
+
             switch (cube.type)
             {
                 case CubeType.Monochrome:

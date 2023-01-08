@@ -1,5 +1,6 @@
 ﻿using _8x8x8_LED.Core.Models.Geometry;
 using System;
+using System.Drawing;
 
 namespace _8x8x8_LED.Core.Models
 {
@@ -33,6 +34,7 @@ namespace _8x8x8_LED.Core.Models
         public int width;
         public int length;
         public int height;
+        public bool inverted;
 
         /// <summary>
         /// Initializes a <see cref="Cube"/>, optionally by custom dimensions (default is 8x8x8).
@@ -40,12 +42,14 @@ namespace _8x8x8_LED.Core.Models
         /// <param name="x">Width of <see cref="Cube"/>.</param>
         /// <param name="y">Length of <see cref="Cube"/>.</param>
         /// <param name="z">Height of <see cref="Cube"/>.</param>
-        public Cube(int x = 8, int y = 8, int z = 8)
+        /// <param name="inverted">Whether to invert lights on <see cref="Cube"/> (black -> white).</param>
+        public Cube(int x = 8, int y = 8, int z = 8, bool inverted = false)
         {
             width = x;
             length = y;
             height = z;
             matrix = new CubeColor[width, length, height];
+            this.inverted = inverted;
         }
 
         public CubeColor[,,] Rotate(Rotation rotation, CubeColor[,,] input)
@@ -147,6 +151,10 @@ namespace _8x8x8_LED.Core.Models
             return output;
         }
 
+        /// <summary>
+        /// Clears the <see cref="Cube"/> to an empty color (default black).
+        /// </summary>
+        /// <param name="color"></param>
         public void Clear(CubeColor color = CubeColor.Black)
         {
             for (int x = 0; x < matrix.GetLength(0); x++)
@@ -332,6 +340,24 @@ namespace _8x8x8_LED.Core.Models
                             matrix[x, y, offset] = color;
                     break;
             }
+        }
+
+        /// <summary>
+        /// Invert all colors on <see cref="Cube"/>. All white turns to black, and black to white.
+        /// Also, forces color into grayscale (anything not black is considered white).
+        /// </summary>
+        public void Invert()
+        {
+            for (int x = 0; x < matrix.GetLength(0); x++)
+                for (int y = 0; y < matrix.GetLength(1); y++)
+                    for (int z = 0; z < matrix.GetLength(2); z++)
+                        if (matrix[x, y, z] == CubeColor.Black)
+                        {
+                            matrix[x, y, z] = CubeColor.White;
+                        } else
+                        {
+                            matrix[x, y, z] = CubeColor.Black;
+                        }
         }
     }
 }
