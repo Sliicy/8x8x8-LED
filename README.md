@@ -135,3 +135,5 @@ I designed & 3D printed a custom bottom for the cube using [Blender](https://www
 
 ## Future Development
 Anyone is welcome to provide suggestions, improvements, changes, bugs found, etc.
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?business=YHG4Y6QUAQ4NA&no_recurring=0&currency_code=USD)
