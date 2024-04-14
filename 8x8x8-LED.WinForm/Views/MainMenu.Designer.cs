@@ -101,7 +101,7 @@ namespace _8x8x8_LED
             this.lstApps.ItemHeight = 24;
             this.lstApps.Location = new System.Drawing.Point(8, 6);
             this.lstApps.Name = "lstApps";
-            this.lstApps.Size = new System.Drawing.Size(507, 676);
+            this.lstApps.Size = new System.Drawing.Size(507, 772);
             this.lstApps.Sorted = true;
             this.lstApps.TabIndex = 1;
             this.lstApps.SelectedIndexChanged += new System.EventHandler(this.LstApps_SelectedIndexChanged);
@@ -110,7 +110,7 @@ namespace _8x8x8_LED
             // btnOpen
             // 
             this.btnOpen.Enabled = false;
-            this.btnOpen.Location = new System.Drawing.Point(112, 698);
+            this.btnOpen.Location = new System.Drawing.Point(112, 786);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(300, 42);
             this.btnOpen.TabIndex = 2;

@@ -25,9 +25,9 @@ namespace _8x8x8_LED
         public readonly SerialPort serialPort = new SerialPort();
 
         public Cube cube = new Cube(
-            Properties.Settings.Default.CubeSizeX,
-            Properties.Settings.Default.CubeSizeY,
-            Properties.Settings.Default.CubeSizeZ);
+            Properties.Settings.Default.CubeSize,
+            Properties.Settings.Default.CubeSize,
+            Properties.Settings.Default.CubeSize);
 
         private readonly string requestedApp = "";
         public bool minimized = false;
@@ -482,9 +482,9 @@ namespace _8x8x8_LED
             cube.length = (int)nudCubeSize.Value;
             cube.width = (int)nudCubeSize.Value;
             cube.height = (int)nudCubeSize.Value;
-            Properties.Settings.Default.CubeSizeX = cube.length;
-            Properties.Settings.Default.CubeSizeY = cube.width;
-            Properties.Settings.Default.CubeSizeZ = cube.height;
+            Properties.Settings.Default.CubeSize = cube.length;
+            Properties.Settings.Default.CubeSize = cube.width;
+            Properties.Settings.Default.CubeSize = cube.height;
             Properties.Settings.Default.Save();
         }
     }

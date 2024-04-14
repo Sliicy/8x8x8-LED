@@ -775,12 +775,12 @@ namespace _8x8x8_LED.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public int CubeSizeX {
+        public int CubeSize {
             get {
-                return ((int)(this["CubeSizeX"]));
+                return ((int)(this["CubeSize"]));
             }
             set {
-                this["CubeSizeX"] = value;
+                this["CubeSize"] = value;
             }
         }
     }
