@@ -71,6 +71,8 @@ namespace _8x8x8_LED
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpMenu = new System.Windows.Forms.TabPage();
             this.tpSettings = new System.Windows.Forms.TabPage();
+            this.grpCubeSize = new System.Windows.Forms.GroupBox();
+            this.nudCubeSize = new System.Windows.Forms.NumericUpDown();
             this.grpSendColor = new System.Windows.Forms.GroupBox();
             this.cbSendColor = new System.Windows.Forms.ComboBox();
             this.grpCubeType = new System.Windows.Forms.GroupBox();
@@ -87,6 +89,8 @@ namespace _8x8x8_LED
             this.tabControl.SuspendLayout();
             this.tpMenu.SuspendLayout();
             this.tpSettings.SuspendLayout();
+            this.grpCubeSize.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCubeSize)).BeginInit();
             this.grpSendColor.SuspendLayout();
             this.grpCubeType.SuspendLayout();
             this.SuspendLayout();
@@ -133,7 +137,7 @@ namespace _8x8x8_LED
             this.grpGeometry.Controls.Add(this.lblRotateZ);
             this.grpGeometry.Controls.Add(this.lblRotateY);
             this.grpGeometry.Controls.Add(this.lblRotateX);
-            this.grpGeometry.Location = new System.Drawing.Point(265, 87);
+            this.grpGeometry.Location = new System.Drawing.Point(265, 178);
             this.grpGeometry.Name = "grpGeometry";
             this.grpGeometry.Size = new System.Drawing.Size(250, 356);
             this.grpGeometry.TabIndex = 18;
@@ -337,7 +341,7 @@ namespace _8x8x8_LED
             this.grpSendPacket.Controls.Add(this.lblVersion);
             this.grpSendPacket.Controls.Add(this.btnSendPacket);
             this.grpSendPacket.Controls.Add(this.txtBytesToSend);
-            this.grpSendPacket.Location = new System.Drawing.Point(6, 452);
+            this.grpSendPacket.Location = new System.Drawing.Point(6, 546);
             this.grpSendPacket.Margin = new System.Windows.Forms.Padding(6);
             this.grpSendPacket.Name = "grpSendPacket";
             this.grpSendPacket.Padding = new System.Windows.Forms.Padding(6);
@@ -353,7 +357,7 @@ namespace _8x8x8_LED
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(110, 24);
             this.lblVersion.TabIndex = 39;
-            this.lblVersion.Text = "Version: 2.2";
+            this.lblVersion.Text = "Version: 2.3";
             // 
             // btnSendPacket
             // 
@@ -394,7 +398,7 @@ namespace _8x8x8_LED
             this.grpConnection.Controls.Add(this.cbParity);
             this.grpConnection.Controls.Add(this.cbStopBits);
             this.grpConnection.Controls.Add(this.cbComPort);
-            this.grpConnection.Location = new System.Drawing.Point(6, 87);
+            this.grpConnection.Location = new System.Drawing.Point(6, 178);
             this.grpConnection.Margin = new System.Windows.Forms.Padding(6);
             this.grpConnection.Name = "grpConnection";
             this.grpConnection.Padding = new System.Windows.Forms.Padding(6);
@@ -574,7 +578,7 @@ namespace _8x8x8_LED
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(116, 792);
+            this.btnConnect.Location = new System.Drawing.Point(116, 880);
             this.btnConnect.Margin = new System.Windows.Forms.Padding(6);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(300, 42);
@@ -590,7 +594,7 @@ namespace _8x8x8_LED
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(529, 783);
+            this.tabControl.Size = new System.Drawing.Size(529, 871);
             this.tabControl.TabIndex = 0;
             // 
             // tpMenu
@@ -600,13 +604,14 @@ namespace _8x8x8_LED
             this.tpMenu.Location = new System.Drawing.Point(4, 33);
             this.tpMenu.Name = "tpMenu";
             this.tpMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMenu.Size = new System.Drawing.Size(521, 746);
+            this.tpMenu.Size = new System.Drawing.Size(521, 834);
             this.tpMenu.TabIndex = 0;
             this.tpMenu.Text = "Menu";
             this.tpMenu.UseVisualStyleBackColor = true;
             // 
             // tpSettings
             // 
+            this.tpSettings.Controls.Add(this.grpCubeSize);
             this.tpSettings.Controls.Add(this.grpSendColor);
             this.tpSettings.Controls.Add(this.grpCubeType);
             this.tpSettings.Controls.Add(this.btnWebsite);
@@ -617,10 +622,43 @@ namespace _8x8x8_LED
             this.tpSettings.Location = new System.Drawing.Point(4, 33);
             this.tpSettings.Name = "tpSettings";
             this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSettings.Size = new System.Drawing.Size(521, 746);
+            this.tpSettings.Size = new System.Drawing.Size(521, 834);
             this.tpSettings.TabIndex = 1;
             this.tpSettings.Text = "Settings";
             this.tpSettings.UseVisualStyleBackColor = true;
+            // 
+            // grpCubeSize
+            // 
+            this.grpCubeSize.Controls.Add(this.nudCubeSize);
+            this.grpCubeSize.Location = new System.Drawing.Point(6, 84);
+            this.grpCubeSize.Name = "grpCubeSize";
+            this.grpCubeSize.Size = new System.Drawing.Size(250, 72);
+            this.grpCubeSize.TabIndex = 3;
+            this.grpCubeSize.TabStop = false;
+            this.grpCubeSize.Text = "Cube Size";
+            // 
+            // nudCubeSize
+            // 
+            this.nudCubeSize.Location = new System.Drawing.Point(93, 28);
+            this.nudCubeSize.Maximum = new decimal(new int[] {
+            128,
+            0,
+            0,
+            0});
+            this.nudCubeSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudCubeSize.Name = "nudCubeSize";
+            this.nudCubeSize.Size = new System.Drawing.Size(65, 29);
+            this.nudCubeSize.TabIndex = 0;
+            this.nudCubeSize.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.nudCubeSize.ValueChanged += new System.EventHandler(this.NudCubeSize_ValueChanged);
             // 
             // grpSendColor
             // 
@@ -669,7 +707,7 @@ namespace _8x8x8_LED
             // 
             // btnWebsite
             // 
-            this.btnWebsite.Location = new System.Drawing.Point(6, 689);
+            this.btnWebsite.Location = new System.Drawing.Point(2, 783);
             this.btnWebsite.Margin = new System.Windows.Forms.Padding(6);
             this.btnWebsite.Name = "btnWebsite";
             this.btnWebsite.Size = new System.Drawing.Size(246, 42);
@@ -680,7 +718,7 @@ namespace _8x8x8_LED
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(269, 689);
+            this.btnReset.Location = new System.Drawing.Point(265, 783);
             this.btnReset.Margin = new System.Windows.Forms.Padding(6);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(246, 42);
@@ -694,7 +732,7 @@ namespace _8x8x8_LED
             this.AcceptButton = this.btnConnect;
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(532, 849);
+            this.ClientSize = new System.Drawing.Size(532, 937);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.tabControl);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -722,6 +760,8 @@ namespace _8x8x8_LED
             this.tabControl.ResumeLayout(false);
             this.tpMenu.ResumeLayout(false);
             this.tpSettings.ResumeLayout(false);
+            this.grpCubeSize.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudCubeSize)).EndInit();
             this.grpSendColor.ResumeLayout(false);
             this.grpCubeType.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -776,6 +816,8 @@ namespace _8x8x8_LED
         private System.Windows.Forms.CheckBox chkBlinkOnConnect;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.CheckBox chkInvert;
+        private System.Windows.Forms.GroupBox grpCubeSize;
+        private System.Windows.Forms.NumericUpDown nudCubeSize;
     }
 }
 

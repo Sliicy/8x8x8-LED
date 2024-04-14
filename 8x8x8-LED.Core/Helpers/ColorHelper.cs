@@ -24,236 +24,236 @@ namespace _8x8x8_LED.Core.Helpers
                 for (int y = 0; y < c.GetLength(1); y++)
                     for (int z = 0; z < c.GetLength(2); z++)
                     {
-                        int r = 4;
+                        int red = 4;
                         if (y == 1)
-                            r = 5;
+                            red = 5;
                         else if (y == 2)
-                            r = 10;
+                            red = 10;
                         else if (y == 3)
-                            r = 11;
+                            red = 11;
                         else if (y == 4)
-                            r = 16;
+                            red = 16;
                         else if (y == 5)
-                            r = 17;
+                            red = 17;
                         else if (y == 6)
-                            r = 22;
+                            red = 22;
                         else if (y == 7)
-                            r = 23;
-                        int g = 0;
+                            red = 23;
+                        int green = 0;
                         if (y == 1)
-                            g = 1;
+                            green = 1;
                         else if (y == 2)
-                            g = 6;
+                            green = 6;
                         else if (y == 3)
-                            g = 7;
+                            green = 7;
                         else if (y == 4)
-                            g = 12;
+                            green = 12;
                         else if (y == 5)
-                            g = 13;
+                            green = 13;
                         else if (y == 6)
-                            g = 18;
+                            green = 18;
                         else if (y == 7)
-                            g = 19;
-                        int b = 2;
+                            green = 19;
+                        int blue = 2;
                         if (y == 1)
-                            b = 3;
+                            blue = 3;
                         else if (y == 2)
-                            b = 8;
+                            blue = 8;
                         else if (y == 3)
-                            b = 9;
+                            blue = 9;
                         else if (y == 4)
-                            b = 14;
+                            blue = 14;
                         else if (y == 5)
-                            b = 15;
+                            blue = 15;
                         else if (y == 6)
-                            b = 20;
+                            blue = 20;
                         else if (y == 7)
-                            b = 21;
+                            blue = 21;
 
                         byte X = (byte)Math.Pow(2, x);
                         switch (c[x, y, z])
                         {
                             case CubeColor.White:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray1[g + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.Red:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
                                 break;
                             case CubeColor.Green:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
                                 break;
                             case CubeColor.Blue:
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.Cyan:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.Magenta:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.Yellow:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray1[g + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
                                 break;
                             case CubeColor.DarkRed:
-                                outputArray1[r + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
                                 break;
                             case CubeColor.DarkGreen:
-                                outputArray1[g + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
                                 break;
                             case CubeColor.DarkBlue:
-                                outputArray1[b + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
                                 break;
                             case CubeColor.DarkCyan:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
                                 break;
                             case CubeColor.DarkMagenta:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
                                 break;
                             case CubeColor.DarkYellow:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray1[g + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
                                 break;
                             case CubeColor.Gray:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray1[g + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
                                 break;
                             case CubeColor.BrightRed:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.BrightGreen:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.BrightBlue:
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.BrightCyan:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.BrightMagenta:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.BrightYellow:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray1[g + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.RedGreen:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
                                 break;
                             case CubeColor.RedBlue:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.RedCyan:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.RedMagenta:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.RedYellow:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
                                 break;
                             case CubeColor.GreenBlue:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.GreenCyan:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.GreenMagenta:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.GreenYellow:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
                                 break;
                             case CubeColor.BlueCyan:
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.BlueMagenta:
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.BlueYellow:
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
                                 break;
                             case CubeColor.CyanMagenta:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[b + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[blue + 24 * z] += X;
                                 break;
                             case CubeColor.CyanYellow:
-                                outputArray1[g + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
+                                outputArray1[green + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
                                 break;
                             case CubeColor.MagentaYellow:
-                                outputArray1[r + 24 * z] += X;
-                                outputArray1[b + 24 * z] += X;
-                                outputArray2[r + 24 * z] += X;
-                                outputArray2[g + 24 * z] += X;
+                                outputArray1[red + 24 * z] += X;
+                                outputArray1[blue + 24 * z] += X;
+                                outputArray2[red + 24 * z] += X;
+                                outputArray2[green + 24 * z] += X;
                                 break;
                         }
                     }
-            return outputArray1.Concat(outputArray2).ToArray();
+            return [.. outputArray1, .. outputArray2];
         }
 
         /// <summary>

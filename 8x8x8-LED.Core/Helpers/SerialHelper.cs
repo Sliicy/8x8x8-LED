@@ -15,19 +15,19 @@ namespace _8x8x8_LED.Core.Helpers
         /// <summary>
         /// Header used for <see cref="MonochromeCube"/>.
         /// </summary>
-        public static readonly byte[] MONOCHROME_HEADER = { 0xF2 };
+        public static readonly byte[] MONOCHROME_HEADER = [0xF2];
 
         /// <summary>
         /// Header used for <see cref="Cube"/>.
         /// </summary>
-        public static readonly byte[] RGB_HEADER = { 0x00, 0xFF, 0x00, 0x00 };
+        public static readonly byte[] RGB_HEADER = [0x00, 0xFF, 0x00, 0x00];
 
         /// <summary>
         /// Layer being updated in <see cref="Cube"/> (typically either layer 1 or 2).
         /// </summary>
         /// <remarks><c>0x00</c> = Layer 1, <c>0x01</c> = Layer 2, etc.<br/>
         /// This property is stored as a <see cref="byte"/> array since it is appended to <see cref="RGB_HEADER"/>.</remarks>
-        public static readonly byte[] RGB_COLOR_LAYER = { 0x00 };
+        public static readonly byte[] RGB_COLOR_LAYER = [0x00];
 
         /// <summary>
         /// Delay in milliseconds between updating the cube over USB serial.

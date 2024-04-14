@@ -24,7 +24,10 @@ namespace _8x8x8_LED
 
         public readonly SerialPort serialPort = new SerialPort();
 
-        public Cube cube = new Cube(8, 8, 8);
+        public Cube cube = new Cube(
+            Properties.Settings.Default.CubeSizeX,
+            Properties.Settings.Default.CubeSizeY,
+            Properties.Settings.Default.CubeSizeZ);
 
         private readonly string requestedApp = "";
         public bool minimized = false;
@@ -74,6 +77,8 @@ namespace _8x8x8_LED
             nudOffsetX.Value = Properties.Settings.Default.OffsetX;
             nudOffsetY.Value = Properties.Settings.Default.OffsetY;
             nudOffsetZ.Value = Properties.Settings.Default.OffsetZ;
+            
+            nudCubeSize.Value = cube.length;
 
             if (chkAutoconnect.Checked) btnConnect.PerformClick();
         }
@@ -468,6 +473,19 @@ namespace _8x8x8_LED
         {
             if (lstApps.SelectedIndex != -1)
                 btnOpen.Enabled = true;
+        }
+
+        private void NudCubeSize_ValueChanged(object sender, EventArgs e)
+        {
+            // Anything higher than 128 for the cube size wastes tons of memory and slows everything down.
+            // The array crashes if the value exceeds 812.
+            cube.length = (int)nudCubeSize.Value;
+            cube.width = (int)nudCubeSize.Value;
+            cube.height = (int)nudCubeSize.Value;
+            Properties.Settings.Default.CubeSizeX = cube.length;
+            Properties.Settings.Default.CubeSizeY = cube.width;
+            Properties.Settings.Default.CubeSizeZ = cube.height;
+            Properties.Settings.Default.Save();
         }
     }
 }
