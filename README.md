@@ -70,7 +70,7 @@ This will display bouncing balls (optionally syncable to music being played).
   <summary>iCubeSmart 3D8-S-DIP board (Monochrome version)</summary>
 
   ## How to Build for the iCubeSmart 3D8-S-DIP board (Monochrome version)
-  The schematic for the board I used can be found [here](https://github.com/Sliicy/ledcube8x8x8/blob/master/schematics/iCubeSmart%20Schematic.pdf). Rather than building the PCB and all, I simply purchased a ready-to-assemble board on [Amazon](https://www.amazon.com/Icubesmart-Animation-Electronic-Teenagers-Activities/dp/B07GRDRPST).
+  The schematic for the board I used can be found [here](https://github.com/Sliicy/8x8x8-LED/blob/master/Schematics/Monochrome/iCubeSmart%20Schematic.pdf). Rather than building the PCB and all, I simply purchased a ready-to-assemble board on [Amazon](https://www.amazon.com/Icubesmart-Animation-Electronic-Teenagers-Activities/dp/B07GRDRPST).
 
 1) After purchasing and assembling the board, I connected TXD, RXD, and Ground (skipping 5V until later) to the USB to TTL adapter it shipped with, and used the STC program (https://github.com/Sliicy/ledcube8x8x8/blob/master/tools/stc-isp-15xx-v6.85.zip) to flash the cube. My particular settings were as follows:
  * MCU Type: STC12C5A60S2
@@ -81,13 +81,13 @@ This will display bouncing balls (optionally syncable to music being played).
 
 ![STC Settings](https://user-images.githubusercontent.com/23116873/127097458-40155d32-88da-4519-a718-3c50a148ca29.png)
 
-2) Press on 'Open Code File', and select the .hex or .ihx file to flash to the cube. I modified Tomazas' existing firmware to get it to work with my board, which can be downloaded here: https://github.com/Sliicy/ledcube8x8x8/blob/master/firmware/v2-sdcc-icubesmart/firmware.ihx
+2) Press on 'Open Code File', and select the .hex or .ihx file to flash to the cube. I modified Tomazas' existing firmware to get it to work with my board, which can be downloaded here: https://github.com/Sliicy/8x8x8-LED/blob/master/Firmware/Monochrome/8x8x8%20Monochrome%20Cube%20Firmware.ihx
 3) Before continuing, I first clicked on 'Check MCU' just to make sure that the cube was properly being recognized. After clicking on the button, I connected 5V at this point, and then the board was recognized (MCU ID : D17EC59205195F, MCU type: STC12C5A60S2, F/W version: 7.1.4I).
 4) After confirming that the board was being read properly, I disconnected 5V again, and clicked on 'Download/Program', and then reconnected the 5V, to get the cube to flash the firmware.
 5) At this point, the cube should be flashed, and the cube should be able to talk to the program.
 
 ## Note about using the iCubeSmart Monochrome Cube
-Since I have a slightly different cube than the aformentioned cube in [Tomazas' firmware](https://github.com/tomazas/ledcube8x8x8), I had to fork my own version, and modify the firmware to get it to work. [Here](https://github.com/Sliicy/ledcube8x8x8) is a link to the project (I'm using the [v2-sdcc-icubesmart](https://github.com/Sliicy/ledcube8x8x8/tree/master/firmware/v2-sdcc-icubesmart)). Just flash the .ihx file as a regular .hex using the [STC flashing tool](https://github.com/tomazas/ledcube8x8x8/tree/master/tools).
+Since I have a slightly different cube than the aformentioned cube in [Tomazas' firmware](https://github.com/tomazas/ledcube8x8x8), I had to fork my own version, and modify the firmware to get it to work. The .ihx file can be flashed as a regular .hex using the [STC flashing tool](https://github.com/tomazas/ledcube8x8x8/tree/master/tools).
 </details>
 <details>
   <summary>iCubeSmart 3D8RGB board (RGB version)</summary>
@@ -102,7 +102,7 @@ There is a YouTube video that explains the process of setting up Arduino with th
 3) Add the following URL to Additional Board Manager URLs (File > Preferences):
 https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json
 4) In Tools > Boards Manager, install the latest version of STM32 (2.1.0+)
-5) Open the "8x8x8_RGB_LED_iCubeSmart.ino"
+5) Open the "8x8x8_RGB_LED_iCubeSmart.ino" (which can be downloaded [here](https://github.com/Sliicy/8x8x8-LED/blob/master/Firmware/RGB/8x8x8_RGB_LED_iCubeSmart/8x8x8_RGB_LED_iCubeSmart.ino))
 6) Select "Generic STM32F1 series" under Tools > Board
 7) Select "Generic F103RETx" under Tools > Board part number
 8) Select "STM32CubeProgrammer (Serial)" under Tools > Upload Method
