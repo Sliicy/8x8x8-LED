@@ -1,0 +1,1 @@
+This directory has some example bitmap files which can be used in the app to display images or videos on the cube. In the case of video, the bitmap stores the entire video in a vertical downwards sequence, and each "frame" is 8 pixels in height, and 64 pixels in width.
