@@ -107,15 +107,16 @@ https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectron
 7) Select "Generic F103RETx" under Tools > Board part number
 8) Select "STM32CubeProgrammer (Serial)" under Tools > Upload Method
 9) Beneath the 8x8x8 board (on the smaller yellow board), ensure the Download switch is set to 0 (Boot1=0), and the Run switch is set to 0 (Boot0=0)
-10) Power the cube with both the 5V 2A cable, as well as the 4 USB cables to the USB to TTL:
+10) Power the cube with both the 5V 2A cable (Note: If the RGB cube is powered and requested to have all LEDs white, the board needs at least 1.437 amps and 4.72 volts or it will flicker rapidly)
+11) The 4 pin wires from the board to the USB to TTL should have the following connections:
 * GND to GND
 * TXD to TXD
 * RXD to RXD
 * 5V to 5V
 * Jumper connecting both 3V3 and VCC
-11) Press Reset Button and then "Upload" in Arduino
-12) Toggle both switches on the yellow board so that the Download switch is set to 1 (Boot0=1) and Run switch is set to 1 (Boot1=1)
-13) The cube should now be ready for UART Serial Communication
+12) Press Reset Button and then "Upload" in Arduino
+13) Toggle both switches on the yellow board so that the Download switch is set to 1 (Boot0=1) and Run switch is set to 1 (Boot1=1)
+14) The cube should now be ready for UART Serial Communication
 </details>
 
 
