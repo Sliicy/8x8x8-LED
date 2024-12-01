@@ -116,8 +116,7 @@ https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectron
 * 5V to 5V
 * Jumper connecting both 3V3 and VCC
 12) Press the Reset Button on the yellow board (the yellow board should change to a blue LED) and then "Upload" in Arduino
-13) Toggle both switches on the yellow board so that they are both set to 1 (Boot0 = 1 and Boot1 = 1)
-![Run Mode](/Screenshots/Boot-Switches-Run-Mode.jpg)
+13) Toggle both switches on the yellow board so that they are now both set to 0 (Boot0 = 0 and Boot1 = 0)
 14) The cube should now be ready for UART Serial Communication
 </details>
 
