@@ -98,7 +98,7 @@ This cube's motherboard features a separately mounted yellow board, controlled b
 There is a YouTube video that explains the process of setting up Arduino with the STM32: https://www.youtube.com/watch?v=Myon8H111PQ
 
 1) Install Arduino IDE
-2) Install STM32 Cube Programmer (https://www.st.com/en/development-tools/stm32cubeprog.html). Arduino requires this installed to be able to flash to it.
+2) Install STM32 Cube Programmer (STM32CubePrg-W64) (https://www.st.com/en/development-tools/stm32cubeprog.html). This MUST be installed otherwise Arduino will be unable to flash to the chip (it will throw an error: STM32CubeProgrammer not found (STM32_Programmer_CLI.exe)).
 3) Add the following URL to Additional Board Manager URLs (File > Preferences):
 https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json
 4) In Tools > Board > Boards Manager, install the latest version of STM32 (2.1.0+)
