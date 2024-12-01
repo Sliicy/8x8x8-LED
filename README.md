@@ -101,7 +101,7 @@ There is a YouTube video that explains the process of setting up Arduino with th
 2) Install STM32 Cube Programmer (STM32CubePrg-W64) (https://www.st.com/en/development-tools/stm32cubeprog.html). This MUST be installed otherwise Arduino won't be able to flash the chip (it will throw an error: STM32CubeProgrammer not found (STM32_Programmer_CLI.exe)).
 3) Add the following URL to Additional Board Manager URLs (File > Preferences):
 https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json
-4) In Tools > Board > Boards Manager, install the latest version of STM32 (2.1.0+)
+4) In Tools > Board > Boards Manager, install the latest version of STM32 (tested and working with version 2.9.0)
 5) Open the "8x8x8_RGB_LED_iCubeSmart.ino" (which can be downloaded [here](https://github.com/Sliicy/8x8x8-LED/blob/master/Firmware/RGB/8x8x8_RGB_LED_iCubeSmart/8x8x8_RGB_LED_iCubeSmart.ino))
 6) Select "Generic STM32F1 series" under Tools > Board
 7) Select "Generic F103RETx" under Tools > Board part number
