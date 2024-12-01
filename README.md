@@ -98,7 +98,7 @@ This cube's motherboard features a separately mounted yellow board, controlled b
 There is a YouTube video that explains the process of setting up Arduino with the STM32: https://www.youtube.com/watch?v=Myon8H111PQ
 
 1) Install Arduino IDE
-2) Install STM32 Cube Programmer (STM32CubePrg-W64) (https://www.st.com/en/development-tools/stm32cubeprog.html). This MUST be installed otherwise Arduino will be unable to flash to the chip (it will throw an error: STM32CubeProgrammer not found (STM32_Programmer_CLI.exe)).
+2) Install STM32 Cube Programmer (STM32CubePrg-W64) (https://www.st.com/en/development-tools/stm32cubeprog.html). This MUST be installed otherwise Arduino won't be able to flash the chip (it will throw an error: STM32CubeProgrammer not found (STM32_Programmer_CLI.exe)).
 3) Add the following URL to Additional Board Manager URLs (File > Preferences):
 https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json
 4) In Tools > Board > Boards Manager, install the latest version of STM32 (2.1.0+)
@@ -107,6 +107,7 @@ https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectron
 7) Select "Generic F103RETx" under Tools > Board part number
 8) Select "STM32CubeProgrammer (Serial)" under Tools > Upload Method
 9) Beneath the 8x8x8 board (on the smaller yellow board), ensure that Boot0 is set to 1, and Boot1 is set to 0
+![Download Mode](/Screenshots/Boot-Switches-Download-Mode.jpg)
 10) Power the cube with both the 5V 2A cable (Note: If the RGB cube is powered and requested to have all LEDs white, the board needs at least 1.437 amps and 4.72 volts or it will flicker rapidly)
 11) The 4 pin wires from the board to the USB to TTL should have the following connections:
 * GND to GND
@@ -116,6 +117,7 @@ https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectron
 * Jumper connecting both 3V3 and VCC
 12) Press Reset Button and then "Upload" in Arduino
 13) Toggle both switches on the yellow board so that they are both set to 1 (Boot0 = 1 and Boot1 = 1)
+![Run Mode](/Screenshots/Boot-Switches-Run-Mode.jpg)
 14) The cube should now be ready for UART Serial Communication
 </details>
 
