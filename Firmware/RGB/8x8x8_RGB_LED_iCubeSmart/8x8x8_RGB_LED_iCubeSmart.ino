@@ -101,6 +101,7 @@ int buttonPressCountCycle = 0;
 bool startButtonPressed = false;
 bool nextButtonPressed = false;
 bool cycleButtonPressed = false;
+const int BUTTON_PRESS_THRESHOLD = 2;
 
 // Number of "cubes" that cube cycles between.
 /*
@@ -182,49 +183,20 @@ void setup() {
   pinMode(A2, OUTPUT);
   pinMode(ENABLE_PIN, OUTPUT);
 
-  // Open serial port and listen @ 38400 bps:
+  // Open serial port and listen:
   Serial1.begin(38400);
 }
 
 // Switches electricity to the requested Z-Axis (0 - 7):
-void SwitchToLayerZ(int z) {
-  if (z == 0) {
-    digitalWrite(A0, LOW);
-    digitalWrite(A1, LOW);
-    digitalWrite(A2, LOW);
-  } else if (z == 1) {
-    digitalWrite(A0, HIGH);
-    digitalWrite(A1, LOW);
-    digitalWrite(A2, LOW);
-  } else if (z == 2) {
-    digitalWrite(A0, LOW);
-    digitalWrite(A1, HIGH);
-    digitalWrite(A2, LOW);
-  } else if (z == 3) {
-    digitalWrite(A0, HIGH);
-    digitalWrite(A1, HIGH);
-    digitalWrite(A2, LOW);
-  } else if (z == 4) {
-    digitalWrite(A0, LOW);
-    digitalWrite(A1, LOW);
-    digitalWrite(A2, HIGH);
-  } else if (z == 5) {
-    digitalWrite(A0, HIGH);
-    digitalWrite(A1, LOW);
-    digitalWrite(A2, HIGH);
-  } else if (z == 6) {
-    digitalWrite(A0, LOW);
-    digitalWrite(A1, HIGH);
-    digitalWrite(A2, HIGH);
-  } else if (z == 7) {
-    digitalWrite(A0, HIGH);
-    digitalWrite(A1, HIGH);
-    digitalWrite(A2, HIGH);
-  }
+void switchToLayerZ(int z) {
+  // Map the z-axis layer to the correct A0, A1, A2 values
+  digitalWrite(A0, z & 1); // LSB
+  digitalWrite(A1, (z >> 1) & 1);
+  digitalWrite(A2, (z >> 2) & 1);
 }
 
 // Clear entire layer:
-void ClearCurrentLayer() {
+void clearCurrentLayer() {
   digitalWrite(LE, LOW);
   for (int i = 0; i < yAxisStates; i++) 
     shiftOut(SPI_MOSI, SPI_Clock, LSBFIRST, 0);
@@ -266,81 +238,85 @@ void readIncomingBytes() {
     }
 }
 
+void handleButtonPress(int buttonState, int &pressCount, int colorValue, bool cycleEffect) {
+  if (buttonState == LOW) { // LOW = Pressed
+    pressCount++;
+    if (pressCount > BUTTON_PRESS_THRESHOLD) {
+      paintCube(colorValue);
+      if (cycleEffect) {
+        randomizeCube();
+      }
+    }
+  }
+}
+
+// Paints the entire cube whatever value is given (0 - 255):
+void paintCube(int value) {
+  for (int c = 0; c < colorDepth; c++) {
+    for (int z = 0; z < height; z++) {
+      for (int y = 0; y < yAxisStates; y++) {
+        cube[c][z][y] = value;
+      }
+    }
+  }
+}
+
+// Function to randomize the cube values
+void randomizeCube() {
+    for (int color = 0; color < colorDepth; ++color) {
+        for (int heightIdx = 0; heightIdx < height; ++heightIdx) {
+            for (int yAxis = 0; yAxis < yAxisStates; ++yAxis) {
+                cube[color][heightIdx][yAxis] = rand() % 256; // Random value between 0 and 255
+            }
+        }
+    }
+}
+
 void loop() {
   startButtonPressed = digitalRead(Button_Start);
   nextButtonPressed = digitalRead(Button_Next);
   cycleButtonPressed = digitalRead(Button_Cycle);
-  if (startButtonPressed == LOW) { // HIGH = Depressed; LOW = Pressed
-    buttonPressCountStart++;
-    if (buttonPressCountStart > 2) {
-      for (int c = 0; c < colorDepth; c++) {
-        for (int z = 0; z < height; z++) {
-          for (int y = 0; y < yAxisStates; y++)
-            cube[c][z][y] = 255;
-        }
-      }
-    }
-  }
-  if (nextButtonPressed == LOW) { // HIGH = Depressed; LOW = Pressed
-    buttonPressCountNext++;
-    if (buttonPressCountNext > 2) {
-      for (int c = 0; c < colorDepth; c++) {
-        for (int z = 0; z < height; z++) {
-          for (int y = 0; y < yAxisStates; y++)
-            cube[c][z][y] = 0;
-        }
-      }
-    }
-  }
-  if (cycleButtonPressed == LOW) { // HIGH = Depressed; LOW = Pressed
-    buttonPressCountCycle++;
-    if (buttonPressCountCycle > 2) {
-      for (int c = 0; c < colorDepth; c++) {
-        for (int z = 0; z < height; z++) {
-          for (int y = 0; y < yAxisStates; y++)
-            cube[c][z][y] = 0;
-        }
-      }
-      for (int c = 0; c < colorDepth; c++) {
-        for (int z = 0; z < height; z++) {
-          for (int y = 0; y < yAxisStates; y += 3)
-            cube[c][z][y] = 255;
-        }
-      }
-    }
-  }
 
-  // Render each depth of color:
+  handleButtonPress(startButtonPressed, buttonPressCountStart, 255, false);
+  handleButtonPress(nextButtonPressed, buttonPressCountNext, 0, false);
+  handleButtonPress(cycleButtonPressed, buttonPressCountCycle, 0, true);
+  
+  renderCube();
+  readAndUpdateCube();
+}
+
+void renderCube() {
+  // Loop through color depth and Z-axis layers
   for (int c = 0; c < colorDepth; c++) {
-
-    // Render each Z-Axis layer:
     for (int z = 0; z < height; z++) {
-      ClearCurrentLayer();
-      
-      // Switch to the corresponding Z-Axis:
-      SwitchToLayerZ(z);
+      clearCurrentLayer();
+      switchToLayerZ(z);
       digitalWrite(LE, LOW);
       
-      // Render each Y-Axis layer:
+      // Render each Y-axis layer
       for (int y = 0; y < yAxisStates; y++) {
-        
-        // Render each X-Axis byte-layer:
+        // Render each X-axis byte-layer
         shiftOut(SPI_MOSI, SPI_Clock, LSBFIRST, cube[c][z][y]);
       }
       digitalWrite(LE, HIGH);
     }
   }
+}
 
+void readAndUpdateCube() {
   readIncomingBytes();
   if (newData) {
     targetColorDepth = receivedBytes[0];
-    for (int z = 0; z < height; z++) {
-      for (int y = 0; y < yAxisStates; y++) {
-        
-        // Render the target cube and target color layer, offset by 1 byte for the color depth:
-        cube[targetColorDepth][z][y] = receivedBytes[z * 24 + y + 1];
-      }
-    }
+    updateCubeWithNewData();
     newData = false;
+  }
+}
+
+void updateCubeWithNewData() {
+  // Update the cube with the received bytes
+  for (int z = 0; z < height; z++) {
+    for (int y = 0; y < yAxisStates; y++) {
+      cube[targetColorDepth][z][y] = receivedBytes[z * 24 + y + 1];
+    }
   }
 }
