@@ -106,7 +106,7 @@ https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectron
 6) Select "Generic STM32F1 series" under Tools > Board
 7) Select "Generic F103RETx" under Tools > Board part number
 8) Select "STM32CubeProgrammer (Serial)" under Tools > Upload Method
-9) Beneath the 8x8x8 board (on the smaller yellow board), ensure the Download switch is set to 0 (Boot1=0), and the Run switch is set to 0 (Boot0=0)
+9) Beneath the 8x8x8 board (on the smaller yellow board), ensure the Download switch is set to 0 (Boot0=0), and the Run switch is set to 0 (Boot1=0)
 10) Power the cube with both the 5V 2A cable (Note: If the RGB cube is powered and requested to have all LEDs white, the board needs at least 1.437 amps and 4.72 volts or it will flicker rapidly)
 11) The 4 pin wires from the board to the USB to TTL should have the following connections:
 * GND to GND
