@@ -127,7 +127,7 @@ const int yAxisStates = primaryColors * yAxisRows;
  */
 const byte numBytes = yAxisStates * height + 1;
 byte receivedBytes[numBytes]; // Array that holds incoming data to paint the cube.
-boolean newData = false; // Controls whether incoming data has finished being read.
+bool newData = false; // Controls whether incoming data has finished being read.
 byte header[] = {0x00, 0xFF, 0x00, 0x00}; // The header used to delineate incoming data.
 
 int targetColorDepth = 0; // Contains the destination color layer that is to be rendered.
